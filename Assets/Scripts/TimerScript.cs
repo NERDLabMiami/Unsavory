@@ -10,6 +10,8 @@ public class TimerScript : MonoBehaviour {
 		if (timer <= 0) {
 			//TIMES UP!
 			timer = 0;
+			PlayerPrefs.SetString ("Game Over Message", "Good Job! You Get Paid!");
+
 			Application.LoadLevel(1);
 
 		}

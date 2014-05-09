@@ -13,14 +13,20 @@ public class CurrentOrderScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
+		if (current_recipes.Length > 5) {
+			PlayerPrefs.SetString ("Game Over Message", "Too Slow, You're Fired!");
+
+			Application.LoadLevel(1);
+		}
 	}
 
 	public void Spawn() {
+	
 		Vector3 newRecipePosition = gameObject.transform.position;
-		newRecipePosition.x += nextXPosition;
-		Instantiate(recipes[Random.Range (0, recipes.Length)], newRecipePosition, Quaternion.identity);
-		nextXPosition += 1;
+//		newRecipePosition.x += nextXPosition;
+		Instantiate(recipes[Random.Range (0, recipes.Length)], gameObject.transform.position, Quaternion.identity);
+//		nextXPosition += 1;
 		Invoke("Spawn", timeBetweenOrders);
 
 	}

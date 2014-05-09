@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\CurrentOrderScript.cs" />
      <Compile Include="Assets\Scripts\GameOverScript.cs" />
      <Compile Include="Assets\Scripts\IngredientScript.cs" />
+     <Compile Include="Assets\Scripts\OrderStopperScript.cs" />
      <Compile Include="Assets\Scripts\PlateScript.cs" />
      <Compile Include="Assets\Scripts\RecipeScript.cs" />
      <Compile Include="Assets\Scripts\StrikeScript.cs" />

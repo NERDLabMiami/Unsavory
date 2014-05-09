@@ -24,12 +24,12 @@ public class PlateScript : MonoBehaviour {
 			}
 		}
 
+
 		if (matched) {
 			//clean up
 			//get rid of the current order
 			Destroy(current_recipes[matchedOrderIndex]);
 		}
-
 		//remove the list of ingredients
 
 		ingredients.Clear();
