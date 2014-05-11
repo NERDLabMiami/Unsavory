@@ -1,11 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RecipeScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameOverScript.cs">
     <Files>
-      <File FileName="../../../Documents/ZooRush-beta/Assets/Scripts/Menus and Scene Managers/StoryModeHandler.cs" Line="220" Column="47" />
-      <File FileName="../../../Documents/ZooRush-beta/Assets/Scripts/Menus and Scene Managers/RandomFact.cs" Line="28" Column="57" />
-      <File FileName="Assets/Scripts/CurrentOrderScript.cs" Line="7" Column="30" />
-      <File FileName="Assets/Scripts/RecipeScript.cs" Line="11" Column="1" />
+      <File FileName="Assets/Scripts/CurrentOrderScript.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/RecipeScript.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/OrderStopperScript.cs" Line="16" Column="1" />
+      <File FileName="Assets/Scripts/PlateScript.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/GameOverScript.cs" Line="14" Column="1" />
+      <File FileName="Assets/Scripts/TimerScript.cs" Line="13" Column="72" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
