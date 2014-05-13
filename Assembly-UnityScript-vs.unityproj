@@ -46,7 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\StrikeScript.js" />
+     <Compile Include="Assets\TouchScript\Examples\General\Tap\Scripts\TapJS_Breaker.js" />
+     <Compile Include="Assets\TouchScript\Examples\General\Tap\Scripts\TapJS_Spawner.js" />
+     <None Include="Assets\GestureRecognition\Resources\numbers.xml" />
+     <None Include="Assets\GestureRecognition\Resources\shapes.xml" />
+     <None Include="Assets\Resources\gestures.xml" />
+     <None Include="Assets\GestureRecognition\Resources\alphabet.xml" />
+ <Reference Include="Assets\TouchScript\Plugins\TouchScript">
+ <HintPath>Assets\TouchScript\Plugins\TouchScript.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

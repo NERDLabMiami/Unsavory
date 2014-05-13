@@ -10,7 +10,6 @@ public class PlateScript : MonoBehaviour {
 	public GameObject strikeCounter;
 
 	private void OnMouseDown() {
-		Debug.Log("Detected Mouse Down");
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 		bool matched = false;
 		int matchedOrderIndex = -1;
@@ -58,25 +57,5 @@ public class PlateScript : MonoBehaviour {
 		}
 		return true;
 	}
-
-	public static bool ScrambledGOEquals<GameObject>(List<GameObject> list1, List<GameObject> list2) {
-		var cnt = new Dictionary<GameObject, int>();
-		foreach (GameObject s in list1) {
-			if (cnt.ContainsKey(s)) {
-				cnt[s]++;
-			} else {
-				cnt.Add(s, 1);
-			}
-		}
-		foreach (GameObject s in list2) {
-			if (cnt.ContainsKey(s)) {
-				cnt[s]--;
-			} else {
-				return false;
-			}
-		}
-		return cnt.Values.All(c => c == 0);
-	}
-
 
 }

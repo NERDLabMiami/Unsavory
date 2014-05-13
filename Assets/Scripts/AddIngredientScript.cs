@@ -4,16 +4,22 @@ using System.Collections;
 public class AddIngredientScript : MonoBehaviour {
 	public GameObject ingredient = null;
 	public GameObject plate;
+	private bool tainted = false;
 
-	public bool has_ingredient = false;
 	void Start() {
 	}
 
 	private void OnMouseDown() {
-		if (ingredient != null && !has_ingredient) {
+		if (ingredient != null) {
 			Spawn ();
 			plate.GetComponent<PlateScript>().ingredients.Add(ingredient);
 		}
+	}
+	public bool getTainted() {
+		return tainted;
+	}
+	public void setTainted(bool taint) {
+		tainted = taint;
 	}
 
 	void Spawn() {

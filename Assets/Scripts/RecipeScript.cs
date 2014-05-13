@@ -8,7 +8,7 @@ public class RecipeScript : MonoBehaviour {
 	void Start() {
 		Vector3 relativePos = GameObject.Find("OrderStopper").transform.position - gameObject.transform.position;
 		relativePos.y = 0;
-		gameObject.rigidbody2D.AddForce(10 * relativePos);
+		gameObject.rigidbody2D.AddForce(50 * relativePos);
 
 	}
 	// Use this for initialization
@@ -16,7 +16,5 @@ public class RecipeScript : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		other.relativeVelocity.Set(0,0);
 		gameObject.rigidbody2D.velocity.Set(0,0);
-//		gameObject.rigidbody2D.isKinematic = true;
-//		other.gameObject.rigidbody2D.isKinematic = true;
 	}
 }

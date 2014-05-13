@@ -24,9 +24,7 @@ public class CurrentOrderScript : MonoBehaviour {
 	public void Spawn() {
 	
 		Vector3 newRecipePosition = gameObject.transform.position;
-//		newRecipePosition.x += nextXPosition;
 		Instantiate(recipes[Random.Range (0, recipes.Length)], gameObject.transform.position, Quaternion.identity);
-//		nextXPosition += 1;
 		Invoke("Spawn", timeBetweenOrders);
 
 	}
