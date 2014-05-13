@@ -19,6 +19,7 @@ public class CameraShakeScript : MonoBehaviour {
 	private Vector2 firstPressPos;
 	private Vector2 secondPressPos;
 	private Vector2 currentSwipe;
+	private bool isPaused = false;
 	
 	void Start()
 	{
@@ -28,6 +29,14 @@ public class CameraShakeScript : MonoBehaviour {
 		SneezeWarning = false;
 		OriginalPos = transform.position;
 		OriginalRot = transform.rotation;
+	}
+
+	public void pauseSneezing() {
+		isPaused = true;
+	}
+
+	public void resumeSneezing() {
+		isPaused = false;
 	}
 
 	private void resetSneezeTimer() {
@@ -59,7 +68,7 @@ public class CameraShakeScript : MonoBehaviour {
 
 
 
-		if(ShakeIntensity > 0 && (Sneezing || SneezeWarning)) {
+		if(ShakeIntensity > 0 && (Sneezing || SneezeWarning) && !isPaused) {
 
 			transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
 			transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-ShakeIntensity, ShakeIntensity)*.2f,

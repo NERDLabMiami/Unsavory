@@ -58,13 +58,16 @@
      <Compile Include="Assets\Scripts\GameOverScript.cs" />
      <Compile Include="Assets\Scripts\IngredientScript.cs" />
      <Compile Include="Assets\Scripts\LoadSceneTimer.cs" />
+     <Compile Include="Assets\Scripts\MessageFadeOutScript.cs" />
      <Compile Include="Assets\Scripts\OrderStopperScript.cs" />
+     <Compile Include="Assets\Scripts\PauseScript.cs" />
      <Compile Include="Assets\Scripts\PlateScript.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\RecipeScript.cs" />
      <Compile Include="Assets\Scripts\SceneSwitchButtonScript.cs" />
      <Compile Include="Assets\Scripts\StrikeScript.cs" />
      <Compile Include="Assets\Scripts\TimerScript.cs" />
+     <Compile Include="Assets\Scripts\TutorScript.cs" />
      <None Include="Assets\GestureRecognition\Resources\numbers.xml" />
      <None Include="Assets\GestureRecognition\Resources\shapes.xml" />
      <None Include="Assets\Resources\gestures.xml" />

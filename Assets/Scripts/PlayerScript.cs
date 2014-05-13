@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
 	public float health;
 	public int money;
+	public bool hasBeenTutored;
 
 	void Start() {
 		//check defaults

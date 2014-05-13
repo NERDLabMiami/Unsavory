@@ -12,7 +12,7 @@ public class SceneSwitchButtonScript : MonoBehaviour {
 
 	void Update() {
 		if (moving) {
-			float distanceCovered = (Time.time - startTime) * speed;
+			float distanceCovered = (Time.realtimeSinceStartup - startTime) * speed;
 			float fracJourney = distanceCovered / movementTime;
 			Camera.main.transform.position = Vector3.Lerp (startingPosition.position, newCameraPosition.position, fracJourney);
 
