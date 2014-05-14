@@ -17,7 +17,7 @@ public class CurrentOrderScript : MonoBehaviour {
 		if (current_recipes.Length > 5) {
 			PlayerPrefs.SetString ("Game Over Message", "Too Slow, You're Fired!");
 
-			Application.LoadLevel(1);
+			//Application.LoadLevel(1);
 		}
 	}
 

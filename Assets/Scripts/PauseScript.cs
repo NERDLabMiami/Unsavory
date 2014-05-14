@@ -3,15 +3,7 @@ using System.Collections;
 
 public class PauseScript : MonoBehaviour {
 	public bool isPaused = false;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 	void OnMouseDown() {
 		if (!isPaused) {

@@ -8,7 +8,7 @@ public class StrikeScript : MonoBehaviour {
 	void Update () {
 		gameObject.guiText.text = strikesLeft.ToString();
 		if (strikesLeft <= 0) {
-			Application.LoadLevel(1);
+		//	Application.LoadLevel(1);
 		}
 	}
 }

@@ -14,8 +14,6 @@ public class PlateScript : MonoBehaviour {
 		bool matched = false;
 		int matchedOrderIndex = -1;
 		for (int i = 0; i < current_recipes.Length; i++) {
-
-//			if (ScrambledGOEquals(current_recipes[i].GetComponent<RecipeScript>().ingredients,ingredients)) {
 			if (doOrdersMatch(current_recipes[i].GetComponent<RecipeScript>().ingredients,ingredients)) {
 
 			//ADD JUICE!

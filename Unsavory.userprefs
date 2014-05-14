@@ -1,21 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TutorScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerScript.cs">
     <Files>
-      <File FileName="Assets/Scripts/SceneSwitchButtonScript.cs" Line="31" Column="1" />
-      <File FileName="Assets/Scripts/RecipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/CameraShakeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlateScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/CurrentOrderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/OrderStopperScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/ClockAnimator.cs" Line="10" Column="1" />
+      <File FileName="Assets/Scripts/TimerScript.cs" Line="49" Column="1" />
+      <File FileName="Assets/Scripts/StrikeScript.cs" Line="11" Column="5" />
       <File FileName="Assets/Scripts/GameOverScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TimerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/AddIngredientScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OrderStopperScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlateScript.cs" Line="38" Column="1" />
       <File FileName="Assets/Scripts/PlayerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ButtonScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/LoadSceneTimer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MessageFadeOutScript.cs" Line="7" Column="16" />
-      <File FileName="Assets/Scripts/TutorScript.cs" Line="6" Column="37" />
+      <File FileName="Assets/Scripts/CurrentOrderScript.cs" Line="20" Column="6" />
+      <File FileName="Assets/Scripts/SceneSwitchButtonScript.cs" Line="28" Column="17" />
+      <File FileName="Assets/Scripts/PauseScript.cs" Line="6" Column="1" />
+      <File FileName="Assets/Scripts/CameraShakeScript.cs" Line="29" Column="25" />
+      <File FileName="Assets/Scripts/AddIngredientScript.cs" Line="20" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

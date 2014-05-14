@@ -1,12 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class TimerScript : MonoBehaviour {
 
 	public float timer = 30;
+	public int startHour = 8;
+	public int startMinute = 0;
+	private TimeSpan workday;
+	private DateTime today;
+
+	void Start() {
+		workday = new TimeSpan(8,0,0);
+		today = new DateTime(2014,1,1);
+		today = today.Add(workday);
+	}
+
 	// Update is called once per frame
 	void Update () {
+
 		timer -= Time.deltaTime;
+		today = today.AddSeconds(Time.deltaTime * 1080);
+
+
 		if (timer <= 0) {
 			//TIMES UP!
 			timer = 0;
@@ -26,11 +42,11 @@ public class TimerScript : MonoBehaviour {
 
 			}
 
+			Debug.Log("The End Time is: " + today);
 			Application.LoadLevel(1);
-
 		}
-
-		gameObject.guiText.text = ((int)timer).ToString();
+		gameObject.GetComponent<TextMesh>().text = today.ToString("h:mm tt");
 	}
+
 
 }

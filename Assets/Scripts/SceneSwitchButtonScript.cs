@@ -26,7 +26,7 @@ public class SceneSwitchButtonScript : MonoBehaviour {
 	void OnMouseDown() {
 		startingPosition =  Camera.main.transform;
 		moving = true;
-		startTime = Time.time;
+		startTime = Time.realtimeSinceStartup;
 		movementTime = Vector3.Distance(startingPosition.position, newCameraPosition.position);
 
 	}
