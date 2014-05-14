@@ -54,7 +54,6 @@
      <Compile Include="Assets\Scripts\AddIngredientScript.cs" />
      <Compile Include="Assets\Scripts\ButtonScript.cs" />
      <Compile Include="Assets\Scripts\CameraShakeScript.cs" />
-     <Compile Include="Assets\Scripts\ClockAnimator.cs" />
      <Compile Include="Assets\Scripts\CurrentOrderScript.cs" />
      <Compile Include="Assets\Scripts\GameOverScript.cs" />
      <Compile Include="Assets\Scripts\IngredientScript.cs" />

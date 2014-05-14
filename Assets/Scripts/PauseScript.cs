@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PauseScript : MonoBehaviour {
 	public bool isPaused = false;
+	public GameObject timer;
 
 
 	void OnMouseDown() {
@@ -17,4 +18,11 @@ public class PauseScript : MonoBehaviour {
 			Time.timeScale = 1.0f;
 		}
 	}
+
+	void Update() {
+	if (!isPaused) {
+			gameObject.GetComponent<TextMesh>().text = timer.GetComponent<TimerScript>().getClock();
+		}
+	}
+
 }

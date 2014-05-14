@@ -20,6 +20,7 @@ public class LoadSceneTimer : MonoBehaviour {
 		guiTexture.texture = texture;
 		beginTransition();
 		Debug.Log("Load Scene Timer?");
+		Time.timeScale = 1f;
 	}
 
 	void timesUp() {
