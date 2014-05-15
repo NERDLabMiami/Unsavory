@@ -14,9 +14,9 @@ public class SceneSwitchButtonScript : MonoBehaviour {
 		if (moving) {
 			float distanceCovered = (Time.realtimeSinceStartup - startTime) * speed;
 			float fracJourney = distanceCovered / movementTime;
-			Camera.main.transform.position = Vector2.Lerp (startingPosition.position, newCameraPosition.position, fracJourney);
+			Camera.main.transform.position = Vector3.Lerp (startingPosition.position, newCameraPosition.position, fracJourney);
 			Debug.Log("COVERED " + distanceCovered + " MOVETIME " + movementTime);
-			if (Vector2.Distance (newCameraPosition.transform.position, Camera.main.transform.position) <= .1) {
+			if (Vector3.Distance (newCameraPosition.transform.position, Camera.main.transform.position) <= .1) {
 				moving = false;
 				Debug.Log("Stopped Moving");
 			}
@@ -28,7 +28,7 @@ public class SceneSwitchButtonScript : MonoBehaviour {
 		startingPosition =  Camera.main.transform;
 		moving = true;
 		startTime = Time.realtimeSinceStartup;
-		movementTime = Vector2.Distance(startingPosition.position, newCameraPosition.position);
+		movementTime = Vector3.Distance(startingPosition.position, newCameraPosition.position);
 
 	}
 
