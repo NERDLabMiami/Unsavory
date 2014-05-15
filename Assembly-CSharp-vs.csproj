@@ -61,6 +61,9 @@
      <Compile Include="Assets\Scripts\IngredientScript.cs" />
      <Compile Include="Assets\Scripts\LoadSceneTimer.cs" />
      <Compile Include="Assets\Scripts\MessageFadeOutScript.cs" />
+     <Compile Include="Assets\Scripts\MovingMessageScript.cs" />
+     <Compile Include="Assets\Scripts\NoseWipeScript.cs" />
+     <Compile Include="Assets\Scripts\ObjectLabel.cs" />
      <Compile Include="Assets\Scripts\OrderStopperScript.cs" />
      <Compile Include="Assets\Scripts\PanPositionScript.cs" />
      <Compile Include="Assets\Scripts\PauseScript.cs" />
@@ -68,8 +71,9 @@
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\RecipeScript.cs" />
      <Compile Include="Assets\Scripts\SceneSwitchButtonScript.cs" />
+     <Compile Include="Assets\Scripts\SetPrefsScript.cs" />
+     <Compile Include="Assets\Scripts\SneezeScript.cs" />
      <Compile Include="Assets\Scripts\StayHomeScript.cs" />
-     <Compile Include="Assets\Scripts\StrikeScript.cs" />
      <Compile Include="Assets\Scripts\TimerScript.cs" />
      <Compile Include="Assets\Scripts\TutorScript.cs" />
      <Compile Include="Assets\Scripts\WorkScript.cs" />

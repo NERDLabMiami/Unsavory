@@ -8,7 +8,8 @@ public class PlateScript : MonoBehaviour {
 	public List<GameObject> ingredients = new List<GameObject>();
 	public GameObject currentOrder;
 	public GameObject strikeCounter;
-
+	private int orderCounter = 0;
+	
 	private void OnMouseDown() {
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 		bool matched = false;
@@ -20,6 +21,8 @@ public class PlateScript : MonoBehaviour {
 				//found a match
 				matched = true;
 				matchedOrderIndex = i;
+				orderCounter++;
+				currentOrder.GetComponent<CurrentOrderScript>().setOrdersServed(orderCounter);
 				break;
 			}
 

@@ -17,6 +17,12 @@ public class CurrentOrderScript : MonoBehaviour {
 	private string levelData;
 	private int currentLevel = 0;
 	private int numberOfRecipes = 7;
+	private int numberOfOrdersServed = 0;
+
+	public void setOrdersServed(int numOrders) {
+		numberOfOrdersServed = numOrders;
+	}
+
 	// Use this for initialization
 	void Start () {
 		if (PlayerPrefs.GetInt("endless") == 1) {
@@ -60,7 +66,7 @@ public class CurrentOrderScript : MonoBehaviour {
 			spawnMoreOrders = false;
 			PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", tooSlowTitleString);
 			if (levelTimer.GetComponent<TimerScript>().endless) {
-				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", "Worked " + levelTimer.GetComponent<TimerScript>().getTimeWorked() + " Hours Straight");
+				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", numberOfOrdersServed + " Customers Served");
 			}
 			else {
 				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", tooSlowMessageString);

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PanPositionScript : MonoBehaviour {
 	public Transform newCameraPosition;
+	public GameObject nextPanEvent;
 	public bool moveOnLoad = false;
 	private Transform startingPosition;
 	private float movementTime;
@@ -24,12 +25,15 @@ public class PanPositionScript : MonoBehaviour {
 
 			if (Vector3.Distance (newCameraPosition.transform.position, Camera.main.transform.position) <= .1) {
 				moving = false;
-				Debug.Log("Stopped Moving");
+				//queue next event
+				if (nextPanEvent != null) {
+					nextPanEvent.GetComponent<PanPositionScript>().move ();
+				}
 			}
 		}	
 	}
 
-	void move() {
+	public void move() {
 		moveOnLoad = false;
 		startingPosition =  Camera.main.transform;
 		startTime = Time.realtimeSinceStartup;
