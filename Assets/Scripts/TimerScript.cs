@@ -14,20 +14,24 @@ public class TimerScript : MonoBehaviour {
 	public string endOfLevelTitleString;
 	public string endOfLevelMessageString;
 	public GameObject endOfLevelMessage;
+	public bool endless = false;
 	private TimeSpan workday;
 	private DateTime today;
+	private DateTime startOfWorkDay;
 	private bool endOfDay = false;
 	private bool waitingForPlayerInput = false;
 	private Transform startingPosition;
 	private float startTime;
 	private float movementTime;
 	private float speed = 1.0f;
+	private float timeBetweenOrders = 3f;
 
 
 	void Start() {
 		workday = new TimeSpan(8,0,0);
 		today = new DateTime(2014,1,1);
 		today = today.Add(workday);
+		startOfWorkDay = today;
 		startingPosition = Camera.main.transform;
 
 	}
@@ -37,16 +41,30 @@ public class TimerScript : MonoBehaviour {
 		return today.ToString("h:mm tt");
 	}
 
+	public string getTimeWorked() {
+		TimeSpan timeWorked = today-startOfWorkDay;
+		return  timeWorked.Hours.ToString();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (!endOfDay) {
 			timer -= Time.deltaTime;
 
-			if (timer <= 0) {
+			if (timer <= 0 && !endless) {
 				//Continue onto next day
 				PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", endOfLevelTitleString);
 				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", endOfLevelMessageString);
+				int currentLevel = PlayerPrefs.GetInt("current level");
+				PlayerPrefs.SetInt ("current level", currentLevel+1);
 				EndOfLevel();
+			}
+			if (endless && timer <= 0) {
+				timer = 30;
+				timeBetweenOrders *= .95f;
+				if (timeBetweenOrders <= .5f) {
+					timeBetweenOrders = .5f;
+				}
 			}
 
 		}

@@ -7,8 +7,11 @@ public class PlayerScript : MonoBehaviour {
 	public bool hasBeenTutored;
 
 	void Start() {
-		//check defaults
+		//TODO: reset, this is for testing
 		PlayerPrefs.SetInt("highest level", 4);
+
+		//check defaults
+
 		if (PlayerPrefs.HasKey("health")) {
 			health = PlayerPrefs.GetFloat("health");
 		}
@@ -21,6 +24,10 @@ public class PlayerScript : MonoBehaviour {
 		}
 		else {
 			PlayerPrefs.SetInt ("money", money);
+		}
+
+		if (!PlayerPrefs.HasKey ("current level")) {
+			PlayerPrefs.SetInt("current level", 0);
 		}
 
 	}

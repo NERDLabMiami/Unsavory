@@ -1,44 +1,81 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using SimpleJSON;
 
 public class CurrentOrderScript : MonoBehaviour {
-	public GameObject[] recipes;
+	private List<GameObject> recipes = new List<GameObject>();
 	public GameObject levelTimer;
 	public GameObject continueButton;
-	public float timeBetweenOrders = 8;
+	private float timeBetweenOrders = 3;
 	public int maximumNumberOfBackedUpOrders = 5;
 	public string tooSlowTitleString;
 	public string tooSlowMessageString;
 	public string retryButtonText;
 	public int retrySceneNumber;
-	private float nextXPosition;
 	private bool spawnMoreOrders = true;
+	private string levelData;
+	private int currentLevel = 0;
+	private int numberOfRecipes = 7;
 	// Use this for initialization
 	void Start () {
-		nextXPosition = 0;
+		if (PlayerPrefs.GetInt("endless") == 1) {
+
+		}
+		else {
+			currentLevel = PlayerPrefs.GetInt("current level");
+			levelData =  Resources.Load<TextAsset>("levels").ToString();
+			JSONNode levels = JSON.Parse(levelData);
+			timeBetweenOrders = levels["levels"][currentLevel]["waiting time"].AsFloat;
+			numberOfRecipes = levels["levels"][currentLevel]["recipes"].AsInt;
+		}
+
+		Debug.Log("Starting Level " + currentLevel);
+		switch(numberOfRecipes) {
+			case 7:
+				goto case 6;
+			case 6:
+				goto case 5;
+			case 5:
+				goto case 4;
+			case 4:
+				goto case 3;
+			case 3:
+				recipes.Add((GameObject)Resources.Load("Recipes/OGB Recipe"));
+				goto case 2;
+			case 2:
+				recipes.Add((GameObject)Resources.Load("Recipes/OGM Recipe"));
+				goto case 1;
+			case 1:
+				recipes.Add((GameObject)Resources.Load("Recipes/RGB Recipe"));
+				break;
+		}
 		Spawn ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 		if (current_recipes.Length > maximumNumberOfBackedUpOrders && spawnMoreOrders) {
 			spawnMoreOrders = false;
-			//TODO: Change Continue Button to Retry
 			PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", tooSlowTitleString);
-			PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", tooSlowMessageString);
+			if (levelTimer.GetComponent<TimerScript>().endless) {
+				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", "Worked " + levelTimer.GetComponent<TimerScript>().getTimeWorked() + " Hours Straight");
+			}
+			else {
+				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", tooSlowMessageString);
+
+			}
 			continueButton.GetComponent<TextMesh>().text = retryButtonText;
 			continueButton.GetComponent<LoadSceneTimer>().sceneNumber = retrySceneNumber;
 			levelTimer.GetComponent<TimerScript>().EndOfLevel();
-			//Application.LoadLevel(1);
 		}
 	}
 
 	public void Spawn() {
-//TODO: Stop creating when level has finished	
 		Vector3 newRecipePosition = gameObject.transform.position;
 		if (spawnMoreOrders) {
-			Instantiate(recipes[Random.Range (0, recipes.Length)], gameObject.transform.position, Quaternion.identity);
+			Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);
 		}
 
 		Invoke("Spawn", timeBetweenOrders);

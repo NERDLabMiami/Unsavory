@@ -1,0 +1,56 @@
+{
+  "levels": [
+    {
+        "recipes": 4,
+        "waiting time": 3,
+        "end": false
+    },
+    {
+        "recipes": 4,
+        "waiting time": 2.9,
+        "end": false
+    },
+    {
+        "recipes": 4,
+        "waiting time": 2.8,
+        "end": false
+    },
+    {
+        "recipes": 4,
+        "waiting time": 2.7,
+        "end": false
+    },
+    {
+        "recipes": 4,
+        "waiting time": 2.6,
+        "end": true
+    },
+    {
+        "recipes": 5,
+        "waiting time": 2.5,
+        "end": false
+    },
+    {
+        "recipes": 5,
+        "waiting time": 2.4,
+        "end": false
+    },
+    {
+        "recipes": 5,
+        "waiting time": 2.3,
+        "end": false
+    },
+    {
+        "recipes": 5,
+        "waiting time": 2.2,
+        "end": false
+    },
+    {
+        "recipes": 5,
+        "waiting time": 2.1,
+        "end": true
+    }    
+    
+  ]
+  
+ }

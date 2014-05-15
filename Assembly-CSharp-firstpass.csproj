@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{564591D9-222D-8E9F-2112-6E9921B2797A}</ProjectGuid>
+	<ProjectGuid>{D9BD7BF9-7161-000E-4C2E-91C22B2D0874}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,42 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\GestureRecognition\Scripts\CapturePoints.cs" />
-     <Compile Include="Assets\GestureRecognition\Scripts\FileTools.cs" />
-     <Compile Include="Assets\GestureRecognition\Scripts\Gesture.cs" />
-     <Compile Include="Assets\GestureRecognition\Scripts\GestureLibrary.cs" />
-     <Compile Include="Assets\GestureRecognition\Scripts\Result.cs" />
-     <Compile Include="Assets\Scripts\AddIngredientScript.cs" />
-     <Compile Include="Assets\Scripts\ButtonScript.cs" />
-     <Compile Include="Assets\Scripts\BuyDrugsScript.cs" />
-     <Compile Include="Assets\Scripts\CameraShakeScript.cs" />
-     <Compile Include="Assets\Scripts\CurrentOrderScript.cs" />
-     <Compile Include="Assets\Scripts\GameOverScript.cs" />
-     <Compile Include="Assets\Scripts\HealthMessageScript.cs" />
-     <Compile Include="Assets\Scripts\IngredientScript.cs" />
-     <Compile Include="Assets\Scripts\LoadSceneTimer.cs" />
-     <Compile Include="Assets\Scripts\MessageFadeOutScript.cs" />
-     <Compile Include="Assets\Scripts\OrderStopperScript.cs" />
-     <Compile Include="Assets\Scripts\PanPositionScript.cs" />
-     <Compile Include="Assets\Scripts\PauseScript.cs" />
-     <Compile Include="Assets\Scripts\PlateScript.cs" />
-     <Compile Include="Assets\Scripts\PlayerScript.cs" />
-     <Compile Include="Assets\Scripts\RecipeScript.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchButtonScript.cs" />
-     <Compile Include="Assets\Scripts\StayHomeScript.cs" />
-     <Compile Include="Assets\Scripts\StrikeScript.cs" />
-     <Compile Include="Assets\Scripts\TimerScript.cs" />
-     <Compile Include="Assets\Scripts\TutorScript.cs" />
-     <Compile Include="Assets\Scripts\WorkScript.cs" />
+     <Compile Include="Assets\Plugins\SimpleJSON.cs" />
      <None Include="Assets\Resources\levels.txt" />
      <None Include="Assets\GestureRecognition\Resources\numbers.xml" />
      <None Include="Assets\GestureRecognition\Resources\shapes.xml" />
      <None Include="Assets\Resources\gestures.xml" />
      <None Include="Assets\GestureRecognition\Resources\alphabet.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{D9BD7BF9-7161-000E-4C2E-91C22B2D0874}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

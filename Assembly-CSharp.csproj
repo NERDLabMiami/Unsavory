@@ -53,25 +53,35 @@
      <Compile Include="Assets\GestureRecognition\Scripts\Result.cs" />
      <Compile Include="Assets\Scripts\AddIngredientScript.cs" />
      <Compile Include="Assets\Scripts\ButtonScript.cs" />
+     <Compile Include="Assets\Scripts\BuyDrugsScript.cs" />
      <Compile Include="Assets\Scripts\CameraShakeScript.cs" />
      <Compile Include="Assets\Scripts\CurrentOrderScript.cs" />
      <Compile Include="Assets\Scripts\GameOverScript.cs" />
+     <Compile Include="Assets\Scripts\HealthMessageScript.cs" />
      <Compile Include="Assets\Scripts\IngredientScript.cs" />
      <Compile Include="Assets\Scripts\LoadSceneTimer.cs" />
      <Compile Include="Assets\Scripts\MessageFadeOutScript.cs" />
      <Compile Include="Assets\Scripts\OrderStopperScript.cs" />
+     <Compile Include="Assets\Scripts\PanPositionScript.cs" />
      <Compile Include="Assets\Scripts\PauseScript.cs" />
      <Compile Include="Assets\Scripts\PlateScript.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\RecipeScript.cs" />
      <Compile Include="Assets\Scripts\SceneSwitchButtonScript.cs" />
+     <Compile Include="Assets\Scripts\StayHomeScript.cs" />
      <Compile Include="Assets\Scripts\StrikeScript.cs" />
      <Compile Include="Assets\Scripts\TimerScript.cs" />
      <Compile Include="Assets\Scripts\TutorScript.cs" />
+     <Compile Include="Assets\Scripts\WorkScript.cs" />
+     <None Include="Assets\Resources\levels.txt" />
      <None Include="Assets\GestureRecognition\Resources\numbers.xml" />
      <None Include="Assets\GestureRecognition\Resources\shapes.xml" />
      <None Include="Assets\Resources\gestures.xml" />
      <None Include="Assets\GestureRecognition\Resources\alphabet.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{D9BD7BF9-7161-000E-4C2E-91C22B2D0874}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
