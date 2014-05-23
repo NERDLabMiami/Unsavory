@@ -20,21 +20,22 @@ public class CameraShakeScript : MonoBehaviour {
 	{
 		Sneezing = false;
 		SneezeWarning = false;
-		OriginalPos = transform.position;
-		OriginalRot = transform.rotation;
+		OriginalPos = player.transform.position;
+		OriginalRot = player.transform.rotation;
 	}
 
 	public void giveSneezeWarning(float timeBeforeWarning) {
 		SneezeWarning = true;
 		DoShake(timeBeforeWarning - .1f, .01f);
+		Sneezing = false;
 
 	}
 
 	public void sneeze(float nextSneezeTime) {
+		Debug.Log("Sneezed");
 		sneezeTimer = nextSneezeTime;
 		SneezeWarning = false;
 		DoShake(.02f, .3f);
-		Sneezing = true;
 
 	}
 
@@ -51,12 +52,10 @@ public class CameraShakeScript : MonoBehaviour {
 	void Update () 
 	{
 		sneezeTimer -= Time.deltaTime;
-		if(ShakeIntensity > 0 && (Sneezing || SneezeWarning) && !isPaused) {
-
-			transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
+		if(ShakeIntensity > 0 && (Sneezing || SneezeWarning) && !isPaused) {		
 			transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-ShakeIntensity, ShakeIntensity)*.2f,
 			                                    OriginalRot.y + Random.Range(-ShakeIntensity, ShakeIntensity)*.2f,
-			                                    OriginalRot.z + Random.Range(-ShakeIntensity, ShakeIntensity)*.2f,
+			                                    OriginalRot.z,
 			                                    OriginalRot.w + Random.Range(-ShakeIntensity, ShakeIntensity)*.2f);
 			
 			ShakeIntensity -= ShakeDecay;
@@ -73,13 +72,15 @@ public class CameraShakeScript : MonoBehaviour {
 	}
 
 	public bool sneezed() {
+		if (didSneeze) {
+			Debug.Log("I done did sneeze");
+		}
 		return didSneeze;
 	}
 
 	public void DoShake(float decay, float intensity) {
 		ShakeIntensity = intensity;
-		ShakeDecay = decay; 
-		Sneezing = true;
+		ShakeDecay = decay;
 	}   
 
 }

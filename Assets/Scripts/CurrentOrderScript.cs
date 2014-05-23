@@ -30,10 +30,12 @@ public class CurrentOrderScript : MonoBehaviour {
 		}
 		else {
 			currentLevel = PlayerPrefs.GetInt("current level");
+			currentLevel = 0;
 			levelData =  Resources.Load<TextAsset>("levels").ToString();
 			JSONNode levels = JSON.Parse(levelData);
 			timeBetweenOrders = levels["levels"][currentLevel]["waiting time"].AsFloat;
 			numberOfRecipes = levels["levels"][currentLevel]["recipes"].AsInt;
+
 		}
 
 		Debug.Log("Starting Level " + currentLevel);
@@ -79,6 +81,7 @@ public class CurrentOrderScript : MonoBehaviour {
 	}
 
 	public void Spawn() {
+		Debug.Log("Spawning New Order");
 		Vector3 newRecipePosition = gameObject.transform.position;
 		if (spawnMoreOrders) {
 			Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);

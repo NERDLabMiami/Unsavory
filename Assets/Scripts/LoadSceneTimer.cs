@@ -22,7 +22,7 @@ public class LoadSceneTimer : MonoBehaviour {
 		Debug.Log("Load Scene Timer?");
 		Time.timeScale = 1f;
 	}
-
+	
 	void timesUp() {
 		startTime = Time.time;
 		switchingScene = false;

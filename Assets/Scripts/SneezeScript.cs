@@ -25,6 +25,8 @@ public class SneezeScript : MonoBehaviour {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
 				PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", "Gross");
 				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", "All the food is tainted...");
+				PlayerPrefs.SetInt("sneezed", 1);
+
 				launchedLevelEnd = true;
 				panEvent.GetComponent<PanPositionScript>().move();
 				//pause

@@ -35,6 +35,7 @@ public class NoseWipeScript : MonoBehaviour {
 	void Update () {
 		sneezeTimer -= Time.deltaTime;
 		if (sneezeTimer <= 0) {
+			Debug.Log("Sneezing still");
 			Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);
 			sneezeTimer = timeBetweenSneezes;
 
@@ -56,10 +57,11 @@ public class NoseWipeScript : MonoBehaviour {
 
 	
 	private void resetSneezeTimer() {
-		//TODO: re-enable this and make it for story mode only. also need to flip the switch once the game has ended due to sneezing
-		//		if (canStopSneeze) {
+		Debug.Log("Reset Sneeze");
+		if (canStopSneeze) {
 			sneezeTimer = player.GetComponent<PlayerScript>().health;
-//		}
+			Debug.Log("Sneeze Timer now : " + sneezeTimer);
+		}
 	}
 
 	public void Swipe()

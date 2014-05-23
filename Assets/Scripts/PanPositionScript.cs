@@ -4,7 +4,10 @@ using System.Collections;
 public class PanPositionScript : MonoBehaviour {
 	public Transform newCameraPosition;
 	public GameObject nextPanEvent;
+	public GameObject dialogObject;
 	public bool moveOnLoad = false;
+	public bool loadSceneOnFinish = false;
+	public int sceneToLoad = 0;
 	private Transform startingPosition;
 	private float movementTime;
 	private float startTime;
@@ -25,6 +28,9 @@ public class PanPositionScript : MonoBehaviour {
 
 			if (Vector3.Distance (newCameraPosition.transform.position, Camera.main.transform.position) <= .1) {
 				moving = false;
+				if (loadSceneOnFinish) {
+					Application.LoadLevel(sceneToLoad);
+				}
 				//queue next event
 				if (nextPanEvent != null) {
 					nextPanEvent.GetComponent<PanPositionScript>().move ();
@@ -39,6 +45,10 @@ public class PanPositionScript : MonoBehaviour {
 		startTime = Time.realtimeSinceStartup;
 		movementTime = Vector3.Distance(startingPosition.position, newCameraPosition.position);
 		moving = true;
+		if (dialogObject != null) {
+			dialogObject.GetComponent<DialogBubbleReaderScript>().beginTalking();
+		}
+
 	}
 
 }
