@@ -34,6 +34,7 @@ public class CameraShakeScript : MonoBehaviour {
 	public void sneeze(float nextSneezeTime) {
 		Debug.Log("Sneezed");
 		sneezeTimer = nextSneezeTime;
+		Sneezing = true;
 		SneezeWarning = false;
 		DoShake(.02f, .3f);
 
@@ -63,7 +64,7 @@ public class CameraShakeScript : MonoBehaviour {
 		else if (Sneezing) {
 			//TODO: Send message to pan and game over to the right
 			didSneeze = true;
-			Sneezing = false;  
+			//Sneezing = false;  
 		}
 		else if (SneezeWarning) {
 			SneezeWarning = false;

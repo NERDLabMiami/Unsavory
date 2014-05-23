@@ -7,12 +7,14 @@ public class CurrentOrderScript : MonoBehaviour {
 	private List<GameObject> recipes = new List<GameObject>();
 	public GameObject levelTimer;
 	public GameObject continueButton;
+	public GameObject orderTutor;
 	private float timeBetweenOrders = 3;
 	public int maximumNumberOfBackedUpOrders = 5;
 	public string tooSlowTitleString;
 	public string tooSlowMessageString;
 	public string retryButtonText;
 	public int retrySceneNumber;
+	public bool tutorial = true;
 	private bool spawnMoreOrders = true;
 	private string levelData;
 	private int currentLevel = 0;
@@ -25,6 +27,14 @@ public class CurrentOrderScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (PlayerPrefs.HasKey("tutorial")) {
+			tutorial = false;
+		}
+		else {
+			//TODO: When it works properly, uncomment this line
+			//			PlayerPrefs.SetInt("tutorial", 1);
+		}
+
 		if (PlayerPrefs.GetInt("endless") == 1) {
 
 		}
@@ -59,10 +69,19 @@ public class CurrentOrderScript : MonoBehaviour {
 				break;
 		}
 		Spawn ();
+
+		if (tutorial) {
+		//	tutorialDialog.GetComponent<DialogBubbleReaderScript>().beginTalking();
+			//tell recipe to run tutorial?
+			//now stop this madness
+			tutorial = false;
+		}
+
 	}
 
 	// Update is called once per frame
 	void Update () {
+
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 		if (current_recipes.Length > maximumNumberOfBackedUpOrders && spawnMoreOrders) {
 			spawnMoreOrders = false;
@@ -84,7 +103,16 @@ public class CurrentOrderScript : MonoBehaviour {
 		Debug.Log("Spawning New Order");
 		Vector3 newRecipePosition = gameObject.transform.position;
 		if (spawnMoreOrders) {
-			Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);
+			if (tutorial) {
+				Debug.Log("Attaching Tutorial to First Recipe");
+				GameObject firstRecipe = Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity) as GameObject;
+				firstRecipe.GetComponent<RecipeScript>().setTutorialObject(orderTutor);
+				firstRecipe.GetComponent<RecipeScript>().setTutorialActive();	
+				tutorial = false;
+			}
+			else {
+				Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);
+			}
 		}
 
 		Invoke("Spawn", timeBetweenOrders);

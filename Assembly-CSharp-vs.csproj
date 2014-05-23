@@ -80,6 +80,7 @@
      <Compile Include="Assets\Scripts\WorkScript.cs" />
      <None Include="Assets\Resources\levels.txt" />
      <None Include="Assets\GestureRecognition\Resources\numbers.xml" />
+     <None Include="Assets\Resources\Character Text\First Order.txt" />
      <None Include="Assets\GestureRecognition\Resources\shapes.xml" />
      <None Include="Assets\Resources\Character Text\Second Set.txt" />
      <None Include="Assets\Resources\gestures.xml" />

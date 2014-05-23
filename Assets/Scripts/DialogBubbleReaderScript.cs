@@ -84,6 +84,7 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 	}
 
 	public void beginTalking() {
+		Debug.Log("I should start talking");
 		startTalking = true;
 		gameObject.SetActive(true);
 	}
@@ -115,14 +116,17 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 				move ();
 			}
 			else {
+				Debug.Log("SPeech over");
 				//resume game
+				finishedTalking = true;
 				if (panEventAfterDialog != null) {
+					Debug.Log("Should queue move");
 					panEventAfterDialog.GetComponent<PanPositionScript>().move ();
 				}
 				else {
 					objectFadeAway ();
 				}
-				}
+			}
 		}
 	}
 }

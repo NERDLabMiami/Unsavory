@@ -40,13 +40,20 @@ public class PanPositionScript : MonoBehaviour {
 	}
 
 	public void move() {
+		Debug.Log("Called Movement");
 		moveOnLoad = false;
 		startingPosition =  Camera.main.transform;
 		startTime = Time.realtimeSinceStartup;
 		movementTime = Vector3.Distance(startingPosition.position, newCameraPosition.position);
 		moving = true;
+
 		if (dialogObject != null) {
+			Debug.Log("Loading Dialog");
 			dialogObject.GetComponent<DialogBubbleReaderScript>().beginTalking();
+		}
+		else {
+
+			Time.timeScale = 1.0f;
 		}
 
 	}
