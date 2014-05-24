@@ -8,7 +8,10 @@ using System.Text.RegularExpressions;
 [System.Serializable]
 public class SpeechPoint {
 	public GameObject anchor;
-	public TextAsset speech;
+	public TextAsset[] speech;
+	public bool randomize = true;
+	public string keyName;
+	public int index;
 }
 
 public class DialogBubbleReaderScript : MonoBehaviour {
@@ -23,6 +26,7 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 	private Vector3 objectOffset;
 	private float movementTime;
 	private float speed = 1.0f;
+	private int assignedSpeech = 0;
 	public bool pauseGame = false;
 	public bool finishedTalking = false;
 	public bool startTalking = false;
@@ -46,7 +50,30 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 		int offset = 0;
 		currentDialogIndex = 0;
 		dialog.Clear();
-		string dialogText =  Regex.Replace(speechPoints[speechPointIndex].speech.text, @"\s{2,}"," ");
+		if (speechPoints[speechPointIndex].randomize) {
+			assignedSpeech = UnityEngine.Random.Range (0, speechPoints[speechPointIndex].speech.Length);
+		}
+		else {
+			if(PlayerPrefs.HasKey(speechPoints[speechPointIndex].keyName)) {
+			//has one, let's use it
+				Debug.Log("Has the key, must have already run");
+				assignedSpeech = PlayerPrefs.GetInt(speechPoints[speechPointIndex].keyName, speechPoints[speechPointIndex].index);
+				if(PlayerPrefs.GetInt(speechPoints[speechPointIndex].keyName) >= speechPoints[speechPointIndex].speech.Length) {
+					//went too far, need to reset the counter
+					assignedSpeech = 0;
+				}
+
+			}
+			else {
+				Debug.Log("No key, let's generate one");
+				PlayerPrefs.SetInt (speechPoints[speechPointIndex].keyName, 0);
+			}
+			//increment the speech index
+			PlayerPrefs.SetInt(speechPoints[speechPointIndex].keyName,assignedSpeech +1); 
+			Debug.Log("SPEECH INDEX: " + PlayerPrefs.GetInt(speechPoints[speechPointIndex].keyName));
+		}
+		Debug.Log("Assigned Speech: " + assignedSpeech);
+		string dialogText =  Regex.Replace(speechPoints[speechPointIndex].speech[assignedSpeech].text, @"\s{2,}"," ");
 		while (offset < dialogText.Length) {
 			
 			int index = dialogText.LastIndexOf(" ", Math.Min (dialogText.Length, offset+maximumCharactersPerLine));
@@ -55,6 +82,8 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 			dialog.Add (line);
 		}
 		gameObject.GetComponentInChildren<TextMesh>().text = dialog[currentDialogIndex];
+		if (!speechPoints[speechPointIndex].randomize) {
+		}
 	}
 
 	// Update is called once per frame
@@ -87,6 +116,8 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 		Debug.Log("I should start talking");
 		startTalking = true;
 		gameObject.SetActive(true);
+		GetComponent<Animator>().SetTrigger("Fade In");
+
 	}
 
 	public void move() {
@@ -97,7 +128,6 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 	}
 
 	private void objectFadeAway() {
-		Debug.Log("Fading Away...");
 		moving = false;
 		Time.timeScale = 1.0f;
 		GetComponent<Animator>().SetTrigger("Fade Out");
@@ -116,11 +146,9 @@ public class DialogBubbleReaderScript : MonoBehaviour {
 				move ();
 			}
 			else {
-				Debug.Log("SPeech over");
 				//resume game
 				finishedTalking = true;
 				if (panEventAfterDialog != null) {
-					Debug.Log("Should queue move");
 					panEventAfterDialog.GetComponent<PanPositionScript>().move ();
 				}
 				else {

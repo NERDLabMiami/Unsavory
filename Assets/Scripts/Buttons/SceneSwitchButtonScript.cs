@@ -15,16 +15,13 @@ public class SceneSwitchButtonScript : MonoBehaviour {
 			float distanceCovered = (Time.realtimeSinceStartup - startTime) * speed;
 			float fracJourney = distanceCovered / movementTime;
 			Camera.main.transform.position = Vector3.Lerp (startingPosition.position, newCameraPosition.position, fracJourney);
-			Debug.Log("COVERED " + distanceCovered + " MOVETIME " + movementTime);
 			if (Vector3.Distance (newCameraPosition.transform.position, Camera.main.transform.position) <= .1) {
 				moving = false;
-				Debug.Log("Stopped Moving");
 			}
 		}	
 	}
 
 	void OnMouseDown() {
-		Debug.Log("DETECTED MOUSE!");
 		startingPosition =  Camera.main.transform;
 		moving = true;
 		startTime = Time.realtimeSinceStartup;

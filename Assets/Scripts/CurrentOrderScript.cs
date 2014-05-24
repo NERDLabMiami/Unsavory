@@ -29,10 +29,11 @@ public class CurrentOrderScript : MonoBehaviour {
 	void Start () {
 		if (PlayerPrefs.HasKey("tutorial")) {
 			tutorial = false;
+			Debug.Log("Turning off tutorial");
 		}
 		else {
-			//TODO: When it works properly, uncomment this line
-			//			PlayerPrefs.SetInt("tutorial", 1);
+			Debug.Log("Doesn't Have Tutorial Key");
+			Debug.Log("key = " + PlayerPrefs.GetInt ("tutorial"));
 		}
 
 		if (PlayerPrefs.GetInt("endless") == 1) {
@@ -45,10 +46,11 @@ public class CurrentOrderScript : MonoBehaviour {
 			JSONNode levels = JSON.Parse(levelData);
 			timeBetweenOrders = levels["levels"][currentLevel]["waiting time"].AsFloat;
 			numberOfRecipes = levels["levels"][currentLevel]["recipes"].AsInt;
+			currentLevel = PlayerPrefs.GetInt("current level");
 
 		}
 
-		Debug.Log("Starting Level " + currentLevel);
+		Debug.Log("Starting Day " + currentLevel);
 		switch(numberOfRecipes) {
 			case 7:
 				goto case 6;
@@ -71,8 +73,6 @@ public class CurrentOrderScript : MonoBehaviour {
 		Spawn ();
 
 		if (tutorial) {
-		//	tutorialDialog.GetComponent<DialogBubbleReaderScript>().beginTalking();
-			//tell recipe to run tutorial?
 			//now stop this madness
 			tutorial = false;
 		}
@@ -95,12 +95,13 @@ public class CurrentOrderScript : MonoBehaviour {
 			}
 			continueButton.GetComponent<TextMesh>().text = retryButtonText;
 			continueButton.GetComponent<LoadSceneTimer>().sceneNumber = retrySceneNumber;
+		//too many orders
 			levelTimer.GetComponent<TimerScript>().EndOfLevel();
+		
 		}
 	}
 
 	public void Spawn() {
-		Debug.Log("Spawning New Order");
 		Vector3 newRecipePosition = gameObject.transform.position;
 		if (spawnMoreOrders) {
 			if (tutorial) {

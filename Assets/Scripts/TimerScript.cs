@@ -65,11 +65,15 @@ public class TimerScript : MonoBehaviour {
 				PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", endOfLevelTitleString);
 				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", endOfLevelMessageString);
 				int currentLevel = PlayerPrefs.GetInt("current level");
+				Debug.Log("Day " + currentLevel);
+				PlayerPrefs.SetInt("tutorial", 1);
 				//FULL DAY
 				List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
 				wages.Add (hourlyRate * 8);
+				Debug.Log("Made " + hourlyRate * 8 + " dollars");
 				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
-				PlayerPrefs.SetInt ("current level", currentLevel+1);
+//				PlayerPrefs.SetInt ("current level", currentLevel+1);
+				Debug.Log ("Now Day " + currentLevel);
 				EndOfLevel();
 			}
 			if (endless && timer <= 0) {

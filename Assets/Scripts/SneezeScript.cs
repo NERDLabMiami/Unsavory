@@ -26,6 +26,16 @@ public class SneezeScript : MonoBehaviour {
 				PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", "Gross");
 				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", "All the food is tainted...");
 				PlayerPrefs.SetInt("sneezed", 1);
+				//END OF LEVEL POINT
+
+				//add to the sneeze count
+				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
+				PlayerPrefs.SetInt ("sneezes", sneezes);
+
+				if (sneezes > 3) {
+					//maxed out, real game over
+					PlayerPrefs.SetInt("fired", 1);
+				}
 
 				launchedLevelEnd = true;
 				panEvent.GetComponent<PanPositionScript>().move();
@@ -39,12 +49,14 @@ public class SneezeScript : MonoBehaviour {
 				wages.Add (hourlyRate * timeWorked);
 				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
 				//advance level/day
-				PlayerPrefs.SetInt ("current level", currentLevel+1);
+//				Debug.Log ("Advancing Level");
+//				PlayerPrefs.SetInt ("current level", currentLevel+1);
 
 			}
 		}
 		if (endless && !launchedLevelEnd) {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
+				//END OF LEVEL POINT, NO STORY MODE
 				launchedLevelEnd = true;
 				continueButton.GetComponent<TextMesh>().text = retryButtonText;
 				continueButton.GetComponent<LoadSceneTimer>().sceneNumber = retrySceneNumber;

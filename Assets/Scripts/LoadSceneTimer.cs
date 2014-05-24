@@ -19,7 +19,6 @@ public class LoadSceneTimer : MonoBehaviour {
 		texture = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
 		guiTexture.texture = texture;
 		beginTransition();
-		Debug.Log("Load Scene Timer?");
 		Time.timeScale = 1f;
 	}
 	
@@ -49,7 +48,6 @@ public class LoadSceneTimer : MonoBehaviour {
 		float fadeAmount = fadeTime / fadingTime;
 		guiTexture.color = Color.Lerp (guiTexture.color, Color.black, fadeAmount);
 		if (guiTexture.color.a >= 0.95f) {
-			Debug.Log("Faded Completely");
 			Application.LoadLevel(sceneNumber);
 		}
 	}

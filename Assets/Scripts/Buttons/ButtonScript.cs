@@ -8,6 +8,7 @@ public class ButtonScript : MonoBehaviour {
 		if (hidden) {
 			setVisibility(!hidden);
 		}
+
 	}
 
 	public void setVisibility(bool visible) {

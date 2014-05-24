@@ -8,15 +8,17 @@ public class PlayerScript : MonoBehaviour {
 	public bool hasBeenTutored;
 	public bool hasSneezed = false;
 	public bool startFromZero = true;
+	public bool reset = false;
 
 	void Start() {
 
 //TODO: reset, this is for testing
-		PlayerPrefs.SetInt("highest level", 4);
-		float[] payout = PlayerPrefsX.GetFloatArray("week1");
-		for (int i = 0; i < payout.Length; i++) {
-			Debug.Log("DAY " + i + " " + payout[i]);
+		if (!PlayerPrefs.HasKey ("current level") || reset) {
+			//this resets
+			CustomFunctionScript.resetPlayerData(health, money);
 		}
+
+		float[] wages = PlayerPrefsX.GetFloatArray("wages");
 		//check defaults
 		if (PlayerPrefs.HasKey("health")) {
 			health = PlayerPrefs.GetFloat("health");
@@ -41,9 +43,6 @@ public class PlayerScript : MonoBehaviour {
 			PlayerPrefs.SetInt ("money", money);
 		}
 
-		if (!PlayerPrefs.HasKey ("current level")) {
-			PlayerPrefs.SetInt("current level", 0);
-		}
 
 	}
 
