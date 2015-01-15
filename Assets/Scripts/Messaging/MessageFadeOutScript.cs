@@ -5,10 +5,10 @@ public class MessageFadeOutScript : MonoBehaviour {
 	public float fadeOutTime = 10;
 
 	void Start() {
-		renderer.enabled = false;
+		GetComponent<Renderer>().enabled = false;
 	}
 	void Begin () {
-		renderer.enabled = true;
+		GetComponent<Renderer>().enabled = true;
 		Destroy (gameObject, fadeOutTime);
 	}
 	

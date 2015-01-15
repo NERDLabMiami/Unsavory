@@ -72,8 +72,9 @@ public class TimerScript : MonoBehaviour {
 				wages.Add (hourlyRate * 8);
 				Debug.Log("Made " + hourlyRate * 8 + " dollars");
 				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
-//				PlayerPrefs.SetInt ("current level", currentLevel+1);
+				float[] z = PlayerPrefsX.GetFloatArray("wages",'z',1);
 				Debug.Log ("Now Day " + currentLevel);
+				Debug.Log("WAGES: " + z[0]);
 				EndOfLevel();
 			}
 			if (endless && timer <= 0) {

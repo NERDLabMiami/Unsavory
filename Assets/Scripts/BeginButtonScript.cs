@@ -7,7 +7,7 @@ public class BeginButtonScript : MonoBehaviour {
 	void Awake () {
 		if (PlayerPrefs.GetInt("current level") > 1) {
 			Debug.Log("CURRENT LEVEL: " + PlayerPrefs.GetInt("current level"));
-			GetComponent<TextMesh>().text = "continue";
+			GetComponent<TextMesh>().text = "day " + PlayerPrefs.GetInt("current level");
 		}
 	}
 	

@@ -11,7 +11,7 @@ public class RecipeScript : MonoBehaviour {
 	void Start() {
 		Vector3 relativePos = GameObject.Find("OrderStopper").transform.position - gameObject.transform.position;
 		relativePos.y = 0;
-		gameObject.rigidbody2D.AddForce(50 * relativePos);
+		gameObject.GetComponent<Rigidbody2D>().AddForce(50 * relativePos);
 	}
 
 	public void setTutorialActive() {
@@ -35,6 +35,6 @@ public class RecipeScript : MonoBehaviour {
 			runTutorial();
 		}
 		other.relativeVelocity.Set(0,0);
-		gameObject.rigidbody2D.velocity.Set(0,0);
+		gameObject.GetComponent<Rigidbody2D>().velocity.Set(0,0);
 	}
 }

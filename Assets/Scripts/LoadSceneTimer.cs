@@ -15,9 +15,9 @@ public class LoadSceneTimer : MonoBehaviour {
 
 
 	void OnMouseDown() {
-		guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+		GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 		texture = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
-		guiTexture.texture = texture;
+		GetComponent<GUITexture>().texture = texture;
 		beginTransition();
 		Time.timeScale = 1f;
 	}
@@ -26,7 +26,7 @@ public class LoadSceneTimer : MonoBehaviour {
 		startTime = Time.time;
 		switchingScene = false;
 		fading = true;
-		guiTexture.enabled = true;
+		GetComponent<GUITexture>().enabled = true;
 	}
 
 	void Update () {
@@ -46,8 +46,8 @@ public class LoadSceneTimer : MonoBehaviour {
 	void fadeToBlack() {
 		float fadeTime = (Time.time - startTime) * fadeSpeed;
 		float fadeAmount = fadeTime / fadingTime;
-		guiTexture.color = Color.Lerp (guiTexture.color, Color.black, fadeAmount);
-		if (guiTexture.color.a >= 0.95f) {
+		GetComponent<GUITexture>().color = Color.Lerp (GetComponent<GUITexture>().color, Color.black, fadeAmount);
+		if (GetComponent<GUITexture>().color.a >= 0.95f) {
 			Application.LoadLevel(sceneNumber);
 		}
 	}

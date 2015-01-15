@@ -13,8 +13,11 @@ public class PlayerScript : MonoBehaviour {
 	void Start() {
 
 //TODO: reset, this is for testing
+	
+
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
 			//this resets
+			PlayerPrefs.SetInt("current_level",1);
 			CustomFunctionScript.resetPlayerData(health, money);
 		}
 
@@ -22,8 +25,10 @@ public class PlayerScript : MonoBehaviour {
 		//check defaults
 		if (PlayerPrefs.HasKey("health")) {
 			health = PlayerPrefs.GetFloat("health");
+			Debug.Log("Has Health: " + health);
 		}
 		else {
+			Debug.Log("No Health Set, Using Default of " + health);
 			PlayerPrefs.SetFloat("health", health);
 		}
 

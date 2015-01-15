@@ -9,7 +9,7 @@ public class ReturnHomeScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		bool weekend = false;
-		int day = PlayerPrefs.GetInt("current level");
+		int day = PlayerPrefs.GetInt("current level",1);
 		float[] wages = PlayerPrefsX.GetFloatArray("wages");
 		if (PlayerPrefs.HasKey ("fired")) {
 			playerWasFired = true;
@@ -26,6 +26,7 @@ public class ReturnHomeScript : MonoBehaviour {
 				if (wages.Length >= day) {
 	//				for (int i = 0; i < 5; i++) {
 					for (int i = day; i > day - 5; i--) {
+						Debug.Log("Day: " + i);
 						daysWorked += "$" + wages[i-1].ToString() + "\n";
 						Debug.Log ("Pay for " + wages[i-1]);
 					}
