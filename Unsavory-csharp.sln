@@ -25,12 +25,16 @@ Global
 	EndGlobalSection
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 																																																																																																																																		GlobalSection(MonoDevelopProperties) = preSolution
 =======
 																																																																																																																																														GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> FETCH_HEAD
 =======
 																																																																																																																																		GlobalSection(MonoDevelopProperties) = preSolution
+>>>>>>> 4.6
+=======
+																																																																																																																																			GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> 4.6
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
