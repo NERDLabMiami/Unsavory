@@ -42,10 +42,13 @@ public class CurrentOrderScript : MonoBehaviour {
 		else {
 			currentLevel = PlayerPrefs.GetInt("current level");
 			currentLevel = 0;
+			Debug.Log("Loading Level Resource");
 			levelData =  Resources.Load<TextAsset>("levels").ToString();
 			JSONNode levels = JSON.Parse(levelData);
 			timeBetweenOrders = levels["levels"][currentLevel]["waiting time"].AsFloat;
 			numberOfRecipes = levels["levels"][currentLevel]["recipes"].AsInt;
+			Debug.Log("Time Between Orders: " + timeBetweenOrders);
+			Debug.Log("Number of Recipes: " + numberOfRecipes);
 			currentLevel = PlayerPrefs.GetInt("current level");
 
 		}

@@ -18,6 +18,12 @@ public class NoseWipeScript : MonoBehaviour {
 	private Vector2 firstPressPos;
 	private Vector2 secondPressPos;
 	private Vector2 currentSwipe;
+	private bool swipeWasActive;
+	private Vector2 swipeStart;
+	private Vector2 swipeEnd;
+	public	float swipeThreshold = 1.2f;
+
+
 //	private bool isPaused = false;
 	// Use this for initialization
 
@@ -52,7 +58,9 @@ public class NoseWipeScript : MonoBehaviour {
 		}
 
 		//swipe detection
-		Swipe ();
+		if (Input.touchCount == 1) {
+			Swipe ();
+		}
 	}
 
 	
@@ -67,70 +75,102 @@ public class NoseWipeScript : MonoBehaviour {
 	public void Swipe()
 		
 	{
-		
-		if(Input.GetMouseButtonDown(0)) {
-			
-			//save began touch 2d point
-			
-			firstPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-			
+		if (Application.platform == RuntimePlatform.IPhonePlayer) {
+			Touch theTouch = Input.touches[0];
+			if (theTouch.deltaPosition == Vector2.zero) {
+			//nothing
+				Debug.Log("Not a swipe...");
+			}
+
+			Vector2 speedVec = theTouch.deltaPosition * theTouch.deltaTime;
+			float theSpeed = speedVec.magnitude;
+
+
+			bool swipeActive = false;
+			if (theSpeed > swipeThreshold) {
+				swipeActive = true;
+				Debug.Log("Swipe Active! " + theSpeed);
+			}
+
+			if (swipeActive) {
+				if (!swipeWasActive) {
+					swipeStart = theTouch.position;
+				}
+			}
+			else {
+				if (swipeWasActive) {
+					swipeEnd = theTouch.position;
+					Debug.Log("Swipe Detected: " + theSpeed);
+					resetSneezeTimer();
+				}
+			}
+			swipeWasActive = swipeActive;
 		}
-		
-		if(Input.GetMouseButtonUp(0)) {
-			
-			//save ended touch 2d point
-			
-			secondPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-			
-			
-			
-			//create vector from the two points
-			
-			currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y); 
-			
-			
-			
-			//normalize the 2d vector
-			
-			currentSwipe.Normalize();
-			
-			
-			
-			//swipe upwards
-			
-			if(currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) {
+
+		else {
+			if(Input.GetMouseButtonDown(0)) {
 				
-				Debug.Log("up swipe");
+				//save began touch 2d point
+				
+				firstPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 				
 			}
 			
-			//swipe down
-			
-			if(currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) {
+			if(Input.GetMouseButtonUp(0)) {
 				
-				Debug.Log("down swipe");
+				//save ended touch 2d point
+				
+				secondPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
+				
+				
+				
+				//create vector from the two points
+				
+				currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y); 
+				
+				
+				
+				//normalize the 2d vector
+				
+				currentSwipe.Normalize();
+				
+				
+				
+				//swipe upwards
+				
+				if(currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) {
+					
+					Debug.Log("up swipe ");
+					
+				}
+				
+				//swipe down
+				
+				if(currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) {
+					
+					Debug.Log("down swipe");
+					
+				}
+				
+				//swipe left
+				
+				if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
+					
+					Debug.Log("left swipe: y, " + currentSwipe.y);
+					resetSneezeTimer();
+					
+				}
+				
+				//swipe right
+				
+				if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
+					resetSneezeTimer();
+					Debug.Log("right swipe: y, " + currentSwipe.y);
+					
+				}
 				
 			}
-			
-			//swipe left
-			
-			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
-				
-				Debug.Log("left swipe");
-				resetSneezeTimer();
-				
-			}
-			
-			//swipe right
-			
-			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
-				resetSneezeTimer();
-				Debug.Log("right swipe");
-				
-			}
-			
-		}
-		
+		}		
 	}
 
 
