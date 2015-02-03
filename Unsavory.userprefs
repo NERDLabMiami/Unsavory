@@ -1,25 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CurrentOrderScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Loading/PlayerScript.cs">
     <Files>
-      <File FileName="Assets/Scripts/DialogBubbleReaderScript.cs" Line="76" Column="1" />
-      <File FileName="Assets/Scripts/LoadSceneTimer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TimerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/SneezeScript.cs" Line="36" Column="33" />
-      <File FileName="Assets/Scripts/CurrentOrderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/AddIngredientScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WorkScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/NoseWipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/StayHomeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/BeginButtonScript.cs" Line="8" Column="46" />
-      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="19" Column="1" />
-      <File FileName="Assets/Scripts/Buttons/ButtonScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/CustomFunctionScript.cs" Line="12" Column="1" />
-      <File FileName="Assets/Scripts/Buttons/ResetButtonScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Character Text/Sneeze 2.txt" Line="1" Column="102" />
-      <File FileName="Assets/Resources/Character Text/Sneeze.txt" Line="1" Column="74" />
-      <File FileName="Assets/Resources/Character Text/Sneeze 3.txt" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/CurrentOrderScript.cs" Line="102" Column="4" />
+      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="57" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/TimerScript.cs" Line="54" Column="65" />
+      <File FileName="Assets/Resources/Character Text/Boss Welcome.txt" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/StartCareer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Resources/bills.txt" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Messaging/CharacterDialog.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/StartLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/CameraSequencing.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Buttons/PauseScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/SceneLoader.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Buttons/SceneSwitchButtonScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/MusicLibrary.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Input/ScrollableList.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Routines/BillScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/RecipeScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/ReadySetGo.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

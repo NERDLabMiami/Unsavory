@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -51,45 +51,53 @@
      <Compile Include="Assets\GestureRecognition\Scripts\Gesture.cs" />
      <Compile Include="Assets\GestureRecognition\Scripts\GestureLibrary.cs" />
      <Compile Include="Assets\GestureRecognition\Scripts\Result.cs" />
-     <Compile Include="Assets\Scripts\AddIngredientScript.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\BeginButtonScript.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\ButtonScript.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\DialogBubbleReaderScript.cs" />
      <Compile Include="Assets\Scripts\Attached Not Used\IngredientScript.cs" />
-     <Compile Include="Assets\Scripts\BeginButtonScript.cs" />
-     <Compile Include="Assets\Scripts\Buttons\ButtonScript.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\LoadSceneTimer.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\ObjectLabel.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\PanPositionScript.cs" />
+     <Compile Include="Assets\Scripts\Attached Not Used\StayHomeScript.cs" />
      <Compile Include="Assets\Scripts\Buttons\PauseScript.cs" />
      <Compile Include="Assets\Scripts\Buttons\ResetButtonScript.cs" />
      <Compile Include="Assets\Scripts\Buttons\SceneSwitchButtonScript.cs" />
-     <Compile Include="Assets\Scripts\BuyDrugsScript.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraSequencing.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraShakeScript.cs" />
-     <Compile Include="Assets\Scripts\CurrentOrderScript.cs" />
-     <Compile Include="Assets\Scripts\CustomFunctionScript.cs" />
-     <Compile Include="Assets\Scripts\DialogBubbleReaderScript.cs" />
-     <Compile Include="Assets\Scripts\LoadSceneTimer.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\AddIngredientScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\CurrentOrderScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\MusicLibrary.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\NoseWipeScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\OrderStopperScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\PlateScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\RecipeScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\SneezeScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\TimerScript.cs" />
+     <Compile Include="Assets\Scripts\Input\ScrollableList.cs" />
+     <Compile Include="Assets\Scripts\Input\SwipeScene.cs" />
+     <Compile Include="Assets\Scripts\Loading\CustomFunctionScript.cs" />
      <Compile Include="Assets\Scripts\Loading\PlayerScript.cs" />
+     <Compile Include="Assets\Scripts\Loading\ReadySetGo.cs" />
      <Compile Include="Assets\Scripts\Loading\ReturnHomeScript.cs" />
-     <Compile Include="Assets\Scripts\Loading\SetPrefsScript.cs" />
+     <Compile Include="Assets\Scripts\Loading\SceneLoader.cs" />
+     <Compile Include="Assets\Scripts\Loading\StartCareer.cs" />
+     <Compile Include="Assets\Scripts\Loading\StartLevel.cs" />
+     <Compile Include="Assets\Scripts\Loading\WorkScript.cs" />
+     <Compile Include="Assets\Scripts\Messaging\CharacterDialog.cs" />
      <Compile Include="Assets\Scripts\Messaging\HealthMessageScript.cs" />
-     <Compile Include="Assets\Scripts\Messaging\MessageFadeOutScript.cs" />
      <Compile Include="Assets\Scripts\Messaging\MovingMessageScript.cs" />
-     <Compile Include="Assets\Scripts\NoseWipeScript.cs" />
-     <Compile Include="Assets\Scripts\ObjectLabel.cs" />
-     <Compile Include="Assets\Scripts\OrderStopperScript.cs" />
-     <Compile Include="Assets\Scripts\PanPositionScript.cs" />
-     <Compile Include="Assets\Scripts\PlateScript.cs" />
-     <Compile Include="Assets\Scripts\RecipeScript.cs" />
-     <Compile Include="Assets\Scripts\SneezeScript.cs" />
-     <Compile Include="Assets\Scripts\StayHomeScript.cs" />
-     <Compile Include="Assets\Scripts\TimerScript.cs" />
-     <Compile Include="Assets\Scripts\WorkScript.cs" />
+     <Compile Include="Assets\Scripts\Routines\AnimationFunctions.cs" />
+     <Compile Include="Assets\Scripts\Routines\BillScript.cs" />
+     <Compile Include="Assets\Scripts\Routines\BuyDrugsScript.cs" />
      <None Include="Assets\Resources\levels.txt" />
      <None Include="Assets\GestureRecognition\Resources\numbers.xml" />
-     <None Include="Assets\Resources\Character Text\Sneeze 2.txt" />
+     <None Include="Assets\Resources\Character Text\boss.txt" />
      <None Include="Assets\Resources\Character Text\First Order.txt" />
+     <None Include="Assets\Resources\bills.txt" />
      <None Include="Assets\GestureRecognition\Resources\shapes.xml" />
      <None Include="Assets\Resources\Character Text\Second Set.txt" />
      <None Include="Assets\Resources\gestures.xml" />
      <None Include="Assets\Resources\Character Text\Boss Welcome.txt" />
-     <None Include="Assets\Resources\Character Text\Sneeze 3.txt" />
-     <None Include="Assets\Resources\Character Text\Sneeze.txt" />
      <None Include="Assets\GestureRecognition\Resources\alphabet.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
