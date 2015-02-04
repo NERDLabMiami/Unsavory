@@ -9,17 +9,22 @@ public class ReturnHomeScript : MonoBehaviour {
 	public Canvas check;
 	private bool playerWasFired = false;
 	public bool electricity = true;
+	public Text moneyUI;
 
 	// Use this for initialization
 	void Start () {
 		bool weekend = false;
 		int day = PlayerPrefs.GetInt("current level");
+
+		int money = PlayerPrefs.GetInt("money");
+
 		float[] wages = PlayerPrefsX.GetFloatArray("wages");
 		if (PlayerPrefs.HasKey ("fired")) {
 			playerWasFired = true;
 			Debug.Log("Fired...");
 			//TODO: Need to reveal to the player
-			CustomFunctionScript.resetPlayerData(100,0);
+			//TODO: Save starting health in JSON file
+			CustomFunctionScript.resetPlayerData(30,0);
 		}
 		else  {
 			Debug.Log("It's day " + day);
@@ -31,14 +36,17 @@ public class ReturnHomeScript : MonoBehaviour {
 				string daysWorked = "";
 				if (wages.Length >= day) {
 					for (int i = day; i > day - 5; i--) {
+						money += (int)wages[i-1];
 						daysWorked += "$" + wages[i-1].ToString() + "\n";
 						Debug.Log ("Pay for " + wages[i-1]);
 					}
-					GetComponent<TextMesh>().text = daysWorked;
+//					GetComponent<TextMesh>().text = daysWorked;
 				}
 			}
 			//advance the day now that you're home.
 			PlayerPrefs.SetInt ("current level", day+1);
+			PlayerPrefs.SetInt("money", money);
+			moneyUI.text = money.ToString();
 		}
 
 	}

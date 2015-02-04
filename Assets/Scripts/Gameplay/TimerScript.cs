@@ -51,7 +51,7 @@ public class TimerScript : MonoBehaviour {
 
 			if (timer <= 0 && !endless) {
 				//Continue onto next day, full day of work
-				player.GetComponent<PlayerScript>().EndOfLevel(true, false);
+				player.GetComponent<PlayerScript>().EndOfLevel(true, false, false);
 				running = false;
 				Debug.Log("End of Day!");
 			}

@@ -85,20 +85,22 @@ public class CurrentOrderScript : MonoBehaviour {
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 		if (current_recipes.Length > maximumNumberOfBackedUpOrders && spawnMoreOrders) {
 			spawnMoreOrders = false;
-			PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", tooSlowTitleString);
+			retryButton.SetActive(true);
 			if (levelTimer.GetComponent<TimerScript>().endless) {
-				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", numberOfOrdersServed + " Customers Served");
+					//endless, too many orders
+				player.GetComponent<PlayerScript>().EndOfLevel(false, true, false);
+
 			}
 			else {
-				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", tooSlowMessageString);
+				//Pay player for time worked
+				player.GetComponent<PlayerScript>().addWages( levelTimer.GetComponent<TimerScript>().getTimeWorked());
+				player.GetComponent<PlayerScript>().EndOfLevel(false, false, false);
 
 			}
 		//TODO: Game over should be a retry or main menu button instead of Go Home.
 			//			continueButton.GetComponent<TextMesh>().text = retryButtonText;
 //			continueButton.GetComponent<LoadSceneTimer>().sceneNumber = retrySceneNumber;
 		//too many orders
-			retryButton.SetActive(true);
-			player.GetComponent<PlayerScript>().EndOfLevel(false, false);
 		}
 	}
 

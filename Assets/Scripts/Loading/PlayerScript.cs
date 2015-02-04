@@ -16,11 +16,14 @@ public class PlayerScript : MonoBehaviour {
 	public bool reset = false;
 	public Canvas endOfLevelCanvas;
 	public Animator boss;
+	public GameObject homeButton;
+	public GameObject retryButton;
+	public GameObject quitButton;
 
 	public void resetData() {
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
 			//this resets
-			CustomFunctionScript.resetPlayerData(15, money);
+			CustomFunctionScript.resetPlayerData(10, money);
 		}
 
 	}
@@ -30,31 +33,73 @@ public class PlayerScript : MonoBehaviour {
 		wages.Add (hourlyRate * timeWorked);
 		PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
 	}
-	public void EndOfLevel(bool fullday, bool endless) {
-		Debug.Log("End of Level Ran");
-
-		//		endOfLevelCanvas.enabled = true;
+	public void EndOfLevel(bool fullday, bool endless, bool sick) {
 		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 		Time.timeScale = 0;
 		int currentLevel = PlayerPrefs.GetInt("current level");
 		PlayerPrefs.SetInt("tutorial", 1);
+		Debug.Log("End of Level Ran");
 		if (endless) {
-			
+			retryButton.SetActive(true);
+			quitButton.SetActive(true);
+
+			if (fullday) {
+				//technically this is impossible
+			}
+			else {
+
+				if (sick) {
+					//ended because of sickness
+				}
+				else {
+					//ended because of too many orders
+				}
+
+			}
 		}
 
-		if(fullday) {
-			List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
-			wages.Add (hourlyRate * 8);
-			PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
-			PlayerPrefs.SetInt ("current level", currentLevel+1);
-			Debug.Log ("Now Day " + currentLevel);
-			//cue boss
-			boss.SetBool("talkAgain", true);
-		}
-		else {
-			//too slow
-			boss.SetBool("talkAgain", true);
+		if (!endless) {
+			if (fullday) {
+				//Normal Day at Work
+				List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
+				wages.Add (hourlyRate * 8);
+				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
+				PlayerPrefs.SetInt ("current level", currentLevel+1);
+				Debug.Log ("Now Day " + currentLevel);
+				//cue boss
+				boss.SetBool("talkAgain", true);
+				boss.SetBool("finishedTalking", false);
+				homeButton.SetActive(true);
 
+			}
+			else {
+				boss.SetBool("finishedTalking", false);
+				boss.SetBool("talkAgain", true);
+//				retryButton.SetActive(true);
+				homeButton.SetActive(true);
+				quitButton.SetActive(true);
+
+				if (sick) {
+					//sneezed
+					//TODO: Change Dialogue for Sickness
+				}
+				else {
+					//TODO: Change dialogue for too slow
+				}
+			}
+		}
+
+
+		//		endOfLevelCanvas.enabled = true;
+		if (endless) {
+		}
+
+		if(fullday && !endless) {
+
+		}
+		else if (!fullday && !endless) {
+			//too slow, warning, fired after x amount of too slow?
+		
 		}
 		
 	}

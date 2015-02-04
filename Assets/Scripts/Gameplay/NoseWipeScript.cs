@@ -23,11 +23,14 @@ public class NoseWipeScript : MonoBehaviour {
 	// Use this for initialization
 
 	void Start () {
-		sneezeTimer = 999999;
+		initializeSneezing();
 		if (PlayerPrefs.HasKey("sneezed")) {
 			canStopSneeze = true;
+			Debug.Log("Player Should Be Able to Stop Sneeze");
 		}
 		else {
+			Debug.Log("Player Should Not Be Able to Stop Sneeze");
+
 			canStopSneeze = false; 
 		}
 	}
@@ -41,6 +44,7 @@ public class NoseWipeScript : MonoBehaviour {
 	void Update () {
 		if (sneezeAllowed) {
 			sneezeTimer -= Time.deltaTime;
+
 			if (sneezeTimer <= 0) {
 				Debug.Log("Sneezing still");
 				Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);

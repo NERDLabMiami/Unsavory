@@ -6,18 +6,22 @@ using System;
 
 public class StartLevel : MonoBehaviour {
 	public GameObject timer;
+	public float gameTimer = 0;
+	public bool timerOn = false;
+	public GameObject nose;
 	public MusicLibrary musicLibrary;
+
 	// Use this for initialization
 	void Start () {
 		Camera.main.GetComponent<AudioSource>().clip = musicLibrary.characterBackground;
 		Camera.main.GetComponent<AudioSource>().Play();
-
 	}
 
 	public void beginLevel() {
+		timerOn = true;
 		Camera.main.GetComponent<AudioSource>().clip = musicLibrary.gameplayBackground;
 		Camera.main.GetComponent<AudioSource>().Play();
-
+		nose.GetComponent<NoseWipeScript>().sneezeAllowed = true;
 		List<string> effects = new List<string>();
 		effects.AddRange(PlayerPrefsX.GetStringArray("effects"));
 		
@@ -61,6 +65,8 @@ public class StartLevel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (timerOn) {
+			gameTimer += Time.deltaTime;
+		}
 	}
 }

@@ -35,6 +35,7 @@ public class ReadySetGo : MonoBehaviour {
 					GetComponentInChildren<Animator>().SetBool("finished", true);
 					gamePlayObject.SetActive(true);
 					pauseButton.SetActive(true);
+//					Time.timeScale = 1.0f;
 					timer.GetComponent<PauseScript>().gamePlayStarted = true;
 					player.GetComponent<StartLevel>().beginLevel();
 					timer.GetComponent<TimerScript>().running = true;
@@ -46,5 +47,6 @@ public class ReadySetGo : MonoBehaviour {
 				}
 			}
 		}
+
 	}
 }

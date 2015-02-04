@@ -13,7 +13,10 @@ public class CharacterDialog : MonoBehaviour {
 	private int dialogIndex = 0;
 	private int selectedIndex;
 	private JSONNode jsonDialog;
-	public Button advanceButton;
+	public GameObject advanceButton;
+	public GameObject homeButton;
+	public GameObject retryButton;
+	public GameObject quitButton;
 
 	// Use this for initialization
 	void Start () {
@@ -21,14 +24,17 @@ public class CharacterDialog : MonoBehaviour {
 		selectedIndex = Random.Range(0, jsonDialog[key].Count);
 		Debug.Log("There are " + jsonDialog[key].Count + " potential messages.");
 		dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
-
+		homeButton.SetActive(false);
+		retryButton.SetActive(false);
+		quitButton.SetActive(false);
 	}
 	
 	public void advanceScript() {
 		if (dialogIndex >= jsonDialog[key][selectedIndex].Count - 1) {
 			//finished script
 			GetComponentInChildren<Animator>().SetBool("finishedTalking", true);
-			advanceButton.GetComponent<Animator>().SetBool("finished", true);
+			advanceButton.SetActive(false);
+//			advanceButton.GetComponent<Animator>().SetBool("finished", true);
 			Camera.main.GetComponent<Animator>().SetBool("playing", true);
 			Camera.main.GetComponent<CameraSequencing>().enableGamePlay();
 			//timer.GetComponent<TimerScript>().running = true;
