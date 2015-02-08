@@ -38,6 +38,7 @@ public class BillScript : MonoBehaviour {
 			//Set Due Date 30 Days Out
 			int[] dueDates = PlayerPrefsX.GetIntArray("due");
 			dueDates[id] = dueDates[id] + 30;
+			Debug.Log("Setting due date to " + dueDates[id]);
 			PlayerPrefsX.SetIntArray("due", dueDates);
 			
 

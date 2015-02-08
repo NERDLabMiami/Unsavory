@@ -26,6 +26,7 @@ public class ScrollableList : MonoBehaviour
 
 		//adjust the height of the container so that it will just barely fit all its children
 		itemCount = 0;
+		Debug.Log("There are " + dueDates.Length);
 		for (int i = 0; i < bills["bills"].Count -1; i++) {
 			if (dueDates[i] <= day) {
 				itemCount++;

@@ -11,6 +11,7 @@ public class ReturnHomeScript : MonoBehaviour {
 	public bool electricity = true;
 	public Text moneyUI;
 
+
 	// Use this for initialization
 	void Start () {
 		bool weekend = false;
@@ -33,6 +34,7 @@ public class ReturnHomeScript : MonoBehaviour {
 				weekend = true;
 				buyGroceries();
 				Debug.Log("It's the weekend");
+				//TODO: Game Mode -> Overtime/Catering work until too slow, paid immediately as bonus.
 				string daysWorked = "";
 				if (wages.Length >= day) {
 					for (int i = day; i > day - 5; i--) {
@@ -40,13 +42,18 @@ public class ReturnHomeScript : MonoBehaviour {
 						daysWorked += "$" + wages[i-1].ToString() + "\n";
 						Debug.Log ("Pay for " + wages[i-1]);
 					}
-//					GetComponent<TextMesh>().text = daysWorked;
 				}
 			}
 			//advance the day now that you're home.
 			PlayerPrefs.SetInt ("current level", day+1);
 			PlayerPrefs.SetInt("money", money);
 			moneyUI.text = money.ToString();
+			if (day >= 20) {
+				//TODO: Come up with ending, promotion?
+				// OR, never ends, basically a sprint each time?
+			
+				Debug.Log("Month is over, game ends");
+			}
 		}
 
 	}

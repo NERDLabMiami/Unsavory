@@ -11,19 +11,22 @@ public class PlayerScript : MonoBehaviour {
 	private int pills;
 	public float hourlyRate;
 	public bool hasBeenTutored;
+	public int warningsBeforeFired = 3;
 	public bool hasSneezed = false;
 	public bool startFromZero = true;
 	public bool reset = false;
 	public Canvas endOfLevelCanvas;
-	public Animator boss;
+	//public Animator boss;
+	public Animator gameScreen;
 	public GameObject homeButton;
 	public GameObject retryButton;
 	public GameObject quitButton;
+	public GameObject boss;
 
 	public void resetData() {
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
 			//this resets
-			CustomFunctionScript.resetPlayerData(10, money);
+			CustomFunctionScript.resetPlayerData(30, money);
 		}
 
 	}
@@ -66,25 +69,44 @@ public class PlayerScript : MonoBehaviour {
 				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
 				PlayerPrefs.SetInt ("current level", currentLevel+1);
 				Debug.Log ("Now Day " + currentLevel);
+				if (currentLevel%5 == 0) {
+					Debug.Log("Weekend");
+					boss.GetComponent<CharacterDialog>().changeSpeechKey("weekend");
+
+				}
+				else {
+					boss.GetComponent<CharacterDialog>().changeSpeechKey("complete");
+
+				}
+
 				//cue boss
-				boss.SetBool("talkAgain", true);
-				boss.SetBool("finishedTalking", false);
+				boss.GetComponent<Animator>().SetBool("talkAgain", true);
+				boss.GetComponent<Animator>().SetBool("finishedTalking", false);
 				homeButton.SetActive(true);
 
 			}
 			else {
-				boss.SetBool("finishedTalking", false);
-				boss.SetBool("talkAgain", true);
-//				retryButton.SetActive(true);
+				//TODO: Fire after x many screw ups
+				boss.GetComponent<Animator>().SetBool("finishedTalking", false);
+				boss.GetComponent<Animator>().SetBool("talkAgain", true);
+				//RETRY: Start Level Again, No Penalties <- Setting Unlockable?"Poor Performance Allowed"
+				//				retryButton.SetActive(true);
+				//GO HOME: Give Up, Come Back
+				//+1 Strike
 				homeButton.SetActive(true);
+				//
 				quitButton.SetActive(true);
 
 				if (sick) {
 					//sneezed
 					//TODO: Change Dialogue for Sickness
+					boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
+
 				}
 				else {
 					//TODO: Change dialogue for too slow
+					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");
+
 				}
 			}
 		}
@@ -101,7 +123,8 @@ public class PlayerScript : MonoBehaviour {
 			//too slow, warning, fired after x amount of too slow?
 		
 		}
-		
+		gameScreen.SetBool("ended", true);
+
 	}
 
 

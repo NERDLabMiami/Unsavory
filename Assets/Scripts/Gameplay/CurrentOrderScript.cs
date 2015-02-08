@@ -10,10 +10,10 @@ public class CurrentOrderScript : MonoBehaviour {
 	public GameObject retryButton;
 	public GameObject orderTutor;
 	public GameObject player;
+	public GameObject spawningGround;
+
 	private float timeBetweenOrders = 3;
 	public int maximumNumberOfBackedUpOrders = 5;
-	public string tooSlowTitleString;
-	public string tooSlowMessageString;
 	public bool tutorial = true;
 	private bool spawnMoreOrders = true;
 	private string levelData;
@@ -115,7 +115,8 @@ public class CurrentOrderScript : MonoBehaviour {
 				tutorial = false;
 			}
 			else {
-				Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);
+				GameObject newRecipe =(GameObject) Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);
+				newRecipe.transform.parent = spawningGround.transform;
 			}
 		}
 

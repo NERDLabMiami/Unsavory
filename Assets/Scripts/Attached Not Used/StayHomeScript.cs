@@ -12,6 +12,7 @@ public class StayHomeScript : MonoBehaviour {
 		health += Random.Range (increaseHealthMaximum, increaseHealthMinimum);
 		PlayerPrefs.SetFloat("health",health);
 		int currentLevel = PlayerPrefs.GetInt("current level");
+		PlayerPrefs.SetInt("current level", currentLevel+1);
 		List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
 		wages.Add (0);
 		Debug.Log("Made $0 for staying home");

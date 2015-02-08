@@ -1,11 +1,15 @@
 {
-  "tutorial": [ ["one", "two"], ["three"]],
-  "return": [ 	["You work hard, you can come back tomorrow.", "I don't want good enough, I want your best.", "The food won't make itself."],
+  	"tutorial": [ ["one", "two"], ["three"]],
+  	"weekend": [ ["it's the weekend", "if you're lucky I'll throw you some overtime"]],
+  	"complete":[["hard work complete"]],
+  	
+    "return": [ 	["You work hard, you can come back tomorrow.", "I don't want good enough, I want your best.", "The food won't make itself."],
   					["This isn't just food, it's a lifestyle.", "Welcome to the family, all I require is your best."], 
   					["Here, there is no such thing as a bad burrito.", "The burrito never lies.", ],
   					["I hear all, see all.", "Our only purpose is to serve." , "Let's get to work."],
   					["You ready to work?", "Here, everyone pulls their own weight."],
   					["There is no greater feeling than hard work.", "Show me why you're here.", "The name of the game is keep up.","At your age I made 50 burritos a minute."]
   					],
+  "slow":[["too slow..."]],
   "sneezed": ["Clean yourself up!", "You're driving away the customers!", "You gotta go!", "I got my eye on you.", "That's it! Go home!", "That doesn't belong in a burrito!" , "Would you eat that?!", "If I even think I heard you cough, you're gone.", "I won't stand for this!", "I'm watching you.", "You don't look too good.", "Would you eat that?!", "That's not sanitary!" , "Would you eat here?!", "I can't afford to get sick!", "Don't let me see it again.", "Clock out!", "You wanna kill the customer?"]  
  }

@@ -20,6 +20,15 @@ public class CharacterDialog : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		int currentLevel = PlayerPrefs.GetInt("current level");
+		if (currentLevel == 1) {
+			//first day of work
+			Debug.Log("First Day of Work!");
+		}
+		else {
+			//return to work
+			Debug.Log("Returning to work");
+		}
 		jsonDialog = JSON.Parse(dialog.ToString());
 		selectedIndex = Random.Range(0, jsonDialog[key].Count);
 		Debug.Log("There are " + jsonDialog[key].Count + " potential messages.");
@@ -34,10 +43,7 @@ public class CharacterDialog : MonoBehaviour {
 			//finished script
 			GetComponentInChildren<Animator>().SetBool("finishedTalking", true);
 			advanceButton.SetActive(false);
-//			advanceButton.GetComponent<Animator>().SetBool("finished", true);
-			Camera.main.GetComponent<Animator>().SetBool("playing", true);
 			Camera.main.GetComponent<CameraSequencing>().enableGamePlay();
-			//timer.GetComponent<TimerScript>().running = true;
 
 		}
 		else {
@@ -46,7 +52,16 @@ public class CharacterDialog : MonoBehaviour {
 
 		}
 	}
-	
+
+	public void changeSpeechKey(string _key) {
+		key = _key;
+		dialogIndex = 0;
+		selectedIndex = Random.Range(0, jsonDialog[key].Count);
+		Debug.Log("There are " + jsonDialog[key].Count + " potential messages.");
+		dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
+
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

@@ -27,7 +27,7 @@ public class SneezeScript : MonoBehaviour {
 				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
 				PlayerPrefs.SetInt ("sneezes", sneezes);
 
-				if (sneezes > 3) {
+				if (sneezes > player.GetComponent<PlayerScript>().warningsBeforeFired) {
 					//maxed out, real game over
 					PlayerPrefs.SetInt("fired", 1);
 				}

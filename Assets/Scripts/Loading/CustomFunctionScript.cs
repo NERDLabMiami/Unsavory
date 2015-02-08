@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 public class CustomFunctionScript : MonoBehaviour {
 
@@ -12,6 +14,10 @@ public class CustomFunctionScript : MonoBehaviour {
 		PlayerPrefs.SetFloat("health", health);
 		PlayerPrefs.SetInt ("money", money);
 		PlayerPrefs.SetInt ("sneezes", 0);
+		List<string> effects = new List<string>();
+		List<int> dueDates = new List<int>();
+		PlayerPrefsX.SetStringArray("effects",effects.ToArray());
+
 //		PlayerPrefs.DeleteKey("tutorial");
 	}
 }
