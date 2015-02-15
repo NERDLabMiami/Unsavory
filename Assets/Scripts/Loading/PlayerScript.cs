@@ -7,7 +7,7 @@ using System.Linq;
 public class PlayerScript : MonoBehaviour {
 	public Text moneyUI;
 	public Text pillsUI;
-	private int money;
+	private float money;
 	private int pills;
 	public float hourlyRate;
 	public bool hasBeenTutored;
@@ -15,13 +15,15 @@ public class PlayerScript : MonoBehaviour {
 	public bool hasSneezed = false;
 	public bool startFromZero = true;
 	public bool reset = false;
-	public Canvas endOfLevelCanvas;
+	public Canvas levelCompleteCanvas;
 	//public Animator boss;
 	public Animator gameScreen;
 	public GameObject homeButton;
 	public GameObject retryButton;
 	public GameObject quitButton;
 	public GameObject boss;
+	public Text hoursWorkedUI;
+	public Text wagesUI;
 
 	public void resetData() {
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
@@ -42,6 +44,7 @@ public class PlayerScript : MonoBehaviour {
 		int currentLevel = PlayerPrefs.GetInt("current level");
 		PlayerPrefs.SetInt("tutorial", 1);
 		Debug.Log("End of Level Ran");
+		levelCompleteCanvas.enabled = true;
 		if (endless) {
 			retryButton.SetActive(true);
 			quitButton.SetActive(true);
@@ -64,8 +67,12 @@ public class PlayerScript : MonoBehaviour {
 		if (!endless) {
 			if (fullday) {
 				//Normal Day at Work
+				//TODO: Start Animation that shows amount worked / wage potential
 				List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
 				wages.Add (hourlyRate * 8);
+				hoursWorkedUI.text = "8 Hours Worked";
+				wagesUI.text = "$" + (hourlyRate * 8).ToString() + " added to your next paycheck";
+
 				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
 				PlayerPrefs.SetInt ("current level", currentLevel+1);
 				Debug.Log ("Now Day " + currentLevel);
@@ -83,19 +90,24 @@ public class PlayerScript : MonoBehaviour {
 				boss.GetComponent<Animator>().SetBool("talkAgain", true);
 				boss.GetComponent<Animator>().SetBool("finishedTalking", false);
 				homeButton.SetActive(true);
+//				Text responseText = homeButton.GetComponentInChildren<Text>();
+//				responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
+
 
 			}
 			else {
 				//TODO: Fire after x many screw ups
-				boss.GetComponent<Animator>().SetBool("finishedTalking", false);
-				boss.GetComponent<Animator>().SetBool("talkAgain", true);
+				//TODO: Start Animation that shows amount worked / wage potential
+				hoursWorkedUI.text = "8 Hours Worked";
+				wagesUI.text = "$" + (hourlyRate * 8).ToString() + " added to your next paycheck";
+
 				//RETRY: Start Level Again, No Penalties <- Setting Unlockable?"Poor Performance Allowed"
 				//				retryButton.SetActive(true);
 				//GO HOME: Give Up, Come Back
 				//+1 Strike
 				homeButton.SetActive(true);
 				//
-				quitButton.SetActive(true);
+//				quitButton.SetActive(true);
 
 				if (sick) {
 					//sneezed
@@ -111,8 +123,6 @@ public class PlayerScript : MonoBehaviour {
 			}
 		}
 
-
-		//		endOfLevelCanvas.enabled = true;
 		if (endless) {
 		}
 
@@ -126,7 +136,6 @@ public class PlayerScript : MonoBehaviour {
 		gameScreen.SetBool("ended", true);
 
 	}
-
 
 	void Start() {
 		//checks if values need to be reset
@@ -148,12 +157,12 @@ public class PlayerScript : MonoBehaviour {
 
 	
 		if (PlayerPrefs.HasKey("money")) {
-			money = PlayerPrefs.GetInt ("money");
+			money = PlayerPrefs.GetFloat ("money");
 			Debug.Log("Have Money : " + money);
 		}
 		else {
 			Debug.Log("No Money");
-			PlayerPrefs.SetInt ("money", money);
+			PlayerPrefs.SetFloat("money", money);
 		}
 
 		if (moneyUI) {

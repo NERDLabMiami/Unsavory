@@ -21,39 +21,36 @@ public class ScrollableList : MonoBehaviour
 		//calculate the width and height of each child item.
 		float width = containerRectTransform.rect.width / columnCount;
 		float ratio = width / rowRectTransform.rect.width;
+		Debug.Log("RECT WIDTH: " + rowRectTransform.rect.width);
+		Debug.Log("WIDTH: " + width);
+		Debug.Log("RATIO: " + ratio);
+		Debug.Log("HEIGHT: " + rowRectTransform.rect.height);
 		float height = rowRectTransform.rect.height * ratio;
 		List<string> effects = new List<string>();
 
 		//adjust the height of the container so that it will just barely fit all its children
-		itemCount = 0;
+//		itemCount = 0;
 		Debug.Log("There are " + dueDates.Length);
-		for (int i = 0; i < bills["bills"].Count -1; i++) {
-			if (dueDates[i] <= day) {
-				itemCount++;
-			}
-		}
+//		for (int i = 0; i < bills["bills"].Count -1; i++) {
+//			if (dueDates[i] <= day) {
+//				itemCount++;
+//			}
+//		}
 
-		float scrollHeight = height * itemCount;
+		float scrollHeight = height *  bills["bills"].Count;
 		Debug.Log("Scroll Height is " + scrollHeight);
-		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight / 2);
-		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
+		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight);
+		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, 0);
 
-		for (int i = 0; i < bills["bills"].Count - 1; i++) {
-			bool instantiateBill = false;
+		for (int i = 0; i < bills["bills"].Count; i++) {
 			bool overdue = false;
-			if (dueDates[i] == day) {
-				instantiateBill = true;
-				Debug.Log(bills["bills"][i]["title"] + " is due, cost is " + bills["bills"][i]["amount"]);
-			}
-			else if (dueDates[i] <= day) {
-				instantiateBill = true;
+
+			 if (dueDates[i] <= day) {
 				overdue = true;
-//				Debug.Log(bills["bills"][i]["title"] + " for " + bills["bills"][i]["amount"] + " is overdue by " + (day - dueDates[i]) + " days");
-				//bill is over due
 				effects.Add(bills["bills"][i]["effect"]);
 			}
+			Debug.Log("INDEX: " + i);
 
-			if (instantiateBill) {
 				GameObject newItem = Instantiate(itemPrefab) as GameObject;
 				
 				newItem.GetComponentInChildren<BillScript>().amount = bills["bills"][i]["amount"].AsInt;
@@ -67,13 +64,12 @@ public class ScrollableList : MonoBehaviour
 				//move and size the new item
 				RectTransform rectTransform = newItem.GetComponent<RectTransform>();				
 				float x = -containerRectTransform.rect.width / 2 + width * (i % columnCount);
-				float y = containerRectTransform.rect.height / 2 - height * i;
+				float y = containerRectTransform.rect.height / 2 - height * (i+1);
 				rectTransform.offsetMin = new Vector2(x, y);				
 				x = rectTransform.offsetMin.x + width;
 				y = rectTransform.offsetMin.y + height;
 				rectTransform.offsetMax = new Vector2(x, y);
 
-			}
 		}
 
 	}
@@ -81,7 +77,7 @@ public class ScrollableList : MonoBehaviour
 
 
 	void Start() {
-
+		createScrollableBillList();
     }
 
 }

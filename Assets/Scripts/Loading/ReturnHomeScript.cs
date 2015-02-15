@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ReturnHomeScript : MonoBehaviour {
 	public GameObject phone;
-	public Canvas check;
 	private bool playerWasFired = false;
 	public bool electricity = true;
 	public Text moneyUI;
@@ -17,7 +16,7 @@ public class ReturnHomeScript : MonoBehaviour {
 		bool weekend = false;
 		int day = PlayerPrefs.GetInt("current level");
 
-		int money = PlayerPrefs.GetInt("money");
+		float money = PlayerPrefs.GetFloat("money");
 
 		float[] wages = PlayerPrefsX.GetFloatArray("wages");
 		if (PlayerPrefs.HasKey ("fired")) {
@@ -46,7 +45,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			}
 			//advance the day now that you're home.
 			PlayerPrefs.SetInt ("current level", day+1);
-			PlayerPrefs.SetInt("money", money);
+			PlayerPrefs.SetFloat("money", money);
 			moneyUI.text = money.ToString();
 			if (day >= 20) {
 				//TODO: Come up with ending, promotion?
@@ -62,7 +61,7 @@ public class ReturnHomeScript : MonoBehaviour {
 	void buyGroceries() {
 		string billData =  Resources.Load<TextAsset>("bills").ToString();
 		JSONNode bills = JSON.Parse(billData);
-		int money = PlayerPrefs.GetInt ("money");
+		float money = PlayerPrefs.GetFloat ("money");
 		int costOfGroceries = bills["groceries"][0]["amount"].AsInt;
 		if (money >= costOfGroceries) {
 			//TODO: Show Buying Groceries

@@ -26,6 +26,7 @@ public class StartCareer : MonoBehaviour {
 		if (!PlayerPrefs.HasKey("started career")) {
 			//TODO: Remove Started Career Key on Game Over
 			PlayerPrefs.SetInt("started career", 1);
+			PlayerPrefs.SetInt("current level", 1);
 			//read bills JSON
 			string billData =  Resources.Load<TextAsset>("bills").ToString();
 			JSONNode bills = JSON.Parse(billData);
@@ -33,9 +34,10 @@ public class StartCareer : MonoBehaviour {
 
 			for (int i = 0; i < bills["bills"].Count; i++) {
 				int startDueDate = bills["bills"][i]["delay"].AsInt;
-				int finalDueDate = 30;
+				int finalDueDate = 20;
 				int dueDate = Random.Range(startDueDate, finalDueDate);
 				dueDates.Add(dueDate);
+				Debug.Log("Added due date of " + dueDate);
 			}
 			PlayerPrefsX.SetIntArray("due", dueDates.ToArray());
 			Debug.Log("Career Started");

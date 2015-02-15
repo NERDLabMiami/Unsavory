@@ -8,6 +8,8 @@ public class PlateScript : MonoBehaviour {
 	public List<GameObject> ingredients = new List<GameObject>();
 	public GameObject currentOrder;
 	public GameObject strikeCounter;
+	public GameObject tutorial;
+	public bool tutorialMode = false;
 	private int orderCounter = 0;
 	
 	private void OnMouseDown() {
@@ -42,7 +44,21 @@ public class PlateScript : MonoBehaviour {
 		for(int j = 0; j < foodOnTheTable.Length; j++) {
 			Destroy (foodOnTheTable[j]);
 		}
+		//TODO: Check tutorial
+		if (tutorialMode) {
+			tutorial.GetComponent<TutorScript>().finishTutorial();
+			tutorialMode = false;
+		}
 
+	}
+
+	public bool hasIngredient(GameObject ingredient) {
+		if(ingredients.Contains(ingredient)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public bool doOrdersMatch(List<GameObject> list1, List<GameObject> list2) {

@@ -4,6 +4,7 @@ using System.Collections;
 public class NoseWipeScript : MonoBehaviour {
 	private float timeBetweenSneezes = 10;
 	private float timeBeforeSneezeWarning = 2;
+	public float sweatingBeforeSneezeWarning = 1;
 //	private bool Sneezing;
 //	private bool SneezeWarning;
 	private float sneezeTimer;
@@ -14,6 +15,9 @@ public class NoseWipeScript : MonoBehaviour {
 	public GameObject player;
 	private bool canStopSneeze = false;
 	public bool sneezeAllowed = true;
+	public ParticleSystem snot;
+	public ParticleSystem sweat;
+	private bool sweating = false;
 	private Vector2 firstPosition;
 	private Vector2 lastPosition;
 	private Vector2 firstPressPos;
@@ -24,6 +28,7 @@ public class NoseWipeScript : MonoBehaviour {
 
 	void Start () {
 		initializeSneezing();
+		sweatingBeforeSneezeWarning+= timeBeforeSneezeWarning;
 		if (PlayerPrefs.HasKey("sneezed")) {
 			canStopSneeze = true;
 			Debug.Log("Player Should Be Able to Stop Sneeze");
@@ -49,6 +54,7 @@ public class NoseWipeScript : MonoBehaviour {
 				Debug.Log("Sneezing still");
 				Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);
 				sneezeTimer = timeBetweenSneezes;
+				snot.Play();
 
 				//TAINT INGREDIENTS
 				GameObject[] trays = GameObject.FindGameObjectsWithTag("Tray");
@@ -57,7 +63,13 @@ public class NoseWipeScript : MonoBehaviour {
 				}
 				
 			}
-			
+			if (sneezeTimer <= sweatingBeforeSneezeWarning && !sweating) {
+				//TODO: sweat before sneezing
+				sweat.Play();
+				sweat.loop = true;
+				sweating = true;
+				Debug.Log("Sweating!");
+			}
 			if (sneezeTimer <= timeBeforeSneezeWarning) {
 				Camera.main.GetComponent<CameraShakeScript>().giveSneezeWarning(timeBeforeSneezeWarning);
 			}
@@ -70,6 +82,8 @@ public class NoseWipeScript : MonoBehaviour {
 	
 	private void resetSneezeTimer() {
 		Debug.Log("Reset Sneeze");
+		sweating = false;
+		sweat.loop = false;
 		if (canStopSneeze) {
 			float health = PlayerPrefs.GetFloat("health");
 			sneezeTimer = health;

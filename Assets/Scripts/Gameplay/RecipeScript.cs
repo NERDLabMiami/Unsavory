@@ -7,6 +7,8 @@ public class RecipeScript : MonoBehaviour {
 	public List<GameObject> ingredients = new List<GameObject>();
 	private bool tutorialShouldRun = false;
 	public GameObject tutorialObject;
+	public string name;
+
 
 	void Start() {
 		Vector3 relativePos = GameObject.Find("OrderStopper").transform.position - gameObject.transform.position;

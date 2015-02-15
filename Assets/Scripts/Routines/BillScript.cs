@@ -10,18 +10,55 @@ public class BillScript : MonoBehaviour {
 	public string title;
 	public string effect;
 	public bool overdue = false;
+	public Text titleUI;
+	public Text amountUI;
+	public Text dueUI;
+	public Button payButton;
+	private int money;
 	// Use this for initialization
 	void Start () {
-		GetComponentInChildren<Text>().text = amount.ToString();
+		titleUI.text = title;
+		amountUI.text = "$" + amount.ToString();
+		int[] dueDates = PlayerPrefsX.GetIntArray("due");
+		int currentDay = PlayerPrefs.GetInt("current level");
+		money = PlayerPrefs.GetInt ("money");
+		if (money > amount) {
+//			payButton.enabled = true;
+		}
+		else {
+			payButton.enabled = false;
+		}
+		if (dueDates[id] > currentDay) {
+			//due in a bit
+			dueUI.text = "Due in " + ( dueDates[id] - currentDay).ToString() + " days";
+		}
+		else if (dueDates[id] == currentDay) {
+			//due today
+			dueUI.text = "Due Today";
+		}
+		else {
+			//overdue
+			dueUI.text = "OVERDUE!";
+		}
+
+//		GetComponentInChildren<Text>().text = amount.ToString();
+//		GetComponentInChildren<Text>().text = amount.ToString();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (money > amount) {
+			payButton.enabled = true;
+		}
+		else {
+		//	payButton.enabled = false;
+		}
+
 	}
 
 	public void payBill() {
-		int money = PlayerPrefs.GetInt ("money");
+		money = PlayerPrefs.GetInt ("money");
 
 		if (money - amount < 0) {
 		//TODO: Visual update for not being able to pay the bill

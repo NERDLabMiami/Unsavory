@@ -1,13 +1,21 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Messaging/CharacterDialog.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Character Text/boss.txt">
     <Files>
-      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="76" Column="6" />
-      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="31" Column="33" />
-      <File FileName="Assets/Scripts/Gameplay/SneezeScript.cs" Line="33" Column="1" />
-      <File FileName="../../Games/Unsavory/Assets/Scripts/Loading/StartLevel.cs" Line="36" Column="86" />
-      <File FileName="Assets/Scripts/Messaging/CharacterDialog.cs" Line="58" Column="19" />
-      <File FileName="Assets/Resources/Character Text/boss.txt" Line="1" Column="2" />
+      <File FileName="Assets/Scripts/Gameplay/CurrentOrderScript.cs" Line="92" Column="47" />
+      <File FileName="Assets/Scripts/Gameplay/RecipeScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/SneezeScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Messaging/CharacterDialog.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/AddIngredientScript.cs" Line="34" Column="5" />
+      <File FileName="Assets/Scripts/Gameplay/PlateScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/TutorScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="100" Column="1" />
+      <File FileName="Assets/Scripts/Loading/ReadySetGo.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/CameraSequencing.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/StartLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/CustomFunctionScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Resources/Character Text/boss.txt" Line="4" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

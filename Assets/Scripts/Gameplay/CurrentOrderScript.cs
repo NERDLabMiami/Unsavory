@@ -15,7 +15,7 @@ public class CurrentOrderScript : MonoBehaviour {
 	private float timeBetweenOrders = 3;
 	public int maximumNumberOfBackedUpOrders = 5;
 	public bool tutorial = true;
-	private bool spawnMoreOrders = true;
+	public bool spawnMoreOrders = false;
 	private string levelData;
 	private int currentLevel = 0;
 	private int numberOfRecipes = 7;
@@ -27,15 +27,16 @@ public class CurrentOrderScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (PlayerPrefs.HasKey("tutorial")) {
+/*		if (PlayerPrefs.HasKey("tutorial")) {
 			tutorial = false;
+			spawnMoreOrders = true;
 			Debug.Log("Turning off tutorial");
 		}
 		else {
 			Debug.Log("Doesn't Have Tutorial Key");
 			Debug.Log("key = " + PlayerPrefs.GetInt ("tutorial"));
 		}
-
+*/
 		if (PlayerPrefs.GetInt("endless") == 1) {
 
 		}
@@ -61,13 +62,13 @@ public class CurrentOrderScript : MonoBehaviour {
 			case 4:
 				goto case 3;
 			case 3:
-				recipes.Add((GameObject)Resources.Load("Recipes/OGB Recipe"));
+				recipes.Add((GameObject)Resources.Load("Recipes/Beans and Rice"));
 				goto case 2;
 			case 2:
-				recipes.Add((GameObject)Resources.Load("Recipes/OGM Recipe"));
+				recipes.Add((GameObject)Resources.Load("Recipes/Chicken and Beans"));
 				goto case 1;
 			case 1:
-				recipes.Add((GameObject)Resources.Load("Recipes/RGB Recipe"));
+				recipes.Add((GameObject)Resources.Load("Recipes/Chicken and Rice"));
 				break;
 		}
 		Spawn ();

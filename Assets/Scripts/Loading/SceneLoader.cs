@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SceneLoader : MonoBehaviour {
 	private int sceneNumber;
-	public float fadeSpeed = 1.5f;          // Speed that the screen fades to and from black.
+	public float fadeSpeed = 5f;          // Speed that the screen fades to and from black.
 	public CanvasGroup canvases;
 	private bool sceneStarting = true;      // Whether or not the scene is still fading in.
 	private bool sceneEnding = false;
@@ -70,6 +70,22 @@ public class SceneLoader : MonoBehaviour {
 		}
 	}
 
+	public void RestartGame() {
+		string resume = PlayerPrefs.GetString("resume game");
+		if (resume.Equals("home")) {
+			sceneNumber = 2;
+
+		}
+
+		else if (resume.Equals("game")) {
+			sceneNumber = 1;
+
+		}
+		else {
+			sceneNumber = 1;
+		}
+	}
+
 	
 	public void EndScene ()
 	{
@@ -78,6 +94,14 @@ public class SceneLoader : MonoBehaviour {
 		sceneEnding = true;
 		Time.timeScale = 1.0f;
 		Debug.Log("Ending Scene");
+	}
+
+	public void QuitInGame() {
+		PlayerPrefs.SetString("resume game", "game");
+	}
+
+	public void QuitAtHome() {
+		PlayerPrefs.SetString("resume game", "home");
 	}
 
 	public void setSceneNumber(int sceneNum) {

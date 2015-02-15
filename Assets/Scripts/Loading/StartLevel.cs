@@ -9,6 +9,7 @@ public class StartLevel : MonoBehaviour {
 	public float gameTimer = 0;
 	public bool timerOn = false;
 	public GameObject nose;
+	public GameObject tutor;
 	public MusicLibrary musicLibrary;
 
 	// Use this for initialization
@@ -59,6 +60,16 @@ public class StartLevel : MonoBehaviour {
 		}
 		else {
 			timer.GetComponent<TimerScript>().endless = false;
+		}
+
+		if (PlayerPrefs.HasKey("tutorial")) {
+//			spawnMoreOrders = true;
+			tutor.GetComponent<TutorScript>().orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
+			Debug.Log("Turning off tutorial");
+		}
+		else {
+			tutor.SetActive(true);
+			Debug.Log("Running Tutorial");
 		}
 
 	}
