@@ -9,6 +9,7 @@ public class TutorScript : MonoBehaviour {
 	public GameObject spawningArea;
 	public GameObject orderHopper;
 	public GameObject plate;
+	public Button pauseButton;
 	private int trayIndex = 0;
 	private RecipeScript currentRecipe;
 	public string tutorialEnd;
@@ -30,7 +31,7 @@ public class TutorScript : MonoBehaviour {
 		plate.GetComponent<BoxCollider2D>().enabled = false;
 		plate.GetComponent<PlateScript>().tutorialMode = true;
 		Time.timeScale = 0;
-
+		pauseButton.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -45,6 +46,7 @@ public class TutorScript : MonoBehaviour {
 		//TODO: Start Current Order Script Up
 		orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
 		Time.timeScale = 1.0f;
+		pauseButton.enabled = true;
 		Destroy (gameObject);
 
 	}

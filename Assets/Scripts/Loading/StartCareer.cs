@@ -7,6 +7,11 @@ public class StartCareer : MonoBehaviour {
 	public Text startButton;
 	// Use this for initialization
 	void Start () {
+		if (PlayerPrefs.HasKey("fired")) {
+			CustomFunctionScript.resetPlayerData(30, 0);
+			Debug.Log("Resetting Game");
+		}
+
 		beginCareer();	
 		displayDueDates();
 	
@@ -27,6 +32,7 @@ public class StartCareer : MonoBehaviour {
 			//TODO: Remove Started Career Key on Game Over
 			PlayerPrefs.SetInt("started career", 1);
 			PlayerPrefs.SetInt("current level", 1);
+			PlayerPrefs.SetInt("max warnings", 3);
 			//read bills JSON
 			string billData =  Resources.Load<TextAsset>("bills").ToString();
 			JSONNode bills = JSON.Parse(billData);

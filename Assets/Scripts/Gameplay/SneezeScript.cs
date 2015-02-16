@@ -26,12 +26,12 @@ public class SneezeScript : MonoBehaviour {
 				//add to the sneeze count
 				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
 				PlayerPrefs.SetInt ("sneezes", sneezes);
-
+				/*
 				if (sneezes > player.GetComponent<PlayerScript>().warningsBeforeFired) {
 					//maxed out, real game over
 					PlayerPrefs.SetInt("fired", 1);
 				}
-
+*/
 				launchedLevelEnd = true;
 				//pause
 				Time.timeScale = 0;

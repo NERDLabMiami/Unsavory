@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour {
 	private int pills;
 	public float hourlyRate;
 	public bool hasBeenTutored;
-	public int warningsBeforeFired = 3;
+//	public int warningsBeforeFired = 3;
 	public bool hasSneezed = false;
 	public bool startFromZero = true;
 	public bool reset = false;
@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject boss;
 	public Text hoursWorkedUI;
 	public Text wagesUI;
+	private float daysWage;
 
 	public void resetData() {
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
@@ -35,7 +36,8 @@ public class PlayerScript : MonoBehaviour {
 
 	public void addWages(int timeWorked) {
 		List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
-		wages.Add (hourlyRate * timeWorked);
+		daysWage = hourlyRate * timeWorked;
+		wages.Add (daysWage);
 		PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
 	}
 	public void EndOfLevel(bool fullday, bool endless, bool sick) {
@@ -65,15 +67,16 @@ public class PlayerScript : MonoBehaviour {
 		}
 
 		if (!endless) {
+			retryButton.SetActive(false);
 			if (fullday) {
 				//Normal Day at Work
 				//TODO: Start Animation that shows amount worked / wage potential
-				List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
-				wages.Add (hourlyRate * 8);
-				hoursWorkedUI.text = "8 Hours Worked";
-				wagesUI.text = "$" + (hourlyRate * 8).ToString() + " added to your next paycheck";
+				addWages(8);
+//				List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
+//				wages.Add (hourlyRate * 8);
+				hoursWorkedUI.text = "Full Day of Work";
 
-				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
+//				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
 				PlayerPrefs.SetInt ("current level", currentLevel+1);
 				Debug.Log ("Now Day " + currentLevel);
 				if (currentLevel%5 == 0) {
@@ -98,8 +101,7 @@ public class PlayerScript : MonoBehaviour {
 			else {
 				//TODO: Fire after x many screw ups
 				//TODO: Start Animation that shows amount worked / wage potential
-				hoursWorkedUI.text = "8 Hours Worked";
-				wagesUI.text = "$" + (hourlyRate * 8).ToString() + " added to your next paycheck";
+								wagesUI.text = "$" + daysWage.ToString() + " added to your next paycheck";
 
 				//RETRY: Start Level Again, No Penalties <- Setting Unlockable?"Poor Performance Allowed"
 				//				retryButton.SetActive(true);
@@ -112,13 +114,30 @@ public class PlayerScript : MonoBehaviour {
 				if (sick) {
 					//sneezed
 					//TODO: Change Dialogue for Sickness
+					hoursWorkedUI.text = "Sick on the Job";
+
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
 
 				}
 				else {
 					//TODO: Change dialogue for too slow
+					hoursWorkedUI.text = "Too Slow";
+
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");
 
+				}
+				int warnings = PlayerPrefs.GetInt ("warnings");
+				warnings+=1;
+				int maxWarnings = PlayerPrefs.GetInt("max warnings");
+				PlayerPrefs.SetInt("warnings", warnings);
+				if (warnings >= maxWarnings) {
+					//TODO: Fire Player
+					Debug.Log("Player should be fired");
+					hoursWorkedUI.text = "Fired";
+					PlayerPrefs.SetInt("fired",1);
+					boss.GetComponent<CharacterDialog>().changeSpeechKey("fired");
+					quitButton.SetActive(true);
+					homeButton.SetActive(false);
 				}
 			}
 		}

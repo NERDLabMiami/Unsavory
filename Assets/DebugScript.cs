@@ -24,7 +24,7 @@ public class DebugScript : MonoBehaviour {
 		pillText.text = pillSlider.value.ToString();
 		wageSlider.value = PlayerPrefs.GetFloat ("hourly wage");
 		wageText.text = wageSlider.value.ToString();
-		firedSlider.value = PlayerPrefs.GetInt("warnings");
+		firedSlider.value = PlayerPrefs.GetInt("max warnings");
 		firedText.text = firedSlider.value.ToString();
 
 	}
@@ -56,5 +56,6 @@ public class DebugScript : MonoBehaviour {
 
 	public void setFiredAttempts(float f) {
 		firedText.text = f.ToString();
+		PlayerPrefs.SetInt("max warnings", (int) f);
 	}
 }

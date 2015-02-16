@@ -30,7 +30,8 @@
   									["I'm awake."],
   									["Don't even try."]
   									],
-  									
+ "fired": [["you're fired..."]],
+ "fired_response": [["great..."]],  									
   "slow":[	["You knew this was hard work"],
   				["You must work for the money!"], 
   				["I trusted you with my business!"], 
