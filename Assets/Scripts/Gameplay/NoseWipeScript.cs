@@ -17,14 +17,25 @@ public class NoseWipeScript : MonoBehaviour {
 	public bool sneezeAllowed = true;
 	public ParticleSystem snot;
 	public ParticleSystem sweat;
+	public MusicLibrary music;
 	private bool sweating = false;
 	private Vector2 firstPosition;
 	private Vector2 lastPosition;
 	private Vector2 firstPressPos;
 	private Vector2 secondPressPos;
 	private Vector2 currentSwipe;
-//	private bool isPaused = false;
-	// Use this for initialization
+	public float avrgTime = 0.5f;
+	public float peakLevel = 0.6f;
+	public float endCountTime = 0.6f;
+	public int shakeDir;
+	public int shakeCount;
+	Vector3 avrgAcc = Vector3.zero;
+	int countPos;
+	int countNeg;
+	int lastPeak;
+	int firstPeak;
+	bool counting;
+	float timer;
 
 	void Start () {
 		initializeSneezing();
@@ -47,6 +58,18 @@ public class NoseWipeScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		/*
+		if (ShakeDetector()){ // call ShakeDetector every Update!
+			// the device was shaken up and the count is in shakeCount
+			// the direction of the first shake is in shakeDir (1 or -1)
+			Debug.Log("shaking device");
+		}
+		// the variable counting tells when the device is being shaken:
+		if (counting){
+			print("Shaking up device");
+		}
+*/
+
 		if (sneezeAllowed) {
 			sneezeTimer -= Time.deltaTime;
 
@@ -142,7 +165,7 @@ public class NoseWipeScript : MonoBehaviour {
 			//swipe left
 			
 			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
-				
+				music.wipeNose();
 				Debug.Log("left swipe");
 				resetSneezeTimer();
 				
@@ -151,15 +174,67 @@ public class NoseWipeScript : MonoBehaviour {
 			//swipe right
 			
 			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
+				music.wipeNose();
 				resetSneezeTimer();
 				Debug.Log("right swipe");
 				
 			}
 			
 		}
+
+		if (	Input.acceleration.magnitude < .5) {
+//			resetSneezeTimer();
+		}
+
 		
 	}
 
 
+	bool ShakeDetector(){
+		// read acceleration:
+		Vector3 curAcc = Input.acceleration; 
+		// update average value:
+		avrgAcc = Vector3.Lerp(avrgAcc, curAcc, avrgTime * Time.deltaTime);
+		// calculate peak size:
+		curAcc -= avrgAcc;
+		// variable peak is zero when no peak detected...
+		int peak = 0;
+		// or +/- 1 according to the peak polarity:
+		if (curAcc.y > peakLevel) peak = 1;
+		if (curAcc.y < -peakLevel) peak = -1;
+		// do nothing if peak is the same of previous frame:
+		if (peak == lastPeak) 
+			return false;
+		// peak changed state: process it
+		lastPeak = peak; // update lastPeak
+		if (peak != 0){ // if a peak was detected...
+			timer = 0; // clear end count timer...
+			if (peak > 0) // and increment corresponding count
+				countPos++;
+			else
+				countNeg++;
+			if (!counting){ // if it's the first peak...
+				counting = true; // start shake counting
+				firstPeak = peak; // save the first peak direction
+			}
+		} 
+		else // but if no peak detected...
+		if (counting){ // and it was counting...
+			timer += Time.deltaTime; // increment timer
+			if (timer > endCountTime){ // if endCountTime reached...
+				counting = false; // finish counting...
+				shakeDir = firstPeak; // inform direction of first shake...
+				if (countPos > countNeg) // and return the higher count
+					shakeCount = countPos;
+				else
+					shakeCount = countNeg;
+				// zero counters and become ready for next shake count
+				countPos = 0;
+				countNeg = 0;
+				return true; // count finished
+			}
+		}
+		return false;
+	}
 
 }

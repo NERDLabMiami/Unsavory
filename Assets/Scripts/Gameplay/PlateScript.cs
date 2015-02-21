@@ -11,8 +11,10 @@ public class PlateScript : MonoBehaviour {
 	public GameObject tutorial;
 	public bool tutorialMode = false;
 	private int orderCounter = 0;
+	public GameObject music;
 	
 	private void OnMouseDown() {
+
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 		bool matched = false;
 		int matchedOrderIndex = -1;
@@ -25,6 +27,8 @@ public class PlateScript : MonoBehaviour {
 				matchedOrderIndex = i;
 				orderCounter++;
 				currentOrder.GetComponent<CurrentOrderScript>().setOrdersServed(orderCounter);
+				music.GetComponent<MusicLibrary>().plated();
+//				music.GetComponent<AudioSource>().Play();
 				break;
 			}
 
@@ -35,6 +39,9 @@ public class PlateScript : MonoBehaviour {
 			//clean up
 			//get rid of the current order
 			Destroy(current_recipes[matchedOrderIndex]);
+		}
+		else {
+			music.GetComponent<MusicLibrary>().misplated();
 		}
 		//remove the list of ingredients
 
@@ -50,6 +57,10 @@ public class PlateScript : MonoBehaviour {
 			tutorialMode = false;
 		}
 
+	}
+
+	public int getOrders() {
+		return orderCounter;
 	}
 
 	public bool hasIngredient(GameObject ingredient) {

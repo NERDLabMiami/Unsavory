@@ -21,22 +21,7 @@ public class CharacterDialog : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		int currentLevel = PlayerPrefs.GetInt("current level");
-		if (currentLevel == 1) {
-			//first day of work
-			Debug.Log("First Day of Work!");
-		}
-		else {
-			//return to work
-			Debug.Log("Returning to work");
-		}
-		string response_key = key + "_response";
-		jsonDialog = JSON.Parse(dialog.ToString());
-		selectedIndex = Random.Range(0, jsonDialog[key].Count);
-		Debug.Log("There are " + jsonDialog[key].Count + " potential messages.");
-		dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
-		Text responseText = advanceButton.GetComponentInChildren<Text>();
-		responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
+
 		homeButton.SetActive(false);
 		retryButton.SetActive(false);
 		quitButton.SetActive(false);
@@ -57,6 +42,7 @@ public class CharacterDialog : MonoBehaviour {
 			//finished script
 			GetComponentInChildren<Animator>().SetBool("finishedTalking", true);
 			advanceButton.SetActive(false);
+			//TODO: Skip if tutorial is enabled
 			Camera.main.GetComponent<CameraSequencing>().enableGamePlay();
 
 		}
@@ -71,15 +57,22 @@ public class CharacterDialog : MonoBehaviour {
 	}
 
 	public void changeSpeechKey(string _key) {
+		jsonDialog = JSON.Parse(dialog.ToString());
 		key = _key;
 		dialogIndex = 0;
 		selectedIndex = Random.Range(0, jsonDialog[key].Count);
+
 		Debug.Log("There are " + jsonDialog[key].Count + " potential messages.");
 		dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
 		string response_key = _key + "_response";
 		Text responseText = homeButton.GetComponentInChildren<Text>();
-		responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
-
+		Text advanceText = advanceButton.GetComponentInChildren<Text>();
+		if (responseText) {
+			responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
+		}
+		if (advanceText) {
+			advanceText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
+		}
 	}
 	
 	// Update is called once per frame

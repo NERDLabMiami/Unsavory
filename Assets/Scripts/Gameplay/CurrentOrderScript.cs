@@ -27,16 +27,10 @@ public class CurrentOrderScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-/*		if (PlayerPrefs.HasKey("tutorial")) {
-			tutorial = false;
-			spawnMoreOrders = true;
+		if (PlayerPrefs.HasKey("tutorial")) {
 			Debug.Log("Turning off tutorial");
+			tutorial = false;
 		}
-		else {
-			Debug.Log("Doesn't Have Tutorial Key");
-			Debug.Log("key = " + PlayerPrefs.GetInt ("tutorial"));
-		}
-*/
 		if (PlayerPrefs.GetInt("endless") == 1) {
 
 		}
@@ -92,21 +86,20 @@ public class CurrentOrderScript : MonoBehaviour {
 				player.GetComponent<PlayerScript>().EndOfLevel(false, true, false);
 
 			}
+			else if (levelTimer.GetComponent<TimerScript>().catering) {
+				//catering too slow
+			}
 			else {
 				//Pay player for time worked
 				player.GetComponent<PlayerScript>().addWages( levelTimer.GetComponent<TimerScript>().getTimeWorked());
 				player.GetComponent<PlayerScript>().EndOfLevel(false, false, false);
 
 			}
-		//TODO: Game over should be a retry or main menu button instead of Go Home.
-			//			continueButton.GetComponent<TextMesh>().text = retryButtonText;
-//			continueButton.GetComponent<LoadSceneTimer>().sceneNumber = retrySceneNumber;
-		//too many orders
 		}
 	}
 
 	public void Spawn() {
-		Vector3 newRecipePosition = gameObject.transform.position;
+//		Vector3 newRecipePosition = gameObject.transform.position;
 		if (spawnMoreOrders) {
 			if (tutorial) {
 				Debug.Log("Attaching Tutorial to First Recipe");

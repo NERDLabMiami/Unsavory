@@ -5,15 +5,24 @@ using SimpleJSON;
 using UnityEngine.UI;
 public class StartCareer : MonoBehaviour {
 	public Text startButton;
+	public int maxWarnings = 3;
+	public int daysUntilComplete = 30;
 	// Use this for initialization
 	void Start () {
 		if (PlayerPrefs.HasKey("fired")) {
 			CustomFunctionScript.resetPlayerData(30, 0);
 			Debug.Log("Resetting Game");
 		}
+		if (!PlayerPrefs.HasKey("started career")) {
+			beginCareer();	
+		}
+		else {
+			startButton.text = "Get Back to Work";
+			Debug.Log("Career Already Started");
 
-		beginCareer();	
-		displayDueDates();
+		}
+
+//		displayDueDates();
 	
 	}
 
@@ -28,11 +37,10 @@ public class StartCareer : MonoBehaviour {
 
 
 	public void beginCareer() {
-		if (!PlayerPrefs.HasKey("started career")) {
-			//TODO: Remove Started Career Key on Game Over
 			PlayerPrefs.SetInt("started career", 1);
 			PlayerPrefs.SetInt("current level", 1);
-			PlayerPrefs.SetInt("max warnings", 3);
+			PlayerPrefs.SetInt("max warnings", maxWarnings);
+			PlayerPrefs.SetInt("final day", daysUntilComplete);
 			//read bills JSON
 			string billData =  Resources.Load<TextAsset>("bills").ToString();
 			JSONNode bills = JSON.Parse(billData);
@@ -40,18 +48,13 @@ public class StartCareer : MonoBehaviour {
 
 			for (int i = 0; i < bills["bills"].Count; i++) {
 				int startDueDate = bills["bills"][i]["delay"].AsInt;
-				int finalDueDate = 20;
+				int finalDueDate = daysUntilComplete;
 				int dueDate = Random.Range(startDueDate, finalDueDate);
 				dueDates.Add(dueDate);
 				Debug.Log("Added due date of " + dueDate);
 			}
 			PlayerPrefsX.SetIntArray("due", dueDates.ToArray());
 			Debug.Log("Career Started");
-		}
-		else {
-			startButton.text = "Get Back to Work";
-			Debug.Log("Career Already Started");
-		}
 
 	}
 	

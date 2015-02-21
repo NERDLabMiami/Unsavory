@@ -8,10 +8,13 @@ public class PauseScript : MonoBehaviour {
 	public Canvas pauseCanvas;
 	public Animator panelAnimator;
 	public Text clock;
+	public MusicLibrary music;
 	public bool gamePlayStarted = false;
 
 	public void pause() {
 		if (!isPaused) {
+			music.pause();
+			Camera.main.audio.Stop();
 			Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 			GetComponentInParent<TimerScript>().running = false;
 			Debug.Log("Pausing");
@@ -25,6 +28,8 @@ public class PauseScript : MonoBehaviour {
 		}
 		else {
 			Debug.Log("Resuming");
+			music.unpause();
+			Camera.main.audio.Play();
 			Camera.main.GetComponent<CameraShakeScript>().resumeSneezing();
 			GetComponentInParent<TimerScript>().running = true;
 			Time.timeScale = 1.0f;

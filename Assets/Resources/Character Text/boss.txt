@@ -1,6 +1,8 @@
 { 	
    	"tutorial": [ ["one", "two"], ["three"]],
   	"weekend": [ ["it's the weekend", "if you're lucky I'll throw you some overtime."]],
+  	"weekend_complete": [ ["yep", "yay!"]
+  						],
   	"complete":[ ["I thought you were sick...", "I'll see you tomorrow."],
   						["That's some kind of immune system you got there."],
   						["I'm watching you."],
@@ -8,12 +10,21 @@
   						["So I guess you want to stay."],
   						[ "You see what hard work can do?"]
   						],
-  	"complete_response": [["Nuh uh", "See you tomorrow"], 
+  	"complete_response": [ ["Nuh uh", "See you tomorrow"], 
   										["I got it from my momma"], 
   										["I'm watching you."], 
   										["Not a problem"],
   										["Can't live without money"],
-  										["Yes"]]
+  										["Yes"]
+  										],
+  	"catering":[ ["Ready to make some extra cash?"] ],
+  	"catering_response": [ ["yep"] ],
+  	"catering_complete":[ ["Here's some extra cash"] ],
+  	"catering_complete_response": [ ["thanks"] ],
+  	 "catering_finished": [ ["Good job"] ],
+  	"catering_finished_response": [ ["tacos forever!"] ],
+  	"welcome": [["welcome to your first day"]],
+  	"welcome_response": [["glad to be here"]],
     "return": [ 	["The taco waits for no man... Or woman."],
   					["The taco calls... and you're here."], 
   					["Your respect for this lifestyle moves me."],

@@ -10,15 +10,36 @@ public class StartLevel : MonoBehaviour {
 	public bool timerOn = false;
 	public GameObject nose;
 	public GameObject tutor;
+	public CharacterDialog dialog;
 	public MusicLibrary musicLibrary;
+	private bool levelBegan = false;
 
 	// Use this for initialization
 	void Start () {
 		Camera.main.GetComponent<AudioSource>().clip = musicLibrary.characterBackground;
 		Camera.main.GetComponent<AudioSource>().Play();
+		int currentLevel = PlayerPrefs.GetInt("current level");
+		bool catering = PlayerPrefs.HasKey("catering");
+		if (catering) {
+			dialog.changeSpeechKey("catering");
+
+		}
+		else if (currentLevel == 1) {
+			//first day of work
+			Debug.Log("First Day of Work!");
+			dialog.changeSpeechKey("welcome");
+
+		}
+		else {
+			//return to work
+			Debug.Log("Returning to work");
+			dialog.changeSpeechKey("return");
+
+		}
 	}
 
 	public void beginLevel() {
+		if (!levelBegan) {
 		timerOn = true;
 		Camera.main.GetComponent<AudioSource>().clip = musicLibrary.gameplayBackground;
 		Camera.main.GetComponent<AudioSource>().Play();
@@ -71,7 +92,8 @@ public class StartLevel : MonoBehaviour {
 			tutor.SetActive(true);
 			Debug.Log("Running Tutorial");
 		}
-
+			levelBegan = true;
+		}
 	}
 	
 	// Update is called once per frame

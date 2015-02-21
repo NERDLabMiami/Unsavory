@@ -14,16 +14,16 @@ public class BillScript : MonoBehaviour {
 	public Text amountUI;
 	public Text dueUI;
 	public Button payButton;
-	private int money;
+	private float money;
 	// Use this for initialization
 	void Start () {
 		titleUI.text = title;
 		amountUI.text = "$" + amount.ToString();
 		int[] dueDates = PlayerPrefsX.GetIntArray("due");
 		int currentDay = PlayerPrefs.GetInt("current level");
-		money = PlayerPrefs.GetInt ("money");
+		money = PlayerPrefs.GetFloat ("money");
 		if (money > amount) {
-//			payButton.enabled = true;
+			payButton.enabled = true;
 		}
 		else {
 			payButton.enabled = false;
@@ -52,13 +52,13 @@ public class BillScript : MonoBehaviour {
 			payButton.enabled = true;
 		}
 		else {
-		//	payButton.enabled = false;
+			payButton.enabled = false;
 		}
 
 	}
 
 	public void payBill() {
-		money = PlayerPrefs.GetInt ("money");
+		money = PlayerPrefs.GetFloat("money");
 
 		if (money - amount < 0) {
 		//TODO: Visual update for not being able to pay the bill
@@ -68,13 +68,14 @@ public class BillScript : MonoBehaviour {
 			//Pay Amount Required
 			Debug.Log ("Paying bill");
 			money = money - amount;
-			PlayerPrefs.SetInt("money", money);
+			PlayerPrefs.SetFloat("money", money);
 //			moneyUI.text = money.ToString();
 			GameObject player = GameObject.Find("/Player");
 			player.GetComponent<PlayerScript>().moneyUI.text = money.ToString();
 			//Set Due Date 30 Days Out
 			int[] dueDates = PlayerPrefsX.GetIntArray("due");
-			dueDates[id] = dueDates[id] + 30;
+			int finalDay = PlayerPrefs.GetInt("final day");
+			dueDates[id] = dueDates[id] + finalDay;
 			Debug.Log("Setting due date to " + dueDates[id]);
 			PlayerPrefsX.SetIntArray("due", dueDates);
 			

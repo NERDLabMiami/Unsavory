@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SceneLoader : MonoBehaviour {
 	private int sceneNumber;
-	public float fadeSpeed = 5f;          // Speed that the screen fades to and from black.
+	public float fadeSpeed = 10f;          // Speed that the screen fades to and from black.
 	public CanvasGroup canvases;
 	private bool sceneStarting = true;      // Whether or not the scene is still fading in.
 	private bool sceneEnding = false;

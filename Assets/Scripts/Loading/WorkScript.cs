@@ -21,7 +21,7 @@ public class WorkScript : MonoBehaviour {
 		health = PlayerPrefs.GetFloat("health");
 		health += Random.Range (increaseHealthMaximum, increaseHealthMinimum);
 		PlayerPrefs.SetFloat("health",health);
-		int currentLevel = PlayerPrefs.GetInt("current level");
+//		int currentLevel = PlayerPrefs.GetInt("current level");
 		List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
 		wages.Add (0);
 		Debug.Log("Made $0 for staying home");

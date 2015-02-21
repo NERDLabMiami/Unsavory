@@ -14,8 +14,9 @@ public class ReadySetGo : MonoBehaviour {
 	public GameObject pauseButton;
 	public GameObject timer;
 	public GameObject player;
+	public MusicLibrary music;
 	private bool finished = false;
-
+	private bool updating = false;
 	// Use this for initialization
 	void Start () {
 		nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
@@ -23,6 +24,18 @@ public class ReadySetGo : MonoBehaviour {
 	}
 
 
+	public void startGame() {
+		music.prestart();
+		gamePlayObject.SetActive(true);
+		pauseButton.SetActive(true);
+		timer.GetComponent<PauseScript>().gamePlayStarted = true;
+		player.GetComponent<StartLevel>().beginLevel();
+		timer.GetComponent<TimerScript>().running = true;
+		finished = true;
+		Debug.Log("Let's go");
+
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		if (!finished) {
@@ -33,14 +46,7 @@ public class ReadySetGo : MonoBehaviour {
 				wordIndex++;
 				if (wordIndex >= words.Length) {
 					GetComponentInChildren<Animator>().SetBool("finished", true);
-					gamePlayObject.SetActive(true);
-					pauseButton.SetActive(true);
-//					Time.timeScale = 1.0f;
-					timer.GetComponent<PauseScript>().gamePlayStarted = true;
-					player.GetComponent<StartLevel>().beginLevel();
-					timer.GetComponent<TimerScript>().running = true;
-
-					finished = true;
+					startGame();
 				}
 				else {
 					display.text = words[wordIndex];

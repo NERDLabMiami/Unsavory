@@ -16,7 +16,7 @@ public class ScrollableList : MonoBehaviour
 		string billData =  Resources.Load<TextAsset>("bills").ToString();
 		JSONNode bills = JSON.Parse(billData);
 		int[] dueDates = PlayerPrefsX.GetIntArray("due");
-		string[] effectsArray = PlayerPrefsX.GetStringArray("effects");
+//		string[] effectsArray = PlayerPrefsX.GetStringArray("effects");
 
 		//calculate the width and height of each child item.
 		float width = containerRectTransform.rect.width / columnCount;

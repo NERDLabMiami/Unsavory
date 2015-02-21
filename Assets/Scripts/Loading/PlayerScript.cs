@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour {
 	private float money;
 	private int pills;
 	public float hourlyRate;
-	public bool hasBeenTutored;
+//	public bool hasBeenTutored;
 //	public int warningsBeforeFired = 3;
 	public bool hasSneezed = false;
 	public bool startFromZero = true;
@@ -22,9 +22,13 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject retryButton;
 	public GameObject quitButton;
 	public GameObject boss;
+	public MusicLibrary music;
 	public Text hoursWorkedUI;
 	public Text wagesUI;
 	private float daysWage;
+	private bool endless;
+	private bool fullday;
+	private bool sick;
 
 	public void resetData() {
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
@@ -34,98 +38,68 @@ public class PlayerScript : MonoBehaviour {
 
 	}
 
-	public void addWages(int timeWorked) {
+	public float addWages(int timeWorked) {
 		List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
 		daysWage = hourlyRate * timeWorked;
 		wages.Add (daysWage);
 		PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
+		return daysWage;
 	}
-	public void EndOfLevel(bool fullday, bool endless, bool sick) {
-		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
-		Time.timeScale = 0;
+
+	public void cateringEvent() {
+		PlayerPrefs.SetInt("catering",1);
+
+	}
+
+	public void completeCatering() {
+		homeButton.SetActive(true);
+		retryButton.SetActive(false);
+		boss.GetComponent<CharacterDialog>().changeSpeechKey("catering_complete");
+		//cue boss
+		boss.GetComponent<Animator>().SetBool("talkAgain", true);
+		boss.GetComponent<Animator>().SetBool("finishedTalking", false);
+
+	}
+
+	public void setBoss() {
 		int currentLevel = PlayerPrefs.GetInt("current level");
-		PlayerPrefs.SetInt("tutorial", 1);
-		Debug.Log("End of Level Ran");
-		levelCompleteCanvas.enabled = true;
-		if (endless) {
-			retryButton.SetActive(true);
-			quitButton.SetActive(true);
-
-			if (fullday) {
-				//technically this is impossible
-			}
-			else {
-
-				if (sick) {
-					//ended because of sickness
-				}
-				else {
-					//ended because of too many orders
-				}
-
-			}
-		}
 
 		if (!endless) {
 			retryButton.SetActive(false);
+			homeButton.SetActive(true);
+
 			if (fullday) {
 				//Normal Day at Work
 				//TODO: Start Animation that shows amount worked / wage potential
-				addWages(8);
-//				List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
-//				wages.Add (hourlyRate * 8);
-				hoursWorkedUI.text = "Full Day of Work";
 
-//				PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
-				PlayerPrefs.SetInt ("current level", currentLevel+1);
 				Debug.Log ("Now Day " + currentLevel);
+
 				if (currentLevel%5 == 0) {
 					Debug.Log("Weekend");
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("weekend");
-
+					
 				}
 				else {
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("complete");
-
+					
 				}
-
+				
 				//cue boss
 				boss.GetComponent<Animator>().SetBool("talkAgain", true);
 				boss.GetComponent<Animator>().SetBool("finishedTalking", false);
-				homeButton.SetActive(true);
-//				Text responseText = homeButton.GetComponentInChildren<Text>();
-//				responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
 
-
+				
 			}
 			else {
-				//TODO: Fire after x many screw ups
-				//TODO: Start Animation that shows amount worked / wage potential
-								wagesUI.text = "$" + daysWage.ToString() + " added to your next paycheck";
-
-				//RETRY: Start Level Again, No Penalties <- Setting Unlockable?"Poor Performance Allowed"
-				//				retryButton.SetActive(true);
-				//GO HOME: Give Up, Come Back
-				//+1 Strike
-				homeButton.SetActive(true);
-				//
-//				quitButton.SetActive(true);
+				//too late
 
 				if (sick) {
-					//sneezed
-					//TODO: Change Dialogue for Sickness
-					hoursWorkedUI.text = "Sick on the Job";
-
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
-
 				}
 				else {
-					//TODO: Change dialogue for too slow
-					hoursWorkedUI.text = "Too Slow";
-
-					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");
-
+					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");					
 				}
+
 				int warnings = PlayerPrefs.GetInt ("warnings");
 				warnings+=1;
 				int maxWarnings = PlayerPrefs.GetInt("max warnings");
@@ -142,24 +116,73 @@ public class PlayerScript : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public void EndOfLevel(bool _fullday, bool _endless, bool _sick) {
+		fullday = _fullday;
+		endless = _endless;
+		sick = _sick;
+		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
+		Time.timeScale = 0;
+//		int currentLevel = PlayerPrefs.GetInt("current level");
+		PlayerPrefs.SetInt("tutorial", 1);
+		Debug.Log("End of Level Ran");
+		levelCompleteCanvas.enabled = true;
+
 		if (endless) {
+			retryButton.SetActive(true);
+			quitButton.SetActive(true);
+
+				if (sick) {
+					//ended because of sickness
+					hoursWorkedUI.text = "Sick on the Job";
+
+				}
+				else {
+					//ended because of too many orders
+					hoursWorkedUI.text = "Too Slow";
+
+				}
+
 		}
 
-		if(fullday && !endless) {
+
+		else if(fullday) {
+			Debug.Log ("running wage update");
+			hoursWorkedUI.text = "Full Day of Work";
+			wagesUI.text = "$" + addWages(8).ToString() + " added to your next paycheck";
+			music.levelCompleted();
+			Camera.main.audio.Stop ();
 
 		}
-		else if (!fullday && !endless) {
-			//too slow, warning, fired after x amount of too slow?
+
+		else if(sick) {
+			//ended because of sickness
+			wagesUI.text = "$" + daysWage.ToString() + " added to your next paycheck.";
+			hoursWorkedUI.text = "Sick on the Job";
+			music.levelFailed();
+			Camera.main.audio.Stop ();
+
+		}
 		
-		}
-		gameScreen.SetBool("ended", true);
+		else {
+			wagesUI.text = "$" + daysWage.ToString() + " added to your next paycheck.";
 
+			hoursWorkedUI.text = "Too Slow";
+			Debug.Log("SLOW UPDATE SPEECH");
+			music.levelFailed();
+			Camera.main.audio.Stop ();
+
+		}
+
+		gameScreen.SetBool("ended", true);
+	
 	}
 
 	void Start() {
 		//checks if values need to be reset
 		resetData();
-		float[] wages = PlayerPrefsX.GetFloatArray("wages");
+//		float[] wages = PlayerPrefsX.GetFloatArray("wages");
 
 		if (PlayerPrefs.HasKey("pills")) {
 			pills = PlayerPrefs.GetInt("pills");

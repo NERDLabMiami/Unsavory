@@ -17,7 +17,7 @@ public class CustomFunctionScript : MonoBehaviour {
 		PlayerPrefs.SetInt ("warnings", 0);
 		PlayerPrefs.SetInt("max warnings", 3);
 		List<string> effects = new List<string>();
-		List<int> dueDates = new List<int>();
+//		List<int> dueDates = new List<int>();
 		PlayerPrefsX.SetStringArray("effects",effects.ToArray());
 
 //		PlayerPrefs.DeleteKey("tutorial");

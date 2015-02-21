@@ -13,6 +13,7 @@ public class TutorScript : MonoBehaviour {
 	private int trayIndex = 0;
 	private RecipeScript currentRecipe;
 	public string tutorialEnd;
+	public GameObject preStartObject;
 	bool tutorialFinished = false;
 
 	// Use this for initialization
@@ -47,12 +48,14 @@ public class TutorScript : MonoBehaviour {
 		orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
 		Time.timeScale = 1.0f;
 		pauseButton.enabled = true;
+		preStartObject.SetActive(true);
+		PlayerPrefs.SetInt("tutorial", 1);
 		Destroy (gameObject);
 
 	}
 
 	public void advanceTutorial() {
-
+		Debug.Log("Advance Tutorial");
 		trays[trayIndex].GetComponent<Animator>().SetBool("jiggling", false);
 		trayIndex++;
 		if (trayIndex < trays.Count) {

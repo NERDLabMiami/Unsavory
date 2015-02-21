@@ -36,9 +36,7 @@ public class AddIngredientScript : MonoBehaviour {
 	}
 
 	void Spawn() {
-		int numberOfIngredients = plate.GetComponent<PlateScript>().ingredients.Count;
 		Vector3 newIngredientPosition = plate.transform.position;
-		//newIngredientPosition.x += numberOfIngredients - 2;
 		GameObject item = (GameObject) Instantiate(ingredient, newIngredientPosition, Quaternion.identity);
 		item.transform.parent = plate.transform;
 	}

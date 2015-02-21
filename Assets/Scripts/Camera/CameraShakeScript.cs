@@ -15,6 +15,7 @@ public class CameraShakeScript : MonoBehaviour {
 	private Quaternion OriginalRot;
 	public GameObject player;
 	private bool isPaused = false;
+	public MusicLibrary music;
 	
 	void Start()
 	{
@@ -33,6 +34,7 @@ public class CameraShakeScript : MonoBehaviour {
 
 	public void sneeze(float nextSneezeTime) {
 		Debug.Log("Sneezed");
+		music.sneeze();
 		sneezeTimer = nextSneezeTime;
 		Sneezing = true;
 		SneezeWarning = false;

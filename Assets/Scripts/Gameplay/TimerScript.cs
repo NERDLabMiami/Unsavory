@@ -13,6 +13,7 @@ public class TimerScript : MonoBehaviour {
 	private DateTime startOfWorkDay;
 	public bool running = false;
 	private bool waitingForPlayerInput = false;
+	public bool catering = false;
 	private Transform startingPosition;
 	private float startTime;
 	private float movementTime;
@@ -23,6 +24,9 @@ public class TimerScript : MonoBehaviour {
 
 	void Start() {
 
+		if (PlayerPrefs.HasKey("catering")) {
+			catering = true;
+		}
 
 	}
 
@@ -48,22 +52,20 @@ public class TimerScript : MonoBehaviour {
 	void Update () {
 		if (running) {
 			timer -= Time.deltaTime;
-
-			if (timer <= 0 && !endless) {
-				//Continue onto next day, full day of work
-				player.GetComponent<PlayerScript>().EndOfLevel(true, false, false);
-				running = false;
-				Debug.Log("End of Day!");
-			}
-			//endless increase difficulty
-			if (endless && timer <= 0) {
-				timer = 30;
-				timeBetweenOrders *= .95f;
-				if (timeBetweenOrders <= .5f) {
-					timeBetweenOrders = .5f;
+				if (timer <= 0 && !endless && !catering) {
+					//Continue onto next day, full day of work
+					player.GetComponent<PlayerScript>().EndOfLevel(true, false, false);
+					running = false;
+					Debug.Log("End of Day!");
 				}
-			}
-
+				//endless increase difficulty
+				if (endless && timer <= 0) {
+					timer = 30;
+					timeBetweenOrders *= .95f;
+					if (timeBetweenOrders <= .5f) {
+						timeBetweenOrders = .5f;
+					}
+				}
 		}
 	}
 
