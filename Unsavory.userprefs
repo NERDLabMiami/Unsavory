@@ -1,28 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Loading/ReturnHomeScript.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Input/SwipeScene.cs">
     <Files>
-      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="118" Column="23" />
+      <File FileName="Assets/Resources/Character Text/boss.txt" Line="53" Column="32" />
+      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="237" Column="1" />
       <File FileName="Assets/Scripts/Messaging/CharacterDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/SocialFeatures.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Messaging/HealthMessageScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Loading/SceneLoader.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/StartCareer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/BillScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/BuyDrugsScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/CustomFunctionScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Character Text/boss.txt" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Input/ScrollableList.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="75" Column="12" />
       <File FileName="Assets/Scripts/Loading/WorkScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/bills.txt" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/StartLevel.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/PlateScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/RecipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/CurrentOrderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/SneezeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Camera/CameraShakeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/NoseWipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="151" Column="38" />
-      <File FileName="Assets/Scripts/Gameplay/MusicLibrary.cs" Line="52" Column="25" />
+      <File FileName="Assets/Scripts/Input/SwipeScene.cs" Line="85" Column="1" />
+      <File FileName="../Hand of Golf 2/Assets/StayAboveTerrain.cs" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

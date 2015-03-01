@@ -94,9 +94,19 @@ public class PlayerScript : MonoBehaviour {
 				//too late
 
 				if (sick) {
-					boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
+
+					//First sneeze?
+					if (PlayerPrefs.GetInt("sneezes",1) <= 2) {
+						boss.GetComponent<CharacterDialog>().changeSpeechKey("sneeze_tip");
+
+					}
+					else {
+						boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
+
+					}
 				}
 				else {
+					//Slow
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");					
 				}
 
@@ -109,7 +119,14 @@ public class PlayerScript : MonoBehaviour {
 					Debug.Log("Player should be fired");
 					hoursWorkedUI.text = "Fired";
 					PlayerPrefs.SetInt("fired",1);
-					boss.GetComponent<CharacterDialog>().changeSpeechKey("fired");
+					if (sick) {
+						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
+
+					}
+					else {
+						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_slow");
+
+					}
 					quitButton.SetActive(true);
 					homeButton.SetActive(false);
 				}
@@ -214,18 +231,6 @@ public class PlayerScript : MonoBehaviour {
 
 		if (pillsUI) {
 			pillsUI.text = pills.ToString();
-		}
-
-	}
-
-	void Awake() {
-		//race... not working, need a better system for this
-		if (PlayerPrefs.GetInt("highest level") > 2) {
-			GameObject[] unlockables = GameObject.FindGameObjectsWithTag("Unlockable");
-			for (int i = 0; i < unlockables.Length; i++) {
-				Debug.Log("Unlocking..." + i);
-				unlockables[i].GetComponent<ButtonScript>().setVisibility(true);
-			}
 		}
 
 	}

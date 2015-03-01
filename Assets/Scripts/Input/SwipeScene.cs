@@ -11,6 +11,8 @@ public class SwipeScene : MonoBehaviour {
 	public int currentPlace;
 	private Transform startPosition;
 	private Transform endPosition;
+	private float currentLerpTime = 0f;
+	private float lerpTime = 1f;
 	private bool moving = false;
 	private float movementStartTime;
 
@@ -21,12 +23,16 @@ public class SwipeScene : MonoBehaviour {
 
 	void Update() {
 		if (moving) {
-			float distanceCovered = (Time.realtimeSinceStartup - movementStartTime) * 5.0f;// * speed;
-			float fracJourney = distanceCovered / movementStartTime;
-			Camera.main.transform.position = Vector3.Lerp (startPosition.position, endPosition.position, fracJourney);
-			if (Vector3.Distance (endPosition.transform.position, Camera.main.transform.position) <= .1) {
+			currentLerpTime += Time.deltaTime;
+			if (currentLerpTime > lerpTime) {
+				currentLerpTime = lerpTime;
 				moving = false;
+
 			}
+			
+			float perc = currentLerpTime / lerpTime;
+			Camera.main.transform.position = Vector3.Lerp (startPosition.position, endPosition.position,perc);
+
 		}
 
 		Swipe();
@@ -63,7 +69,7 @@ public class SwipeScene : MonoBehaviour {
 					startPosition = places[currentPlace];
 					currentPlace++;
 					endPosition = places[currentPlace];
-					movementStartTime = Time.realtimeSinceStartup;
+					currentLerpTime = 0f;
 					moving = true;
 				}
 			}
@@ -76,8 +82,8 @@ public class SwipeScene : MonoBehaviour {
 					currentPlace--;
 					endPosition = places[currentPlace];
 					Debug.Log("right swipe");				
-					movementStartTime = Time.realtimeSinceStartup;
 					moving = true;
+					currentLerpTime = 0f;
 				}
 			}
 			
