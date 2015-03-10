@@ -1,14 +1,29 @@
 {
   "levels": [
     {
-        "recipes": 4,
+        "recipes": 1,
         "waiting time": 3,
         "end": false
     },
     {
-        "recipes": 4,
+        "recipes": 2,
         "waiting time": 2.9,
         "end": false
+    },
+    {
+        "recipes": 3,
+        "waiting time": 3,
+        "end": false
+    },
+    {
+        "recipes": 3,
+        "waiting time": 2.8,
+        "end": false
+    },
+    {
+        "recipes": 4,
+        "waiting time": 3,
+        "end": true
     },
     {
         "recipes": 4,
@@ -21,36 +36,120 @@
         "end": false
     },
     {
-        "recipes": 4,
-        "waiting time": 2.6,
-        "end": true
+        "recipes": 5,
+        "waiting time": 2.9,
+        "end": false
     },
     {
         "recipes": 5,
+        "waiting time": 2.8,
+        "end": false
+    },
+    {
+        "recipes": 5,
+        "waiting time": 2.7,
+        "end": false
+    },   
+        {
+        "recipes": 6,
+        "waiting time": 2.8,
+        "end": false
+    },
+    {
+        "recipes": 6,
+        "waiting time": 2.7,
+        "end": false
+    },
+    {
+        "recipes": 6,
+        "waiting time": 2.6,
+        "end": false
+    },
+    {
+        "recipes": 7,
+        "waiting time": 2.7,
+        "end": false
+    },
+        {
+        "recipes": 7,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 7,
         "waiting time": 2.5,
         "end": false
     },
-    {
-        "recipes": 5,
-        "waiting time": 2.4,
+        {
+        "recipes": 8,
+        "waiting time": 2.7,
         "end": false
     },
-    {
-        "recipes": 5,
+        {
+        "recipes": 8,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 9,
+        "waiting time": 2.7,
+        "end": false
+    },
+        {
+        "recipes": 10,
+        "waiting time": 2.7,
+        "end": false
+    },
+        {
+        "recipes": 10,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 11,
+        "waiting time": 2.7,
+        "end": false
+    },
+        {
+        "recipes": 11,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 12,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 13,
+        "waiting time": 2.7,
+        "end": false
+    },
+        {
+        "recipes": 14,
+        "waiting time": 2.7,
+        "end": false
+    },
+        {
+        "recipes": 14,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 15,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 16,
+        "waiting time": 2.6,
+        "end": false
+    },
+        {
+        "recipes": 16,
         "waiting time": 2.3,
         "end": false
-    },
-    {
-        "recipes": 5,
-        "waiting time": 2.2,
-        "end": false
-    },
-    {
-        "recipes": 5,
-        "waiting time": 2.1,
-        "end": true
-    }    
-    
+    }            
   ]
   
  }

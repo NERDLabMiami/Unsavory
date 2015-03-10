@@ -13,17 +13,19 @@ public class PlayerScript : MonoBehaviour {
 //	public bool hasBeenTutored;
 //	public int warningsBeforeFired = 3;
 	public bool hasSneezed = false;
-	public bool startFromZero = true;
 	public bool reset = false;
-	public Canvas levelCompleteCanvas;
+	public GameObject levelCompleteCanvas;
+//	public Canvas levelCompleteCanvas;
 	//public Animator boss;
 	public Animator gameScreen;
+	public Animator gameGUI;
 	public GameObject homeButton;
 	public GameObject retryButton;
 	public GameObject quitButton;
 	public GameObject boss;
 	public MusicLibrary music;
 	public Text hoursWorkedUI;
+	public Text shiftCompleteText;
 	public Text wagesUI;
 	private float daysWage;
 	private bool endless;
@@ -65,6 +67,7 @@ public class PlayerScript : MonoBehaviour {
 		int currentLevel = PlayerPrefs.GetInt("current level");
 
 		if (!endless) {
+			Debug.Log("Setting Retry Button Inactive");
 			retryButton.SetActive(false);
 			homeButton.SetActive(true);
 
@@ -132,6 +135,17 @@ public class PlayerScript : MonoBehaviour {
 				}
 			}
 		}
+		else {
+			if (sick) {
+				boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
+				
+			}
+			else {
+				boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_slow");
+				
+			}
+
+		}
 
 	}
 
@@ -144,27 +158,13 @@ public class PlayerScript : MonoBehaviour {
 //		int currentLevel = PlayerPrefs.GetInt("current level");
 		PlayerPrefs.SetInt("tutorial", 1);
 		Debug.Log("End of Level Ran");
-		levelCompleteCanvas.enabled = true;
-
-		if (endless) {
-			retryButton.SetActive(true);
-			quitButton.SetActive(true);
-
-				if (sick) {
-					//ended because of sickness
-					hoursWorkedUI.text = "Sick on the Job";
-
-				}
-				else {
-					//ended because of too many orders
-					hoursWorkedUI.text = "Too Slow";
-
-				}
-
-		}
+		levelCompleteCanvas.SetActive(true);
+		gameGUI.SetTrigger("Fade Out");
+		homeButton.SetActive(false);
+		retryButton.SetActive(false);
 
 
-		else if(fullday) {
+		 if(fullday) {
 			Debug.Log ("running wage update");
 			hoursWorkedUI.text = "Full Day of Work";
 			wagesUI.text = "$" + addWages(8).ToString() + " added to your next paycheck";
@@ -175,24 +175,25 @@ public class PlayerScript : MonoBehaviour {
 
 		else if(sick) {
 			//ended because of sickness
-			wagesUI.text = "$" + daysWage.ToString() + " added to your next paycheck.";
-			hoursWorkedUI.text = "Sick on the Job";
+			wagesUI.text = "Leaving early with $" + daysWage.ToString() + " on next paycheck.";
+			shiftCompleteText.text = "Sick on the Job";
+//			hoursWorkedUI.text = "Sick on the Job";
 			music.levelFailed();
 			Camera.main.audio.Stop ();
 
 		}
 		
 		else {
-			wagesUI.text = "$" + daysWage.ToString() + " added to your next paycheck.";
-
-			hoursWorkedUI.text = "Too Slow";
+			wagesUI.text = "Sent home with $" + daysWage.ToString() + " on next paycheck.";
+			shiftCompleteText.text = "Too Slow";
+//			hoursWorkedUI.text = "Too Slow";
 			Debug.Log("SLOW UPDATE SPEECH");
 			music.levelFailed();
 			Camera.main.audio.Stop ();
 
 		}
-
-		gameScreen.SetBool("ended", true);
+		//NOT SURE IF THIS APPLIES ANYMORE
+//		gameScreen.SetBool("ended", true);
 	
 	}
 
@@ -206,6 +207,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 		else {
 			PlayerPrefs.SetInt("pills", 0);
+			pills = 0;
 		}
 		if (PlayerPrefs.HasKey("sneezed")) {
 			hasSneezed = true;
@@ -217,16 +219,15 @@ public class PlayerScript : MonoBehaviour {
 	
 		if (PlayerPrefs.HasKey("money")) {
 			money = PlayerPrefs.GetFloat ("money");
-			Debug.Log("Have Money : " + money);
 		}
 		else {
-			Debug.Log("No Money");
 			PlayerPrefs.SetFloat("money", money);
 		}
 
 		if (moneyUI) {
-			moneyUI.text = money.ToString();
+			moneyUI.text = "$" + money.ToString();
 			Debug.Log("Set Money");
+			Debug.Log("Money: " + money);
 		}
 
 		if (pillsUI) {

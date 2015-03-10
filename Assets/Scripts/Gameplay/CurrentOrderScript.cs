@@ -47,22 +47,37 @@ public class CurrentOrderScript : MonoBehaviour {
 
 		Debug.Log("Starting Day " + currentLevel);
 		switch(numberOfRecipes) {
+			case 16:
+			case 15:
+			case 14:
+			case 13:
+			case 12:
+			case 11:
+			case 10:
+			case 9:
+			case 8:
+				recipes.Add((GameObject)Resources.Load("Recipes/TRBC No Rocket"));
+				goto case 7;
 			case 7:
+				recipes.Add((GameObject)Resources.Load("Recipes/TRB No Rocket"));
 				goto case 6;
 			case 6:
+				recipes.Add((GameObject)Resources.Load("Recipes/TRBCC No Rocket"));
 				goto case 5;
 			case 5:
-				goto case 4;
+				recipes.Add((GameObject)Resources.Load("Recipes/TBCCS No Rocket"));
+			goto case 4;
 			case 4:
+				recipes.Add((GameObject)Resources.Load("Recipes/TBC No Rocket"));
 				goto case 3;
 			case 3:
-				recipes.Add((GameObject)Resources.Load("Recipes/Beans and Rice"));
+				recipes.Add((GameObject)Resources.Load("Recipes/TBCS No Rocket"));
 				goto case 2;
 			case 2:
-				recipes.Add((GameObject)Resources.Load("Recipes/Chicken and Beans"));
+			recipes.Add((GameObject)Resources.Load("Recipes/TC No Rocket"));
 				goto case 1;
 			case 1:
-				recipes.Add((GameObject)Resources.Load("Recipes/Chicken and Rice"));
+				recipes.Add((GameObject)Resources.Load("Recipes/TRBCCS No Rocket"));
 				break;
 		}
 		Spawn ();

@@ -4,7 +4,7 @@ using System.Collections;
 public class LoadSceneTimer : MonoBehaviour {
 	public float timeUntilNextScene = 10;
 	public float fadeSpeed = 1.5f;
-	private bool sceneStarting = true;
+//	private bool sceneStarting = true;
 	public int sceneNumber;
 	private float currentTime;
 	private float startTime;

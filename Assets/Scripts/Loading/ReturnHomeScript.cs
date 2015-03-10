@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ReturnHomeScript : MonoBehaviour {
 	public GameObject phone;
-	private bool playerWasFired = false;
 	public bool electricity = true;
 	public Text moneyUI;
 	public Text paycheckUI;
@@ -73,7 +72,7 @@ public class ReturnHomeScript : MonoBehaviour {
 	}
 	
 	void Start () {
-
+		money = PlayerPrefs.GetFloat("money");
 		if (PlayerPrefs.HasKey("catering")) {
 
 			PlayerPrefs.DeleteKey("catering");
@@ -119,7 +118,7 @@ public class ReturnHomeScript : MonoBehaviour {
 
 			}
 			day++;
-			moneyUI.text = money.ToString();
+			moneyUI.text = "$" + money.ToString();
 			PlayerPrefs.SetInt("current level", day);
 		}
 	}

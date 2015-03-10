@@ -117,11 +117,10 @@ public class NoseWipeScript : MonoBehaviour {
 	public void Swipe()
 		
 	{
-		
+		float distance = 0f;
 		if(Input.GetMouseButtonDown(0)) {
 			
 			//save began touch 2d point
-			
 			firstPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 			
 		}
@@ -129,7 +128,8 @@ public class NoseWipeScript : MonoBehaviour {
 		if(Input.GetMouseButtonUp(0)) {
 			
 			//save ended touch 2d point
-			
+			Debug.Log("Mouse Y: " + Input.mousePosition.y);
+
 			secondPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 			
 			
@@ -139,9 +139,9 @@ public class NoseWipeScript : MonoBehaviour {
 			currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y); 
 			
 			
-			
+			distance = Mathf.Abs(currentSwipe.x);
 			//normalize the 2d vector
-			
+
 			currentSwipe.Normalize();
 			
 			
@@ -164,20 +164,18 @@ public class NoseWipeScript : MonoBehaviour {
 			
 			//swipe left
 			
-			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
+			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f && distance >= 80) {
 				music.wipeNose();
-				Debug.Log("left swipe");
 				resetSneezeTimer();
 				
 			}
 			
 			//swipe right
 			
-			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
+			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f && distance >= 80) {
 				music.wipeNose();
 				resetSneezeTimer();
-				Debug.Log("right swipe");
-				
+
 			}
 			
 		}

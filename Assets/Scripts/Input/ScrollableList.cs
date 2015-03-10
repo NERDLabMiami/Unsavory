@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ScrollableList : MonoBehaviour
 {
 	public GameObject itemPrefab;
-	public int itemCount = 0, columnCount = 1;
 
 	public void createScrollableBillList() {
 		RectTransform rowRectTransform = itemPrefab.GetComponent<RectTransform>();
@@ -19,8 +18,11 @@ public class ScrollableList : MonoBehaviour
 //		string[] effectsArray = PlayerPrefsX.GetStringArray("effects");
 
 		//calculate the width and height of each child item.
-		float width = containerRectTransform.rect.width / columnCount;
+		float width = containerRectTransform.rect.width ;
 		float ratio = width / rowRectTransform.rect.width;
+
+
+
 		Debug.Log("RECT WIDTH: " + rowRectTransform.rect.width);
 		Debug.Log("WIDTH: " + width);
 		Debug.Log("RATIO: " + ratio);
@@ -37,11 +39,18 @@ public class ScrollableList : MonoBehaviour
 //			}
 //		}
 
-		float scrollHeight = height *  bills["bills"].Count;
-		Debug.Log("Scroll Height is " + scrollHeight);
-		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight);
-		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, 0);
+		float scrollHeight = height *  bills["bills"].Count -1;
 
+		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight / 2);
+		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, scrollHeight / 2);
+
+
+		Debug.Log("Scroll Height is " + scrollHeight);
+//		containerRectTransform.offsetMin = new Vector2(containerRectTransform.offsetMin.x, -scrollHeight/1.5f);
+//		containerRectTransform.offsetMin = new Vector2(0,0);
+
+//		containerRectTransform.offsetMax = new Vector2(containerRectTransform.offsetMax.x, 0);
+//		containerRectTransform.offsetMax = new Vector2(0, 0);
 		for (int i = 0; i < bills["bills"].Count; i++) {
 			bool overdue = false;
 
@@ -59,13 +68,12 @@ public class ScrollableList : MonoBehaviour
 				newItem.GetComponentInChildren<BillScript>().effect = bills["bills"][i]["effect"];
 				newItem.GetComponentInChildren<BillScript>().overdue = overdue;
 				newItem.name = gameObject.name + " item at (" + i;
-				newItem.transform.parent = gameObject.transform;
-				
+				newItem.transform.SetParent(gameObject.transform);				
 				//move and size the new item
 				RectTransform rectTransform = newItem.GetComponent<RectTransform>();				
-				float x = -containerRectTransform.rect.width / 2 + width * (i % columnCount);
-				float y = containerRectTransform.rect.height / 2 - height * (i+1);
-				rectTransform.offsetMin = new Vector2(x, y);				
+				float x = -containerRectTransform.rect.width / 2;
+				float y = containerRectTransform.rect.height / 2 - (height * (i+1));
+				rectTransform.offsetMin = new Vector2(x, y);		
 				x = rectTransform.offsetMin.x + width;
 				y = rectTransform.offsetMin.y + height;
 				rectTransform.offsetMax = new Vector2(x, y);

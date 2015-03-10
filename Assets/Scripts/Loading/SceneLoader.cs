@@ -70,8 +70,13 @@ public class SceneLoader : MonoBehaviour {
 		}
 	}
 
+	public void newScene() {
+		Application.LoadLevel(sceneNumber);
+	}
+
 	public void RestartGame() {
 		string resume = PlayerPrefs.GetString("resume game");
+		Debug.Log("Restart Game Run");
 		if (resume.Equals("home")) {
 			sceneNumber = 2;
 
@@ -84,6 +89,8 @@ public class SceneLoader : MonoBehaviour {
 		else {
 			sceneNumber = 1;
 		}
+		Application.LoadLevel(sceneNumber);
+
 	}
 
 	

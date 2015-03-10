@@ -18,14 +18,14 @@ public class BuyDrugsScript : MonoBehaviour {
 	public void buy() {
 		Debug.Log("Buying Drugs");
 
-		int money = PlayerPrefs.GetInt("money");
+		float money = PlayerPrefs.GetFloat("money");
 		if (money - costOfDrugs >= 0) {
 			Debug.Log("Have Enough Money");
 			money -= costOfDrugs;
 			pills++;
 			PlayerPrefs.SetInt("pills", pills);
-			PlayerPrefs.SetInt("money",money);
-			moneyUI.text = money.ToString();
+			PlayerPrefs.SetFloat("money",money);
+			moneyUI.text = "$" + money.ToString();
 			pillsUI.text = pills.ToString();
 			canvasTitle.text = "Bought Dayquil";
 		}

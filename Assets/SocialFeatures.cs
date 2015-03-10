@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.SocialPlatforms;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using SimpleJSON;
+
+
 
 public class SocialFeatures : MonoBehaviour {
 
@@ -23,7 +29,7 @@ public class SocialFeatures : MonoBehaviour {
 	}
 
 	public void facebookConnect() {
-		FB.Login("public_profile,email,user_friends", LoginCallback);
+		FB.Login("public_profile,email,user_friends, publish_actions", LoginCallback);
 
 	}
 
@@ -37,6 +43,30 @@ public class SocialFeatures : MonoBehaviour {
 			facebookButton.SetActive(false);
 		}
 
+	}
+
+	public void postToFacebook() {
+		var wwwForm = new WWWForm();
+		wwwForm.AddField("message", "Mmm... FB integration. A necessary evil.");
+		
+		FB.API("me/feed", Facebook.HttpMethod.POST, postCallback, wwwForm);
+
+	}
+     private void postCallback(FBResult result) {
+		Debug.Log("Callback for post:" + result);
+	}
+	public void askForHelp() {
+		FB.AppRequest("I can't pay my bills, mind helping me out?",null,null,null,1,"","Overdue Bills",null);
+
+
+		/*
+		if (!FB.IsLoggedIn) {
+			facebookButton.SetActive(true);
+		}
+		else {
+			facebookButton.SetActive(false);
+		}
+		*/
 	}
 
     private void OnHideUnity(bool isGameShown)

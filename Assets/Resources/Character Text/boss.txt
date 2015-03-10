@@ -23,13 +23,12 @@
   	"catering_complete_response": [ ["thanks"] ],
   	 "catering_finished": [ ["Good job"] ],
   	"catering_finished_response": [ ["tacos forever!"] ],
-
-  	"welcome": [["In the beginning, there was the taco. Rocket Taco.", "This is not just food, it's a lifestyle.", "Look at our customers. They're happy. The taco did this. You understand?","This is why they come. The taco is the truth.", "Uphold this standard, and you'll do just fine. Are you ready to lift off?", "Remember... at Rocket Taco, service is out of this world."]],
-  	"welcome_response": [["I see", "Gotcha", "I do", "Tacos never lie.", "I am!", "Roger that!"]],
+	"welcome":[["Now you very well know, no one starts at the top.", "Okay, well maybe some people.", "You're not one of them.", "We work for our keep. We prove our worth. It builds character.", "That's great. I'll start you at $7.25 an hour. I threw in an extra quarter for good measure.", "Have you ever seen a taco sick?", "Exactly! So you will not be sick. Ever.", "If you cannot get sick, then you need no sick days.", "If I'm not mistaken, my third eye, which is keen, senses you are not well. Is this true?", "Well you could go home... but then you wouldn't make any money!", "Excellent! Remember, at Rocket Taco, our service is out of this world!"]],
+	"welcome_response":[["They don't?", "What about me?", "Oh...", "I've got character!", "That's pretty low...", "No...", "Wait, what?", "That doesn't sound fair...", "What if am?", "Then no, I'm not sick...", "I'm ready to lift off!"]],
     "return": [ 	["The taco waits for no man... Or woman."],
   					["The taco calls... and you're here."], 
   					["Your respect for this lifestyle moves me."],
-  					["Keep it up and you'll be my boss!", "Not really."],
+  					["Keep it up and you'll be my boss!"],
   					["I can trust a man who respects a taco."],
   					["Rise and shine."],
   					["I see I can't keep you away"]
@@ -65,7 +64,7 @@
   									["I respect it!"],
   									["Of course it can't."]
   									],	
-  "sneeze_tip": ["When you feel like sneezing, don't blow it on the taco, swipe your nose!", "Have you heard of shaking your head to ward off a sneeze?"],
+  "sneeze_tip": ["Sneezing on the food! Don't let me catch you swiping your nose. That makes an unsavory taco!", "Have you heard of shaking your head to ward off a sneeze?"],
   "sneeze_tip_response": ["That makes sense.", "I'll have to try that..."],
   "sneezed": ["I won't stand for this! Get out of here!", 
   					"Clock out!", 

@@ -16,11 +16,6 @@ public class StartCareer : MonoBehaviour {
 		if (!PlayerPrefs.HasKey("started career")) {
 			beginCareer();	
 		}
-		else {
-			startButton.text = "Get Back to Work";
-			Debug.Log("Career Already Started");
-
-		}
 
 //		displayDueDates();
 	

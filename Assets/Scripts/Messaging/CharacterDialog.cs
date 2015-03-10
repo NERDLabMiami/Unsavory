@@ -18,22 +18,46 @@ public class CharacterDialog : MonoBehaviour {
 	public GameObject retryButton;
 	public GameObject quitButton;
 	public GameObject trays;
+	public GameObject inGameGui;
+	private bool endless = false;
 
 	// Use this for initialization
 	void Start () {
-
+		if (PlayerPrefs.GetInt("endless") == 1) {
+			endless = true;
+			Debug.Log("ENDLESS MODE ON");
+		}
+		else {
+			endless = false;
+			Debug.Log("ENDLESS MODE OFF");
+		}
 		homeButton.SetActive(false);
 		retryButton.SetActive(false);
 		quitButton.SetActive(false);
 	}
 	public void enableTrays() {
 		trays.SetActive(true);
+		Camera.main.GetComponent<Animator>().SetTrigger("Prep");
 	}
 
 	public void reappear() {
+		Camera.main.GetComponent<Animator>().SetTrigger("Pots");
+
 		GetComponent<Animator>().SetBool("finishedTalking", false);
 		GetComponent<Animator>().SetBool("talkAgain", true);
-		
+		if (endless) {
+			retryButton.SetActive(true);
+			quitButton.SetActive(true);
+			homeButton.SetActive(false);
+		}
+		else {
+			quitButton.SetActive(false);
+			retryButton.SetActive(false);
+			homeButton.SetActive(true);
+
+		}
+
+		inGameGui.SetActive(false);		
 	}
 
 	
@@ -42,6 +66,9 @@ public class CharacterDialog : MonoBehaviour {
 			//finished script
 			GetComponentInChildren<Animator>().SetBool("finishedTalking", true);
 			advanceButton.SetActive(false);
+			homeButton.SetActive(false);
+			quitButton.SetActive(false);
+			inGameGui.SetActive (true);
 			//TODO: Skip if tutorial is enabled
 			Camera.main.GetComponent<CameraSequencing>().enableGamePlay();
 

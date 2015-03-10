@@ -6,7 +6,6 @@ public class CameraSequencing : MonoBehaviour {
 	public GameObject preStartObject;
 	public GameObject gamePlayObject;
 	public GameObject timer;
-	public GameObject pauseButton;
 	public GameObject player;
 	public CharacterDialog boss;
 	// Use this for initialization
@@ -21,7 +20,7 @@ public class CameraSequencing : MonoBehaviour {
 		else {
 			boss.enableTrays();
 			gamePlayObject.SetActive(true);
-			pauseButton.SetActive(true);
+//			pauseButton.SetActive(true);
 			timer.GetComponent<PauseScript>().gamePlayStarted = true;
 			player.GetComponent<StartLevel>().beginLevel();
 			timer.GetComponent<TimerScript>().running = true;

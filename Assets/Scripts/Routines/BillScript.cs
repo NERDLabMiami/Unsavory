@@ -17,16 +17,20 @@ public class BillScript : MonoBehaviour {
 	private float money;
 	// Use this for initialization
 	void Start () {
+		money = PlayerPrefs.GetFloat ("money");
+	}
+
+	public void set() {
 		titleUI.text = title;
 		amountUI.text = "$" + amount.ToString();
 		int[] dueDates = PlayerPrefsX.GetIntArray("due");
 		int currentDay = PlayerPrefs.GetInt("current level");
-		money = PlayerPrefs.GetFloat ("money");
 		if (money > amount) {
 			payButton.enabled = true;
 		}
 		else {
 			payButton.enabled = false;
+			payButton.GetComponentInChildren<Text>().text = "Not Enough";
 		}
 		if (dueDates[id] > currentDay) {
 			//due in a bit
@@ -41,11 +45,7 @@ public class BillScript : MonoBehaviour {
 			dueUI.text = "OVERDUE!";
 		}
 
-//		GetComponentInChildren<Text>().text = amount.ToString();
-//		GetComponentInChildren<Text>().text = amount.ToString();
-
 	}
-	
 	// Update is called once per frame
 	void Update () {
 		if (money > amount) {
@@ -53,6 +53,8 @@ public class BillScript : MonoBehaviour {
 		}
 		else {
 			payButton.enabled = false;
+			payButton.GetComponentInChildren<Text>().text = "Not Enough";
+
 		}
 
 	}

@@ -12,6 +12,7 @@ public class PlateScript : MonoBehaviour {
 	public bool tutorialMode = false;
 	private int orderCounter = 0;
 	public GameObject music;
+	public TortillaFoundation tortilla;
 	
 	private void OnMouseDown() {
 
@@ -56,7 +57,7 @@ public class PlateScript : MonoBehaviour {
 			tutorial.GetComponent<TutorScript>().finishTutorial();
 			tutorialMode = false;
 		}
-
+		tortilla.lockTrays();
 	}
 
 	public int getOrders() {

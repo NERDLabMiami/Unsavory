@@ -12,12 +12,10 @@ public class TimerScript : MonoBehaviour {
 	public DateTime today;
 	private DateTime startOfWorkDay;
 	public bool running = false;
-	private bool waitingForPlayerInput = false;
 	public bool catering = false;
 	private Transform startingPosition;
 	private float startTime;
 	private float movementTime;
-	private float speed = 1.0f;
 	private float timeBetweenOrders = 3f;
 	public GameObject player;
 

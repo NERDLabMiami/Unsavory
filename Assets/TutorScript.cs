@@ -14,7 +14,6 @@ public class TutorScript : MonoBehaviour {
 	private RecipeScript currentRecipe;
 	public string tutorialEnd;
 	public GameObject preStartObject;
-	bool tutorialFinished = false;
 
 	// Use this for initialization
 	void Start () {

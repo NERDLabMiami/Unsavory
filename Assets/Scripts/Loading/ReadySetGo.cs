@@ -11,12 +11,10 @@ public class ReadySetGo : MonoBehaviour {
 	public string[] words;
 	public float secondsBetweenWords;
 	public GameObject gamePlayObject;
-	public GameObject pauseButton;
 	public GameObject timer;
 	public GameObject player;
 	public MusicLibrary music;
 	private bool finished = false;
-	private bool updating = false;
 	// Use this for initialization
 	void Start () {
 		nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
@@ -27,7 +25,7 @@ public class ReadySetGo : MonoBehaviour {
 	public void startGame() {
 		music.prestart();
 		gamePlayObject.SetActive(true);
-		pauseButton.SetActive(true);
+//		pauseButton.SetActive(true);
 		timer.GetComponent<PauseScript>().gamePlayStarted = true;
 		player.GetComponent<StartLevel>().beginLevel();
 		timer.GetComponent<TimerScript>().running = true;

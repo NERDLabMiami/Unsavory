@@ -13,6 +13,9 @@ public class AnimationFunctions : MonoBehaviour {
 	
 	}
 
+	public void disable() {
+		gameObject.SetActive(false);
+	}
 	public void setFinished() {
 		GetComponent<Animator>().SetBool("finished", true);
 	}
