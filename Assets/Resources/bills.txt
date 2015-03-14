@@ -3,42 +3,42 @@
     {
         "title": "Rent",
         "amount": 600,
-        "delay":20,
+        "due":20,
         "effect": "gameover"
     },
         {
         "title": "Car",
         "amount": 150,
-        "delay":10,
-        "effect": "bus"
+        "due":16,
+        "effect": "late effect"
     },
         {
         "title": "Car Insurance",
         "amount": 100,
-        "delay":5,        
-        "effect": "bus"
+        "due":11,        
+        "effect": "late effect"
     },
         {
         "title": "Health Insurance",
         "amount": 20,
-        "delay":6,
-        "effect": "health"
+        "due":6,
+        "effect": "health effect"
     },
         {
         "title": "Cable & Phone",
         "amount": 100,
-        "delay":4,
-        "effect": "overtime"
+        "due":12,
+        "effect": "overtime effect"
     },
         {
         "title": "Electricity",
         "amount": 90,
-        "delay":5,
-        "effect": "lights"
+        "due":7,
+        "effect": "electricity effect"
     }
   ],
   "groceries": [
-  		{"title": "Groceries", "amount": 32, "effect": "health"}
+  		{"title": "Groceries", "amount": 32, "effect": "health effect"}
   ]
   
  }

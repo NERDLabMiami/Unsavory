@@ -11,6 +11,7 @@ public class SneezeScript : MonoBehaviour {
 	public string retryButtonText;
 	public int retrySceneNumber;
 
+
 	// Use this for initialization
 	void Start () {
 		if (PlayerPrefs.GetInt("endless") == 1) {
@@ -26,16 +27,9 @@ public class SneezeScript : MonoBehaviour {
 				//add to the sneeze count
 				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
 				PlayerPrefs.SetInt ("sneezes", sneezes);
-				/*
-				if (sneezes > player.GetComponent<PlayerScript>().warningsBeforeFired) {
-					//maxed out, real game over
-					PlayerPrefs.SetInt("fired", 1);
-				}
-*/
-				launchedLevelEnd = true;
-				//pause
-				Time.timeScale = 0;
 				player.GetComponent<PlayerScript>().addWages( timer.GetComponent<TimerScript>().getTimeWorked());
+				launchedLevelEnd = true;
+				timer.GetComponent<TimerScript>().running = false;
 				player.GetComponent<PlayerScript>().EndOfLevel(false, false, true);
 
 			}
@@ -45,9 +39,6 @@ public class SneezeScript : MonoBehaviour {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
 				//END OF LEVEL POINT, NO STORY MODE
 				launchedLevelEnd = true;
-				PlayerPrefs.SetString ("ENDOFLEVEL_TITLE", "Gross");
-				PlayerPrefs.SetString ("ENDOFLEVEL_MESSAGE", "All the food is tainted...");
-				Debug.Log("Calling End of Level - not end of day");
 				player.GetComponent<PlayerScript>().EndOfLevel(false, true, true);
 			}
 		}

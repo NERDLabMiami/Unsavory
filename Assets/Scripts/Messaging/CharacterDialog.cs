@@ -19,10 +19,12 @@ public class CharacterDialog : MonoBehaviour {
 	public GameObject quitButton;
 	public GameObject trays;
 	public GameObject inGameGui;
-	private bool endless = false;
+	public MusicLibrary music;
+//	private bool endless = false;
 
 	// Use this for initialization
 	void Start () {
+		/*
 		if (PlayerPrefs.GetInt("endless") == 1) {
 			endless = true;
 			Debug.Log("ENDLESS MODE ON");
@@ -31,55 +33,40 @@ public class CharacterDialog : MonoBehaviour {
 			endless = false;
 			Debug.Log("ENDLESS MODE OFF");
 		}
-		homeButton.SetActive(false);
-		retryButton.SetActive(false);
-		quitButton.SetActive(false);
+		*/
+//		homeButton.SetActive(false);
+//		retryButton.SetActive(false);
+//		quitButton.SetActive(false);
 	}
+	/*
 	public void enableTrays() {
 		trays.SetActive(true);
-		Camera.main.GetComponent<Animator>().SetTrigger("Prep");
+		Debug.Log("Prepping");
+//		Camera.main.GetComponent<Animator>().SetTrigger("Prep");
 	}
-
+	*/
 	public void reappear() {
+		GetComponent<Animator>().SetTrigger ("reappear");
 		Camera.main.GetComponent<Animator>().SetTrigger("Pots");
-
-		GetComponent<Animator>().SetBool("finishedTalking", false);
-		GetComponent<Animator>().SetBool("talkAgain", true);
-		if (endless) {
-			retryButton.SetActive(true);
-			quitButton.SetActive(true);
-			homeButton.SetActive(false);
-		}
-		else {
-			quitButton.SetActive(false);
-			retryButton.SetActive(false);
-			homeButton.SetActive(true);
-
-		}
-
-		inGameGui.SetActive(false);		
 	}
 
 	
 	public void advanceScript() {
 		if (dialogIndex >= jsonDialog[key][selectedIndex].Count - 1) {
-			//finished script
-			GetComponentInChildren<Animator>().SetBool("finishedTalking", true);
-			advanceButton.SetActive(false);
-			homeButton.SetActive(false);
-			quitButton.SetActive(false);
+			//HIDES BOSS
+			GetComponentInChildren<Animator>().SetTrigger("disappear");
+			//SHOWS GUI
 			inGameGui.SetActive (true);
-			//TODO: Skip if tutorial is enabled
-			Camera.main.GetComponent<CameraSequencing>().enableGamePlay();
+			Camera.main.GetComponent<Animator>().SetTrigger("Prep");
 
 		}
 		else {
+			music.boss();
 			dialogIndex++;
 			string response_key = key + "_response";
-
 			dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
-				Text responseText = advanceButton.GetComponentInChildren<Text>();
-				responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
+			Text responseText = advanceButton.GetComponentInChildren<Text>();
+			responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
 		}
 	}
 
@@ -88,8 +75,6 @@ public class CharacterDialog : MonoBehaviour {
 		key = _key;
 		dialogIndex = 0;
 		selectedIndex = Random.Range(0, jsonDialog[key].Count);
-
-		Debug.Log("There are " + jsonDialog[key].Count + " potential messages.");
 		dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
 		string response_key = _key + "_response";
 		Text responseText = homeButton.GetComponentInChildren<Text>();

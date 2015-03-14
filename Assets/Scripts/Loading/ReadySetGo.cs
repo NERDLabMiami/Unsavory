@@ -13,24 +13,33 @@ public class ReadySetGo : MonoBehaviour {
 	public GameObject gamePlayObject;
 	public GameObject timer;
 	public GameObject player;
+	public Button pauseButton;
+	public CurrentOrderScript currentOrder;
 	public MusicLibrary music;
 	private bool finished = false;
 	// Use this for initialization
 	void Start () {
 		nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
 		display.text = words[wordIndex];
+		Camera.main.GetComponent<AudioSource>().Stop ();
+		music.prestart();
+		pauseButton.enabled = false;
 	}
 
 
 	public void startGame() {
-		music.prestart();
-		gamePlayObject.SetActive(true);
-//		pauseButton.SetActive(true);
+	
+//		gamePlayObject.SetActive(true);
+//		orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
 		timer.GetComponent<PauseScript>().gamePlayStarted = true;
 		player.GetComponent<StartLevel>().beginLevel();
 		timer.GetComponent<TimerScript>().running = true;
-		finished = true;
+		currentOrder.spawnMoreOrders = true;
+		currentOrder.Spawn();
+		Time.timeScale = 1f;
+		music.countdownFinished();
 		Debug.Log("Let's go");
+		pauseButton.enabled = true;
 
 	}
 	
@@ -44,6 +53,8 @@ public class ReadySetGo : MonoBehaviour {
 				wordIndex++;
 				if (wordIndex >= words.Length) {
 					GetComponentInChildren<Animator>().SetBool("finished", true);
+					Debug.Log("Starting Game");
+					finished = true;
 					startGame();
 				}
 				else {

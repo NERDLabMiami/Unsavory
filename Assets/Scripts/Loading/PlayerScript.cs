@@ -9,14 +9,10 @@ public class PlayerScript : MonoBehaviour {
 	public Text pillsUI;
 	private float money;
 	private int pills;
-	public float hourlyRate;
-//	public bool hasBeenTutored;
-//	public int warningsBeforeFired = 3;
-	public bool hasSneezed = false;
+	private float hourlyRate;
+//	public bool hasSneezed = false;
 	public bool reset = false;
 	public GameObject levelCompleteCanvas;
-//	public Canvas levelCompleteCanvas;
-	//public Animator boss;
 	public Animator gameScreen;
 	public Animator gameGUI;
 	public GameObject homeButton;
@@ -24,7 +20,6 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject quitButton;
 	public GameObject boss;
 	public MusicLibrary music;
-	public Text hoursWorkedUI;
 	public Text shiftCompleteText;
 	public Text wagesUI;
 	private float daysWage;
@@ -41,16 +36,19 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	public float addWages(int timeWorked) {
-		List<float> wages = PlayerPrefsX.GetFloatArray("wages").Cast<float>().ToList();
+		float earnedWages = PlayerPrefs.GetFloat("earned wages",0);
+		Debug.Log("Earned Wages Before: " + earnedWages);
+
 		daysWage = hourlyRate * timeWorked;
-		wages.Add (daysWage);
-		PlayerPrefsX.SetFloatArray("wages", wages.ToArray());
+		Debug.Log("Today's Wage: " + daysWage);
+		earnedWages += daysWage;
+		PlayerPrefs.SetFloat("earned wages", earnedWages);
+		Debug.Log("Earned Wages Now " + earnedWages);
 		return daysWage;
 	}
 
 	public void cateringEvent() {
 		PlayerPrefs.SetInt("catering",1);
-
 	}
 
 	public void completeCatering() {
@@ -72,8 +70,6 @@ public class PlayerScript : MonoBehaviour {
 			homeButton.SetActive(true);
 
 			if (fullday) {
-				//Normal Day at Work
-				//TODO: Start Animation that shows amount worked / wage potential
 
 				Debug.Log ("Now Day " + currentLevel);
 
@@ -88,8 +84,7 @@ public class PlayerScript : MonoBehaviour {
 				}
 				
 				//cue boss
-				boss.GetComponent<Animator>().SetBool("talkAgain", true);
-				boss.GetComponent<Animator>().SetBool("finishedTalking", false);
+				boss.GetComponent<Animator>().SetTrigger("reappear");
 
 				
 			}
@@ -117,10 +112,9 @@ public class PlayerScript : MonoBehaviour {
 				warnings+=1;
 				int maxWarnings = PlayerPrefs.GetInt("max warnings");
 				PlayerPrefs.SetInt("warnings", warnings);
-				if (warnings >= maxWarnings) {
+				if (warnings > maxWarnings) {
 					//TODO: Fire Player
 					Debug.Log("Player should be fired");
-					hoursWorkedUI.text = "Fired";
 					PlayerPrefs.SetInt("fired",1);
 					if (sick) {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
@@ -130,6 +124,7 @@ public class PlayerScript : MonoBehaviour {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_slow");
 
 					}
+
 					quitButton.SetActive(true);
 					homeButton.SetActive(false);
 				}
@@ -154,43 +149,48 @@ public class PlayerScript : MonoBehaviour {
 		endless = _endless;
 		sick = _sick;
 		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
-		Time.timeScale = 0;
+		gameScreen.SetTrigger("fade orders");
+
 //		int currentLevel = PlayerPrefs.GetInt("current level");
 		PlayerPrefs.SetInt("tutorial", 1);
 		Debug.Log("End of Level Ran");
-		levelCompleteCanvas.SetActive(true);
 		gameGUI.SetTrigger("Fade Out");
 		homeButton.SetActive(false);
 		retryButton.SetActive(false);
 
 
 		 if(fullday) {
+			Time.timeScale = 0;
 			Debug.Log ("running wage update");
-			hoursWorkedUI.text = "Full Day of Work";
-			wagesUI.text = "$" + addWages(8).ToString() + " added to your next paycheck";
-			music.levelCompleted();
-			Camera.main.audio.Stop ();
+			levelCompleteCanvas.SetActive(true);
+			wagesUI.text = "$" + addWages(8).ToString("0.00") + " added to your next paycheck";
+			shiftCompleteText.text = "Shift Complete";
+//			music.levelCompleted();
+			Camera.main.GetComponent<AudioSource>().Stop ();
+			levelCompleteCanvas.GetComponentInChildren<ShiftCompleteScript>().success();
 
 		}
 
 		else if(sick) {
 			//ended because of sickness
-			wagesUI.text = "Leaving early with $" + daysWage.ToString() + " on next paycheck.";
+			wagesUI.text = "You were caught being sick on the job. You have to leave work early. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
 			shiftCompleteText.text = "Sick on the Job";
-//			hoursWorkedUI.text = "Sick on the Job";
-			music.levelFailed();
-			Camera.main.audio.Stop ();
+			Camera.main.GetComponent<AudioSource>().Stop ();
+			levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
 
 		}
 		
 		else {
-			wagesUI.text = "Sent home with $" + daysWage.ToString() + " on next paycheck.";
+			Time.timeScale = 0;
+			wagesUI.text = "You were too slow with preparing orders and have been sent home. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
 			shiftCompleteText.text = "Too Slow";
-//			hoursWorkedUI.text = "Too Slow";
 			Debug.Log("SLOW UPDATE SPEECH");
-			music.levelFailed();
-			Camera.main.audio.Stop ();
-
+//			music.levelFailed();
+			Camera.main.GetComponent<AudioSource>().Stop ();
+			levelCompleteCanvas.SetActive(true);
+//			ShiftCompleteScript shift = levelCompleteCanvas.GetComponent<ShiftCompleteScript>();
+//			shift.failed ();
+			levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
 		}
 		//NOT SURE IF THIS APPLIES ANYMORE
 //		gameScreen.SetBool("ended", true);
@@ -200,7 +200,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start() {
 		//checks if values need to be reset
 		resetData();
-//		float[] wages = PlayerPrefsX.GetFloatArray("wages");
+		hourlyRate = PlayerPrefs.GetFloat("hourly rate", 8.05f);
 
 		if (PlayerPrefs.HasKey("pills")) {
 			pills = PlayerPrefs.GetInt("pills");
@@ -208,12 +208,6 @@ public class PlayerScript : MonoBehaviour {
 		else {
 			PlayerPrefs.SetInt("pills", 0);
 			pills = 0;
-		}
-		if (PlayerPrefs.HasKey("sneezed")) {
-			hasSneezed = true;
-		}
-		else {
-			PlayerPrefs.SetInt("sneezed", 1);
 		}
 
 	
@@ -225,7 +219,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 
 		if (moneyUI) {
-			moneyUI.text = "$" + money.ToString();
+			moneyUI.text = "$" + money.ToString("0");
 			Debug.Log("Set Money");
 			Debug.Log("Money: " + money);
 		}

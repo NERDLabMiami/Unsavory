@@ -5,8 +5,10 @@ public class MusicLibrary : MonoBehaviour {
 	public AudioClip characterBackground;
 	public AudioClip characterResponse;
 	public AudioClip characterResponse2;
+	public AudioClip bossTalk;
 	public AudioClip tutorialBackground;
 	public AudioClip preGameplayBackground;
+	public AudioClip letsGo;
 	public AudioClip gameplayBackground;
 	public AudioClip pauseEffect;
 	public AudioClip selectEffect;
@@ -14,31 +16,30 @@ public class MusicLibrary : MonoBehaviour {
 	public AudioClip phoneRingEffect;
 	public AudioClip spendMoneyEffect;
 	public AudioClip unpauseEffect;
-	public AudioClip firedEffect;
-	public AudioClip endOfDayEffect;
-	public AudioClip dayIncompleteEffect;
 	public AudioClip orderFinishedEffect;
+	public AudioClip rocketSauceEffect;
 	public AudioClip orderWrongEffect;
-	public AudioClip addBeansEffect;
-	public AudioClip addRiceEffect;
-	public AudioClip addTortillaEffect;
-	public AudioClip addCreamEffect;
-	public AudioClip addRocketSauceEffect;
-	public AudioClip addCheeseEffect;
-	public AudioClip addChickenEffect;
 	public AudioClip sneezeEffect;
 	public AudioClip swipeNoseEffect;
 
 	// Use this for initialization
 	void Start () {
-	
+		setVolume();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+	public void playEffect(AudioClip clip) {
+		GetComponent<AudioSource>().PlayOneShot(clip);
+	}
 
+	public void setVolume() {
+		float sfVol = PlayerPrefs.GetFloat("sfx volume",1);
+		GetComponent<AudioSource>().volume = sfVol;
+
+	}
 
 	private void play() {
 		GetComponent<AudioSource>().Play();
@@ -49,6 +50,11 @@ public class MusicLibrary : MonoBehaviour {
 		play();
 
 	}
+	public void boss() {
+		GetComponent<AudioSource>().clip = bossTalk;
+		play();
+	}
+
 	public void respond() {
 		GetComponent<AudioSource>().clip = characterResponse;
 		play();
@@ -62,8 +68,15 @@ public class MusicLibrary : MonoBehaviour {
 
 	public void prestart() {
 		GetComponent<AudioSource>().clip = preGameplayBackground;
+		GetComponent<AudioSource>().loop = true;
 		play();
 
+	}
+
+	public void countdownFinished() {
+		GetComponent<AudioSource>().loop = false;
+		GetComponent<AudioSource>().clip = letsGo;
+		play ();
 	}
 
 	public void spendMoney() {
@@ -104,14 +117,11 @@ public class MusicLibrary : MonoBehaviour {
 		GetComponent<AudioSource>().clip = orderFinishedEffect;
 		play ();
 	}
-	public void levelCompleted() {
-		GetComponent<AudioSource>().clip = endOfDayEffect;
+
+	public void rocket() {
+		GetComponent<AudioSource>().clip = rocketSauceEffect;
 		play ();
 
-	}
-	public void levelFailed() {
-		GetComponent<AudioSource>().clip = dayIncompleteEffect;
-		play ();
 	}
 
 	public void wipeNose() {

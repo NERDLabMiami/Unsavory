@@ -9,6 +9,7 @@ public class PlateScript : MonoBehaviour {
 	public GameObject currentOrder;
 	public GameObject strikeCounter;
 	public GameObject tutorial;
+	public GameObject rocketSauce;
 	public bool tutorialMode = false;
 	private int orderCounter = 0;
 	public GameObject music;
@@ -28,8 +29,6 @@ public class PlateScript : MonoBehaviour {
 				matchedOrderIndex = i;
 				orderCounter++;
 				currentOrder.GetComponent<CurrentOrderScript>().setOrdersServed(orderCounter);
-				music.GetComponent<MusicLibrary>().plated();
-//				music.GetComponent<AudioSource>().Play();
 				break;
 			}
 
@@ -40,6 +39,16 @@ public class PlateScript : MonoBehaviour {
 			//clean up
 			//get rid of the current order
 			Destroy(current_recipes[matchedOrderIndex]);
+			if (containsIngredient(ingredients, rocketSauce)) {
+				Debug.Log("Has Rocket Sauce");
+				music.GetComponent<MusicLibrary>().rocket();
+			}
+			else {
+				Debug.Log("No Rocket Sauce");
+				music.GetComponent<MusicLibrary>().plated();
+
+			}
+
 		}
 		else {
 			music.GetComponent<MusicLibrary>().misplated();
@@ -66,6 +75,14 @@ public class PlateScript : MonoBehaviour {
 
 	public bool hasIngredient(GameObject ingredient) {
 		if(ingredients.Contains(ingredient)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public bool containsIngredient(List<GameObject> list, GameObject ingredient) {
+		if (list.Contains(ingredient)) {
 			return true;
 		}
 		else {

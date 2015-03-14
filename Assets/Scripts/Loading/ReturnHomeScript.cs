@@ -19,69 +19,81 @@ public class ReturnHomeScript : MonoBehaviour {
 	private int day;
 	private int finalDay;
 	private float money;
-	private float[] wages;
+	private float wages;
+	private string billData;
 	// Use this for initialization
 
 	private float calculateWages() {
 		money = PlayerPrefs.GetFloat("money");
-		wages = PlayerPrefsX.GetFloatArray("wages");
-		string daysWorked = "";
-		float paycheck = 0;
-		if (wages.Length >= day) {
-			for (int i = day; i > day - 5; i--) {
-				paycheck += (int)wages[i-1];
-				daysWorked += "$" + wages[i-1].ToString() + "\n";
-				Debug.Log ("Pay for " + wages[i-1]);
-			}
-		}
+		float paycheck = PlayerPrefs.GetFloat("earned wages", 0);
+		Debug.Log("WAGES TO BE PAID: " + wages);
 		money += paycheck;
-
+		//set earned wages back to nothing
+		PlayerPrefs.SetFloat("earned wages", 0);
 		PlayerPrefs.SetFloat("money", money);
 		Debug.Log("Player has $" + money);
 		return paycheck;
 	}
 
 	private int payOutstandingBills() {
-		string billData =  Resources.Load<TextAsset>("bills").ToString();
 		JSONNode bills = JSON.Parse(billData);
-		int[] dueDates = PlayerPrefsX.GetIntArray("due");
-//		string[] effectsArray = PlayerPrefsX.GetStringArray("effects");
 		int unpaidBills = 0;
+
 		for (int i = 0; i < bills["bills"].Count; i++) {
-			
-			if (dueDates[i] <= day) {
-				//pay each bill
-				if (money >= bills["bills"][i]["amount"].AsInt) {
-					money = money - bills["bills"][i]["amount"].AsInt;
-					dueDates[i] += finalDay;
-					//remove effect, only worthwhile if playing past the month
-					List<string> effects = new List<string>();
-					effects.AddRange(PlayerPrefsX.GetStringArray("effects"));
-					effects.RemoveAll(s => s == bills["bills"][i]["effect"]);
-					PlayerPrefsX.SetStringArray("effects", effects.ToArray());
-					
+			//if it's past the due date
+			if (bills["bills"][i]["due"].AsInt >= day) {
+				//check if it's unpaid
+				if (PlayerPrefs.GetInt("bill" + i,0) == 0) {
+					//pay it
+					float remainingMoney =money - bills["bills"][i]["amount"].AsInt;
+					if (remainingMoney >= 0) {
+						money = remainingMoney;
+						PlayerPrefs.SetInt("bill" + i,1); 
+					}
+					else {
+						unpaidBills++;
+					}
 				}
-				else {
-					unpaidBills++;
-				}
-				
 			}
 		}
-		PlayerPrefsX.SetIntArray("due", dueDates);
 		return unpaidBills;
 	}
 	
 	void Start () {
 		money = PlayerPrefs.GetFloat("money");
+		day = PlayerPrefs.GetInt("current level", 0);
+		Time.timeScale = 1f;
+		//Apply Effects Based on Unpaid Bills
+		billData =  Resources.Load<TextAsset>("bills").ToString();
+
+		JSONNode bills = JSON.Parse(billData);
+		for (int i = 0; i < bills["bills"].Count; i++) {
+			//if it's past the due date
+			if (bills["bills"][i]["due"].AsInt < day) {
+				//check if it's paid
+				if (PlayerPrefs.GetInt("bill" + i,0) == 1) {
+					//it's unpaid
+					string effect = bills["bills"][i]["effect"];
+					int currentEffect = PlayerPrefs.GetInt(effect, 0);
+					currentEffect++;
+					PlayerPrefs.SetInt(effect, currentEffect);
+					Debug.Log(effect + " is now " + currentEffect);
+				}
+				else {
+					Debug.Log("This bill is already paid. No effect added");
+				}
+			}
+
+		}
+
 		if (PlayerPrefs.HasKey("catering")) {
 
 			PlayerPrefs.DeleteKey("catering");
 
 		}
 		else {
-			day = PlayerPrefs.GetInt("current level");
 			Debug.Log ("I have " + money.ToString());
-			finalDay = PlayerPrefs.GetInt("final day");
+			finalDay = PlayerPrefs.GetInt("final day", 30);
 			Debug.Log("It's day " + day);
 			if (day % 5 == 0) {
 				//Pay Wages, Add Notification for Bill
@@ -107,9 +119,19 @@ public class ReturnHomeScript : MonoBehaviour {
 				}
 				else if(weekend) {
 					Debug.Log("It's the weekend");
-					paycheckUI.text = "$" + calculateWages().ToString();
-					buyGroceries();
-					bankAccountUI.text = "$" + money.ToString();
+					paycheckUI.text = "$" + calculateWages().ToString("0.00");
+					float groceryCost = buyGroceries();
+					if (groceryCost > 0) {
+						Debug.Log("Deducting " + groceryCost + " for groceries");
+						money = money - groceryCost;
+						PlayerPrefs.SetFloat("money", money);
+						groceryUI.text = "-$" + groceryCost.ToString("0.00");
+					}
+				else {
+					//health deducted in buygroceries
+						groceryUI.text = "N/A";
+				}
+					bankAccountUI.text = "$" + money.ToString("0.00");
 					weekCompletePanel.SetActive(true);
 				//TODO: Offer Overtime Catering
 				//check if player has phone
@@ -118,7 +140,7 @@ public class ReturnHomeScript : MonoBehaviour {
 
 			}
 			day++;
-			moneyUI.text = "$" + money.ToString();
+			moneyUI.text = "$" + money.ToString("0.00");
 			PlayerPrefs.SetInt("current level", day);
 		}
 	}
@@ -132,6 +154,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			//returning to main menu as a loser
 			PlayerPrefs.SetInt("fired", 1);
 		}
+		Application.LoadLevel(0);
 	}
 
 	public void continueToNextMonth() {
@@ -140,31 +163,22 @@ public class ReturnHomeScript : MonoBehaviour {
 		PlayerPrefs.SetInt("month", currentMonth);
 	}
 	
-	void buyGroceries() {
+	float buyGroceries() {
 		string billData =  Resources.Load<TextAsset>("bills").ToString();
 		JSONNode bills = JSON.Parse(billData);
 		money = PlayerPrefs.GetFloat ("money");
-		int costOfGroceries = bills["groceries"][0]["amount"].AsInt;
+		float costOfGroceries = bills["groceries"][0]["amount"].AsFloat;
 		if (money >= costOfGroceries) {
-			//TODO: Show Buying Groceries
-			money = money - costOfGroceries;
-			PlayerPrefs.SetFloat("money", money);
-			groceryUI.text = "-$" + costOfGroceries.ToString();
+			return costOfGroceries; 
 		}
 		else {
-			groceryUI.text = "N/A";
-			addEffect(bills["groceries"][0]["effect"]);
+			float health = PlayerPrefs.GetFloat("health");
+			health--;
+			PlayerPrefs.SetFloat("health", health);
+			return 0f;
 		}
 	}
 
-	void addEffect(string effect) {
-		string[] effectsArray = PlayerPrefsX.GetStringArray("effects");
-		List<string> effects = new List<string>();
-		effects.AddRange(effectsArray);
-		effects.Add(effect);
-		PlayerPrefsX.SetStringArray("effects", effects.ToArray());
-
-	}
 
 	// Update is called once per frame
 	void Update () {

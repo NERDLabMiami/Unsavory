@@ -25,6 +25,10 @@ public class CameraShakeScript : MonoBehaviour {
 		OriginalRot = player.transform.rotation;
 	}
 
+	public void resetCameraToOriginalPosition() {
+		transform.rotation = OriginalRot;
+		transform.position = OriginalPos;
+	}
 	public void giveSneezeWarning(float timeBeforeWarning) {
 		SneezeWarning = true;
 		DoShake(timeBeforeWarning - .1f, .01f);

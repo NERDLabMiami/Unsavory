@@ -22,80 +22,57 @@ public class StartLevel : MonoBehaviour {
 		bool catering = PlayerPrefs.HasKey("catering");
 		if (catering) {
 			dialog.changeSpeechKey("catering");
-
 		}
 		else if (currentLevel == 1) {
 			//first day of work
 			Debug.Log("First Day of Work!");
 			dialog.changeSpeechKey("welcome");
-
 		}
 		else {
 			//return to work
-			Debug.Log("Returning to work");
-			dialog.changeSpeechKey("return");
+			float lateness = PlayerPrefs.GetFloat("late effect", 0);
+			if (lateness > 0) {
+				Debug.Log("Late to work");
+				dialog.changeSpeechKey("late_return");
+
+			}
+			else {
+				Debug.Log("Returned to work on time");
+				dialog.changeSpeechKey("return");
+
+			}
 
 		}
+
 	}
 
 	public void beginLevel() {
+		float lateness = PlayerPrefs.GetFloat("late effect", 0);
+
 		if (!levelBegan) {
-		timerOn = true;
-		Camera.main.GetComponent<AudioSource>().clip = musicLibrary.gameplayBackground;
-		Camera.main.GetComponent<AudioSource>().Play();
-		nose.GetComponent<NoseWipeScript>().sneezeAllowed = true;
-		List<string> effects = new List<string>();
-		effects.AddRange(PlayerPrefsX.GetStringArray("effects"));
-		
-		Debug.Log(effects.Count + " effects are being applied.");
-		int healthEffect = 0;
-		int lateness = 0;
-		for (int i = 0; i < effects.Count; i++) {
-			if (effects[i].Equals("health")) {
-				healthEffect++;
-			}
-			else if (effects[i].Equals("bus")) {
-				//TODO: Figure out proper amount to add for each lateness count. Too late = fired?
-				lateness++;
-			}
-			else {
-				Debug.Log("disregarded " + effects[i]);
-			}
+			timerOn = true;
+			Camera.main.GetComponent<AudioSource>().clip = musicLibrary.gameplayBackground;
+			Camera.main.GetComponent<AudioSource>().Play();
+			nose.GetComponent<NoseWipeScript>().sneezeAllowed = true;
+
 		}
-		//sneezetimer script is looking at this as well on startup. need to redo to remove the race condition
-		float health = PlayerPrefs.GetFloat("health");
-		health = health - healthEffect;
-		PlayerPrefs.SetFloat("health", health);
-		
-		Debug.Log("LATENESS MULTIPLIER: " + lateness + " HEALTH MULTIPLIER: " + healthEffect);
-		int minutesLate = UnityEngine.Random.Range(0, lateness);
-		TimeSpan workday = new TimeSpan(8,minutesLate,0);
+
+		float minutesLate = UnityEngine.Random.Range(0, lateness);
+		TimeSpan workday = new TimeSpan(8,(int)minutesLate,0);
 
 		//TODO: Broadcast Late Message to Update Boss Dialogue for arriving late
 		timer.GetComponent<TimerScript>().setWorkday(workday);
 		Debug.Log("Begin Level");
-		//		startingPosition = Camera.main.transform;
-		
+
 		if (PlayerPrefs.GetInt("endless") == 1) {
 			timer.GetComponent<TimerScript>().endless = true;
 		}
 		else {
 			timer.GetComponent<TimerScript>().endless = false;
 		}
-
-		if (PlayerPrefs.HasKey("tutorial")) {
-//			spawnMoreOrders = true;
-			tutor.GetComponent<TutorScript>().orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
-			Debug.Log("Turning off tutorial");
-		}
-		else {
-			tutor.SetActive(true);
-			Debug.Log("Running Tutorial");
-		}
-			levelBegan = true;
-		}
+		levelBegan = true;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (timerOn) {

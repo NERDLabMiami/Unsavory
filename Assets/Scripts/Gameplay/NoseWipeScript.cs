@@ -15,7 +15,9 @@ public class NoseWipeScript : MonoBehaviour {
 	public GameObject player;
 	private bool canStopSneeze = false;
 	public bool sneezeAllowed = true;
+	private bool snotEmitting = false;
 	public ParticleSystem snot;
+	public GameObject snotImage;
 	public ParticleSystem sweat;
 	public MusicLibrary music;
 	private bool sweating = false;
@@ -37,7 +39,15 @@ public class NoseWipeScript : MonoBehaviour {
 	bool counting;
 	float timer;
 
+	float health;
+	public float startingHealth;
+
 	void Start () {
+		float healthEffect = PlayerPrefs.GetFloat("health effect", 0);
+		health = PlayerPrefs.GetFloat("health");
+		health = health - healthEffect;
+		startingHealth = health;
+
 		initializeSneezing();
 		sweatingBeforeSneezeWarning+= timeBeforeSneezeWarning;
 		if (PlayerPrefs.HasKey("sneezed")) {
@@ -52,24 +62,21 @@ public class NoseWipeScript : MonoBehaviour {
 	}
 
 	public void initializeSneezing() {
-		sneezeTimer = PlayerPrefs.GetFloat("health");
+		sneezeTimer = health;
 		resetSneezeTimer();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		/*
-		if (ShakeDetector()){ // call ShakeDetector every Update!
-			// the device was shaken up and the count is in shakeCount
-			// the direction of the first shake is in shakeDir (1 or -1)
-			Debug.Log("shaking device");
-		}
-		// the variable counting tells when the device is being shaken:
-		if (counting){
-			print("Shaking up device");
-		}
-*/
+		if (snotEmitting) {
+			if(snot.isStopped) {
+			//TODO: Cue player end of level
+				Camera.main.GetComponent<CameraShakeScript>().resetCameraToOriginalPosition();
+				Time.timeScale = 0;
+				player.GetComponent<PlayerScript>().levelCompleteCanvas.SetActive(true);
 
+			}
+		}
 		if (sneezeAllowed) {
 			sneezeTimer -= Time.deltaTime;
 
@@ -78,7 +85,9 @@ public class NoseWipeScript : MonoBehaviour {
 				Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);
 				sneezeTimer = timeBetweenSneezes;
 				snot.Play();
-
+				snotImage.SetActive(true);
+				music.sneeze();
+				snotEmitting = true;
 				//TAINT INGREDIENTS
 				GameObject[] trays = GameObject.FindGameObjectsWithTag("Tray");
 				for (int i = 0; i < trays.Length; i++) {
@@ -92,6 +101,8 @@ public class NoseWipeScript : MonoBehaviour {
 				sweat.loop = true;
 				sweating = true;
 				Debug.Log("Sweating!");
+				GetComponent<Animator>().SetTrigger("twitch");
+
 			}
 			if (sneezeTimer <= timeBeforeSneezeWarning) {
 				Camera.main.GetComponent<CameraShakeScript>().giveSneezeWarning(timeBeforeSneezeWarning);
@@ -105,10 +116,11 @@ public class NoseWipeScript : MonoBehaviour {
 	
 	private void resetSneezeTimer() {
 		Debug.Log("Reset Sneeze");
+		GetComponent<Animator>().SetTrigger("relief");
 		sweating = false;
 		sweat.loop = false;
 		if (canStopSneeze) {
-			float health = PlayerPrefs.GetFloat("health");
+			health = startingHealth;
 			sneezeTimer = health;
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
@@ -128,7 +140,6 @@ public class NoseWipeScript : MonoBehaviour {
 		if(Input.GetMouseButtonUp(0)) {
 			
 			//save ended touch 2d point
-			Debug.Log("Mouse Y: " + Input.mousePosition.y);
 
 			secondPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 			

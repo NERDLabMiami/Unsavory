@@ -1,7 +1,7 @@
 {
   "levels": [
     {
-        "recipes": 1,
+        "recipes": 2,
         "waiting time": 3,
         "end": false
     },

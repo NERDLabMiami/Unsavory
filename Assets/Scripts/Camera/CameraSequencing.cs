@@ -4,29 +4,20 @@ using UnityEngine.UI;
 
 public class CameraSequencing : MonoBehaviour {
 	public GameObject preStartObject;
-	public GameObject gamePlayObject;
-	public GameObject timer;
-	public GameObject player;
-	public CharacterDialog boss;
+	public GameObject tutorObject;
 	// Use this for initialization
 	void Start () {
-	
 	}
 
-	public void enableGamePlay() {
+	public void startCountdown() {
 		if (PlayerPrefs.HasKey("tutorial")) {
 			preStartObject.SetActive(true);
 		}
 		else {
-			boss.enableTrays();
-			gamePlayObject.SetActive(true);
-//			pauseButton.SetActive(true);
-			timer.GetComponent<PauseScript>().gamePlayStarted = true;
-			player.GetComponent<StartLevel>().beginLevel();
-			timer.GetComponent<TimerScript>().running = true;
+			tutorObject.SetActive(true);
 		}
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 	

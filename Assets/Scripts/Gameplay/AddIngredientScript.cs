@@ -4,17 +4,21 @@ using System.Collections;
 public class AddIngredientScript : MonoBehaviour {
 	public GameObject ingredient = null;
 	public GameObject plate;
+	public MusicLibrary music;
+	public AudioClip soundEffect;
 	private bool tainted = false;
 	public string tutorialLesson;
 	public GameObject tutorial;
-	void Start() {
-	}
 
 	private void OnMouseDown() {
+		GetComponent<Animator>().SetTrigger("tapped");
 		if (ingredient != null) {
 			if (!plate.GetComponent<PlateScript>().hasIngredient(ingredient)) {
 				Debug.Log("Ingredient not on plate yet");
 				Spawn ();
+				if (music) {
+					music.playEffect(soundEffect);
+				}
 				plate.GetComponent<PlateScript>().ingredients.Add(ingredient);
 			}
 			else {
