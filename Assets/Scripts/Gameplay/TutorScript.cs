@@ -9,6 +9,7 @@ public class TutorScript : MonoBehaviour {
 	public GameObject spawningArea;
 	public GameObject orderHopper;
 	public GameObject plate;
+	public AudioClip tutorialFinished;
 	public Button pauseButton;
 	private int trayIndex = 0;
 	private RecipeScript currentRecipe;
@@ -50,7 +51,8 @@ public class TutorScript : MonoBehaviour {
 		preStartObject.SetActive(true);
 		PlayerPrefs.SetInt("tutorial", 1);
 		GetComponent<Animator>().SetTrigger("disappear");
-
+		GetComponent<AudioSource>().clip = tutorialFinished;
+		GetComponent<AudioSource>().Play();
 	}
 
 	public void advanceTutorial() {

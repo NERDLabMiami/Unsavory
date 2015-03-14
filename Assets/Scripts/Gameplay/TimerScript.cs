@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TimerScript : MonoBehaviour {
 
-	public float timer = 30;
+	public float timer = 60;
 	public bool endless = false;
 	public DateTime today;
 	private DateTime startOfWorkDay;
@@ -37,13 +37,28 @@ public class TimerScript : MonoBehaviour {
 
 	}
 	public string getClock() {
-		today = today.AddSeconds(Time.deltaTime * 1080);
+//		today = today.AddSeconds(Time.deltaTime * 1080);
+		//voodoo math
+		today = today.AddSeconds(Time.deltaTime * 540);
 		return today.ToString("h:mm tt");
 	}
 
-	public int getTimeWorked() {
-		TimeSpan timeWorked = today-startOfWorkDay;
-		return  timeWorked.Hours;
+	public float getTimeWorked() {
+		//TimeSpan timeWorked = today-startOfWorkDay;
+
+		//timer = 0 and 60
+		//full = 60
+		//60 - timer = TIME WORKED
+		//timer gets smaller
+		//timer = 20, means I worked 40 seconds
+		// 40 / 60 = percentage worked
+		// * 8 hour day
+		float fullday = 60;
+		float timeWorked = fullday - timer;
+		float percentageOfFullDay = timeWorked / fullday;
+		return percentageOfFullDay * 8;
+
+//		return  timeWorked.Hours;
 	}
 
 	// Update is called once per frame

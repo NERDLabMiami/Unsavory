@@ -12,7 +12,7 @@ public class StartCareer : MonoBehaviour {
 	void Start () {
 		Time.timeScale = 1f;
 		if (PlayerPrefs.HasKey("fired") || reset) {
-			CustomFunctionScript.resetPlayerData(30, 0);
+			CustomFunctionScript.resetPlayerData(20, 0);
 			Debug.Log("Resetting Game");
 		}
 		if (!PlayerPrefs.HasKey("started career")) {

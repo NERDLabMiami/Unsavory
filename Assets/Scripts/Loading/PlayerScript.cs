@@ -35,7 +35,7 @@ public class PlayerScript : MonoBehaviour {
 
 	}
 
-	public float addWages(int timeWorked) {
+	public float addWages(float timeWorked) {
 		float earnedWages = PlayerPrefs.GetFloat("earned wages",0);
 		Debug.Log("Earned Wages Before: " + earnedWages);
 

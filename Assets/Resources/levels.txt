@@ -2,7 +2,7 @@
   "levels": [
     {
         "recipes": 2,
-        "waiting time": 3,
+        "waiting time": 4,
         "end": false
     },
     {
@@ -142,7 +142,7 @@
     },
         {
         "recipes": 16,
-        "waiting time": 2.6,
+        "waiting time": 2.5,
         "end": false
     },
         {

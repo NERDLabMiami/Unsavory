@@ -50,6 +50,8 @@ public class NoseWipeScript : MonoBehaviour {
 
 		initializeSneezing();
 		sweatingBeforeSneezeWarning+= timeBeforeSneezeWarning;
+		canStopSneeze = true;
+		/*
 		if (PlayerPrefs.HasKey("sneezed")) {
 			canStopSneeze = true;
 			Debug.Log("Player Should Be Able to Stop Sneeze");
@@ -59,6 +61,7 @@ public class NoseWipeScript : MonoBehaviour {
 
 			canStopSneeze = false; 
 		}
+		*/
 	}
 
 	public void initializeSneezing() {
@@ -116,7 +119,7 @@ public class NoseWipeScript : MonoBehaviour {
 	
 	private void resetSneezeTimer() {
 		Debug.Log("Reset Sneeze");
-		GetComponent<Animator>().SetTrigger("relief");
+//		GetComponent<Animator>().SetTrigger("relief");
 		sweating = false;
 		sweat.loop = false;
 		if (canStopSneeze) {
@@ -176,6 +179,7 @@ public class NoseWipeScript : MonoBehaviour {
 			//swipe left
 			
 			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f && distance >= 80) {
+				GetComponent<Animator>().SetTrigger("wipe right");
 				music.wipeNose();
 				resetSneezeTimer();
 				
@@ -184,6 +188,8 @@ public class NoseWipeScript : MonoBehaviour {
 			//swipe right
 			
 			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f && distance >= 80) {
+				GetComponent<Animator>().SetTrigger("wipe left");
+
 				music.wipeNose();
 				resetSneezeTimer();
 
