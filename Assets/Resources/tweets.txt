@@ -1,0 +1,8 @@
+{
+  "tweets": ["#restaurantswork 90% of restaurant workers without #paidsickdays? That's #unsavory http://goo.gl/HxQjk8 @rocunited @WeRRestaurants #HFANow",
+				  "#restaurantswork employees w/o #paidsickdays is an #unsavory #publichealth concern @rocunited @WeRRestaurants http://goo.gl/HxQjk8 #HFANow",
+				  "#restaurantswork @WeRRestaurants 90% of workers without #paidsickdays is #unsavory http://goo.gl/HxQjk8 #HFANow",
+				  "#restaurantswork 40% of workers coughing or sneezing while handling food? #unsavory #HFANow http://goo.gl/HxQjk8",
+				  "#restaurantswork I support #HFANow and #paidsickdays anything less is #unsavory http://goo.gl/HxQjk8"				  
+				  ]  
+ }

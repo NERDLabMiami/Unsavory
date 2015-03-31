@@ -22,7 +22,7 @@ public class ReadySetGo : MonoBehaviour {
 		nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
 		display.text = words[wordIndex];
 		Camera.main.GetComponent<AudioSource>().Stop ();
-		music.prestart();
+//		music.prestart();
 		pauseButton.enabled = false;
 	}
 
@@ -37,6 +37,7 @@ public class ReadySetGo : MonoBehaviour {
 		currentOrder.spawnMoreOrders = true;
 		currentOrder.Spawn();
 		Time.timeScale = 1f;
+		GetComponent<AudioSource>().Stop();
 		music.countdownFinished();
 		Debug.Log("Let's go");
 		pauseButton.enabled = true;
@@ -54,11 +55,13 @@ public class ReadySetGo : MonoBehaviour {
 				if (wordIndex >= words.Length) {
 					GetComponentInChildren<Animator>().SetBool("finished", true);
 					Debug.Log("Starting Game");
+					display.text = "Go!";
 					finished = true;
 					startGame();
 				}
 				else {
 					display.text = words[wordIndex];
+					GetComponentInChildren<Animator>().SetTrigger("wobble");
 				}
 			}
 		}

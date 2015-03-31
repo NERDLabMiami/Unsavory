@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class TimerScript : MonoBehaviour {
 
 	public float timer = 60;
-	public bool endless = false;
 	public DateTime today;
 	private DateTime startOfWorkDay;
 	public bool running = false;
@@ -32,6 +31,7 @@ public class TimerScript : MonoBehaviour {
 	public void setWorkday(TimeSpan workday) {
 		today = new DateTime(2015,1,1);
 		today = today.Add(workday);
+		//TODO: don't think I need this
 		startOfWorkDay = today;
 		Debug.Log ("Setting Workday");
 
@@ -44,15 +44,7 @@ public class TimerScript : MonoBehaviour {
 	}
 
 	public float getTimeWorked() {
-		//TimeSpan timeWorked = today-startOfWorkDay;
 
-		//timer = 0 and 60
-		//full = 60
-		//60 - timer = TIME WORKED
-		//timer gets smaller
-		//timer = 20, means I worked 40 seconds
-		// 40 / 60 = percentage worked
-		// * 8 hour day
 		float fullday = 60;
 		float timeWorked = fullday - timer;
 		float percentageOfFullDay = timeWorked / fullday;
@@ -65,16 +57,17 @@ public class TimerScript : MonoBehaviour {
 	void Update () {
 		if (running) {
 			timer -= Time.deltaTime;
-				if (timer <= 0 && !endless && !catering) {
+				if (timer <= 0 && !catering) {
 					//Continue onto next day, full day of work
-					player.GetComponent<PlayerScript>().EndOfLevel(true, false, false);
+					player.GetComponent<PlayerScript>().EndOfLevel(true, false);
 					running = false;
 					Debug.Log("End of Day!");
 				}
 				//endless increase difficulty
-				if (endless && timer <= 0) {
+				if (catering && timer <= 0) {
 					timer = 30;
-					timeBetweenOrders *= .95f;
+					timeBetweenOrders *= .85f;
+					Debug.Log("Increasing Difficulty");
 					if (timeBetweenOrders <= .5f) {
 						timeBetweenOrders = .5f;
 					}

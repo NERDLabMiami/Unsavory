@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.GameCenter;
+using UnityEngine.SocialPlatforms;
 
 public class ReturnHomeScript : MonoBehaviour {
 	public GameObject phone;
@@ -14,6 +16,9 @@ public class ReturnHomeScript : MonoBehaviour {
 	public GameObject gameOverPanel;
 	public GameObject monthCompletePanel;
 	public GameObject weekCompletePanel;
+	public GameObject billButton;
+	public GameObject letterButton;
+	public GameObject firstTimeHomePanel;
 	public MusicLibrary music;
 	private bool weekend = false;
 	private int day;
@@ -60,9 +65,22 @@ public class ReturnHomeScript : MonoBehaviour {
 	}
 	
 	void Start () {
+		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
+
 		money = PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
 		Time.timeScale = 1f;
+
+		if (!PlayerPrefs.HasKey("welcomed home")) {
+			firstTimeHomePanel.SetActive(true);
+			PlayerPrefs.SetInt("welcomed home", 1);
+		}
+
+		if (PlayerPrefs.HasKey("letter")) {
+			//TODO: Turn letter button on
+			letterButton.SetActive(true);
+		}
+
 		//Apply Effects Based on Unpaid Bills
 		billData =  Resources.Load<TextAsset>("bills").ToString();
 
@@ -111,13 +129,23 @@ public class ReturnHomeScript : MonoBehaviour {
 					else {
 						//Activate Month Complete Pane
 						monthCompletePanel.SetActive(true);
-					}
+						Social.ReportProgress( "survived", 100, (result) => {
+							Debug.Log ( result ? "Reported Survival" : "Failed to report taco progress");
+					});
+
+				}
 
 					//TODO: unlock wage control ability
 
 					Debug.Log("Month is over, game ends");
 				}
 				else if(weekend) {
+					if (PlayerPrefs.HasKey("using paid sick days")) {
+						int paidSickDays = PlayerPrefs.GetInt("paid sick days",0);
+						paidSickDays++;
+						PlayerPrefs.SetInt("paid sick days", paidSickDays);
+					}
+		
 					Debug.Log("It's the weekend");
 					paycheckUI.text = "$" + calculateWages().ToString("0.00");
 					float groceryCost = buyGroceries();
@@ -133,10 +161,12 @@ public class ReturnHomeScript : MonoBehaviour {
 				}
 					bankAccountUI.text = "$" + money.ToString("0.00");
 					weekCompletePanel.SetActive(true);
+
 				//TODO: Offer Overtime Catering
 				//check if player has phone
-				phone.SetActive(true);
-				music.phoneRing();
+//				phone.SetActive(true);
+//				music.phoneRing();
+				billButton.GetComponent<Animator>().SetTrigger("attention");
 
 			}
 			day++;
@@ -149,6 +179,8 @@ public class ReturnHomeScript : MonoBehaviour {
 	public void gameOver(bool won) {
 		if (won) {
 			//going to credits scene
+			PlayerPrefs.SetInt("survived", 1);
+			PlayerPrefs.SetInt("reset",1);
 		}
 		else {
 			//returning to main menu as a loser

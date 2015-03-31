@@ -1,35 +1,72 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Settings : MonoBehaviour {
-	public Slider backgroundVolumeSlider;
-	public Slider soundEffectsVolumeSlider;
-	public AudioSource backgroundMusicSource;
-	public AudioSource soundEffectsMusicSource;
 	private float sfxvol;
 	private float bgvol;
+	public Toggle music;
+	public Toggle sfx;
+	public Toggle paidSickDays;
+	public GameObject paidSickDaySetting;
+	public AudioMixer mixer;
 	// Use this for initialization
 	void Start () {
-		sfxvol = PlayerPrefs.GetFloat("sfx volume", .5f);
-		bgvol = PlayerPrefs.GetFloat("background volume", .5f);
-		soundEffectsVolumeSlider.value = sfxvol;
-		bgvol = PlayerPrefs.GetFloat("background volume", .5f);
-		backgroundVolumeSlider.value = bgvol;
+
+		if (PlayerPrefs.HasKey("paid sick days achieved")) {
+			paidSickDaySetting.SetActive(true);
+		}
+
+
+		if (PlayerPrefs.GetFloat("sfx volume",0) == 0) {
+			sfx.isOn = true;
+		}
+
+		if (PlayerPrefs.GetFloat("background volume",0) == 0) {
+			music.isOn = true;
+
+		}
+
+		if (PlayerPrefs.HasKey("using paid sick days")) {
+			paidSickDays.isOn = false;
+		}
 	}
 
-	public void setBackgroundVolume(float v) {
-//		backgroundVolumeText.text = bgvol.ToString();
-		PlayerPrefs.SetFloat("background volume", v);
-		backgroundMusicSource.volume = v;
-		Debug.Log("Set Volume to " + v);
+	public void toggleSoundEffectsVolume(bool off) {
+		if (off) {
+			PlayerPrefs.SetFloat("sfx volume", 0);
+			mixer.SetFloat("sfxVolume", -80f);
+		}
+		else {
+			PlayerPrefs.SetFloat("sfx volume", 1);
+			mixer.SetFloat("sfxVolume", 0);
+
+		}
+	}
+
+	public void toggleBackgroundVolume(bool off) {
+		if (off) {
+			PlayerPrefs.SetFloat("background volume", 0);
+			Camera.main.GetComponent<AudioSource>().volume = 0;
+
+		}
+		else {
+			PlayerPrefs.SetFloat("background volume", 1);
+			Camera.main.GetComponent<AudioSource>().volume = 1;
+
+		}
 
 	}
 
-	public void setSFXVolume(float v) {
-		PlayerPrefs.SetFloat("sfx volume", v);
-//		soundEffectsMusicSource.volume = v;
-		Debug.Log("Set Volume to " + v);
+	public void togglePaidSickDays(bool off) {
+		if (off) {
+			PlayerPrefs.DeleteKey("using paid sick days");
+		}
+		else {
+			PlayerPrefs.SetInt("using paid sick days",1);
+		}
+
 	}
 
 	// Update is called once per frame

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 public class PlateScript : MonoBehaviour {
 //	public GameObject[] droppedIngredients;
@@ -10,11 +11,17 @@ public class PlateScript : MonoBehaviour {
 	public GameObject strikeCounter;
 	public GameObject tutorial;
 	public GameObject rocketSauce;
+	public GameObject wrappedTaco;
+	public GameObject tray;
 	public bool tutorialMode = false;
 	private int orderCounter = 0;
 	public GameObject music;
 	public TortillaFoundation tortilla;
-	
+
+	void Start() {
+		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
+	}
+
 	private void OnMouseDown() {
 
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
@@ -28,6 +35,25 @@ public class PlateScript : MonoBehaviour {
 				matched = true;
 				matchedOrderIndex = i;
 				orderCounter++;
+				if (orderCounter == 25) {
+					Social.ReportProgress( "com.dataplayed.unsavory.25tacos", 100f, (result) => {
+						Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
+					});
+				}
+				if (orderCounter == 100) {
+					Social.ReportProgress( "com.dataplayed.unsavory.100tacos", 100f, (result) => {
+						Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
+					});
+				}
+
+				if (orderCounter == 500) {
+					Social.ReportProgress( "com.dataplayed.unsavory.500tacos", 100f, (result) => {
+						Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
+					});
+				}
+
+				
+				
 				currentOrder.GetComponent<CurrentOrderScript>().setOrdersServed(orderCounter);
 				break;
 			}
@@ -39,15 +65,24 @@ public class PlateScript : MonoBehaviour {
 			//clean up
 			//get rid of the current order
 			Destroy(current_recipes[matchedOrderIndex]);
+			Vector3 tacoPosition = transform.position;
+			GameObject taco = (GameObject) Instantiate(wrappedTaco, tacoPosition, Quaternion.identity);
+			//			taco.transform.parent = transform;
+			tray.SetActive(false);
+
 			if (containsIngredient(ingredients, rocketSauce)) {
 				Debug.Log("Has Rocket Sauce");
 				music.GetComponent<MusicLibrary>().rocket();
+				taco.GetComponent<Animator>().SetTrigger("rocket");
+
 			}
 			else {
 				Debug.Log("No Rocket Sauce");
 				music.GetComponent<MusicLibrary>().plated();
+				taco.GetComponent<Animator>().SetTrigger("normal");
 
 			}
+			tray.SetActive(true);
 
 		}
 		else {

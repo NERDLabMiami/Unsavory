@@ -1,0 +1,14 @@
+{
+  "facts": [	
+  				{"fact": "Over 40% of workers that reported working while sick reported coughing or sneezing while handling food."},
+				{"fact":	"Over 60% of restaurant workers report cooking, preparing, and serving food while sick."},
+				{"fact":	"The Healthy Families Act (S.631) would give workers the opportunity to earn up to 7 paid sick days."},
+				{"fact":	"Almost 90% of restaurant workers do not receive paid sick days."},
+				{"fact":	"In the United States, more than four in 10 private-sector workers do not have paid sick days."},
+				{"fact":	"In the United States, 81% of low-wage workers do not have paid sick days."},
+				{"fact":	"A 2014 study showed that those who make less than $20,000 a year are the least likely to have paid sick days."},
+				{"fact":	"Only 24% of food preparation and service workers have access to paid sick days."},
+				{"fact":	"California, Connecticut and Massachusetts have state-paid sick day laws."},
+				{"fact":	"Three quarters of restaurant workers surveyed who worked while sick reported doing so because they could not afford to take the day off."}
+				  	]  
+ }

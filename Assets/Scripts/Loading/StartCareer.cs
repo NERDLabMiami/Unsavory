@@ -5,13 +5,18 @@ using SimpleJSON;
 using UnityEngine.UI;
 public class StartCareer : MonoBehaviour {
 	public Text startButton;
+	public GameObject cateringButton;
 	public int maxWarnings = 3;
 	public bool reset = false;
 	public int daysUntilComplete = 30;
 	// Use this for initialization
 	void Start () {
 		Time.timeScale = 1f;
-		if (PlayerPrefs.HasKey("fired") || reset) {
+		if (PlayerPrefs.HasKey("can cater")) {
+			cateringButton.SetActive(true);
+		}
+
+		if (PlayerPrefs.HasKey("fired")) {
 			CustomFunctionScript.resetPlayerData(20, 0);
 			Debug.Log("Resetting Game");
 		}
@@ -19,6 +24,17 @@ public class StartCareer : MonoBehaviour {
 			beginCareer();	
 		}
 	
+		if (PlayerPrefs.HasKey("survived")) {
+			//TODO: Beat game, reset levels
+		}
+		if (PlayerPrefs.HasKey("reset")) {
+			CustomFunctionScript.resetPlayerData(20, 0);
+			PlayerPrefs.DeleteKey("reset");
+		}
+
+		if (reset) {
+			CustomFunctionScript.resetToDefaults();
+		}
 	}
 
 	public void beginCareer() {
@@ -26,6 +42,7 @@ public class StartCareer : MonoBehaviour {
 			PlayerPrefs.SetInt("current level", 1);
 			PlayerPrefs.SetInt("max warnings", maxWarnings);
 			PlayerPrefs.SetInt("final day", daysUntilComplete);
+			PlayerPrefs.SetFloat("health", 20);
 			PlayerPrefs.SetFloat ("paycheck", 0);
 			PlayerPrefs.SetFloat("earned wages", 0);
 			PlayerPrefs.SetFloat("bank account", 0);

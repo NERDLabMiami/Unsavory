@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SocialPlatforms.GameCenter;
+using UnityEngine.SocialPlatforms;
 
 public class NoseWipeScript : MonoBehaviour {
 	private float timeBetweenSneezes = 10;
@@ -13,13 +15,14 @@ public class NoseWipeScript : MonoBehaviour {
 //	private Vector3 OriginalPos;
 //	private Quaternion OriginalRot;
 	public GameObject player;
+	public GameObject sneezeTutor;
 	private bool canStopSneeze = false;
 	public bool sneezeAllowed = true;
 	private bool snotEmitting = false;
 	public ParticleSystem snot;
 	public GameObject snotImage;
 	public ParticleSystem sweat;
-	public MusicLibrary music;
+//	public MusicLibrary music;
 	private bool sweating = false;
 	private Vector2 firstPosition;
 	private Vector2 lastPosition;
@@ -43,6 +46,7 @@ public class NoseWipeScript : MonoBehaviour {
 	public float startingHealth;
 
 	void Start () {
+		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
 		float healthEffect = PlayerPrefs.GetFloat("health effect", 0);
 		health = PlayerPrefs.GetFloat("health");
 		health = health - healthEffect;
@@ -73,10 +77,17 @@ public class NoseWipeScript : MonoBehaviour {
 	void Update () {
 		if (snotEmitting) {
 			if(snot.isStopped) {
-			//TODO: Cue player end of level
 				Camera.main.GetComponent<CameraShakeScript>().resetCameraToOriginalPosition();
 				Time.timeScale = 0;
-				player.GetComponent<PlayerScript>().levelCompleteCanvas.SetActive(true);
+				PlayerPrefs.SetInt("activated",1);
+				if (Social.localUser.authenticated) {
+					Social.ReportProgress( "sneezed", 100, (result) => {
+						Debug.Log ( result ? "Reported Boogeyman" : "Failed to report boogeyman");
+					});
+				}
+
+				//TODO: Check if catering or not
+//				player.GetComponent<PlayerScript>().levelCompleteCanvas.SetActive(true);
 
 			}
 		}
@@ -89,7 +100,7 @@ public class NoseWipeScript : MonoBehaviour {
 				sneezeTimer = timeBetweenSneezes;
 				snot.Play();
 				snotImage.SetActive(true);
-				music.sneeze();
+//				music.sneeze();
 				snotEmitting = true;
 				//TAINT INGREDIENTS
 				GameObject[] trays = GameObject.FindGameObjectsWithTag("Tray");
@@ -100,6 +111,7 @@ public class NoseWipeScript : MonoBehaviour {
 			}
 			if (sneezeTimer <= sweatingBeforeSneezeWarning && !sweating) {
 				//TODO: sweat before sneezing
+
 				sweat.Play();
 				sweat.loop = true;
 				sweating = true;
@@ -116,7 +128,19 @@ public class NoseWipeScript : MonoBehaviour {
 		}
 	}
 
-	
+	public void checkSneezeTutor() {
+		if (PlayerPrefs.HasKey("sneeze tutor")) {
+			//TODO: Launch Sneeze Tutor
+			Time.timeScale = 0f;
+			sneezeTutor.SetActive(true);
+			PlayerPrefs.DeleteKey("sneeze tutor");
+		}
+
+	}
+
+	public void endSneezeTutorial() {
+		Time.timeScale = 1f;
+	}
 	private void resetSneezeTimer() {
 		Debug.Log("Reset Sneeze");
 //		GetComponent<Animator>().SetTrigger("relief");
@@ -127,8 +151,13 @@ public class NoseWipeScript : MonoBehaviour {
 			sneezeTimer = health;
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
-	}
 
+		Social.ReportProgress( "wiped", 100, (result) => {
+			Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report taco progress");
+		});
+
+	}
+	
 	public void Swipe()
 		
 	{
@@ -142,7 +171,6 @@ public class NoseWipeScript : MonoBehaviour {
 		
 		if(Input.GetMouseButtonUp(0)) {
 			
-			//save ended touch 2d point
 
 			secondPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 			
@@ -180,7 +208,7 @@ public class NoseWipeScript : MonoBehaviour {
 			
 			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f && distance >= 80) {
 				GetComponent<Animator>().SetTrigger("wipe right");
-				music.wipeNose();
+				GetComponent<AudioSource>().Play();
 				resetSneezeTimer();
 				
 			}
@@ -189,8 +217,7 @@ public class NoseWipeScript : MonoBehaviour {
 			
 			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f && distance >= 80) {
 				GetComponent<Animator>().SetTrigger("wipe left");
-
-				music.wipeNose();
+				GetComponent<AudioSource>().Play();
 				resetSneezeTimer();
 
 			}

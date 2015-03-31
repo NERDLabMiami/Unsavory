@@ -50,7 +50,7 @@ public class BillScript : MonoBehaviour {
 		}
 		else {
 			Debug.Log("Disabling");
-			payButton.GetComponentInChildren<Text>().text = "Not Enough";
+//			payButton.GetComponentInChildren<Text>().text = "Not Enough";
 			payButton.enabled = false;
 			payButton.gameObject.GetComponent<Animator>().SetTrigger("disable");
 		}
@@ -101,7 +101,7 @@ public class BillScript : MonoBehaviour {
 			payButton.gameObject.GetComponent<Animator>().SetTrigger("disable");
 
 		}
-		payButton.GetComponentInChildren<Text>().text = "Not Enough";
+//		payButton.GetComponentInChildren<Text>().text = "Not Enough";
 		payButton.interactable = false;
 		payButton.enabled = false;
 		newlyDisabled = true;

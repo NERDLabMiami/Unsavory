@@ -50,6 +50,7 @@ public class TutorScript : MonoBehaviour {
 		pauseButton.enabled = true;
 		preStartObject.SetActive(true);
 		PlayerPrefs.SetInt("tutorial", 1);
+		PlayerPrefs.SetInt ("sneeze tutor", 0);
 		GetComponent<Animator>().SetTrigger("disappear");
 		GetComponent<AudioSource>().clip = tutorialFinished;
 		GetComponent<AudioSource>().Play();

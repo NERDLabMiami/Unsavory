@@ -8,13 +8,11 @@ public class SneezeScript : MonoBehaviour {
 	public GameObject player;
 	private bool launchedLevelEnd = false;
 	private bool endless = false;
-	public string retryButtonText;
-	public int retrySceneNumber;
 
 
 	// Use this for initialization
 	void Start () {
-		if (PlayerPrefs.GetInt("endless") == 1) {
+		if (PlayerPrefs.HasKey("catering")) {
 			endless = true;
 		}
 	}
@@ -30,7 +28,7 @@ public class SneezeScript : MonoBehaviour {
 				player.GetComponent<PlayerScript>().addWages( timer.GetComponent<TimerScript>().getTimeWorked());
 				launchedLevelEnd = true;
 				timer.GetComponent<TimerScript>().running = false;
-				player.GetComponent<PlayerScript>().EndOfLevel(false, false, true);
+				player.GetComponent<PlayerScript>().EndOfLevel(false, true);
 
 			}
 		}
@@ -39,7 +37,8 @@ public class SneezeScript : MonoBehaviour {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
 				//END OF LEVEL POINT, NO STORY MODE
 				launchedLevelEnd = true;
-				player.GetComponent<PlayerScript>().EndOfLevel(false, true, true);
+				Debug.Log("Endless Ends");
+				player.GetComponent<PlayerScript>().EndCatering(false);
 			}
 		}
 	}

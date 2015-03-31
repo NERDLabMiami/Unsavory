@@ -4,28 +4,113 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnionAssets.FLE;
 using SimpleJSON;
-
+using UnityEngine.SocialPlatforms;
 
 
 public class SocialFeatures : MonoBehaviour {
+	public bool gcAuthenticated = false;
+	public bool twitterAuthenticated = false;
+	private bool hitActivateButton = false;
+	public GameObject twitterInterface;
+	public GameObject twitterNotFoundPanel;
+	public GameObject activateButton;
 
-	public GameObject facebookButton;
+	void Start() {
+		if (PlayerPrefs.HasKey("activated")) {
+			activateButton.SetActive(true);
+		}
 
+		Social.localUser.Authenticate (ProcessAuthentication);
+	}
+
+	void ProcessAuthentication (bool success) {
+		if (success) {
+			Debug.Log ("Authenticated social api");
+			Social.LoadAchievements (ProcessLoadedAchievements);
+			gcAuthenticated = true;
+		}
+		else {
+			Debug.Log ("Failed to authenticate");
+		}
+	}
+
+
+	void ProcessLoadedAchievements (IAchievement[] achievements) {
+		if (achievements.Length == 0) {
+			Debug.Log ("Error: no achievements found");
+		}
+			else {
+			Debug.Log ("Got " + achievements.Length + " achievements");
+		}
+	}
 
 	void Awake () {
-		// Authenticate and register a ProcessAuthentication callback
-		// This call needs to be made before we can proceed to other calls in the Social API
-//		SocialAdaptor.Authenticate();
-		//FB.Init(OnInitComplete, OnHideUnity);
+		SPTwitter.instance.addEventListener(TwitterEvents.TWITTER_INITED,  OnInit);
+		SPTwitter.instance.addEventListener(TwitterEvents.AUTHENTICATION_SUCCEEDED,  OnAuth);
+		
+		SPTwitter.instance.addEventListener(TwitterEvents.POST_SUCCEEDED,  OnPost);
+		SPTwitter.instance.addEventListener(TwitterEvents.POST_FAILED,  OnPostFailed);
+		SPTwitter.instance.addEventListener(TwitterEvents.AUTHENTICATION_FAILED, OnAuthFail);
+		SPTwitter.instance.addEventListener(TwitterEvents.USER_DATA_LOADED,  OnUserDataLoaded);
+		SPTwitter.instance.addEventListener(TwitterEvents.USER_DATA_FAILED_TO_LOAD,  OnUserDataLoadFailed);
+
+		SPTwitter.instance.Init();
+		
+
+
+	}
+
+	private void OnAuth() {
+		Debug.Log("Authenticated");
+		twitterAuthenticated = true;
+	}
+	private void OnAuthFail() {
+		Debug.Log("Failed authenticating, no accounts?");
+		if (hitActivateButton) {
+			twitterNotFoundPanel.SetActive(true);
+		}
+	}
+
+	private void OnInit() {
+		Debug.Log("Initialized");
+		if(SPTwitter.instance.IsAuthed) {
+			OnAuth();
+		}
+
+	}
+
+	private void OnPost() {
+		Debug.Log("Posted");
+	}
+
+	private void OnPostFailed() {
+		Debug.Log("Post Failed");
+	}
+
+	private void OnUserDataLoaded() {
+		Debug.Log ("User Data Loaded");
+
+	}
+
+	private void OnUserDataLoadFailed() {
+		Debug.Log ("User Data Failed");
 	}
 
 	public void leaderboard() {
 //		Social.ShowLeaderboardUI();
+
 	}
 
 	public void achievements() {
-//		Social.ShowAchievementsUI();
+			if (Social.localUser.authenticated) {
+			Social.ShowLeaderboardUI();
+//			Social.ShowAchievementsUI();
+		}
+		else {
+			Debug.Log("Not Authenticated. Can't show achievements");
+		}
 	}
 
 	public void facebookConnect() {
@@ -36,47 +121,35 @@ public class SocialFeatures : MonoBehaviour {
     private void OnInitComplete()
     {
 //        Debug.Log("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
-		/*if (!FB.IsLoggedIn) {
-			facebookButton.SetActive(true);
-		}
-		else {
-			facebookButton.SetActive(false);
-		}
-		*/
 
 	}
 
 	public void postToFacebook() {
-		/*
-		var wwwForm = new WWWForm();
-		wwwForm.AddField("message", "Mmm... FB integration. A necessary evil.");
+	//	var wwwForm = new WWWForm();
+	//	wwwForm.AddField("message", "Mmm... FB integration. A necessary evil.");
 		
-		FB.API("me/feed", Facebook.HttpMethod.POST, postCallback, wwwForm);
-		*/
+	//	FB.API("me/feed", Facebook.HttpMethod.POST, postCallback, wwwForm);
 	}
-	/*
-     private void postCallback(FBResult result) {
-		Debug.Log("Callback for post:" + result);
-	}
-	*/
 	public void askForHelp() {
 	//	FB.AppRequest("I can't pay my bills, mind helping me out?",null,null,null,1,"","Overdue Bills",null);
 
-
-		/*
-		if (!FB.IsLoggedIn) {
-			facebookButton.SetActive(true);
-		}
-		else {
-			facebookButton.SetActive(false);
-		}
-		*/
 	}
 
-    private void OnHideUnity(bool isGameShown)
-    {
-        Debug.Log("Is game showing? " + isGameShown);
-    }
+	public void checkTwitter() {
+		Debug.Log("Checking Twitter");
+		if (!twitterAuthenticated) {
+			Debug.Log("Not Authenticated");
+			hitActivateButton = true;
+			SPTwitter.instance.AuthenticateUser();
+		}
+		else {
+			Debug.Log("Authenticated");
+			twitterInterface.SetActive(true);
+		}
+	}
+
+
+
 
 
 	private void CallFBLoginForPublish()
@@ -88,26 +161,15 @@ public class SocialFeatures : MonoBehaviour {
 		// you actually need it.
 //		FB.Login("publish_actions", LoginCallback);
 	}
-	/*
-	void LoginCallback(FBResult result)
-	{
-		if (result.Error != null) {
-			Debug.Log("Error Response: " + result.Error);
-		}
-		/*
-		else if (!FB.IsLoggedIn) {
-			Debug.Log("Login Cancelled By Player");
-		}
-
-		else {
-			Debug.Log("Login Successful");
-		}
-	}
-	*/
 	private void CallFBLogout()
 	{
 		//FB.Logout();
 	}
+
+	void tweeted() {
+		Debug.Log("Just tweeted");
+	}
+
 
 	
 	

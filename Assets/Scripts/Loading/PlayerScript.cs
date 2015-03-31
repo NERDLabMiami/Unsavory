@@ -16,14 +16,14 @@ public class PlayerScript : MonoBehaviour {
 	public Animator gameScreen;
 	public Animator gameGUI;
 	public GameObject homeButton;
-	public GameObject retryButton;
 	public GameObject quitButton;
 	public GameObject boss;
+	public Catering catering;
 	public MusicLibrary music;
 	public Text shiftCompleteText;
+	public GameObject realWorldFact;
 	public Text wagesUI;
 	private float daysWage;
-	private bool endless;
 	private bool fullday;
 	private bool sick;
 
@@ -53,20 +53,15 @@ public class PlayerScript : MonoBehaviour {
 
 	public void completeCatering() {
 		homeButton.SetActive(true);
-		retryButton.SetActive(false);
 		boss.GetComponent<CharacterDialog>().changeSpeechKey("catering_complete");
 		//cue boss
-		boss.GetComponent<Animator>().SetBool("talkAgain", true);
-		boss.GetComponent<Animator>().SetBool("finishedTalking", false);
 
 	}
 
 	public void setBoss() {
-		int currentLevel = PlayerPrefs.GetInt("current level");
+			int currentLevel = PlayerPrefs.GetInt("current level");
 
-		if (!endless) {
 			Debug.Log("Setting Retry Button Inactive");
-			retryButton.SetActive(false);
 			homeButton.SetActive(true);
 
 			if (fullday) {
@@ -92,21 +87,26 @@ public class PlayerScript : MonoBehaviour {
 				//too late
 
 				if (sick) {
-
+				Debug.Log("Giving Sick Talk");
+				PlayerPrefs.SetInt("letter",0);
+				PlayerPrefs.SetInt("activated",1);
 					//First sneeze?
 					if (PlayerPrefs.GetInt("sneezes",1) <= 2) {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("sneeze_tip");
-
+					Debug.Log("GIving Sneeze Tip");
 					}
 					else {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
+					Debug.Log("GIving Sneeze Speech");
 
 					}
 				}
 				else {
 					//Slow
 					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");					
-				}
+				Debug.Log("GIving Slow Talk");
+
+			}
 
 				int warnings = PlayerPrefs.GetInt ("warnings");
 				warnings+=1;
@@ -116,47 +116,39 @@ public class PlayerScript : MonoBehaviour {
 					//TODO: Fire Player
 					Debug.Log("Player should be fired");
 					PlayerPrefs.SetInt("fired",1);
-					if (sick) {
+					PlayerPrefs.SetInt("can cater", 1);
+				Debug.Log("Too Many Warnings");
+
+				if (sick) {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
+					//ALLOW SICK DAYS
+					PlayerPrefs.SetInt("paid sick days achieved",1);
 
 					}
 					else {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_slow");
-
+				
 					}
-
-					quitButton.SetActive(true);
-					homeButton.SetActive(false);
+				Debug.Log("Doing Button Stuff");
+				quitButton.SetActive(true);
+				homeButton.SetActive(false);
 				}
-			}
-		}
-		else {
-			if (sick) {
-				boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
-				
-			}
-			else {
-				boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_slow");
-				
+
 			}
 
-		}
 
 	}
 
-	public void EndOfLevel(bool _fullday, bool _endless, bool _sick) {
+	public void EndOfLevel(bool _fullday, bool _sick) {
 		fullday = _fullday;
-		endless = _endless;
 		sick = _sick;
 		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 		gameScreen.SetTrigger("fade orders");
 
-//		int currentLevel = PlayerPrefs.GetInt("current level");
 		PlayerPrefs.SetInt("tutorial", 1);
 		Debug.Log("End of Level Ran");
 		gameGUI.SetTrigger("Fade Out");
 		homeButton.SetActive(false);
-		retryButton.SetActive(false);
 
 
 		 if(fullday) {
@@ -165,17 +157,19 @@ public class PlayerScript : MonoBehaviour {
 			levelCompleteCanvas.SetActive(true);
 			wagesUI.text = "$" + addWages(8).ToString("0.00") + " added to your next paycheck";
 			shiftCompleteText.text = "Shift Complete";
-//			music.levelCompleted();
+			realWorldFact.SetActive(false);
+
 			Camera.main.GetComponent<AudioSource>().Stop ();
 			levelCompleteCanvas.GetComponentInChildren<ShiftCompleteScript>().success();
 
 		}
 
 		else if(sick) {
-			//ended because of sickness
 			wagesUI.text = "You were caught being sick on the job. You have to leave work early. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
 			shiftCompleteText.text = "Sick on the Job";
+			realWorldFact.SetActive(true);
 			Camera.main.GetComponent<AudioSource>().Stop ();
+			levelCompleteCanvas.SetActive(true);
 			levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
 
 		}
@@ -184,17 +178,22 @@ public class PlayerScript : MonoBehaviour {
 			Time.timeScale = 0;
 			wagesUI.text = "You were too slow with preparing orders and have been sent home. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
 			shiftCompleteText.text = "Too Slow";
-			Debug.Log("SLOW UPDATE SPEECH");
-//			music.levelFailed();
+			realWorldFact.SetActive(false);
 			Camera.main.GetComponent<AudioSource>().Stop ();
 			levelCompleteCanvas.SetActive(true);
-//			ShiftCompleteScript shift = levelCompleteCanvas.GetComponent<ShiftCompleteScript>();
-//			shift.failed ();
 			levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
 		}
-		//NOT SURE IF THIS APPLIES ANYMORE
-//		gameScreen.SetBool("ended", true);
 	
+	}
+
+	public void EndCatering(bool tooSlow) {
+		if (tooSlow) {
+			catering.tooSlow();
+		}
+
+		else {
+			catering.sick();
+		}
 	}
 
 	void Start() {

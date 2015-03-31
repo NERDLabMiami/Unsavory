@@ -3,22 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+//using UnionAssets.FLE;
 
 public class StartLevel : MonoBehaviour {
 	public GameObject timer;
+	//TODO: What's gametimer for
 	public float gameTimer = 0;
 	public bool timerOn = false;
 	public GameObject nose;
 	public GameObject tutor;
 	public CharacterDialog dialog;
-	public MusicLibrary musicLibrary;
+	public AudioClip gamePlayBackground;
 	private bool levelBegan = false;
+	public string appleId = "959296519";
+	public string apdroidAppUrl = "market://details?id=com.dataplayed.unsavory";
+
 
 	// Use this for initialization
 	void Start () {
-		Camera.main.GetComponent<AudioSource>().clip = musicLibrary.characterBackground;
-		Camera.main.GetComponent<AudioSource>().Play();
 		int currentLevel = PlayerPrefs.GetInt("current level");
+		int timesPlayed = PlayerPrefs.GetInt("times played", 0);
+		if (timesPlayed == 3 && !PlayerPrefs.HasKey("rated")) {
+			//Ask to rate the app
+/*			MobileNativeRateUs ratePopUp =  new MobileNativeRateUs("Like this game?", "Rate it and let us know what you thnk!");
+			ratePopUp.SetAppleId(appleId);
+			ratePopUp.SetAndroidAppUrl(apdroidAppUrl);
+			ratePopUp.OnComplete += OnRatePopUpClose;
+			
+			ratePopUp.Start();
+
+*/
+			PlayerPrefs.SetInt("rated",1);
+		}
 		bool catering = PlayerPrefs.HasKey("catering");
 		if (catering) {
 			dialog.changeSpeechKey("catering");
@@ -51,7 +67,7 @@ public class StartLevel : MonoBehaviour {
 
 		if (!levelBegan) {
 			timerOn = true;
-			Camera.main.GetComponent<AudioSource>().clip = musicLibrary.gameplayBackground;
+			Camera.main.GetComponent<AudioSource>().clip = gamePlayBackground;
 			Camera.main.GetComponent<AudioSource>().Play();
 			nose.GetComponent<NoseWipeScript>().sneezeAllowed = true;
 
@@ -63,13 +79,6 @@ public class StartLevel : MonoBehaviour {
 		//TODO: Broadcast Late Message to Update Boss Dialogue for arriving late
 		timer.GetComponent<TimerScript>().setWorkday(workday);
 		Debug.Log("Begin Level");
-
-		if (PlayerPrefs.GetInt("endless") == 1) {
-			timer.GetComponent<TimerScript>().endless = true;
-		}
-		else {
-			timer.GetComponent<TimerScript>().endless = false;
-		}
 		levelBegan = true;
 	}
 

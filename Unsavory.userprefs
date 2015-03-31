@@ -1,33 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gameplay/TutorScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gameplay/Catering.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/BillScript.cs" Line="62" Column="30" />
-      <File FileName="Assets/Scripts/Routines/AnimationFunctions.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/TortillaFoundation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/PauseScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/boss dialogue.txt" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/ReadySetGo.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/MusicLibrary.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Messaging/CharacterDialog.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/RecipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Camera/CameraShakeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/SneezeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/PlateScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/AddIngredientScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/TutorScript.cs" Line="55" Column="38" />
-      <File FileName="Assets/Scripts/Gameplay/CurrentOrderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/NoseWipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/BackgroundSoundDefaults.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Camera/CameraSequencing.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/Catering.cs" Line="82" Column="35" />
       <File FileName="Assets/Scripts/Gameplay/TimerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Routines/SocialFeatures.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/PlateScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Loading/CustomFunctionScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Loading/StartCareer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/levels.txt" Line="1" Column="1" />
-      <File FileName="Assets/CreditSequenceScript.cs" Line="21" Column="23" />
-      <File FileName="Assets/ProgressScript.cs" Line="9" Column="20" />
+      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/SneezeScript.cs" Line="40" Column="31" />
+      <File FileName="Assets/Scripts/Gameplay/NoseWipeScript.cs" Line="136" Column="42" />
+      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="189" Column="21" />
+      <File FileName="Assets/Scripts/Loading/SoundEffectDefaults.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Routines/ProgressScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/StartLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Tweet.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Routines/ShiftCompleteScript.cs" Line="25" Column="1" />
+      <File FileName="Assets/FactScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/CurrentOrderScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gameplay/TutorScript.cs" Line="53" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

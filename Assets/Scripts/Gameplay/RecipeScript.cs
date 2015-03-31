@@ -30,6 +30,10 @@ public class RecipeScript : MonoBehaviour {
 		if (moveLeft) {
 			gameObject.GetComponent<Rigidbody2D>().velocity = -Vector3.right*10;
 		}
+		else {
+			gameObject.GetComponent<Rigidbody2D>().velocity = -Vector3.right;
+
+		}
 		orderLine.position = new Vector3(gameObject.transform.position.x, orderLine.position.y, gameObject.transform.position.z);
 		gameObject.transform.position = orderLine.position;
 		//else {
@@ -60,7 +64,7 @@ public class RecipeScript : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 
 		moveLeft = false;
-		other.relativeVelocity.Set(0,0);
-		gameObject.GetComponent<Rigidbody2D>().velocity.Set(0,0);
+//		other.relativeVelocity.Set(0,0);
+//		gameObject.GetComponent<Rigidbody2D>().velocity.Set(0,0);
 	}
 }

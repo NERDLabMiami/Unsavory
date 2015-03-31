@@ -17,6 +17,15 @@ public class SceneLoader : MonoBehaviour {
 		Application.LoadLevel(sceneNumber);
 	}
 
+	public void startCatering() {
+		PlayerPrefs.SetInt("catering",1);
+		int timesPlayed = PlayerPrefs.GetInt("times played", 0);
+		timesPlayed++;
+		PlayerPrefs.SetInt("times played", timesPlayed);
+		sceneNumber = 1;
+		Application.LoadLevel(sceneNumber);
+	}
+
 	public void RestartGame() {
 		string resume = PlayerPrefs.GetString("resume game");
 		Debug.Log("Restart Game Run");
@@ -44,7 +53,7 @@ public class SceneLoader : MonoBehaviour {
 		newScene();
 
 	}
-
+	
 	public void QuitAtHome() {
 		PlayerPrefs.SetString("resume game", "home");
 		setSceneNumber(0);

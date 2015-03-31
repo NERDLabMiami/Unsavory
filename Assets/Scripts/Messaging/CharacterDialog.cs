@@ -19,7 +19,6 @@ public class CharacterDialog : MonoBehaviour {
 	public GameObject quitButton;
 	public GameObject trays;
 	public GameObject inGameGui;
-	public MusicLibrary music;
 //	private bool endless = false;
 
 	// Use this for initialization
@@ -61,13 +60,17 @@ public class CharacterDialog : MonoBehaviour {
 
 		}
 		else {
-			music.boss();
+			GetComponentInChildren<Animator>().SetTrigger("new text");
 			dialogIndex++;
-			string response_key = key + "_response";
-			dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
-			Text responseText = advanceButton.GetComponentInChildren<Text>();
-			responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
 		}
+	}
+
+	public void updateSpeechBubble() {
+		string response_key = key + "_response";
+		dialogBox.text = jsonDialog[key][selectedIndex][dialogIndex];
+		Text responseText = advanceButton.GetComponentInChildren<Text>();
+		responseText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
+
 	}
 
 	public void changeSpeechKey(string _key) {
