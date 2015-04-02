@@ -51,7 +51,7 @@ public class NoseWipeScript : MonoBehaviour {
 		health = PlayerPrefs.GetFloat("health");
 		health = health - healthEffect;
 		startingHealth = health;
-
+		Debug.Log("Starting Health: " + health);
 		initializeSneezing();
 		sweatingBeforeSneezeWarning+= timeBeforeSneezeWarning;
 		canStopSneeze = true;
@@ -93,7 +93,6 @@ public class NoseWipeScript : MonoBehaviour {
 		}
 		if (sneezeAllowed) {
 			sneezeTimer -= Time.deltaTime;
-
 			if (sneezeTimer <= 0) {
 				Debug.Log("Sneezing still");
 				Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);
@@ -151,11 +150,11 @@ public class NoseWipeScript : MonoBehaviour {
 			sneezeTimer = health;
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
-
-		Social.ReportProgress( "wiped", 100, (result) => {
-			Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report taco progress");
-		});
-
+		if (Social.localUser.authenticated) {
+			Social.ReportProgress( "wiped", 100, (result) => {
+				Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report taco progress");
+			});
+		}
 	}
 	
 	public void Swipe()

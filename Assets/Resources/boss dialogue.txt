@@ -66,10 +66,10 @@
   									],	
   "sneeze_tip": [["Sneezing on the food! Don't let me catch you swiping at your nose. That makes an unsavory taco!"], ["Have you heard of swiping at your nose to ward off a sneeze?"]],
   "sneeze_tip_response": [["That makes sense."], ["I'll have to try that..."]],
-  "sneezed": ["I won't stand for this! Get out of here!", 
-  					"Clock out!", 
-  					"You wanna kill the customer? Get out of here."],
-  "sneezed_response": [	"Perhaps you could sit?",
-  										"But I'm just dehydrated!",
-  										"But..."]
+  "sneezed": [["I won't stand for this! Get out of here!"], 
+  					["Clock out!"], 
+  					["You wanna kill the customer? Get out of here."]],
+  "sneezed_response": [	["Perhaps you could sit?"],
+  										["But I'm just dehydrated!"],
+  										["But..."]]
  }

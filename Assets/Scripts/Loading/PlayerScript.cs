@@ -117,7 +117,8 @@ public class PlayerScript : MonoBehaviour {
 					Debug.Log("Player should be fired");
 					PlayerPrefs.SetInt("fired",1);
 					PlayerPrefs.SetInt("can cater", 1);
-				Debug.Log("Too Many Warnings");
+					Debug.Log("Too Many Warnings");
+					GetComponent<UnityAnalyticsIntegration>().fired ();
 
 				if (sick) {
 						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
@@ -149,8 +150,9 @@ public class PlayerScript : MonoBehaviour {
 		Debug.Log("End of Level Ran");
 		gameGUI.SetTrigger("Fade Out");
 		homeButton.SetActive(false);
+		int currentLevel = PlayerPrefs.GetInt("current level", 0);
 
-
+		
 		 if(fullday) {
 			Time.timeScale = 0;
 			Debug.Log ("running wage update");
@@ -158,6 +160,7 @@ public class PlayerScript : MonoBehaviour {
 			wagesUI.text = "$" + addWages(8).ToString("0.00") + " added to your next paycheck";
 			shiftCompleteText.text = "Shift Complete";
 			realWorldFact.SetActive(false);
+			GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "full day", Time.time);
 
 			Camera.main.GetComponent<AudioSource>().Stop ();
 			levelCompleteCanvas.GetComponentInChildren<ShiftCompleteScript>().success();
@@ -165,6 +168,8 @@ public class PlayerScript : MonoBehaviour {
 		}
 
 		else if(sick) {
+			GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "sick", Time.time);
+
 			wagesUI.text = "You were caught being sick on the job. You have to leave work early. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
 			shiftCompleteText.text = "Sick on the Job";
 			realWorldFact.SetActive(true);
@@ -175,6 +180,8 @@ public class PlayerScript : MonoBehaviour {
 		}
 		
 		else {
+			GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "slow", Time.time);
+
 			Time.timeScale = 0;
 			wagesUI.text = "You were too slow with preparing orders and have been sent home. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
 			shiftCompleteText.text = "Too Slow";
@@ -189,9 +196,13 @@ public class PlayerScript : MonoBehaviour {
 	public void EndCatering(bool tooSlow) {
 		if (tooSlow) {
 			catering.tooSlow();
+
+			GetComponent<UnityAnalyticsIntegration>().caterModeLevelFinished(Time.time, catering.plate.getOrders(), "slow");
 		}
 
 		else {
+			GetComponent<UnityAnalyticsIntegration>().caterModeLevelFinished(Time.time, catering.plate.getOrders(), "sick");
+
 			catering.sick();
 		}
 	}

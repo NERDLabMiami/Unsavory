@@ -17,6 +17,7 @@ public class PlateScript : MonoBehaviour {
 	private int orderCounter = 0;
 	public GameObject music;
 	public TortillaFoundation tortilla;
+	public UnityAnalyticsIntegration analytics;
 
 	void Start() {
 		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
@@ -35,23 +36,24 @@ public class PlateScript : MonoBehaviour {
 				matched = true;
 				matchedOrderIndex = i;
 				orderCounter++;
-				if (orderCounter == 25) {
-					Social.ReportProgress( "com.dataplayed.unsavory.25tacos", 100f, (result) => {
-						Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
-					});
-				}
-				if (orderCounter == 100) {
-					Social.ReportProgress( "com.dataplayed.unsavory.100tacos", 100f, (result) => {
-						Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
-					});
-				}
+				if (Social.localUser.authenticated) {
+					if (orderCounter == 25) {
+						Social.ReportProgress( "com.dataplayed.unsavory.25tacos", 100f, (result) => {
+							Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
+						});
+					}
+					if (orderCounter == 100) {
+						Social.ReportProgress( "com.dataplayed.unsavory.100tacos", 100f, (result) => {
+							Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
+						});
+					}
 
-				if (orderCounter == 500) {
-					Social.ReportProgress( "com.dataplayed.unsavory.500tacos", 100f, (result) => {
-						Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
-					});
+					if (orderCounter == 500) {
+						Social.ReportProgress( "com.dataplayed.unsavory.500tacos", 100f, (result) => {
+							Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
+						});
+					}
 				}
-
 				
 				
 				currentOrder.GetComponent<CurrentOrderScript>().setOrdersServed(orderCounter);
@@ -64,12 +66,13 @@ public class PlateScript : MonoBehaviour {
 		if (matched) {
 			//clean up
 			//get rid of the current order
-			Destroy(current_recipes[matchedOrderIndex]);
+			analytics.servedOrder(current_recipes[matchedOrderIndex].name,"true");
+			current_recipes[matchedOrderIndex].GetComponent<Animator>().SetTrigger("disappear");
+//			Destroy(current_recipes[matchedOrderIndex]);
 			Vector3 tacoPosition = transform.position;
 			GameObject taco = (GameObject) Instantiate(wrappedTaco, tacoPosition, Quaternion.identity);
 			//			taco.transform.parent = transform;
 			tray.SetActive(false);
-
 			if (containsIngredient(ingredients, rocketSauce)) {
 				Debug.Log("Has Rocket Sauce");
 				music.GetComponent<MusicLibrary>().rocket();
@@ -78,6 +81,7 @@ public class PlateScript : MonoBehaviour {
 			}
 			else {
 				Debug.Log("No Rocket Sauce");
+				analytics.servedOrder(current_recipes[matchedOrderIndex].name,"false");
 				music.GetComponent<MusicLibrary>().plated();
 				taco.GetComponent<Animator>().SetTrigger("normal");
 

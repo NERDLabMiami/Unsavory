@@ -36,6 +36,8 @@ public class WorkScript : MonoBehaviour {
 			//USE PAID SICK DAY
 				paidSickDays--;
 				PlayerPrefs.SetInt("paid sick days", paidSickDays);
+				gameObject.GetComponent<UnityAnalyticsIntegration>().usedPaidSickDays(paidSickDays);
+
 				//add money
 				player.GetComponent<PlayerScript>().addWages(8);
 			}

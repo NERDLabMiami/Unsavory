@@ -27,6 +27,7 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void RestartGame() {
+		Camera.main.gameObject.GetComponent<Animator>().SetTrigger("fade out");
 		string resume = PlayerPrefs.GetString("resume game");
 		Debug.Log("Restart Game Run");
 		if (resume.Equals("home")) {

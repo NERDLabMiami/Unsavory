@@ -73,6 +73,7 @@ public class CustomFunctionScript : MonoBehaviour {
 		PlayerPrefs.SetInt ("warnings", 0);
 		PlayerPrefs.SetInt("max warnings", 3);
 		PlayerPrefs.SetInt ("paid sick days", 0);
+		PlayerPrefs.SetFloat("health", 20);
 		PlayerPrefs.SetFloat("background volume", 1);
 		PlayerPrefs.SetFloat("sfx volume", 1);
 

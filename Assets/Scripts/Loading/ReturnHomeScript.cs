@@ -91,6 +91,7 @@ public class ReturnHomeScript : MonoBehaviour {
 				//check if it's paid
 				if (PlayerPrefs.GetInt("bill" + i,0) == 1) {
 					//it's unpaid
+					gameObject.GetComponent<UnityAnalyticsIntegration>().overdueBill(i);
 					string effect = bills["bills"][i]["effect"];
 					int currentEffect = PlayerPrefs.GetInt(effect, 0);
 					currentEffect++;
@@ -124,10 +125,14 @@ public class ReturnHomeScript : MonoBehaviour {
 		
 					if (unpaidBills > 0) {
 						//LOST GAME, present game over panel
+						gameObject.GetComponent<UnityAnalyticsIntegration>().survivedWithUnpaidBills();
 						gameOverPanel.SetActive(true);
+						
 					}
 					else {
 						//Activate Month Complete Pane
+						gameObject.GetComponent<UnityAnalyticsIntegration>().survived();
+
 						monthCompletePanel.SetActive(true);
 						Social.ReportProgress( "survived", 100, (result) => {
 							Debug.Log ( result ? "Reported Survival" : "Failed to report taco progress");
@@ -159,7 +164,8 @@ public class ReturnHomeScript : MonoBehaviour {
 					//health deducted in buygroceries
 						groceryUI.text = "N/A";
 				}
-					bankAccountUI.text = "$" + money.ToString("0.00");
+				gameObject.GetComponent<UnityAnalyticsIntegration>().weekend();
+				bankAccountUI.text = "$" + money.ToString("0.00");
 					weekCompletePanel.SetActive(true);
 
 				//TODO: Offer Overtime Catering
