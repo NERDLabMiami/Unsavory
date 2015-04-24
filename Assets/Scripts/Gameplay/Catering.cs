@@ -53,7 +53,7 @@ public class Catering : MonoBehaviour {
 		}
 		timer -= Time.deltaTime;
 		if (timer <= 0) {
-			timer = 15;
+			timer = 10;
 			orders.incrementRecipeList();
 		}
 
@@ -68,7 +68,7 @@ public class Catering : MonoBehaviour {
 		
 
 		finishedTitle.text = "You Blew It!";
-		finishedDescription.text = "You sneezed all over the";
+		finishedDescription.text = "You sneezed all over the food, that's disgusting.";
 		Time.timeScale = 0f;
 		cateringCompleteCanvas.SetActive(true);
 	}
@@ -82,7 +82,6 @@ public class Catering : MonoBehaviour {
 		finishedTitle.text = "Too Slow";
 		finishedDescription.text = "You've got too many orders backed up.";
 		Time.timeScale = 0f;
-		Debug.Log("Activating Catering Canvas");
 		cateringCompleteCanvas.SetActive(true);
 		Debug.Log("Activated catering canvas");
 

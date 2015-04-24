@@ -11,4 +11,10 @@
 				{"fact":	"California, Connecticut and Massachusetts have state-paid sick day laws."},
 				{"fact":	"Three quarters of restaurant workers surveyed who worked while sick reported doing so because they could not afford to take the day off."}
 				  	]  
+ },
+ {
+ 	"letters": [
+					"Flu season is upon us! If you're feeling sick, you shouldn't go to work. In 2009 during the H1N1 pandemic, it's estimated that an additional 7 million people were infected because contagious employees didn't stay home from work to recover. Stay healthy!",
+  					"You don't look so well, maybe you caught that bug that was going around. It'd probably be best for you to take a day off right? Wrong! You can't afford to! Almost 90 percent of restaurant workers today are forced to work through their illness because they aren't given sick leave! That's not healthy for them or the customers! The Healthy Families Act would mandate up to 7 days of paid sick leave for almost all workers. Help spread the word!",
+ 					"Your poor health is affecting your ability to do your job. Unfortunately your employer doesn't provide paid sick leave. Lack of benefits and minimum wage are putting you in a tight spot, like millions of other people. Isn't it time to do something about this?"]
  }

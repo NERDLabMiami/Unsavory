@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TortillaFoundation : MonoBehaviour {
 	public GameObject trays;
+	public bool tutoring = false;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +16,9 @@ public class TortillaFoundation : MonoBehaviour {
 	}
 
 	private void OnMouseDown() {
-		unlockTrays();
+		if (!tutoring) {
+			unlockTrays();
+		}
 	}
 
 	public void lockTrays() {

@@ -23,27 +23,9 @@ public class CharacterDialog : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*
-		if (PlayerPrefs.GetInt("endless") == 1) {
-			endless = true;
-			Debug.Log("ENDLESS MODE ON");
-		}
-		else {
-			endless = false;
-			Debug.Log("ENDLESS MODE OFF");
-		}
-		*/
-//		homeButton.SetActive(false);
-//		retryButton.SetActive(false);
-//		quitButton.SetActive(false);
+
 	}
-	/*
-	public void enableTrays() {
-		trays.SetActive(true);
-		Debug.Log("Prepping");
-//		Camera.main.GetComponent<Animator>().SetTrigger("Prep");
-	}
-	*/
+
 	public void reappear() {
 		GetComponent<Animator>().SetTrigger ("reappear");
 		Camera.main.GetComponent<Animator>().SetTrigger("Pots");
@@ -89,9 +71,5 @@ public class CharacterDialog : MonoBehaviour {
 			advanceText.text = jsonDialog[response_key][selectedIndex][dialogIndex];
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

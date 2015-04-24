@@ -10,37 +10,27 @@ public class PlayerScript : MonoBehaviour {
 	private float money;
 	private int pills;
 	private float hourlyRate;
-//	public bool hasSneezed = false;
 	public bool reset = false;
-	public GameObject levelCompleteCanvas;
-	public Animator gameScreen;
-	public Animator gameGUI;
-	public GameObject homeButton;
-	public GameObject quitButton;
-	public GameObject boss;
-	public Catering catering;
-	public MusicLibrary music;
-	public Text shiftCompleteText;
-	public GameObject realWorldFact;
-	public Text wagesUI;
-	private float daysWage;
-	private bool fullday;
-	private bool sick;
+//	public float daysWage;
 
 	public void resetData() {
 		if (!PlayerPrefs.HasKey ("current level") || reset) {
 			//this resets
-			CustomFunctionScript.resetPlayerData(30, money);
+			CustomFunctionScript.resetPlayerData(60, money);
 		}
 
+	}
+
+	public float potentialWages(float timeWorked) {
+		Debug.Log("TIME WORKED: " + timeWorked);
+		return hourlyRate * timeWorked;
 	}
 
 	public float addWages(float timeWorked) {
 		float earnedWages = PlayerPrefs.GetFloat("earned wages",0);
 		Debug.Log("Earned Wages Before: " + earnedWages);
 
-		daysWage = hourlyRate * timeWorked;
-		Debug.Log("Today's Wage: " + daysWage);
+		float daysWage = potentialWages(timeWorked);
 		earnedWages += daysWage;
 		PlayerPrefs.SetFloat("earned wages", earnedWages);
 		Debug.Log("Earned Wages Now " + earnedWages);
@@ -51,161 +41,11 @@ public class PlayerScript : MonoBehaviour {
 		PlayerPrefs.SetInt("catering",1);
 	}
 
-	public void completeCatering() {
-		homeButton.SetActive(true);
-		boss.GetComponent<CharacterDialog>().changeSpeechKey("catering_complete");
-		//cue boss
-
-	}
-
-	public void setBoss() {
-			int currentLevel = PlayerPrefs.GetInt("current level");
-
-			Debug.Log("Setting Retry Button Inactive");
-			homeButton.SetActive(true);
-
-			if (fullday) {
-
-				Debug.Log ("Now Day " + currentLevel);
-
-				if (currentLevel%5 == 0) {
-					Debug.Log("Weekend");
-					boss.GetComponent<CharacterDialog>().changeSpeechKey("weekend");
-					
-				}
-				else {
-					boss.GetComponent<CharacterDialog>().changeSpeechKey("complete");
-					
-				}
-				
-				//cue boss
-				boss.GetComponent<Animator>().SetTrigger("reappear");
-
-				
-			}
-			else {
-				//too late
-
-				if (sick) {
-				Debug.Log("Giving Sick Talk");
-				PlayerPrefs.SetInt("letter",0);
-				PlayerPrefs.SetInt("activated",1);
-					//First sneeze?
-					if (PlayerPrefs.GetInt("sneezes",1) <= 2) {
-						boss.GetComponent<CharacterDialog>().changeSpeechKey("sneeze_tip");
-					Debug.Log("GIving Sneeze Tip");
-					}
-					else {
-						boss.GetComponent<CharacterDialog>().changeSpeechKey("sneezed");
-					Debug.Log("GIving Sneeze Speech");
-
-					}
-				}
-				else {
-					//Slow
-					boss.GetComponent<CharacterDialog>().changeSpeechKey("slow");					
-				Debug.Log("GIving Slow Talk");
-
-			}
-
-				int warnings = PlayerPrefs.GetInt ("warnings");
-				warnings+=1;
-				int maxWarnings = PlayerPrefs.GetInt("max warnings");
-				PlayerPrefs.SetInt("warnings", warnings);
-				if (warnings > maxWarnings) {
-					//TODO: Fire Player
-					Debug.Log("Player should be fired");
-					PlayerPrefs.SetInt("fired",1);
-					PlayerPrefs.SetInt("can cater", 1);
-					Debug.Log("Too Many Warnings");
-					GetComponent<UnityAnalyticsIntegration>().fired ();
-
-				if (sick) {
-						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_sick");
-					//ALLOW SICK DAYS
-					PlayerPrefs.SetInt("paid sick days achieved",1);
-
-					}
-					else {
-						boss.GetComponent<CharacterDialog>().changeSpeechKey("fired_slow");
-				
-					}
-				Debug.Log("Doing Button Stuff");
-				quitButton.SetActive(true);
-				homeButton.SetActive(false);
-				}
-
-			}
 
 
-	}
 
-	public void EndOfLevel(bool _fullday, bool _sick) {
-		fullday = _fullday;
-		sick = _sick;
-		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
-		gameScreen.SetTrigger("fade orders");
 
-		PlayerPrefs.SetInt("tutorial", 1);
-		Debug.Log("End of Level Ran");
-		gameGUI.SetTrigger("Fade Out");
-		homeButton.SetActive(false);
-		int currentLevel = PlayerPrefs.GetInt("current level", 0);
 
-		
-		 if(fullday) {
-			Time.timeScale = 0;
-			Debug.Log ("running wage update");
-			levelCompleteCanvas.SetActive(true);
-			wagesUI.text = "$" + addWages(8).ToString("0.00") + " added to your next paycheck";
-			shiftCompleteText.text = "Shift Complete";
-			realWorldFact.SetActive(false);
-			GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "full day", Time.time);
-
-			Camera.main.GetComponent<AudioSource>().Stop ();
-			levelCompleteCanvas.GetComponentInChildren<ShiftCompleteScript>().success();
-
-		}
-
-		else if(sick) {
-			GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "sick", Time.time);
-
-			wagesUI.text = "You were caught being sick on the job. You have to leave work early. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
-			shiftCompleteText.text = "Sick on the Job";
-			realWorldFact.SetActive(true);
-			Camera.main.GetComponent<AudioSource>().Stop ();
-			levelCompleteCanvas.SetActive(true);
-			levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
-
-		}
-		
-		else {
-			GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "slow", Time.time);
-
-			Time.timeScale = 0;
-			wagesUI.text = "You were too slow with preparing orders and have been sent home. $" + daysWage.ToString("0.00") + " has been added to your next paycheck for your work today.";
-			shiftCompleteText.text = "Too Slow";
-			realWorldFact.SetActive(false);
-			Camera.main.GetComponent<AudioSource>().Stop ();
-			levelCompleteCanvas.SetActive(true);
-			levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
-		}
-	
-	}
-
-	public void EndCatering(bool tooSlow) {
-		if (tooSlow) {
-			catering.tooSlow();
-
-			GetComponent<UnityAnalyticsIntegration>().caterModeLevelFinished(Time.time, catering.plate.getOrders(), "slow");
-		}
-
-		else {
-			GetComponent<UnityAnalyticsIntegration>().caterModeLevelFinished(Time.time, catering.plate.getOrders(), "sick");
-
-			catering.sick();
-		}
-	}
 
 	void Start() {
 		//checks if values need to be reset

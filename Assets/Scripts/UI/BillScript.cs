@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleJSON;
+//using SimpleJSON;
 using UnityEngine.UI;
 
 public class BillScript : MonoBehaviour {
@@ -25,13 +25,15 @@ public class BillScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		money = PlayerPrefs.GetFloat("money");
+		/*
 		string billData =  Resources.Load<TextAsset>("bills").ToString();
 		JSONNode bills = JSON.Parse(billData);
 		dueDate = bills["bills"][id]["due"].AsInt;
 		title = bills["bills"][id]["title"];
 		effect = bills["bills"][id]["effect"];
 		amount = bills["bills"][id]["amount"].AsInt;
-		if (PlayerPrefs.GetInt("bill" + id,0) == 1) {
+*/
+	if (PlayerPrefs.GetInt("bill" + id,0) == 1) {
 			paid = true;
 		}
 
@@ -40,10 +42,9 @@ public class BillScript : MonoBehaviour {
 
 	public void set() {
 		titleUI.text = title;
-		amountUI.text = "$" + amount.ToString("0.00");
+		amountUI.text = "$" + amount.ToString("0");
 
 		int currentDay = PlayerPrefs.GetInt("current level");
-		Debug.Log("I Have " + money);
 		if (money > amount) {
 			Debug.Log("Enabling bill because I have enough money");
 			payButton.enabled = true;
@@ -121,7 +122,7 @@ public class BillScript : MonoBehaviour {
 				money = money - amount;
 				PlayerPrefs.SetFloat("money", money);
 				GameObject player = GameObject.Find("/Player");
-				player.GetComponent<PlayerScript>().moneyUI.text = money.ToString();
+				player.GetComponent<PlayerScript>().moneyUI.text = money.ToString("$0");
 				//TODO: When going another month, reset current day, add month
 				PlayerPrefs.SetInt("bill" + id,1);
 				//TODO: Animate to remove

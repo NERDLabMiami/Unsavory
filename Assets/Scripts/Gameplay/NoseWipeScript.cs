@@ -81,7 +81,7 @@ public class NoseWipeScript : MonoBehaviour {
 				Time.timeScale = 0;
 				PlayerPrefs.SetInt("activated",1);
 				if (Social.localUser.authenticated) {
-					Social.ReportProgress( "sneezed", 100, (result) => {
+					Social.ReportProgress( Achievements.WIPED, 100.0f, (result) => {
 						Debug.Log ( result ? "Reported Boogeyman" : "Failed to report boogeyman");
 					});
 				}
@@ -151,8 +151,8 @@ public class NoseWipeScript : MonoBehaviour {
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
 		if (Social.localUser.authenticated) {
-			Social.ReportProgress( "wiped", 100, (result) => {
-				Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report taco progress");
+			Social.ReportProgress( Achievements.SNEEZED, 100.0f, (result) => {
+				Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report nose wipe");
 			});
 		}
 	}

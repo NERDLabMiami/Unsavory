@@ -5,13 +5,11 @@ using UnityEngine.UI;
 public class CreditSequenceScript : MonoBehaviour {
 	public GameObject credit;
 	public GameObject creditTemplate;
-	private Vector3 creditPosition;
 	private int currentCredit = 0;
 	public string[] credits;
 
 	// Use this for initialization
 	void Start () {
-		creditPosition = credit.transform.position;
 		updateCredit();
 	}
 

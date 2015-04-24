@@ -9,15 +9,21 @@ public class Settings : MonoBehaviour {
 	public Toggle music;
 	public Toggle sfx;
 	public Toggle paidSickDays;
-	public GameObject paidSickDaySetting;
 	public AudioMixer mixer;
+	public AudioSource mainAudio;
+
 	// Use this for initialization
 	void Start () {
 
-		if (PlayerPrefs.HasKey("paid sick days achieved")) {
-			paidSickDaySetting.SetActive(true);
+
+		if(!PlayerPrefs.HasKey("sfx volume")) {
+			PlayerPrefs.SetFloat("sfx volume", 1);
 		}
 
+		
+		if(!PlayerPrefs.HasKey("background volume")) {
+			PlayerPrefs.SetFloat("background volume", 1);
+		}
 
 		if (PlayerPrefs.GetFloat("sfx volume",0) == 0) {
 			sfx.isOn = true;
@@ -31,6 +37,9 @@ public class Settings : MonoBehaviour {
 		if (PlayerPrefs.HasKey("using paid sick days")) {
 			paidSickDays.isOn = false;
 		}
+
+		paidSickDays.interactable = PlayerPrefs.HasKey("paid sick days achieved");
+
 	}
 
 	public void toggleSoundEffectsVolume(bool off) {
@@ -48,13 +57,12 @@ public class Settings : MonoBehaviour {
 	public void toggleBackgroundVolume(bool off) {
 		if (off) {
 			PlayerPrefs.SetFloat("background volume", 0);
-			Camera.main.GetComponent<AudioSource>().volume = 0;
+			mainAudio.mute = true;
 
 		}
 		else {
 			PlayerPrefs.SetFloat("background volume", 1);
-			Camera.main.GetComponent<AudioSource>().volume = 1;
-
+			mainAudio.mute = false;
 		}
 
 	}

@@ -10,7 +10,10 @@ public class BackgroundSoundDefaults : MonoBehaviour {
 
 	public void setVolume() {
 		float bgVol = PlayerPrefs.GetFloat("background volume", 1);
-		GetComponent<AudioSource>().volume = bgVol;
+		if (bgVol == 0) {
+			GetComponent<AudioSource>().mute = true;
+
+		}
 	}
 
 	// Update is called once per frame

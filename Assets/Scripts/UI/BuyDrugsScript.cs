@@ -56,7 +56,7 @@ public class BuyDrugsScript : MonoBehaviour {
 			pills++;
 			PlayerPrefs.SetInt("pills", pills);
 			PlayerPrefs.SetFloat("money",money);
-			moneyUI.text = "$" + money.ToString("0.00");
+			moneyUI.text = "$" + money.ToString("0");
 			pillsUI.text = pills.ToString();
 			canvasTitle.text = "Cold Medicine Purchased";
 		}

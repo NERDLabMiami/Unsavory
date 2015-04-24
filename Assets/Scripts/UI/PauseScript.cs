@@ -16,13 +16,16 @@ public class PauseScript : MonoBehaviour {
 
 	public void pause() {
 		if (!isPaused) {
+			/*
 			if (gameElements != null) {
 				foreach(BoxCollider2D child in gameElements.GetComponentsInChildren<BoxCollider2D>()) {
 //					child.enabled = false;
 				}
+
 			}
 
-			Camera.main.GetComponent<AudioSource>().Stop();
+			*/
+			Camera.main.GetComponent<AudioSource>().Pause();
 			Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 			GetComponentInParent<TimerScript>().running = false;
 			Debug.Log("Pausing");
@@ -32,12 +35,14 @@ public class PauseScript : MonoBehaviour {
 			pauseButton.image.sprite = playImage;
 		}
 		else {
+			/*
 			if (gameElements != null) {
 				foreach(BoxCollider2D child in gameElements.GetComponentsInChildren<BoxCollider2D>()) {
 //					child.enabled = true;
 				}
-			}
 
+		}
+*/
 			pauseButton.image.sprite = pauseImage;
 			Debug.Log("Resuming");
 			music.unpause();

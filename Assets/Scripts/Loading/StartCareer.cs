@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms;
+using GooglePlayGames;
+
 public class StartCareer : MonoBehaviour {
-	public Text startButton;
-	public GameObject cateringButton;
+	public Animator mainMenu;
 	public int maxWarnings = 3;
 	public bool reset = false;
 	public int daysUntilComplete = 30;
@@ -13,11 +15,15 @@ public class StartCareer : MonoBehaviour {
 	void Start () {
 		Time.timeScale = 1f;
 		if (PlayerPrefs.HasKey("can cater")) {
-			cateringButton.SetActive(true);
+			mainMenu.SetTrigger("catering");
+		}
+		else {
+			mainMenu.SetTrigger("no catering");
 		}
 
+
 		if (PlayerPrefs.HasKey("fired")) {
-			CustomFunctionScript.resetPlayerData(20, 0);
+			CustomFunctionScript.resetPlayerData(60, 0);
 			Debug.Log("Resetting Game");
 		}
 		if (!PlayerPrefs.HasKey("started career")) {
@@ -28,7 +34,7 @@ public class StartCareer : MonoBehaviour {
 			//TODO: Beat game, reset levels
 		}
 		if (PlayerPrefs.HasKey("reset")) {
-			CustomFunctionScript.resetPlayerData(20, 0);
+			CustomFunctionScript.resetPlayerData(60, 0);
 			PlayerPrefs.DeleteKey("reset");
 		}
 
@@ -42,11 +48,14 @@ public class StartCareer : MonoBehaviour {
 			PlayerPrefs.SetInt("current level", 1);
 			PlayerPrefs.SetInt("max warnings", maxWarnings);
 			PlayerPrefs.SetInt("final day", daysUntilComplete);
-			PlayerPrefs.SetFloat("health", 20);
+			PlayerPrefs.SetFloat("health", 60);
 			PlayerPrefs.SetFloat ("paycheck", 0);
 			PlayerPrefs.SetFloat("earned wages", 0);
 			PlayerPrefs.SetFloat("bank account", 0);
 			PlayerPrefs.SetFloat("hourly rate", 8.05f);
+			PlayerPrefs.SetInt("retries", 3);
+		int r = PlayerPrefs.GetInt("retries", -1);
+		Debug.Log("RETRIES: " + r);
 
 		//set effect levels
 
@@ -64,6 +73,14 @@ public class StartCareer : MonoBehaviour {
 			}
 			Debug.Log("Career Started");
 
+	}
+
+	public void unlockCareer() {
+		/*
+		Social.ReportProgress( "CgkIjOCjtq4PEAIQDA", 100, (result) => {
+			Debug.Log ( result ? "Reported First Day" : "Failed to report first day");
+		});
+*/
 	}
 	
 	// Update is called once per frame

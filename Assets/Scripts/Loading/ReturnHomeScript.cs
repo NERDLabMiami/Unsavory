@@ -24,14 +24,14 @@ public class ReturnHomeScript : MonoBehaviour {
 	private int day;
 	private int finalDay;
 	private float money;
-	private float wages;
+//	private float wages;
 	private string billData;
 	// Use this for initialization
 
 	private float calculateWages() {
 		money = PlayerPrefs.GetFloat("money");
 		float paycheck = PlayerPrefs.GetFloat("earned wages", 0);
-		Debug.Log("WAGES TO BE PAID: " + wages);
+//		Debug.Log("WAGES TO BE PAID: " + wages);
 		money += paycheck;
 		//set earned wages back to nothing
 		PlayerPrefs.SetFloat("earned wages", 0);
@@ -65,7 +65,6 @@ public class ReturnHomeScript : MonoBehaviour {
 	}
 	
 	void Start () {
-		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
 
 		money = PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
@@ -76,10 +75,6 @@ public class ReturnHomeScript : MonoBehaviour {
 			PlayerPrefs.SetInt("welcomed home", 1);
 		}
 
-		if (PlayerPrefs.HasKey("letter")) {
-			//TODO: Turn letter button on
-			letterButton.SetActive(true);
-		}
 
 		//Apply Effects Based on Unpaid Bills
 		billData =  Resources.Load<TextAsset>("bills").ToString();
@@ -117,6 +112,21 @@ public class ReturnHomeScript : MonoBehaviour {
 			if (day % 5 == 0) {
 				//Pay Wages, Add Notification for Bill
 				weekend = true;
+				//Decrease health significantly
+				float health = PlayerPrefs.GetFloat("health");
+
+				if (health >= 50) {
+					PlayerPrefs.SetInt("letter", 0);
+					PlayerPrefs.SetFloat("health", 20);
+				}
+				else if (health >= 30) {
+					PlayerPrefs.SetFloat("health", 15);
+				}
+				else if (health >= 15) {
+					PlayerPrefs.SetFloat("health", 10);
+				}
+
+
 			}
 
 				if (day%finalDay == 0 && day != 0) {
@@ -134,7 +144,7 @@ public class ReturnHomeScript : MonoBehaviour {
 						gameObject.GetComponent<UnityAnalyticsIntegration>().survived();
 
 						monthCompletePanel.SetActive(true);
-						Social.ReportProgress( "survived", 100, (result) => {
+							Social.ReportProgress( Achievements.SURVIVED, 100, (result) => {
 							Debug.Log ( result ? "Reported Survival" : "Failed to report taco progress");
 					});
 
@@ -152,20 +162,20 @@ public class ReturnHomeScript : MonoBehaviour {
 					}
 		
 					Debug.Log("It's the weekend");
-					paycheckUI.text = "$" + calculateWages().ToString("0.00");
+					paycheckUI.text = calculateWages().ToString("$0");
 					float groceryCost = buyGroceries();
 					if (groceryCost > 0) {
 						Debug.Log("Deducting " + groceryCost + " for groceries");
 						money = money - groceryCost;
 						PlayerPrefs.SetFloat("money", money);
-						groceryUI.text = "-$" + groceryCost.ToString("0.00");
+						groceryUI.text = groceryCost.ToString("-$0");
 					}
 				else {
 					//health deducted in buygroceries
 						groceryUI.text = "N/A";
 				}
 				gameObject.GetComponent<UnityAnalyticsIntegration>().weekend();
-				bankAccountUI.text = "$" + money.ToString("0.00");
+				bankAccountUI.text = money.ToString("$0");
 					weekCompletePanel.SetActive(true);
 
 				//TODO: Offer Overtime Catering
@@ -176,8 +186,13 @@ public class ReturnHomeScript : MonoBehaviour {
 
 			}
 			day++;
-			moneyUI.text = "$" + money.ToString("0.00");
+			moneyUI.text = money.ToString("$0");
 			PlayerPrefs.SetInt("current level", day);
+			if (PlayerPrefs.HasKey("letter")) {
+				//TODO: Turn letter button on
+				letterButton.SetActive(true);
+			}
+
 		}
 	}
 	

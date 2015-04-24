@@ -3,12 +3,17 @@ namespace UnityEngine.Cloud.Analytics
 {
 	internal class WebGLWrapper : BasePlatformWrapper
 	{
-		public override string deviceUniqueIdentifier
+		public override string NewGuid()
 		{
-			get 
-			{ 
-				return System.Guid.NewGuid ().ToString();
+			string guidKey = "UNITY_ANALYTICS_GUID_KEY";
+			string savedKey = PlayerPrefs.GetString(guidKey, null);
+			if (string.IsNullOrEmpty(savedKey))
+			{
+				savedKey = System.Guid.NewGuid().ToString();
+				PlayerPrefs.SetString(guidKey, savedKey);
 			}
+
+			return savedKey;
 		}
 	}
 }

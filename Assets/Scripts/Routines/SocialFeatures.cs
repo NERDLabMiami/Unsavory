@@ -4,99 +4,53 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnionAssets.FLE;
 using SimpleJSON;
 using UnityEngine.SocialPlatforms;
+using GooglePlayGames;
+using Soomla.Profile;
 
 
 public class SocialFeatures : MonoBehaviour {
-	public bool gcAuthenticated = false;
-	public bool twitterAuthenticated = false;
-	private bool hitActivateButton = false;
+//	private bool hitActivateButton = false;
 	public GameObject twitterInterface;
 	public GameObject twitterNotFoundPanel;
 	public GameObject activateButton;
+	private bool openTwitterAfterLogin = false;
 
 	void Start() {
-		if (PlayerPrefs.HasKey("activated")) {
+		if (PlayerPrefs.HasKey("activated") && activateButton != null) {
 			activateButton.SetActive(true);
 		}
-
-		Social.localUser.Authenticate (ProcessAuthentication);
+		ProfileEvents.OnLoginFinished += onLoginFinished;
+		ProfileEvents.OnLoginCancelled += onLoginCancelled;
+		ProfileEvents.OnLoginFailed += onLoginFailed;
 	}
 
-	void ProcessAuthentication (bool success) {
-		if (success) {
-			Debug.Log ("Authenticated social api");
-			Social.LoadAchievements (ProcessLoadedAchievements);
-			gcAuthenticated = true;
-		}
-		else {
-			Debug.Log ("Failed to authenticate");
-		}
-	}
-
-
-	void ProcessLoadedAchievements (IAchievement[] achievements) {
-		if (achievements.Length == 0) {
-			Debug.Log ("Error: no achievements found");
-		}
-			else {
-			Debug.Log ("Got " + achievements.Length + " achievements");
-		}
-	}
 
 	void Awake () {
-		SPTwitter.instance.addEventListener(TwitterEvents.TWITTER_INITED,  OnInit);
-		SPTwitter.instance.addEventListener(TwitterEvents.AUTHENTICATION_SUCCEEDED,  OnAuth);
-		
-		SPTwitter.instance.addEventListener(TwitterEvents.POST_SUCCEEDED,  OnPost);
-		SPTwitter.instance.addEventListener(TwitterEvents.POST_FAILED,  OnPostFailed);
-		SPTwitter.instance.addEventListener(TwitterEvents.AUTHENTICATION_FAILED, OnAuthFail);
-		SPTwitter.instance.addEventListener(TwitterEvents.USER_DATA_LOADED,  OnUserDataLoaded);
-		SPTwitter.instance.addEventListener(TwitterEvents.USER_DATA_FAILED_TO_LOAD,  OnUserDataLoadFailed);
-
-		SPTwitter.instance.Init();
-		
 
 
 	}
 
-	private void OnAuth() {
-		Debug.Log("Authenticated");
-		twitterAuthenticated = true;
-	}
-	private void OnAuthFail() {
-		Debug.Log("Failed authenticating, no accounts?");
-		if (hitActivateButton) {
-			twitterNotFoundPanel.SetActive(true);
+	public void onLoginFinished(Soomla.Profile.UserProfile profile, string payload) {
+
+		if (openTwitterAfterLogin) {
+			twitterInterface.SetActive(true);
+			openTwitterAfterLogin = false;
 		}
 	}
 
-	private void OnInit() {
-		Debug.Log("Initialized");
-		if(SPTwitter.instance.IsAuthed) {
-			OnAuth();
-		}
+	public void onLoginCancelled(Provider provider, string payload) {
+		twitterNotFoundPanel.SetActive(true);		
 
 	}
 
-	private void OnPost() {
-		Debug.Log("Posted");
-	}
-
-	private void OnPostFailed() {
-		Debug.Log("Post Failed");
-	}
-
-	private void OnUserDataLoaded() {
-		Debug.Log ("User Data Loaded");
+	public void onLoginFailed(Provider provider, string message, string payload) {
+		Debug.Log("Login Failed: " + message);
+		twitterNotFoundPanel.SetActive(true);		
 
 	}
 
-	private void OnUserDataLoadFailed() {
-		Debug.Log ("User Data Failed");
-	}
 
 	public void leaderboard() {
 //		Social.ShowLeaderboardUI();
@@ -105,11 +59,17 @@ public class SocialFeatures : MonoBehaviour {
 
 	public void achievements() {
 			if (Social.localUser.authenticated) {
-			Social.ShowLeaderboardUI();
-//			Social.ShowAchievementsUI();
+			Social.ShowAchievementsUI();
 		}
 		else {
 			Debug.Log("Not Authenticated. Can't show achievements");
+			Social.localUser.Authenticate((bool success) => {
+				if (success) {
+					Social.ShowAchievementsUI();
+				}
+				Debug.Log("AUTHENTICATION: " + success.ToString());
+			});
+
 		}
 	}
 
@@ -135,22 +95,6 @@ public class SocialFeatures : MonoBehaviour {
 
 	}
 
-	public void checkTwitter() {
-		Debug.Log("Checking Twitter");
-		if (!twitterAuthenticated) {
-			Debug.Log("Not Authenticated");
-			hitActivateButton = true;
-			SPTwitter.instance.AuthenticateUser();
-		}
-		else {
-			Debug.Log("Authenticated");
-			twitterInterface.SetActive(true);
-		}
-	}
-
-
-
-
 
 	private void CallFBLoginForPublish()
 	{
@@ -165,11 +109,20 @@ public class SocialFeatures : MonoBehaviour {
 	{
 		//FB.Logout();
 	}
-
-	void tweeted() {
-		Debug.Log("Just tweeted");
+	public void connectToTwitter() {
+		if(SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
+			twitterInterface.SetActive(true);
+		}
+		else {
+			if (SoomlaProfile.IsProviderNativelyImplemented(Provider.TWITTER)) {
+				openTwitterAfterLogin = true;
+				SoomlaProfile.Login(Provider.TWITTER);
+			}
+			else {
+				twitterNotFoundPanel.SetActive(true);
+			}
+		}
 	}
-
 
 	
 	

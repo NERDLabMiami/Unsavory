@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class SneezeScript : MonoBehaviour {
-	public GameObject timer;
-	public GameObject player;
+	public TimerScript timer;
+	public PlayerScript player;
+	public Level level;
 	private bool launchedLevelEnd = false;
 	private bool endless = false;
 
@@ -25,10 +26,12 @@ public class SneezeScript : MonoBehaviour {
 				//add to the sneeze count
 				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
 				PlayerPrefs.SetInt ("sneezes", sneezes);
-				player.GetComponent<PlayerScript>().addWages( timer.GetComponent<TimerScript>().getTimeWorked());
+				level.setTimeWorked(timer.getTimeWorked());
+//				player.addWages( timer.getTimeWorked());
 				launchedLevelEnd = true;
 				timer.GetComponent<TimerScript>().running = false;
-				player.GetComponent<PlayerScript>().EndOfLevel(false, true);
+				level.setTimeWorked(timer.getTimeWorked());
+				level.EndOfLevel(false, true);
 
 			}
 		}
@@ -38,7 +41,7 @@ public class SneezeScript : MonoBehaviour {
 				//END OF LEVEL POINT, NO STORY MODE
 				launchedLevelEnd = true;
 				Debug.Log("Endless Ends");
-				player.GetComponent<PlayerScript>().EndCatering(false);
+				level.EndCatering(false);
 			}
 		}
 	}

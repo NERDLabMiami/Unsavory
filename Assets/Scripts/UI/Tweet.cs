@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnionAssets.FLE;
+//using UnionAssets.FLE;
 using SimpleJSON;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
-using UnityEngine.SocialPlatforms.GameCenter;
+using Soomla.Profile;
 
 public class Tweet : MonoBehaviour {
 	public Text message;
+	public Animator buttonAnimation;
 	// Use this for initialization
 	void Start () {
 //		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
-
+		ProfileEvents.OnSocialActionFinished += onSocialActionFinished;
 	}
 	
 	// Update is called once per frame
@@ -19,11 +20,31 @@ public class Tweet : MonoBehaviour {
 	
 	}
 
-	public void tweet() {
+	public void onSocialActionFinished(Provider provider, SocialActionType action, string payload) {
+		Social.ReportProgress( Achievements.ACTIVIST, 100.00f, (result) => {
+			Debug.Log ( result ? "Reported #activist" : "Failed to report #activist");
+		});
 
+		// provider is the social provider
+		// action is the social action (like, post status, etc..) that finished
+		// payload is an identification string that you can give when you initiate the social action operation and want to receive back upon its completion
+		
+		// ... your game specific implementation here ...
+	}
+
+	public void tweet() {
+		if (SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
+			buttonAnimation.SetTrigger("tweeted");
+			SoomlaProfile.UpdateStatus(Provider.TWITTER, message.text);
+		}
+		else {
+			SoomlaProfile.Login(Provider.TWITTER);
+			Debug.Log("Not logged in yet");
+		}
+		/*
 		if (SPTwitter.instance.IsAuthed) {
 			SPTwitter.instance.Post(message.text);
-			Social.ReportProgress( "activist", 100, (result) => {
+			Social.ReportProgress( "CgkIjOCjtq4PEAIQAg", 100, (result) => {
 				Debug.Log ( result ? "Reported #activist" : "Failed to report #activist");
 			});
 
@@ -31,6 +52,7 @@ public class Tweet : MonoBehaviour {
 		else {
 			SPTwitter.instance.AuthenticateUser();
 		}
+		*/
 	}
 	
 

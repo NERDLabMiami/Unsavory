@@ -25,14 +25,18 @@ public class AnimationFunctions : MonoBehaviour {
 	}
 
 	public void disableCollisionOnObjects() {
+		Debug.Log("RUNNING DISABLE COLLISION ON OBJECTS");
 		if (objectsWithCollisionToDisable != null) {
 			foreach(BoxCollider2D child in objectsWithCollisionToDisable.GetComponentsInChildren<BoxCollider2D>()) {
-					child.enabled = false;
+				Debug.Log("Disabling " + child.name);
+				child.enabled = false;
 			}
 		}
 	}
 
 	public void enableCollisionOnObjects() {
+		Debug.Log("RUNNING ENABLE COLLISION ON OBJECTS");
+
 		if (objectsWithCollisionToDisable != null) {
 			foreach(BoxCollider2D child in objectsWithCollisionToDisable.GetComponentsInChildren<BoxCollider2D>()) {
 				child.enabled = true;
@@ -40,10 +44,10 @@ public class AnimationFunctions : MonoBehaviour {
 		}
 	}
 
-
 	public void disable() {
 		gameObject.SetActive(false);
 	}
+
 	public void setFinished() {
 		GetComponent<Animator>().SetBool("finished", true);
 	}

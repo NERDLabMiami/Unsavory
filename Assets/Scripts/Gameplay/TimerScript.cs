@@ -7,20 +7,21 @@ using UnityEngine.UI;
 
 public class TimerScript : MonoBehaviour {
 
-	public float timer = 60;
+	public float timer = 30;
 	public DateTime today;
-	private DateTime startOfWorkDay;
+	public Level level;
 	public bool running = false;
 	public bool catering = false;
+
 	private Transform startingPosition;
+	private float fullday;
 	private float startTime;
 	private float movementTime;
 	private float timeBetweenOrders = 3f;
-	public GameObject player;
 
 
 	void Start() {
-
+		fullday = timer;
 		if (PlayerPrefs.HasKey("catering")) {
 			catering = true;
 		}
@@ -32,7 +33,7 @@ public class TimerScript : MonoBehaviour {
 		today = new DateTime(2015,1,1);
 		today = today.Add(workday);
 		//TODO: don't think I need this
-		startOfWorkDay = today;
+//		startOfWorkDay = today;
 		Debug.Log ("Setting Workday");
 
 	}
@@ -45,7 +46,7 @@ public class TimerScript : MonoBehaviour {
 
 	public float getTimeWorked() {
 
-		float fullday = 60;
+//		float fullday = 60;
 		float timeWorked = fullday - timer;
 		float percentageOfFullDay = timeWorked / fullday;
 		return percentageOfFullDay * 8;
@@ -59,7 +60,7 @@ public class TimerScript : MonoBehaviour {
 			timer -= Time.deltaTime;
 				if (timer <= 0 && !catering) {
 					//Continue onto next day, full day of work
-					player.GetComponent<PlayerScript>().EndOfLevel(true, false);
+					level.EndOfLevel(true, false);
 					running = false;
 					Debug.Log("End of Day!");
 				}

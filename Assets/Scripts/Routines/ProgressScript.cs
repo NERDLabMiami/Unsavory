@@ -10,10 +10,10 @@ public class ProgressScript : MonoBehaviour {
 		if (daysLeft < 20) {
 			float money = PlayerPrefs.GetFloat("money");
 			if (PlayerPrefs.HasKey("fired")) {
-				GetComponent<Text>().text = "Fired with " + money.ToString ("$0.00") + " to your name";
+				GetComponent<Text>().text = "Fired with " + money.ToString ("$0") + " to your name";
 			}
 			else {
-				GetComponent<Text>().text = money.ToString ("$0.00") + " with " + daysLeft.ToString("0 days left");
+				GetComponent<Text>().text = money.ToString ("$0") + " with " + daysLeft.ToString("0 days left");
 
 			}
 			}

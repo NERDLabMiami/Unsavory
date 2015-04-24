@@ -13,6 +13,7 @@ public class ReadySetGo : MonoBehaviour {
 	public GameObject gamePlayObject;
 	public GameObject timer;
 	public GameObject player;
+	public Level level;
 	public Button pauseButton;
 	public CurrentOrderScript currentOrder;
 	public MusicLibrary music;
@@ -32,10 +33,12 @@ public class ReadySetGo : MonoBehaviour {
 //		gamePlayObject.SetActive(true);
 //		orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
 		timer.GetComponent<PauseScript>().gamePlayStarted = true;
-		player.GetComponent<StartLevel>().beginLevel();
+		level.beginLevel();
 		timer.GetComponent<TimerScript>().running = true;
-		currentOrder.spawnMoreOrders = true;
-		currentOrder.Spawn();
+		//TODO: Switch between modes
+		//		currentOrder.spawnMoreOrders = true;
+//		currentOrder.Spawn();
+		currentOrder.newOrder();
 		Time.timeScale = 1f;
 		GetComponent<AudioSource>().Stop();
 		music.countdownFinished();
@@ -53,7 +56,7 @@ public class ReadySetGo : MonoBehaviour {
 				//move to the next word
 				wordIndex++;
 				if (wordIndex >= words.Length) {
-					GetComponentInChildren<Animator>().SetBool("finished", true);
+					GetComponentInChildren<Animator>().SetTrigger("finished");
 					Debug.Log("Starting Game");
 					display.text = "Go!";
 					finished = true;
