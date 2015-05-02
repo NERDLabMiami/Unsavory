@@ -37,8 +37,8 @@ public class SocialInit : MonoBehaviour {
 		Social.localUser.Authenticate((bool success) => {
 			Debug.Log("AUTHENTICATION: " + success.ToString());
 		});
-	
-		SoomlaProfile.Initialize();
+			SoomlaProfile.Initialize();
+			Application.LoadLevel(1);
 	}
 	#if UNITY_ANDROID
 

@@ -13,11 +13,19 @@ public class ReturnHomeScript : MonoBehaviour {
 	public Text paycheckUI;
 	public Text bankAccountUI;
 	public Text groceryUI;
+	public FruitBowl fruit;
 	public GameObject gameOverPanel;
 	public GameObject monthCompletePanel;
 	public GameObject weekCompletePanel;
 	public GameObject billButton;
+	public GameObject drugButton;
+	public GameObject bedButton;
+	public GameObject doorButton;
+	public GameObject bedroomPanel;
+	public GameObject doorPanel;
+
 	public GameObject letterButton;
+	public SwipeScene room;
 	public GameObject firstTimeHomePanel;
 	public MusicLibrary music;
 	private bool weekend = false;
@@ -26,6 +34,8 @@ public class ReturnHomeScript : MonoBehaviour {
 	private float money;
 //	private float wages;
 	private string billData;
+	private bool visitedBedroom = false;
+	private bool visitedExit = false;
 	// Use this for initialization
 
 	private float calculateWages() {
@@ -72,9 +82,19 @@ public class ReturnHomeScript : MonoBehaviour {
 
 		if (!PlayerPrefs.HasKey("welcomed home")) {
 			firstTimeHomePanel.SetActive(true);
+			//TODO: Attention to Drugs and Bills
+			billButton.GetComponent<Animator>().SetTrigger("attention");
+			drugButton.GetComponent<Animator>().SetTrigger("attention");
 			PlayerPrefs.SetInt("welcomed home", 1);
 		}
 
+		if (PlayerPrefs.HasKey("seen bedroom")) {
+			visitedBedroom = true;
+		}
+
+		if (PlayerPrefs.HasKey("seen door")) {
+			visitedExit = true;
+		}
 
 		//Apply Effects Based on Unpaid Bills
 		billData =  Resources.Load<TextAsset>("bills").ToString();
@@ -109,6 +129,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			Debug.Log ("I have " + money.ToString());
 			finalDay = PlayerPrefs.GetInt("final day", 30);
 			Debug.Log("It's day " + day);
+			fruit.setFruit(day%5);
 			if (day % 5 == 0) {
 				//Pay Wages, Add Notification for Bill
 				weekend = true;
@@ -130,6 +151,9 @@ public class ReturnHomeScript : MonoBehaviour {
 			}
 
 				if (day%finalDay == 0 && day != 0) {
+				//add last paycheck
+					paycheckUI.text = calculateWages().ToString("$0");
+					float groceryCost = buyGroceries();
 
 					int unpaidBills = payOutstandingBills();
 		
@@ -162,6 +186,7 @@ public class ReturnHomeScript : MonoBehaviour {
 					}
 		
 					Debug.Log("It's the weekend");
+					PlayerPrefs.SetInt("can cater",1);
 					paycheckUI.text = calculateWages().ToString("$0");
 					float groceryCost = buyGroceries();
 					if (groceryCost > 0) {
@@ -191,6 +216,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			if (PlayerPrefs.HasKey("letter")) {
 				//TODO: Turn letter button on
 				letterButton.SetActive(true);
+				PlayerPrefs.SetInt("activated",1);
 			}
 
 		}
@@ -207,7 +233,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			//returning to main menu as a loser
 			PlayerPrefs.SetInt("fired", 1);
 		}
-		Application.LoadLevel(0);
+		Application.LoadLevel(1);
 	}
 
 	public void continueToNextMonth() {
@@ -235,6 +261,25 @@ public class ReturnHomeScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+		if (!visitedExit) {
+			if (room.currentPlace == 2) {
+				Debug.Log("visited exit");
+				PlayerPrefs.SetInt("seen door",1);
+				visitedExit = true;
+				doorButton.GetComponent<Animator>().SetTrigger("attention");
+				doorPanel.SetActive(true);
+
+			}
+		}
+
+		if (!visitedBedroom) {
+			if (	room.currentPlace == 0) {
+				Debug.Log("visited bedroom");
+				PlayerPrefs.SetInt("seen bedroom",1);
+				bedButton.GetComponent<Animator>().SetTrigger("attention");
+				visitedBedroom = true;
+				bedroomPanel.SetActive(true);
+			}
+		}
 	}
 }

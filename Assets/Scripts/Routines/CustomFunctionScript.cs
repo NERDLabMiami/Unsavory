@@ -13,6 +13,12 @@ public class CustomFunctionScript : MonoBehaviour {
 		bool twitter = false;
 		bool survived = false;
 		bool can_cater = false;
+		int evaluationGroup = Random.Range(0,5);
+		Debug.Log("Set Evaluation Group to " + evaluationGroup);
+		if (PlayerPrefs.HasKey("evaluation group")) {
+//			evaluationGroup = PlayerPrefs.GetInt("evaluation group", 0);
+		}
+
 		if (PlayerPrefs.HasKey("can cater")) {
 			can_cater = true;
 		}
@@ -31,8 +37,14 @@ public class CustomFunctionScript : MonoBehaviour {
 		}
 
 		PlayerPrefs.DeleteAll();
+		PlayerPrefs.SetInt("evaluation group", evaluationGroup);
 		PlayerPrefs.SetInt("times played", timesPlayed);
-		PlayerPrefs.SetInt("current level", 1);
+		PlayerPrefs.SetInt("current level", 20);
+		//TODO: DEBUG, REMOVE
+		Debug.Log("Turning off tutorial");
+		PlayerPrefs.SetInt("tutorial", 1);
+
+		
 		PlayerPrefs.SetFloat ("money", money);
 		PlayerPrefs.SetInt ("sneezes", 0);
 		PlayerPrefs.SetInt ("warnings", 0);

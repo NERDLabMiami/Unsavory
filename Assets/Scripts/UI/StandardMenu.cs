@@ -6,7 +6,9 @@ public class StandardMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		objectsToDisable.SetActive(false);
+		if (objectsToDisable) {
+			objectsToDisable.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame

@@ -7,43 +7,30 @@
 				  ],
 				  
  "topics": [
- 				{"title": "The Beta Tester", "tweets": [
- 																		"Playing the prerelease of #unsavory a game about #paidsickdays and I like it http://goo.gl/HxQjk8",
- 																		"What's this Slacktivist5000 stuff in #unsavory? http://goo.gl/HxQjk8"
- 																		]
- 																		},
  				{"title": "Public Health Connoisseur", "tweets":[
-																	"employees w/o #paidsickdays is an #unsavory #publichealth concern", 
-																	"no #paidsickdays for restaurant workers? #nextgreatpandemic", 
-																	"I'm convinced going to get sick because a restaurant didn't provide #paidsickdays to their workers",
-																	"40% of workers coughing or sneezing while handling food? #unsavory #HFANow",
-																	"2009 H1N1 pandemic ~7mil add'l people were infected b/c contagious employees didn't stay home from work to recover #HFANow"]
+																	"employees w/o #paidsickdays is an #unsavorygame and #publichealth concern", 
+																	"no #paidsickdays for restaurant workers? #nextgreatpandemic #unsavorygame", 
+																	"I'm convinced going to get sick because a restaurant didn't provide #paidsickdays to their workers #unsavorygame",
+																	"40% of workers coughing or sneezing while handling food? #unsavorygame #HFANow",
+																	"2009 H1N1 pandemic ~7mil addl ppl infected because contagious employees didn't stay home from work to recover #HFANow"]
  																	},
  				{"title": "The Egalitarian", "tweets":[
- 																	"Most #whitecollar workers get #paidsickdays, why not restaurant workers?",
- 																	"Top wage earners are more likely to get #paidsickdays than low wage earners, sup with that?",
- 																	"Over 60% of all workers have access to #paidsickdays but 90% of restaurant workers do not. That's #unsavory",
- 																	"I support #HFANow and #paidsickdays anything less is #unsavory"]
+ 																	"Most #whitecollar workers get #paidsickdays, why not restaurant workers? #unsavorygame",
+ 																	"Top wage earners are more likely to get #paidsickdays than low wage earners, what's up with that? #unsavorygame",
+ 																	"Over 60% of all workers have access to #paidsickdays but 90% of restaurant workers do not. That's an #unsavorygame"]
  																	},
  				{"title": "The Professional", "tweets":[
- 																	"Restaurant workers staying home when they're sick? That's good for business. #HFANow #paidsickdays",
- 																	"A healthy employee is a productive employee #HFANow #paidsickdays",
- 																	"CT saw a 15% increase in biz #productivity after passing #paidsickdays legislation. What are we waiting for?",
- 																	"Working while sick endangers profits by putting the productivity of others at risk. #paidsickdays #HFANow #commonsense",
- 																	"I support #HFANow and #paidsickdays anything less is #unsavory"]
- 																	},
- 				{"title": "The Humanitarian", "tweets":[
- 																	"#paidsickdays is a basic human right #HFANow",
- 																	"Almost 90% of restaurant workers without #paidsickdays? That's #unsavory"]
+ 																	"Restaurant workers staying home when they're sick? That's good for business. #HFANow #paidsickdays #unsavorygame",
+ 																	"A healthy employee is a productive employee #HFANow #paidsickdays #unsavorygame",
+ 																	"Connecticut saw a 15% increase in biz #productivity after passing #paidsickdays legislation. What are we waiting for?",
+ 																	"Working while sick endangers profits by putting the productivity of others at risk. #paidsickdays #HFANow #commonsense"]
  																	},
  				{"title": "The Advocate", "tweets":[
- 																	"Why does @WeRRestaurants actively work against #paidsickdays laws? #HFANow",
- 																	"@WeRRestaurants what do you have against #paidsickdays legislation?",
- 																	"@WeRRestaurants I support #HFANow and you should too, #paidsickdays is good for everyone"]
- 																	},
- 				{"title": "The Supporter", "tweets":[
- 																	"I support #HFANow and #paidsickdays anything less is #unsavory",
- 																	"I prefer eating at restaurants that give their workers #paidsickdays #HFANow"]
+ 																	"#paidsickdays is a basic human right #HFANow #unsavorygame",
+ 																	"Why does @WeRRestaurants actively work against #paidsickdays laws? #HFANow #unsavorygame",
+ 																	"@WeRRestaurants what do you have against #paidsickdays legislation? #unsavorygame",
+ 																	"@WeRRestaurants I support #HFANow and you should too, #paidsickdays is good for everyone #unsavorygame",
+ 																	"I support #HFANow and #paidsickdays anything less is an #unsavorygame"]
  																	},
  				
  				]				

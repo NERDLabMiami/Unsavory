@@ -89,13 +89,14 @@ public class PlateScript : MonoBehaviour {
 				//clean up
 				//get rid of the current order
 				analytics.servedOrder(current_recipes[matchedOrderIndex].name,"true");
+				Vector3 tacoPosition = transform.position;
+				GameObject taco = (GameObject) Instantiate(current_recipes[0].GetComponent<RecipeScript>().completed, tacoPosition, Quaternion.identity);
+
 				for (int i = 0; i < current_recipes.Length; i++) {
 					current_recipes[i].GetComponent<Animator>().SetTrigger("matched");
 
 				}
 	//			Destroy(current_recipes[matchedOrderIndex]);
-				Vector3 tacoPosition = transform.position;
-				GameObject taco = (GameObject) Instantiate(wrappedTaco, tacoPosition, Quaternion.identity);
 				//			taco.transform.parent = transform;
 				tray.SetActive(false);
 				if (containsIngredient(ingredients, rocketSauce)) {
@@ -122,7 +123,11 @@ public class PlateScript : MonoBehaviour {
 					current_recipes[i].GetComponent<Animator>().SetTrigger("unmatched");					
 				}
 				current.numberOfUnmatchedOrders++;
-				playerWarning(current.numberOfUnmatchedOrders);
+				if (current.warningTimer <= Time.time + 2f) {
+					playerWarning(current.numberOfUnmatchedOrders);
+					current.warningTimer = Time.time;
+				}
+
 				matchedAggregate = 0;
 				perfectLevel = false;
 			}

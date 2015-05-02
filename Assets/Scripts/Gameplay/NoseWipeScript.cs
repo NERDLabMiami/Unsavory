@@ -5,8 +5,8 @@ using UnityEngine.SocialPlatforms;
 
 public class NoseWipeScript : MonoBehaviour {
 	private float timeBetweenSneezes = 10;
-	private float timeBeforeSneezeWarning = 2;
-	public float sweatingBeforeSneezeWarning = 1;
+	private float timeBeforeSneezeWarning = 1.5f;
+	public float sweatingBeforeSneezeWarning = 1f;
 //	private bool Sneezing;
 //	private bool SneezeWarning;
 	private float sneezeTimer;

@@ -18,10 +18,10 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void goHome() {
-		Application.LoadLevel(2);
+		Application.LoadLevel(3);
 	}
 	public void mainMenu() {
-		Application.LoadLevel(0);
+		Application.LoadLevel(1);
 	}
 
 
@@ -39,7 +39,7 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void restartLevel() {
-		ao = Application.LoadLevelAsync(1);
+		ao = Application.LoadLevelAsync(2);
 	}
 
 	public void RestartGame() {
@@ -55,12 +55,12 @@ public class SceneLoader : MonoBehaviour {
 		PlayerPrefs.DeleteKey("catering");
 		Debug.Log("Restart Game Run");
 		if (resume.Equals("home")) {
-			sceneNumber = 2;
+			sceneNumber = 3;
 
 		}
 
 		else {
-			sceneNumber = 1;
+			sceneNumber = 2;
 		}
 		Debug.Log("Loading Level " + sceneNumber);
 		ao = Application.LoadLevelAsync(sceneNumber);
@@ -71,14 +71,14 @@ public class SceneLoader : MonoBehaviour {
 
 	public void QuitInGame() {
 		PlayerPrefs.SetString("resume game", "game");
-		setSceneNumber(0);
+		setSceneNumber(1);
 		newScene();
 
 	}
 	
 	public void QuitAtHome() {
 		PlayerPrefs.SetString("resume game", "home");
-		setSceneNumber(0);
+		setSceneNumber(1);
 		newScene();
 	}
 

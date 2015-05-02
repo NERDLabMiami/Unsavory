@@ -13,12 +13,15 @@ public class StartCareer : MonoBehaviour {
 	public int daysUntilComplete = 30;
 	// Use this for initialization
 	void Start () {
+
 		Time.timeScale = 1f;
 		if (PlayerPrefs.HasKey("can cater")) {
 			mainMenu.SetTrigger("catering");
+		
 		}
 		else {
 			mainMenu.SetTrigger("no catering");
+
 		}
 
 
@@ -33,15 +36,19 @@ public class StartCareer : MonoBehaviour {
 		if (PlayerPrefs.HasKey("survived")) {
 			//TODO: Beat game, reset levels
 		}
-		if (PlayerPrefs.HasKey("reset")) {
+		if (PlayerPrefs.HasKey("reset") || reset) {
+			Debug.Log("Reseting Player");
 			CustomFunctionScript.resetPlayerData(60, 0);
 			PlayerPrefs.DeleteKey("reset");
 		}
 
 		if (reset) {
-			CustomFunctionScript.resetToDefaults();
+	
+			//			CustomFunctionScript.resetToDefaults();
 		}
 	}
+
+
 
 	public void beginCareer() {
 			PlayerPrefs.SetInt("started career", 1);

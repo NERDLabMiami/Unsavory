@@ -1,155 +1,116 @@
 {
   "levels": [
     {
-        "recipes": 3,
-        "waiting time": 6,
+        "recipes": [1,2],
+        "waiting time": 8,
         "end": false
     },
     {
-        "recipes": 4,
-        "waiting time": 6,
+        "recipes": [2,3],
+        "waiting time": 8,
         "end": false
     },
     {
-        "recipes": 3,
-        "waiting time": 5.5,
+        "recipes": [4],
+        "waiting time": 8,
         "end": false
     },
     {
-        "recipes": 4,
-        "waiting time": 5.5,
+        "recipes": [5,6],
+        "waiting time": 8,
         "end": false
     },
     {
-        "recipes": 4,
-        "waiting time": 5.7,
+        "recipes": [7],
+        "waiting time": 7,
         "end": true
     },
     {
-        "recipes": 4,
-        "waiting time": 5.5,
+        "recipes": [8,2,3],
+        "waiting time": 7,
         "end": false
     },
     {
-        "recipes": 3,
-        "waiting time": 3,
+        "recipes": [9,2,3],
+        "waiting time": 7,
         "end": false
     },
     {
-        "recipes": 4,
-        "waiting time": 5,
+        "recipes": [10,7],
+        "waiting time": 7,
         "end": false
     },
     {
-        "recipes": 5,
-        "waiting time": 5.3,
+        "recipes": [11,2,3],
+        "waiting time": 7,
         "end": false
     },
     {
-        "recipes": 6,
-        "waiting time": 5.3,
+        "recipes": [12],
+        "waiting time": 6.5,
         "end": false
     },   
         {
-        "recipes": 4,
-        "waiting time": 4.5,
+        "recipes": [7,9],
+        "waiting time": 6.5,
         "end": false
     },
     {
-        "recipes": 7,
-        "waiting time": 5,
+        "recipes": [7,4],
+        "waiting time": 6.5,
         "end": false
     },
     {
-        "recipes": 8,
-        "waiting time": 5,
+        "recipes": [1,11,9],
+        "waiting time": 6.5,
         "end": false
     },
     {
-        "recipes": 9,
-        "waiting time": 5,
+        "recipes": [1,4,9],
+        "waiting time": 6.5,
         "end": false
     },
         {
-        "recipes": 3,
-        "waiting time": 3,
+        "recipes": [7,2,3],
+        "waiting time": 6,
         "end": false
     },
         {
-        "recipes": 10,
-        "waiting time": 5,
+        "recipes": [12,2],
+        "waiting time": 6,
         "end": false
     },
         {
-        "recipes": 11,
-        "waiting time": 4.5,
+        "recipes": [12,4],
+        "waiting time": 6,
         "end": false
     },
         {
-        "recipes": 12,
-        "waiting time": 4.5,
+        "recipes": [1,2,9,11],
+        "waiting time": 6,
         "end": false
     },
         {
-        "recipes": 4,
-        "waiting time": 3.5,
+        "recipes": [12,11,1],
+        "waiting time": 6,
         "end": false
     },
         {
-        "recipes": 6,
-        "waiting time": 4.5,
+        "recipes": [7,12],
+        "waiting time": 5.5,
+        "end": false
+    },
+         {
+        "recipes": [7,12],
+        "waiting time": 5.4,
         "end": false
     },
         {
-        "recipes": 13,
-        "waiting time": 5,
+        "recipes": [12,11,1],
+        "waiting time": 5.3,
         "end": false
-    },
-        {
-        "recipes": 13,
-        "waiting time": 4.5,
-        "end": false
-    },
-        {
-        "recipes": 14,
-        "waiting time": 4.5,
-        "end": false
-    },
-        {
-        "recipes": 13,
-        "waiting time": 3.7,
-        "end": false
-    },
-        {
-        "recipes": 4,
-        "waiting time": 2.5,
-        "end": false
-    },
-        {
-        "recipes": 14,
-        "waiting time": 3.8,
-        "end": false
-    },
-        {
-        "recipes": 15,
-        "waiting time": 4,
-        "end": false
-    },
-        {
-        "recipes": 15,
-        "waiting time": 4.5,
-        "end": false
-    },
-        {
-        "recipes": 5,
-        "waiting time": 3.5,
-        "end": false
-    },
-        {
-        "recipes": 16,
-        "waiting time": 4,
-        "end": false
-    }            
+    },    
+
   ]
   
  }

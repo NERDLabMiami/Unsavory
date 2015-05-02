@@ -35,7 +35,7 @@ public class Tweet : MonoBehaviour {
 	public void tweet() {
 		if (SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
 			buttonAnimation.SetTrigger("tweeted");
-			SoomlaProfile.UpdateStatus(Provider.TWITTER, message.text);
+			SoomlaProfile.UpdateStatus(Provider.TWITTER, message.text + " http://goo.gl/ZUM31T");
 		}
 		else {
 			SoomlaProfile.Login(Provider.TWITTER);

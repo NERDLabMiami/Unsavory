@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;SOOMLA_TWITTER</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;UNITY_IPHONE;ENABLE_RUNTIME_GI;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_NETWORK;UNITY_IPHONE_API;UNITY_IOS;ENABLE_TEXTUREID_MAP;PLAYERCONNECTION_LISTENS_FIXED_PORT;DEBUGGER_LISTENS_FIXED_PORT;ENABLE_IL2CPP;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;SOOMLA_TWITTER</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,8 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Electricity.cs" />
-     <Compile Include="Assets\FailedShift.cs" />
      <Compile Include="Assets\GestureRecognition\Scripts\CapturePoints.cs" />
      <Compile Include="Assets\GestureRecognition\Scripts\FileTools.cs" />
      <Compile Include="Assets\GestureRecognition\Scripts\Gesture.cs" />
@@ -153,17 +151,21 @@
      <Compile Include="Assets\GooglePlayGames\Platforms\Native\UnsupportedSavedGamesClient.cs" />
      <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
      <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
-     <Compile Include="Assets\IngredientTutor.cs" />
-     <Compile Include="Assets\Scripts\Achievements.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraSequencing.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraShakeScript.cs" />
+     <Compile Include="Assets\Scripts\Electricity.cs" />
+     <Compile Include="Assets\Scripts\EvaluationGroup.cs" />
+     <Compile Include="Assets\Scripts\FailedShift.cs" />
+     <Compile Include="Assets\Scripts\FruitBowl.cs" />
      <Compile Include="Assets\Scripts\Gameplay\AddIngredientScript.cs" />
      <Compile Include="Assets\Scripts\Gameplay\Catering.cs" />
      <Compile Include="Assets\Scripts\Gameplay\CurrentOrderScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\IngredientTutor.cs" />
      <Compile Include="Assets\Scripts\Gameplay\NoseWipeScript.cs" />
      <Compile Include="Assets\Scripts\Gameplay\PlateScript.cs" />
      <Compile Include="Assets\Scripts\Gameplay\RecipeScript.cs" />
      <Compile Include="Assets\Scripts\Gameplay\SneezeScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\SneezeTutor.cs" />
      <Compile Include="Assets\Scripts\Gameplay\TimerScript.cs" />
      <Compile Include="Assets\Scripts\Gameplay\TortillaFoundation.cs" />
      <Compile Include="Assets\Scripts\Gameplay\TutorScript.cs" />
@@ -177,6 +179,7 @@
      <Compile Include="Assets\Scripts\Loading\WorkScript.cs" />
      <Compile Include="Assets\Scripts\Messaging\CharacterDialog.cs" />
      <Compile Include="Assets\Scripts\Messaging\FactScript.cs" />
+     <Compile Include="Assets\Scripts\Routines\Achievements.cs" />
      <Compile Include="Assets\Scripts\Routines\AnimationFunctions.cs" />
      <Compile Include="Assets\Scripts\Routines\BackgroundSoundDefaults.cs" />
      <Compile Include="Assets\Scripts\Routines\CustomFunctionScript.cs" />
@@ -188,21 +191,20 @@
      <Compile Include="Assets\Scripts\Routines\Settings.cs" />
      <Compile Include="Assets\Scripts\Routines\ShiftCompleteScript.cs" />
      <Compile Include="Assets\Scripts\Routines\SocialFeatures.cs" />
+     <Compile Include="Assets\Scripts\Routines\TutorialComplete.cs" />
+     <Compile Include="Assets\Scripts\Routines\TutorialRecipe.cs" />
      <Compile Include="Assets\Scripts\UI\BillPanelScript.cs" />
      <Compile Include="Assets\Scripts\UI\BillScript.cs" />
      <Compile Include="Assets\Scripts\UI\BuyDrugsScript.cs" />
      <Compile Include="Assets\Scripts\UI\CreditSequenceScript.cs" />
      <Compile Include="Assets\Scripts\UI\NewsletterScript.cs" />
      <Compile Include="Assets\Scripts\UI\PauseScript.cs" />
+     <Compile Include="Assets\Scripts\UI\SlacktivistMachine.cs" />
      <Compile Include="Assets\Scripts\UI\StandardMenu.cs" />
      <Compile Include="Assets\Scripts\UI\SwipeScene.cs" />
+     <Compile Include="Assets\Scripts\UI\TacoBar.cs" />
      <Compile Include="Assets\Scripts\UI\Tweet.cs" />
      <Compile Include="Assets\Scripts\UnityAnalyticsIntegration.cs" />
-     <Compile Include="Assets\SlacktivistMachine.cs" />
-     <Compile Include="Assets\SneezeTutor.cs" />
-     <Compile Include="Assets\TacoBar.cs" />
-     <Compile Include="Assets\TutorialComplete.cs" />
-     <Compile Include="Assets\TutorialRecipe.cs" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\wallet_secondary_text_holo_dark.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\proguard.txt" />
      <None Include="Assets\WebPlayerTemplates\SoomlaConfig\android\android-profile-google\google-play-services_lib\res\values-fr\common_strings.xml" />

@@ -144,6 +144,11 @@ public class Level : MonoBehaviour {
 	}
 
 	private void cleanupKitchen() {
+		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
+	
+		for (int i = 0; i < current_recipes.Length; i++) {
+			Destroy(current_recipes[i]);
+		}
 		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 		gameElements.SetTrigger("fade orders");
 		HUD.SetTrigger("Fade Out");
@@ -164,6 +169,7 @@ public class Level : MonoBehaviour {
 		if (plate.perfectLevel) {
 			score++;
 		}
+		Debug.Log("TACO BAR: Retries: " + retries + " Score: " + score); 
 		successTacos.addTacos(retries,score);
 		//add retries for player
 	//	int retries = PlayerPrefs.GetInt("retries", 0);

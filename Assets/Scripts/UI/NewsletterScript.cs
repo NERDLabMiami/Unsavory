@@ -12,7 +12,7 @@ public class NewsletterScript : MonoBehaviour {
 			int letterNumber = PlayerPrefs.GetInt("letter", 0);
 			JSONNode lettersJSON = JSON.Parse(letters);
 			letterContent.text = lettersJSON["letters"][letterNumber];	
-			PlayerPrefs.DeleteKey("letter");
+//			PlayerPrefs.DeleteKey("letter");
 	}
 	
 	// Update is called once per frame
