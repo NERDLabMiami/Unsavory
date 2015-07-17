@@ -110,7 +110,12 @@ public class SlacktivistMachine : MonoBehaviour {
 			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel},{"timer", timeUntilTweetSelected}, {"group", evaluationGroup}});
 
 		tweetButton.interactable = false;
-		SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text);
+		SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text + "http://goo.gl/ZUM31T");
+		if (Social.localUser.authenticated) {
+			Social.ReportProgress( Achievements.ACTIVIST, 100.0f, (result) => {
+				Debug.Log ( result ? "Reported #Activist" : "Failed to report #activist");
+			});
+		}
 	}
 
 

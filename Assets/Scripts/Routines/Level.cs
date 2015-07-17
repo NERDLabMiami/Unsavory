@@ -180,7 +180,7 @@ public class Level : MonoBehaviour {
 		}
 		
 		PlayerPrefs.SetInt("retries", retries);
-		wagesUI.text = "$" + player.addWages(8).ToString("0.00") + " added to your next paycheck";
+		wagesUI.text = "$" + player.addWages(8).ToString("0.00") + " added to your next paycheck, that's a full day of work at minimum wage.";
 		GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "full day", Time.time);
 	}
 
@@ -266,24 +266,14 @@ public class Level : MonoBehaviour {
 		homeButton.SetActive(true);		
 
 		Debug.Log("Giving Sick Talk");
-		PlayerPrefs.SetInt("letter",0);
+		PlayerPrefs.SetInt("letter",1);
 		PlayerPrefs.SetInt("activated",1);
-		//First sneeze?
-		if (PlayerPrefs.GetInt("sneezes",1) <= 2) {
-			dialog.changeSpeechKey("sneeze_tip");
-			Debug.Log("Giving Sneeze Tip");
-		}
-		else {
-			dialog.changeSpeechKey("sneezed");
-			Debug.Log("GIving Sneeze Speech");
-			
-		}
+		dialog.changeSpeechKey("sneezed");
+		Debug.Log("GIving Sneeze Speech");
 
 		if (checkWarnings(giveWarning())) {
 			//FIRE
 			dialog.changeSpeechKey("fired_sick");
-			//ALLOW SICK DAYS
-			PlayerPrefs.SetInt("paid sick days achieved",1);
 
 		}
 

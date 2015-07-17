@@ -131,9 +131,13 @@ public class NoseWipeScript : MonoBehaviour {
 			sneezeTimer = health;
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
+<<<<<<< Updated upstream
 		if (Social.localUser.authenticated) {
 			GKAchievementReporter.ReportAchievement( Achievements.SNEEZED, 100.0f, true);
 		}
+=======
+
+>>>>>>> Stashed changes
 	}
 	
 	public void Swipe()

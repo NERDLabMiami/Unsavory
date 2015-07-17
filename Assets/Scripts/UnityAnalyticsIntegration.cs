@@ -8,6 +8,12 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
+<<<<<<< Updated upstream
+=======
+//		const string projectId = "cd880932-38b5-445e-9697-d4820e85c142";
+	
+//		Analytics.StartSDK (projectId);
+>>>>>>> Stashed changes
 	}
 
 	public void startGameCareerMode() {

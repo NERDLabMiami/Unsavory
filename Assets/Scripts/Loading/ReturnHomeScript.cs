@@ -58,14 +58,21 @@ public class ReturnHomeScript : MonoBehaviour {
 			//if it's past the due date
 			if (bills["bills"][i]["due"].AsInt >= day) {
 				//check if it's unpaid
+				Debug.Log("ATTEMPTING BILL " + i);
 				if (PlayerPrefs.GetInt("bill" + i,0) == 0) {
+					Debug.Log("HAVEN'T PAID " + i);
+
 					//pay it
 					float remainingMoney =money - bills["bills"][i]["amount"].AsInt;
 					if (remainingMoney >= 0) {
 						money = remainingMoney;
 						PlayerPrefs.SetInt("bill" + i,1); 
+						Debug.Log("PAID " + i);
+
 					}
 					else {
+						Debug.Log("CAN'T PAY " + i);
+
 						unpaidBills++;
 					}
 				}
@@ -79,7 +86,9 @@ public class ReturnHomeScript : MonoBehaviour {
 		money = PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
 		Time.timeScale = 1f;
+		//TODO: DEBUG
 
+		//END DEBUG
 		if (!PlayerPrefs.HasKey("welcomed home")) {
 			firstTimeHomePanel.SetActive(true);
 			//TODO: Attention to Drugs and Bills
@@ -127,7 +136,7 @@ public class ReturnHomeScript : MonoBehaviour {
 		}
 		else {
 			Debug.Log ("I have " + money.ToString());
-			finalDay = PlayerPrefs.GetInt("final day", 30);
+			finalDay = PlayerPrefs.GetInt("final day", 20);
 			Debug.Log("It's day " + day);
 			fruit.setFruit(day%5);
 			if (day % 5 == 0) {

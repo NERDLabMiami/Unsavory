@@ -334,7 +334,14 @@ public class CurrentOrderScript : MonoBehaviour {
 					numberOfUnmatchedOrders++;
 					plate.playerWarning(numberOfUnmatchedOrders);
 					warningTimer = Time.time;
+					GameObject[] foodOnTheTable = GameObject.FindGameObjectsWithTag("Ingredient");
+					for(int j = 0; j < foodOnTheTable.Length; j++) {
+							foodOnTheTable[j].GetComponent<Animator>().SetTrigger("mismatch");
+						}
+					plate.ingredients.Clear();
 				}
+					
+
 				newOrder(null,orderTimer);
 			}
 

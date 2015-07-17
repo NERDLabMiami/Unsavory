@@ -39,16 +39,16 @@ public class CustomFunctionScript : MonoBehaviour {
 		PlayerPrefs.DeleteAll();
 		PlayerPrefs.SetInt("evaluation group", evaluationGroup);
 		PlayerPrefs.SetInt("times played", timesPlayed);
-		PlayerPrefs.SetInt("current level", 20);
+		PlayerPrefs.SetInt("current level", 0);
 		//TODO: DEBUG, REMOVE
-		Debug.Log("Turning off tutorial");
-		PlayerPrefs.SetInt("tutorial", 1);
+//		Debug.Log("Turning off tutorial");
+//		PlayerPrefs.SetInt("tutorial", 1);
 
 		
 		PlayerPrefs.SetFloat ("money", money);
 		PlayerPrefs.SetInt ("sneezes", 0);
 		PlayerPrefs.SetInt ("warnings", 0);
-		PlayerPrefs.SetInt("max warnings", 3);
+		PlayerPrefs.SetInt("max warnings", 2);
 		PlayerPrefs.SetInt ("paid sick days", 0);
 		if(can_cater) {
 			PlayerPrefs.SetInt("can cater", 1);
@@ -83,7 +83,7 @@ public class CustomFunctionScript : MonoBehaviour {
 		PlayerPrefs.SetFloat ("money", 0);
 		PlayerPrefs.SetInt ("sneezes", 0);
 		PlayerPrefs.SetInt ("warnings", 0);
-		PlayerPrefs.SetInt("max warnings", 3);
+		PlayerPrefs.SetInt("max warnings", 2);
 		PlayerPrefs.SetInt ("paid sick days", 0);
 		PlayerPrefs.SetFloat("health", 20);
 		PlayerPrefs.SetFloat("background volume", 1);

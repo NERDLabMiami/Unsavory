@@ -10,7 +10,7 @@
  				{"title": "Public Health Connoisseur", "tweets":[
 																	"employees w/o #paidsickdays is an #unsavorygame and #publichealth concern", 
 																	"no #paidsickdays for restaurant workers? #nextgreatpandemic #unsavorygame", 
-																	"I'm convinced going to get sick because a restaurant didn't provide #paidsickdays to their workers #unsavorygame",
+																	"Convinced I'm going to get sick because a restaurant didn't provide #paidsickdays to their workers #unsavorygame",
 																	"40% of workers coughing or sneezing while handling food? #unsavorygame #HFANow",
 																	"2009 H1N1 pandemic ~7mil addl ppl infected because contagious employees didn't stay home from work to recover #HFANow"]
  																	},

@@ -10,7 +10,7 @@ public class StartCareer : MonoBehaviour {
 	public Animator mainMenu;
 	public int maxWarnings = 3;
 	public bool reset = false;
-	public int daysUntilComplete = 30;
+	public int daysUntilComplete = 20;
 	// Use this for initialization
 	void Start () {
 
@@ -35,6 +35,9 @@ public class StartCareer : MonoBehaviour {
 	
 		if (PlayerPrefs.HasKey("survived")) {
 			//TODO: Beat game, reset levels
+		}
+		if (reset) {
+			PlayerPrefs.DeleteAll();
 		}
 		if (PlayerPrefs.HasKey("reset") || reset) {
 			Debug.Log("Reseting Player");

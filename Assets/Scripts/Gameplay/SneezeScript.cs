@@ -22,7 +22,16 @@ public class SneezeScript : MonoBehaviour {
 	void Update () {
 		if (!launchedLevelEnd && !endless) {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
+				//TODO: Boogeyman
+				if (Social.localUser.authenticated) {
+					Social.ReportProgress( Achievements.SNEEZED, 100.0f, (result) => {
+						Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report nose wipe");
+					});
+				}
 				PlayerPrefs.SetInt("sneezed", 1);
+				//ALLOW SICK DAYS
+				PlayerPrefs.SetInt("paid sick days achieved",1);
+
 				//add to the sneeze count
 				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
 				PlayerPrefs.SetInt ("sneezes", sneezes);

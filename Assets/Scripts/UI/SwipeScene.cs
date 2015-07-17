@@ -8,6 +8,7 @@ public class SwipeScene : MonoBehaviour {
 	private Vector2 secondPressPos;
 	private Vector2 currentSwipe;
 	public Transform[] places;
+	public AudioClip[] backgroundMusic;
 	public int currentPlace;
 	private Transform startPosition;
 	private Transform endPosition;
@@ -27,7 +28,10 @@ public class SwipeScene : MonoBehaviour {
 			if (currentLerpTime > lerpTime) {
 				currentLerpTime = lerpTime;
 				moving = false;
-
+				if (gameObject.GetComponent<AudioSource>().clip != backgroundMusic[currentPlace]) {
+					gameObject.GetComponent<AudioSource>().clip = backgroundMusic[currentPlace];
+					gameObject.GetComponent<AudioSource>().Play();
+				}
 			}
 			
 			float perc = currentLerpTime / lerpTime;
