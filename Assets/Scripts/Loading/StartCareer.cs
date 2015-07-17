@@ -80,6 +80,11 @@ public class StartCareer : MonoBehaviour {
 			}
 			Debug.Log("Career Started");
 
+		if (Social.localUser.authenticated) {
+			GKAchievementReporter.ReportAchievement( Achievements.WIPED, 100.0f, true);
+		};
+
+
 	}
 
 	public void unlockCareer() {

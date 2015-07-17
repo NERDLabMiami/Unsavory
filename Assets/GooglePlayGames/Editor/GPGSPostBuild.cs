@@ -1,65 +1,89 @@
-﻿/*
- * Copyright (C) 2014 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+﻿// <copyright file="GPGSPostBuild.cs" company="Google Inc.">
+// Copyright (C) 2014 Google Inc.  All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
 
-using System;
-using UnityEditor.Callbacks;
-using UnityEditor;
-using UnityEngine;
-using System.Diagnostics;
-using GooglePlayGames;
-using GooglePlayGames.Editor.Util;
-using System.Text.RegularExpressions;
+namespace GooglePlayGames
+{
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using UnityEditor.Callbacks;
+    using UnityEditor;
+    using UnityEditor.iOS.Xcode;
+    using GooglePlayGames;
+    using GooglePlayGames.Editor.Util;
+	using UnityEngine;
 
-namespace GooglePlayGames {
-    public static class GPGSPostBuild {
-
+    public static class GPGSPostBuild
+    {
         private const string UrlTypes = "CFBundleURLTypes";
         private const string UrlBundleName = "CFBundleURLName";
         private const string UrlScheme = "CFBundleURLSchemes";
 
         [PostProcessBuild]
-        public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject) {
+        public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
+        {
+#if UNITY_5_0
             if (target != BuildTarget.iOS) {
                 return;
             }
-
-            #if NO_GPGS
-            // remove plugin code from generated project
-//            string pluginDir = pathToBuiltProject + "/Libraries/Plugins/iOS";
-			string pluginDir = pathToBuiltProject + "/Libraries"; //Plugins/iOS";
-            GPGSUtil.WriteFile(pluginDir + "/GPGSAppController.mm", "// Empty since NO_GPGS is defined\n");
-//            return;
-            #endif
-
-            if (GetBundleId() == null) {
-                UnityEngine.Debug.LogError("The iOS bundle ID has not been set up through the " +
-                "'iOS Setup' submenu of 'Google Play Games' - the generated xcode project will " +
-                "not work properly.");
+#else
+            if (target != BuildTarget.iOS)
+            {
                 return;
             }
+#endif
+
+            #if NO_GPGS
+            Debug.Log("Removing AppController code since NO_GPGS is defined");
+            // remove plugin code from generated project
+            string pluginDir = pathToBuiltProject + "/Libraries/Plugins/iOS";
+            if (System.IO.Directory.Exists(pluginDir))
+            {
+                GPGSUtil.WriteFile(pluginDir + "/GPGSAppController.mm", "// Empty since NO_GPGS is defined\n");
+                return;
+            }
+            #else
+
+            if (GetBundleId() == null)
+            {
+                UnityEngine.Debug.LogError("The iOS bundle ID has not been set up through the " +
+                    "'iOS Setup' submenu of 'Google Play Games' - the generated xcode project will " +
+                    "not work properly.");
+                return;
+            }
+
+            //Copy the podfile into the project.
+            string podfile = "Assets/GooglePlayGames/Editor/Podfile.txt";
+            string destpodfile = pathToBuiltProject + "/Podfile";
+            if (!System.IO.File.Exists(destpodfile)) {
+                FileUtil.CopyFileOrDirectory(podfile, destpodfile);
+            }
+
+            GPGSInstructionWindow w = EditorWindow.GetWindow<GPGSInstructionWindow>(
+                true,
+                "Building for IOS",
+                true);
+            w.UsingCocoaPod = CocoaPodHelper.Update(pathToBuiltProject);
 
             UnityEngine.Debug.Log("Adding URL Types for authentication using PlistBuddy.");
 
             UpdateGeneratedInfoPlistFile(pathToBuiltProject + "/Info.plist");
             UpdateGeneratedPbxproj(pathToBuiltProject + "/Unity-iPhone.xcodeproj/project.pbxproj");
 
-            EditorWindow.GetWindow<GPGSInstructionWindow>(
-                utility: true,
-                title: "Building for IOS",
-                focus: true);
+        #endif
         }
 
         /// <summary>
@@ -72,11 +96,13 @@ namespace GooglePlayGames {
         /// <para>We make use of the apple-provided PlistBuddy utility to edit the plist file.</para>
         /// </summary>
         /// <param name="pathToPlist">Path to plist.</param>
-        private static void UpdateGeneratedInfoPlistFile(string pathToPlist) {
+        private static void UpdateGeneratedInfoPlistFile(string pathToPlist)
+        {
             PlistBuddyHelper buddy = PlistBuddyHelper.ForPlistFile(pathToPlist);
 
             // If the top-level UrlTypes field doesn't exist, add it here.
-            if (buddy.EntryValue(UrlTypes) == null) {
+            if (buddy.EntryValue(UrlTypes) == null)
+            {
                 buddy.AddArray(UrlTypes);
             }
 
@@ -92,17 +118,18 @@ namespace GooglePlayGames {
         /// </summary>
         /// <param name="buddy">Buddy.</param>
         /// <param name="index">Index.</param>
-        private static void EnsureGamesUrlScheme(PlistBuddyHelper buddy, int index) {
+        private static void EnsureGamesUrlScheme(PlistBuddyHelper buddy, int index)
+        {
             buddy.RemoveEntry(UrlTypes, index, UrlScheme);
             buddy.AddArray(UrlTypes, index, UrlScheme);
             buddy.AddString(PlistBuddyHelper.ToEntryName(UrlTypes, index, UrlScheme, 0),
                 GetBundleId());
         }
 
-        private static string GetBundleId() {
+        private static string GetBundleId()
+        {
             return GPGSProjectSettings.Instance.Get("ios.BundleId", null);
         }
-
 
         /// <summary>
         /// Finds the index of the CFBundleURLTypes array where the entry for Play Games is stored. If
@@ -110,13 +137,16 @@ namespace GooglePlayGames {
         /// </summary>
         /// <returns>The index in the CFBundleURLTypes array corresponding to Play Games.</returns>
         /// <param name="buddy">The helper corresponding to the plist file.</param>
-        private static int GamesUrlSchemeIndex(PlistBuddyHelper buddy) {
+        private static int GamesUrlSchemeIndex(PlistBuddyHelper buddy)
+        {
             int index = 0;
 
-            while(buddy.EntryValue(UrlTypes, index) != null) {
+            while (buddy.EntryValue(UrlTypes, index) != null)
+            {
                 var urlName = buddy.EntryValue(UrlTypes, index, UrlBundleName);
 
-                if (GetBundleId().Equals(urlName)) {
+                if (GetBundleId().Equals(urlName))
+                {
                     return index;
                 }
 
@@ -133,29 +163,36 @@ namespace GooglePlayGames {
 
         /// <summary>
         /// Updates the generated pbxproj to reduce manual work required by developers. Currently
-        /// this just adds the '-fobjc-arc' flag for the Play Games ObjC source files.
+        /// this adds the '-fobjc-arc' flag for the Play Games ObjC source file.
         /// </summary>
         /// <param name="pbxprojPath">Pbxproj path.</param>
-        private static void UpdateGeneratedPbxproj(string pbxprojPath) {
-            // We're looking for lines in the form:
-            // ... = {isa = PBXBuildFile; fileRef = DEADBEEF /* GPGSFileName.mm */; };
-            // And we want to append "settings = {COMPILER_FLAGS = "-fobjc-arc"};" to the content in
-            // between the braces. This is done with a regex replace.
-            // The expression is structured as follows:
-            // - Begin a capturing group.
-            // - Find any line that begins with "<anything>{isa = PBXBuildFile" followed by a
-            //   reference to a file beginning with "GPGS" and ending with ".m" (e.g. "GPGSFile.m")
-            // - Close the capture group - leaving a trailing "};"
-            // - Replace that line with the captured group with
-            //   "settings = {COMPILER_FLAGS = "-fobjc-arc";};};" appended. The trailing "};" is needed
-            //   because we omitted the "};" from the group.
-            var withFlagAdded = Regex.Replace(
-                                    GPGSUtil.ReadFully(pbxprojPath),
-                                    @"(.*\{isa\s*=\s*PBXBuildFile.*GPGS\w*\.m.*)\}\;",
-                                    @"$1settings = {COMPILER_FLAGS = ""-fobjc-arc""; }; };");
+        private static void UpdateGeneratedPbxproj(string pbxprojPath)
+        {
+            PBXProject proj = new PBXProject();
+            proj.ReadFromString(File.ReadAllText(pbxprojPath));
 
-            // Overwrite the pbxproj with the updated value.
-            GPGSUtil.WriteFile(pbxprojPath, withFlagAdded);
+            string target =
+                proj.TargetGuidByName(PBXProject.GetUnityTargetName());
+            string testTarget =
+                proj.TargetGuidByName(PBXProject.GetUnityTestTargetName());
+
+            proj.AddBuildProperty(target, "OTHER_LDFLAGS", "$(inherited)");
+            proj.AddBuildProperty(testTarget, "OTHER_LDFLAGS", "$(inherited)");
+            proj.AddBuildProperty(target, "HEADER_SEARCH_PATHS", "$(inherited)");
+            proj.AddBuildProperty(testTarget, "HEADER_SEARCH_PATHS", "$(inherited)");
+            proj.AddBuildProperty(target, "OTHER_CFLAGS", "$(inherited)");
+            proj.AddBuildProperty(testTarget, "OTHER_CFLAGS", "$(inherited)");
+
+            string fileGuid =
+                 proj.FindFileGuidByProjectPath("Libraries/Plugins/iOS/GPGSAppController.mm");
+
+            List<string> list = new List<string>();
+            list.Add("-fobjc-arc");
+
+            proj.SetCompileFlagsForFile(target, fileGuid, list);
+
+            File.WriteAllText(pbxprojPath, proj.WriteToString());
         }
     }
 }
+

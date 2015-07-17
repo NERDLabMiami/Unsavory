@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Cloud.Analytics;
+using UnityEngine.Analytics;
 
 public class UnityAnalyticsIntegration : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
 		
-		const string projectId = "cd880932-38b5-445e-9697-d4820e85c142";
-		UnityAnalytics.StartSDK (projectId);
 	}
 
 	public void startGameCareerMode() {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
-		UnityAnalytics.CustomEvent("started", new Dictionary<string, object> {
+		Analytics.CustomEvent("started", new Dictionary<string, object> {
 			{"mode", "career"}, {"day", day}, {"money", money}, {"health", health}});
 	}
 	public void startGameCaterMode() {
@@ -24,19 +22,19 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
 
-		UnityAnalytics.CustomEvent("started", new Dictionary<string, object> {
+		Analytics.CustomEvent("started", new Dictionary<string, object> {
 			{"mode", "career"}, {"day", day}, {"money", money}, {"health", health}});
 	}
 
 	public void careerModeLevelFinished(int level, string reason, float playTime) {
 	
-		UnityAnalytics.CustomEvent("level", new Dictionary<string, object> {
+		Analytics.CustomEvent("level", new Dictionary<string, object> {
 			 {"day", level}, {"type", reason}, {"time", playTime}});
 	}
 
 	public void caterModeLevelFinished(float playTime, int tacosServed, string reason) {
 		
-		UnityAnalytics.CustomEvent("catered", new Dictionary<string, object> {
+		Analytics.CustomEvent("catered", new Dictionary<string, object> {
 			{"time", playTime}, {"served", tacosServed}, {"reason", reason}});
 	}
 
@@ -44,7 +42,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 
-		UnityAnalytics.CustomEvent("twitter", new Dictionary<string, object> {
+		Analytics.CustomEvent("twitter", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"source", "main menu"}});
 
 	}
@@ -53,7 +51,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		
-		UnityAnalytics.CustomEvent("twitter", new Dictionary<string, object> {
+		Analytics.CustomEvent("twitter", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"source", "newsletter"}});
 		
 	}
@@ -62,7 +60,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		
-		UnityAnalytics.CustomEvent("tweeted", new Dictionary<string, object> {
+		Analytics.CustomEvent("tweeted", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"tweetNum", tweetNumber}, {"in game", "true"}});
 		
 	}
@@ -71,7 +69,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		
-		UnityAnalytics.CustomEvent("tweeted", new Dictionary<string, object> {
+		Analytics.CustomEvent("tweeted", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"tweetNum", tweetNumber}, {"in game", "false"}});
 		
 	}
@@ -80,7 +78,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
-		UnityAnalytics.CustomEvent("stayed home", new Dictionary<string, object> {
+		Analytics.CustomEvent("stayed home", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"health", health}});
 
 	}
@@ -89,7 +87,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
-		UnityAnalytics.CustomEvent("weekend", new Dictionary<string, object> {
+		Analytics.CustomEvent("weekend", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"health", health}});
 
 	}
@@ -98,13 +96,13 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
-		UnityAnalytics.CustomEvent("purchased pill", new Dictionary<string, object> {
+		Analytics.CustomEvent("purchased pill", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"health", health}});
 		
 	}
 
 	public void servedOrder(string order, string matched) {
-		UnityAnalytics.CustomEvent("order made", new Dictionary<string, object> {
+		Analytics.CustomEvent("order made", new Dictionary<string, object> {
 			{"order", order}, {"matched", matched}
 		});
 
@@ -113,7 +111,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
-		UnityAnalytics.CustomEvent("used pill", new Dictionary<string, object> {
+		Analytics.CustomEvent("used pill", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"health", health}});
 		
 	}
@@ -124,7 +122,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
 
-		UnityAnalytics.CustomEvent("fired", new Dictionary<string, object> {
+		Analytics.CustomEvent("fired", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"health", health}});
 
 	}
@@ -133,7 +131,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
-		UnityAnalytics.CustomEvent("paid sick day used", new Dictionary<string, object> {
+		Analytics.CustomEvent("paid sick day used", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"health", health}, {"sick days left", sickdaysLeft}});
 
 	}
@@ -142,7 +140,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
 
-		UnityAnalytics.CustomEvent("survived", new Dictionary<string, object> {
+		Analytics.CustomEvent("survived", new Dictionary<string, object> {
 			{"money", money}, {"health", health}, {"all bills paid", "true"}});
 		
 	}
@@ -150,7 +148,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		float health = PlayerPrefs.GetFloat("health", 0);
 		
-		UnityAnalytics.CustomEvent("survived", new Dictionary<string, object> {
+		Analytics.CustomEvent("survived", new Dictionary<string, object> {
 			{"money", money}, {"health", health}, {"all bills paid", "false"}});
 		
 	}
@@ -159,7 +157,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour {
 		int day = PlayerPrefs.GetInt("current level", 0);
 		float money = PlayerPrefs.GetFloat ("money", 0);
 		
-		UnityAnalytics.CustomEvent("unpaid bill", new Dictionary<string, object> {
+		Analytics.CustomEvent("unpaid bill", new Dictionary<string, object> {
 			{"level", day}, {"money", money}, {"bill", bill}});
 		
 	}

@@ -21,9 +21,7 @@ public class Tweet : MonoBehaviour {
 	}
 
 	public void onSocialActionFinished(Provider provider, SocialActionType action, string payload) {
-		Social.ReportProgress( Achievements.ACTIVIST, 100.00f, (result) => {
-			Debug.Log ( result ? "Reported #activist" : "Failed to report #activist");
-		});
+		GKAchievementReporter.ReportAchievement( Achievements.ACTIVIST, 100.00f, true);
 
 		// provider is the social provider
 		// action is the social action (like, post status, etc..) that finished

@@ -168,9 +168,7 @@ public class ReturnHomeScript : MonoBehaviour {
 						gameObject.GetComponent<UnityAnalyticsIntegration>().survived();
 
 						monthCompletePanel.SetActive(true);
-							Social.ReportProgress( Achievements.SURVIVED, 100, (result) => {
-							Debug.Log ( result ? "Reported Survival" : "Failed to report taco progress");
-					});
+						GKAchievementReporter.ReportAchievement( Achievements.SURVIVED, 100, true);
 
 				}
 

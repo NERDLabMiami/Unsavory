@@ -1,0 +1,6 @@
+lastUpgrade=00921
+proj.AppId=527857938444
+android.SetupDone=true
+ios.ClientId=527857938444-75k3hum0ago06r738819g5hqv4hp6lb6.apps.googleusercontent.com
+ios.BundleId=com.dataplayed.unsavory
+ios.SetupDone=true

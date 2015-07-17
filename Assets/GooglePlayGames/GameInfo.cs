@@ -13,8 +13,9 @@ public static class GameInfo {
     private const string UnescapedApplicationId = "APPID";
     private const string UnescapedIosClientId = "CLIENTID";
 
-    public const string ApplicationId = "527857938444"; // Filled in automatically
-    public const string IosClientId = "527857938444-f0ibbt2441blp6s2mc7eub0ckggc0gp6.apps.googleusercontent.com"; // Filled in automatically
+    public const string ApplicationId = "__APPID__"; // Filled in automatically
+    public const string IosClientId = "527857938444-75k3hum0ago06r738819g5hqv4hp6lb6.apps.googleusercontent.com"; // Filled in automatically
+    public const string NearbyConnectionServiceId = "__NEARBY_SERVICE_ID__";
 
     public static bool ApplicationIdInitialized() {
         return !ApplicationId.Equals(ToEscapedToken(UnescapedApplicationId));

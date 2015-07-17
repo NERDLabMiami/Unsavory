@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms;
+
 
 public class PlateScript : MonoBehaviour {
 //	public GameObject[] droppedIngredients;
@@ -59,20 +61,15 @@ public class PlateScript : MonoBehaviour {
 
 					if (Social.localUser.authenticated) {
 						if (orderCounter == 25) {
-							Social.ReportProgress( Achievements.TACOS_25, 100f, (result) => {
-								Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
-							});
+							GKAchievementReporter.ReportAchievement( Achievements.TACOS_25, 100f, true);
 						}
 						if (orderCounter == 100) {
-							Social.ReportProgress( Achievements.TACOS_100, 100f, (result) => {
-								Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
-							});
+
+							GKAchievementReporter.ReportAchievement( Achievements.TACOS_100, 100f, true);
 						}
 
 						if (orderCounter == 500) {
-							Social.ReportProgress( Achievements.TACOS_500, 100f, (result) => {
-								Debug.Log ( result ? "Reported Taco Progress" : "Failed to report taco progress");
-							});
+							GKAchievementReporter.ReportAchievement( Achievements.TACOS_500, 100f, true);
 						}
 					}
 					

@@ -7,13 +7,7 @@ public class NoseWipeScript : MonoBehaviour {
 	private float timeBetweenSneezes = 10;
 	private float timeBeforeSneezeWarning = 1.5f;
 	public float sweatingBeforeSneezeWarning = 1f;
-//	private bool Sneezing;
-//	private bool SneezeWarning;
 	private float sneezeTimer;
-//	private float ShakeDecay = .02f;
-//	private float ShakeIntensity  = 0.3f;   
-//	private Vector3 OriginalPos;
-//	private Quaternion OriginalRot;
 	public GameObject player;
 	public GameObject sneezeTutor;
 	private bool canStopSneeze = false;
@@ -22,7 +16,6 @@ public class NoseWipeScript : MonoBehaviour {
 	public ParticleSystem snot;
 	public GameObject snotImage;
 	public ParticleSystem sweat;
-//	public MusicLibrary music;
 	private bool sweating = false;
 	private Vector2 firstPosition;
 	private Vector2 lastPosition;
@@ -55,17 +48,6 @@ public class NoseWipeScript : MonoBehaviour {
 		initializeSneezing();
 		sweatingBeforeSneezeWarning+= timeBeforeSneezeWarning;
 		canStopSneeze = true;
-		/*
-		if (PlayerPrefs.HasKey("sneezed")) {
-			canStopSneeze = true;
-			Debug.Log("Player Should Be Able to Stop Sneeze");
-		}
-		else {
-			Debug.Log("Player Should Not Be Able to Stop Sneeze");
-
-			canStopSneeze = false; 
-		}
-		*/
 	}
 
 	public void initializeSneezing() {
@@ -81,16 +63,15 @@ public class NoseWipeScript : MonoBehaviour {
 				Time.timeScale = 0;
 				PlayerPrefs.SetInt("activated",1);
 				if (Social.localUser.authenticated) {
-					Social.ReportProgress( Achievements.WIPED, 100.0f, (result) => {
-						Debug.Log ( result ? "Reported Boogeyman" : "Failed to report boogeyman");
-					});
+					GKAchievementReporter.ReportAchievement( Achievements.WIPED, 100.0f, true);
+					};
 				}
 
 				//TODO: Check if catering or not
 //				player.GetComponent<PlayerScript>().levelCompleteCanvas.SetActive(true);
 
 			}
-		}
+
 		if (sneezeAllowed) {
 			sneezeTimer -= Time.deltaTime;
 			if (sneezeTimer <= 0) {
@@ -151,9 +132,7 @@ public class NoseWipeScript : MonoBehaviour {
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
 		if (Social.localUser.authenticated) {
-			Social.ReportProgress( Achievements.SNEEZED, 100.0f, (result) => {
-				Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report nose wipe");
-			});
+			GKAchievementReporter.ReportAchievement( Achievements.SNEEZED, 100.0f, true);
 		}
 	}
 	

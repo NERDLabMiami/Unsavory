@@ -9,6 +9,12 @@
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" /> 
  
     <application>
+    
+     <!-- Required for Nearby Connections API -->
+        <meta-data android:name="com.google.android.gms.nearby.connection.SERVICE_ID"
+            android:value="" />
+    
+	<!-- the space in these forces it to be interpreted as a string vs. int -->
         <meta-data android:name="com.google.android.gms.games.APP_ID"
         		android:value="\ 527857938444" /> 
         <meta-data android:name="com.google.android.gms.appstate.APP_ID"

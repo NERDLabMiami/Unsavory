@@ -1,33 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Loading/ReturnHomeScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Tweet.cs">
     <Files>
+      <File FileName="Assets/Scripts/Gameplay/NoseWipeScript.cs" Line="65" Column="1" />
+      <File FileName="Assets/Scripts/UI/SlacktivistMachine.cs" Line="77" Column="3" />
       <File FileName="Assets/Resources/levels.txt" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/PlateScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/StartCareer.cs" Line="18" Column="38" />
-      <File FileName="Assets/Scripts/Routines/CustomFunctionScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/AddIngredientScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/boss dialogue.txt" Line="12" Column="44" />
-      <File FileName="Assets/Scripts/Gameplay/Catering.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/SocialFeatures.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="192" Column="2" />
-      <File FileName="Assets/Scripts/UI/StandardMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/SocialInit.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/SceneLoader.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/WorkScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/ShiftCompleteScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/PlayerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/Level.cs" Line="145" Column="2" />
-      <File FileName="Assets/Scripts/Gameplay/CurrentOrderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/TacoBar.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Loading/ReadySetGo.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Camera/CameraSequencing.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/MusicLibrary.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Routines/TutorialComplete.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/RecipeScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gameplay/NoseWipeScript.cs" Line="7" Column="40" />
-      <File FileName="Assets/Scripts/UI/NewsletterScript.cs" Line="16" Column="1" />
-      <File FileName="Assets/Scripts/UI/SlacktivistMachine.cs" Line="44" Column="3" />
+      <File FileName="Assets/Scripts/Loading/StartCareer.cs" Line="83" Column="3" />
+      <File FileName="Assets/Scripts/Loading/ReturnHomeScript.cs" Line="156" Column="1" />
+      <File FileName="Assets/Scripts/Loading/SceneLoader.cs" Line="49" Column="34" />
+      <File FileName="Assets/Scripts/UI/Tweet.cs" Line="23" Column="45" />
+      <File FileName="Assets/Scripts/Gameplay/PlateScript.cs" Line="72" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

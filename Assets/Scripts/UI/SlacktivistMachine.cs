@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEngine.Cloud.Analytics;
+using UnityEngine.Analytics;
 using SimpleJSON;
 using Soomla.Profile;
 
@@ -46,7 +46,7 @@ public class SlacktivistMachine : MonoBehaviour {
 
 	public void nextTopic() {
 		Debug.Log("Going to Next Topic");
-		UnityAnalytics.CustomEvent("tweet_topic_switch", new Dictionary<string, object> {
+		Analytics.CustomEvent("tweet_topic_switch", new Dictionary<string, object> {
 
 			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel}});
 
@@ -60,7 +60,7 @@ public class SlacktivistMachine : MonoBehaviour {
 
 	public void previousTopic() {
 		Debug.Log("Going to Previous Topic");
-		UnityAnalytics.CustomEvent("tweet_topic_switch", new Dictionary<string, object> {
+		Analytics.CustomEvent("tweet_topic_switch", new Dictionary<string, object> {
 			
 			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel}});
 
@@ -74,7 +74,7 @@ public class SlacktivistMachine : MonoBehaviour {
 	}
 
 	public void newTweet() {
-		UnityAnalytics.CustomEvent("tweet_message_switch", new Dictionary<string, object> {
+		Analytics.CustomEvent("tweet_message_switch", new Dictionary<string, object> {
 			
 			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel}});
 
@@ -106,7 +106,7 @@ public class SlacktivistMachine : MonoBehaviour {
 	public void tweet() {
 		float timeUntilTweetSelected = Time.time - machineActivated;
 		PlayerPrefs.SetInt("tweet"+currentTopicIndex+currentTweetIndex, 1);
-		UnityAnalytics.CustomEvent("tweeted", new Dictionary<string, object> {
+		Analytics.CustomEvent("tweeted", new Dictionary<string, object> {
 			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel},{"timer", timeUntilTweetSelected}, {"group", evaluationGroup}});
 
 		tweetButton.interactable = false;
