@@ -48,7 +48,15 @@ public class StartCareer : MonoBehaviour {
 		}
 	}
 
+	public void setDay(int day) {
+		PlayerPrefs.SetInt("current level", day);
+		if (day > 0) {
+			PlayerPrefs.SetInt("welcomed home", 1);
+			float amt = day * 40f * 8.05f;
+			PlayerPrefs.SetFloat("bank account", amt);
 
+		}
+	}
 
 	public void beginCareer() {
 			PlayerPrefs.SetInt("started career", 1);
