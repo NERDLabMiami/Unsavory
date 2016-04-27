@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
 using SimpleJSON;
-using Soomla.Profile;
+//using Soomla.Profile;
 
 
 public class SlacktivistMachine : MonoBehaviour {
@@ -110,7 +110,7 @@ public class SlacktivistMachine : MonoBehaviour {
 			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel},{"timer", timeUntilTweetSelected}, {"group", evaluationGroup}});
 
 		tweetButton.interactable = false;
-		SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text);
+		//SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text);
 	}
 
 

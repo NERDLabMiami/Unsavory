@@ -63,7 +63,7 @@ public class NoseWipeScript : MonoBehaviour {
 				Time.timeScale = 0;
 				PlayerPrefs.SetInt("activated",1);
 				if (Social.localUser.authenticated) {
-					GKAchievementReporter.ReportAchievement( Achievements.WIPED, 100.0f, true);
+//					GKAchievementReporter.ReportAchievement( Achievements.WIPED, 100.0f, true);
 					};
 				}
 
@@ -132,7 +132,7 @@ public class NoseWipeScript : MonoBehaviour {
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
 		if (Social.localUser.authenticated) {
-			GKAchievementReporter.ReportAchievement( Achievements.SNEEZED, 100.0f, true);
+//			GKAchievementReporter.ReportAchievement( Achievements.SNEEZED, 100.0f, true);
 		}
 	}
 	

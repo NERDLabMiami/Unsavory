@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using SimpleJSON;
 using UnityEngine.SocialPlatforms;
-using GooglePlayGames;
-using Soomla.Profile;
+//using GooglePlayGames;
+//using Soomla.Profile;
 
 
 public class SocialFeatures : MonoBehaviour {
@@ -21,9 +21,9 @@ public class SocialFeatures : MonoBehaviour {
 		if (PlayerPrefs.HasKey("activated") && activateButton != null) {
 			activateButton.SetActive(true);
 		}
-		ProfileEvents.OnLoginFinished += onLoginFinished;
-		ProfileEvents.OnLoginCancelled += onLoginCancelled;
-		ProfileEvents.OnLoginFailed += onLoginFailed;
+//		ProfileEvents.OnLoginFinished += onLoginFinished;
+//		ProfileEvents.OnLoginCancelled += onLoginCancelled;
+//		ProfileEvents.OnLoginFailed += onLoginFailed;
 	}
 
 
@@ -31,7 +31,7 @@ public class SocialFeatures : MonoBehaviour {
 
 
 	}
-
+		/*
 	public void onLoginFinished(Soomla.Profile.UserProfile profile, string payload) {
 
 		if (openTwitterAfterLogin) {
@@ -51,7 +51,7 @@ public class SocialFeatures : MonoBehaviour {
 
 	}
 
-
+*/
 	public void leaderboard() {
 //		Social.ShowLeaderboardUI();
 
@@ -110,18 +110,18 @@ public class SocialFeatures : MonoBehaviour {
 		//FB.Logout();
 	}
 	public void connectToTwitter() {
-		if(SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
-			twitterInterface.SetActive(true);
-		}
-		else {
-			if (SoomlaProfile.IsProviderNativelyImplemented(Provider.TWITTER)) {
-				openTwitterAfterLogin = true;
-				SoomlaProfile.Login(Provider.TWITTER);
-			}
-			else {
-				twitterNotFoundPanel.SetActive(true);
-			}
-		}
+//		if(SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
+//			twitterInterface.SetActive(true);
+//		}
+//		else {
+//			if (SoomlaProfile.IsProviderNativelyImplemented(Provider.TWITTER)) {
+//				openTwitterAfterLogin = true;
+//				SoomlaProfile.Login(Provider.TWITTER);
+//			}
+//			else {
+//				twitterNotFoundPanel.SetActive(true);
+//			}
+//		}
 	}
 
 	

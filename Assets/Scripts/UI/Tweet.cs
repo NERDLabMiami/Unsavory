@@ -4,7 +4,7 @@ using System.Collections;
 using SimpleJSON;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
-using Soomla.Profile;
+//using Soomla.Profile;
 
 public class Tweet : MonoBehaviour {
 	public Text message;
@@ -12,14 +12,14 @@ public class Tweet : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 //		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
-		ProfileEvents.OnSocialActionFinished += onSocialActionFinished;
+//		ProfileEvents.OnSocialActionFinished += onSocialActionFinished;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
-
+		/*
 	public void onSocialActionFinished(Provider provider, SocialActionType action, string payload) {
 		GKAchievementReporter.ReportAchievement( Achievements.ACTIVIST, 100.00f, true);
 
@@ -29,16 +29,16 @@ public class Tweet : MonoBehaviour {
 		
 		// ... your game specific implementation here ...
 	}
-
+*/
 	public void tweet() {
-		if (SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
-			buttonAnimation.SetTrigger("tweeted");
-			SoomlaProfile.UpdateStatus(Provider.TWITTER, message.text + " http://goo.gl/ZUM31T");
-		}
-		else {
-			SoomlaProfile.Login(Provider.TWITTER);
-			Debug.Log("Not logged in yet");
-		}
+	//	if (SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
+	//		buttonAnimation.SetTrigger("tweeted");
+	//		SoomlaProfile.UpdateStatus(Provider.TWITTER, message.text + " http://goo.gl/ZUM31T");
+	//	}
+	//	else {
+	//		SoomlaProfile.Login(Provider.TWITTER);
+	//		Debug.Log("Not logged in yet");
+	//	}
 		/*
 		if (SPTwitter.instance.IsAuthed) {
 			SPTwitter.instance.Post(message.text);

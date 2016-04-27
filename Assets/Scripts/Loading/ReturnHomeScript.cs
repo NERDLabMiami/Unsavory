@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 using UnityEngine.UI;
-using UnityEngine.SocialPlatforms.GameCenter;
-using UnityEngine.SocialPlatforms;
+//using UnityEngine.SocialPlatforms.GameCenter;
+//using UnityEngine.SocialPlatforms;
 
 public class ReturnHomeScript : MonoBehaviour {
 	public GameObject phone;
@@ -168,7 +168,7 @@ public class ReturnHomeScript : MonoBehaviour {
 						gameObject.GetComponent<UnityAnalyticsIntegration>().survived();
 
 						monthCompletePanel.SetActive(true);
-						GKAchievementReporter.ReportAchievement( Achievements.SURVIVED, 100, true);
+//						GKAchievementReporter.ReportAchievement( Achievements.SURVIVED, 100, true);
 
 				}
 
