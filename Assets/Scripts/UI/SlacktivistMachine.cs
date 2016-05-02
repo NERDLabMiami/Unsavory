@@ -26,6 +26,8 @@ public class SlacktivistMachine : MonoBehaviour {
 	void Start () {
 		machineActivated = Time.time;
 		evaluationGroup = 	PlayerPrefs.GetInt("evaluation group", 0);
+		//stick them in the big group for debugging
+		evaluationGroup = 4;
 		if (evaluationGroup == 4) {
 			topicSwitchingEnabled = true;
 		}
@@ -106,8 +108,8 @@ public class SlacktivistMachine : MonoBehaviour {
 	public void tweet() {
 		float timeUntilTweetSelected = Time.time - machineActivated;
 		PlayerPrefs.SetInt("tweet"+currentTopicIndex+currentTweetIndex, 1);
-		Analytics.CustomEvent("tweeted", new Dictionary<string, object> {
-			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel},{"timer", timeUntilTweetSelected}, {"group", evaluationGroup}});
+//		Analytics.CustomEvent("tweeted", new Dictionary<string, object> {
+//			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel},{"timer", timeUntilTweetSelected}, {"group", evaluationGroup}});
 
 		tweetButton.interactable = false;
 		//SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text);
