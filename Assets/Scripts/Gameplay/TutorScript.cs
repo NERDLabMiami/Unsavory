@@ -71,14 +71,24 @@ public class TutorScript : MonoBehaviour {
 
 	public void tutorialComplete() {
 //		GetComponent<Animator>().SetTrigger("disappear");
+				CustomFunctionScript.collisionOnObjects(allTrays, true);
+
 	}
 	public void confirmInstruction() {
 		GetComponent<Animator>().SetTrigger("confirmed");
-	}
+				if (trayIndex < recipes[selectedTutorial].trays.Count) {
+					recipes[selectedTutorial].trays[trayIndex].GetComponent<BoxCollider2D>().enabled = true;
+				}
+				else {
+						plate.GetComponent<BoxCollider2D>().enabled = true;
+				}
+		}
 
 	public void advanceTutorial() {
 		Debug.Log("Advance Tutorial");
 		recipes[selectedTutorial].trays[trayIndex].GetComponent<Animator>().SetBool("jiggling", false);
+				//disable all collision
+				CustomFunctionScript.collisionOnObjects(allTrays, false);
 		trayIndex++;
 		if (trayIndex < recipes[selectedTutorial].trays.Count) {
 			GetComponentInChildren<Text>().text = recipes[selectedTutorial].trays[trayIndex].GetComponent<AddIngredientScript>().tutorialLesson;

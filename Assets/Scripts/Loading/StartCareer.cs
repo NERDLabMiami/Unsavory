@@ -15,6 +15,7 @@ public class StartCareer : MonoBehaviour {
 	void Start () {
 
 		Time.timeScale = 1f;
+				/*
 		if (PlayerPrefs.HasKey("can cater")) {
 			mainMenu.SetTrigger("catering");
 		
@@ -23,7 +24,7 @@ public class StartCareer : MonoBehaviour {
 			mainMenu.SetTrigger("no catering");
 
 		}
-
+*/
 
 		if (PlayerPrefs.HasKey("fired")) {
 			CustomFunctionScript.resetPlayerData(60, 0);
@@ -59,6 +60,7 @@ public class StartCareer : MonoBehaviour {
 	}
 
 	public void beginCareer() {
+			PlayerPrefs.DeleteAll();
 			PlayerPrefs.SetInt("started career", 1);
 			PlayerPrefs.SetInt("current level", 1);
 			PlayerPrefs.SetInt("max warnings", maxWarnings);
@@ -95,12 +97,44 @@ public class StartCareer : MonoBehaviour {
 
 	}
 
+		public void skipAhead(int day) {
+						PlayerPrefs.DeleteAll();
+						PlayerPrefs.SetInt("current level", day);
+						PlayerPrefs.SetInt("started career", 1);
+						PlayerPrefs.SetInt("max warnings", maxWarnings);
+						PlayerPrefs.SetInt("final day", 30);
+						PlayerPrefs.SetFloat("health", 20);
+						PlayerPrefs.SetFloat ("paycheck", 0);
+						PlayerPrefs.SetFloat("earned wages",  (day-1) * 8.05f * 8);
+						PlayerPrefs.SetFloat("bank account",0);
+						PlayerPrefs.SetFloat("hourly rate", 8.05f);
+						PlayerPrefs.SetInt("retries", 3);
+						PlayerPrefs.SetInt("letter", 0);
+
+		
+						//set effect levels
+
+						PlayerPrefs.SetInt("health effect", 0);
+						PlayerPrefs.SetInt("late effect", 0);
+						PlayerPrefs.SetInt("overtime effect", 0);
+						PlayerPrefs.SetInt("electricity effect", 0);
+
+						//read bills JSON
+						string billData =  Resources.Load<TextAsset>("bills").ToString();
+						JSONNode bills = JSON.Parse(billData);
+
+						for (int i = 0; i < bills["bills"].Count; i++) {
+								PlayerPrefs.SetInt("bill" + i,day);
+						}
+
+		}
+
 	public void unlockCareer() {
 		/*
-		Social.ReportProgress( "CgkIjOCjtq4PEAIQDA", 100, (result) => {
-			Debug.Log ( result ? "Reported First Day" : "Failed to report first day");
-		});
-*/
+//		Social.ReportProgress( "CgkIjOCjtq4PEAIQDA", 100, (result) => {
+//			Debug.Log ( result ? "Reported First Day" : "Failed to report first day");
+//		});
+//*/
 	}
 	
 	// Update is called once per frame

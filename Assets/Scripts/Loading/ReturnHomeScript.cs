@@ -130,7 +130,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			finalDay = PlayerPrefs.GetInt("final day", 30);
 			Debug.Log("It's day " + day);
 			fruit.setFruit(day%5);
-			if (day % 5 == 0) {
+						if (day % 5 == 0 && day!= 0) {
 				//Pay Wages, Add Notification for Bill
 				weekend = true;
 				//Decrease health significantly
