@@ -30,10 +30,9 @@ public class GestureLibrary {
         this.libraryFilename = libraryName + ".xml";
         this.persistentLibraryPath = System.IO.Path.Combine(Application.persistentDataPath, libraryFilename);
 		Debug.Log("path: " + persistentLibraryPath);
-        if (!Application.isWebPlayer) {
+        #if UNITY_WEBGL
             CopyToPersistentPath();
-        }
-        
+        #endif        
         LoadLibrary();
     }
 
@@ -48,11 +47,11 @@ public class GestureLibrary {
          */
         string xmlContents = "";
 
-        #if !UNITY_WEBPLAYER
+#if !UNITY_WEBPLAYER
             xmlContents = FileTools.Read(persistentLibraryPath);
-        #else
+#else
             xmlContents = Resources.Load<TextAsset>(libraryName).text;
-        #endif
+#endif
 
         gestureLibrary.LoadXml(xmlContents);
 
@@ -125,9 +124,9 @@ public class GestureLibrary {
              * Save the file if it is not the web player, because
              * web player cannot have write permissions.
              */
-            #if !UNITY_WEBPLAYER
+#if !UNITY_WEBPLAYER
                 FileTools.Write(persistentLibraryPath, gestureLibrary.OuterXml);
-            #endif
+#endif
 
             return true;
         } catch (Exception e) {
@@ -144,12 +143,12 @@ public class GestureLibrary {
      */
     private void CopyToPersistentPath() {
 
-        #if !UNITY_WEBPLAYER
+#if !UNITY_WEBPLAYER
             if (!FileTools.Exists(persistentLibraryPath)) {
                 string fileContents = Resources.Load<TextAsset>(libraryName).text;
                 FileTools.Write(persistentLibraryPath, fileContents);
             }
-        #endif
+#endif
         
     }
 

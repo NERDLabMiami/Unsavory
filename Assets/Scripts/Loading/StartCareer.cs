@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using SimpleJSON;
-using UnityEngine.UI;
-using UnityEngine.SocialPlatforms;
-using GooglePlayGames;
 
 public class StartCareer : MonoBehaviour {
 	public Animator mainMenu;
@@ -82,10 +77,6 @@ public class StartCareer : MonoBehaviour {
 				PlayerPrefs.SetInt("bill" + i,0);
 			}
 			Debug.Log("Career Started");
-
-		if (Social.localUser.authenticated) {
-			GKAchievementReporter.ReportAchievement( Achievements.WIPED, 100.0f, true);
-		};
 
 
 	}

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using SimpleJSON;
 using UnityEngine.SocialPlatforms;
-using GooglePlayGames;
-using Soomla.Profile;
 
 
 public class SocialFeatures : MonoBehaviour {
@@ -21,9 +19,6 @@ public class SocialFeatures : MonoBehaviour {
 		if (PlayerPrefs.HasKey("activated") && activateButton != null) {
 			activateButton.SetActive(true);
 		}
-		ProfileEvents.OnLoginFinished += onLoginFinished;
-		ProfileEvents.OnLoginCancelled += onLoginCancelled;
-		ProfileEvents.OnLoginFailed += onLoginFailed;
 	}
 
 
@@ -32,24 +27,7 @@ public class SocialFeatures : MonoBehaviour {
 
 	}
 
-	public void onLoginFinished(Soomla.Profile.UserProfile profile, string payload) {
 
-		if (openTwitterAfterLogin) {
-			twitterInterface.SetActive(true);
-			openTwitterAfterLogin = false;
-		}
-	}
-
-	public void onLoginCancelled(Provider provider, string payload) {
-		twitterNotFoundPanel.SetActive(true);		
-
-	}
-
-	public void onLoginFailed(Provider provider, string message, string payload) {
-		Debug.Log("Login Failed: " + message);
-		twitterNotFoundPanel.SetActive(true);		
-
-	}
 
 
 	public void leaderboard() {
@@ -57,21 +35,6 @@ public class SocialFeatures : MonoBehaviour {
 
 	}
 
-	public void achievements() {
-			if (Social.localUser.authenticated) {
-			Social.ShowAchievementsUI();
-		}
-		else {
-			Debug.Log("Not Authenticated. Can't show achievements");
-			Social.localUser.Authenticate((bool success) => {
-				if (success) {
-					Social.ShowAchievementsUI();
-				}
-				Debug.Log("AUTHENTICATION: " + success.ToString());
-			});
-
-		}
-	}
 
 	public void facebookConnect() {
 		//FB.Login("public_profile,email,user_friends, publish_actions", LoginCallback);
@@ -108,20 +71,6 @@ public class SocialFeatures : MonoBehaviour {
 	private void CallFBLogout()
 	{
 		//FB.Logout();
-	}
-	public void connectToTwitter() {
-		if(SoomlaProfile.IsLoggedIn(Provider.TWITTER)) {
-			twitterInterface.SetActive(true);
-		}
-		else {
-			if (SoomlaProfile.IsProviderNativelyImplemented(Provider.TWITTER)) {
-				openTwitterAfterLogin = true;
-				SoomlaProfile.Login(Provider.TWITTER);
-			}
-			else {
-				twitterNotFoundPanel.SetActive(true);
-			}
-		}
 	}
 
 	

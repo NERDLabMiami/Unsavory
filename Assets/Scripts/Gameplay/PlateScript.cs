@@ -61,15 +61,15 @@ public class PlateScript : MonoBehaviour {
 
 					if (Social.localUser.authenticated) {
 						if (orderCounter == 25) {
-							GKAchievementReporter.ReportAchievement( Achievements.TACOS_25, 100f, true);
+							//GKAchievementReporter.ReportAchievement( Achievements.TACOS_25, 100f, true);
 						}
 						if (orderCounter == 100) {
 
-							GKAchievementReporter.ReportAchievement( Achievements.TACOS_100, 100f, true);
+							//GKAchievementReporter.ReportAchievement( Achievements.TACOS_100, 100f, true);
 						}
 
 						if (orderCounter == 500) {
-							GKAchievementReporter.ReportAchievement( Achievements.TACOS_500, 100f, true);
+							//GKAchievementReporter.ReportAchievement( Achievements.TACOS_500, 100f, true);
 						}
 					}
 					

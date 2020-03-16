@@ -16,6 +16,7 @@ public class NoseWipeScript : MonoBehaviour {
 	public ParticleSystem snot;
 	public GameObject snotImage;
 	public ParticleSystem sweat;
+    
 	private bool sweating = false;
 	private Vector2 firstPosition;
 	private Vector2 lastPosition;
@@ -57,55 +58,59 @@ public class NoseWipeScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (snotEmitting) {
-			if(snot.isStopped) {
-				Camera.main.GetComponent<CameraShakeScript>().resetCameraToOriginalPosition();
-				Time.timeScale = 0;
-				PlayerPrefs.SetInt("activated",1);
-				if (Social.localUser.authenticated) {
-					GKAchievementReporter.ReportAchievement( Achievements.WIPED, 100.0f, true);
-					};
-				}
+        if (snotEmitting)
+        {
+            if (snot.isStopped)
+            {
+                Camera.main.GetComponent<CameraShakeScript>().resetCameraToOriginalPosition();
+                Time.timeScale = 0;
+                PlayerPrefs.SetInt("activated", 1);
 
-				//TODO: Check if catering or not
-//				player.GetComponent<PlayerScript>().levelCompleteCanvas.SetActive(true);
+                //TODO: Check if catering or not
+                //				player.GetComponent<PlayerScript>().levelCompleteCanvas.SetActive(true);
 
-			}
+            }
 
-		if (sneezeAllowed) {
-			sneezeTimer -= Time.deltaTime;
-			if (sneezeTimer <= 0) {
-				Debug.Log("Sneezing still");
-				Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);
-				sneezeTimer = timeBetweenSneezes;
-				snot.Play();
-				snotImage.SetActive(true);
-//				music.sneeze();
-				snotEmitting = true;
-				//TAINT INGREDIENTS
-				GameObject[] trays = GameObject.FindGameObjectsWithTag("Tray");
-				for (int i = 0; i < trays.Length; i++) {
-					trays[i].GetComponent<AddIngredientScript>().setTainted(true);
-				}
-				
-			}
-			if (sneezeTimer <= sweatingBeforeSneezeWarning && !sweating) {
-				//TODO: sweat before sneezing
+            if (sneezeAllowed)
+            {
+                sneezeTimer -= Time.deltaTime;
+                if (sneezeTimer <= 0)
+                {
+                    Debug.Log("Sneezing still");
+                    Camera.main.GetComponent<CameraShakeScript>().sneeze(timeBetweenSneezes);
+                    sneezeTimer = timeBetweenSneezes;
+                    snot.Play();
+                    snotImage.SetActive(true);
+                    //				music.sneeze();
+                    snotEmitting = true;
+                    //TAINT INGREDIENTS
+                    GameObject[] trays = GameObject.FindGameObjectsWithTag("Tray");
+                    for (int i = 0; i < trays.Length; i++)
+                    {
+                        trays[i].GetComponent<AddIngredientScript>().setTainted(true);
+                    }
 
-				sweat.Play();
-				sweat.loop = true;
-				sweating = true;
-				Debug.Log("Sweating!");
-				GetComponent<Animator>().SetTrigger("twitch");
+                }
+                if (sneezeTimer <= sweatingBeforeSneezeWarning && !sweating)
+                {
+                    //TODO: sweat before sneezing
+                    ParticleSystem.MainModule main = sweat.main;
+                    main.loop = true;
+                    sweat.Play();
+                    sweating = true;
+                    Debug.Log("Sweating!");
+                    GetComponent<Animator>().SetTrigger("twitch");
 
-			}
-			if (sneezeTimer <= timeBeforeSneezeWarning) {
-				Camera.main.GetComponent<CameraShakeScript>().giveSneezeWarning(timeBeforeSneezeWarning);
-			}
+                }
+                if (sneezeTimer <= timeBeforeSneezeWarning)
+                {
+                    Camera.main.GetComponent<CameraShakeScript>().giveSneezeWarning(timeBeforeSneezeWarning);
+                }
 
-			//swipe detection
-			Swipe ();
-		}
+                //swipe detection
+                Swipe();
+            }
+        }
 	}
 
 	public void checkSneezeTutor() {
@@ -125,20 +130,20 @@ public class NoseWipeScript : MonoBehaviour {
 		Debug.Log("Reset Sneeze");
 //		GetComponent<Animator>().SetTrigger("relief");
 		sweating = false;
-		sweat.loop = false;
+        ParticleSystem.MainModule main = sweat.main;
+        main.loop = false;
 		if (canStopSneeze) {
 			health = startingHealth;
 			sneezeTimer = health;
 			Debug.Log("Sneeze Timer now : " + sneezeTimer);
 		}
-<<<<<<< Updated upstream
-		if (Social.localUser.authenticated) {
+        /*
+        if (Social.localUser.authenticated) {
 			GKAchievementReporter.ReportAchievement( Achievements.SNEEZED, 100.0f, true);
 		}
-=======
 
->>>>>>> Stashed changes
-	}
+*/
+    }
 	
 	public void Swipe()
 		

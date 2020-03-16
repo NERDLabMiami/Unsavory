@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
 using SimpleJSON;
-using Soomla.Profile;
 
 
 public class SlacktivistMachine : MonoBehaviour {
@@ -46,10 +45,6 @@ public class SlacktivistMachine : MonoBehaviour {
 
 	public void nextTopic() {
 		Debug.Log("Going to Next Topic");
-		Analytics.CustomEvent("tweet_topic_switch", new Dictionary<string, object> {
-
-			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel}});
-
 		currentTopicIndex++;
 		currentTweetIndex = 0;
 		if (currentTopicIndex >= tweets["topics"].Count) {
@@ -60,10 +55,6 @@ public class SlacktivistMachine : MonoBehaviour {
 
 	public void previousTopic() {
 		Debug.Log("Going to Previous Topic");
-		Analytics.CustomEvent("tweet_topic_switch", new Dictionary<string, object> {
-			
-			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel}});
-
 		currentTopicIndex--;
 		currentTweetIndex = 0;
 		if (currentTopicIndex < 0) {
@@ -74,9 +65,6 @@ public class SlacktivistMachine : MonoBehaviour {
 	}
 
 	public void newTweet() {
-		Analytics.CustomEvent("tweet_message_switch", new Dictionary<string, object> {
-			
-			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel}});
 
 		currentTweetIndex++;
 	
@@ -106,16 +94,10 @@ public class SlacktivistMachine : MonoBehaviour {
 	public void tweet() {
 		float timeUntilTweetSelected = Time.time - machineActivated;
 		PlayerPrefs.SetInt("tweet"+currentTopicIndex+currentTweetIndex, 1);
-		Analytics.CustomEvent("tweeted", new Dictionary<string, object> {
-			{"current_topic", currentTopicIndex}, {"current_tweet", currentTweetIndex}, {"scene", Application.loadedLevel},{"timer", timeUntilTweetSelected}, {"group", evaluationGroup}});
-
 		tweetButton.interactable = false;
-		SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text + "http://goo.gl/ZUM31T");
-		if (Social.localUser.authenticated) {
-			Social.ReportProgress( Achievements.ACTIVIST, 100.0f, (result) => {
-				Debug.Log ( result ? "Reported #Activist" : "Failed to report #activist");
-			});
-		}
+
+        //TODO: Find a way to tweet
+//        SoomlaProfile.UpdateStatus (Provider.TWITTER, currentTweet.text + "http://goo.gl/ZUM31T");
 	}
 
 
