@@ -15,15 +15,16 @@ public class SceneLoader : MonoBehaviour {
 	}
 	private IEnumerator LoadALevel(int level) {
 		ao = Application.LoadLevelAsync (level);
+       
 		Debug.Log("Loading level...");
 		yield return ao;
 	}
 
 	public void goHome() {
-		Application.LoadLevel(3);
+		Application.LoadLevel(2);
 	}
 	public void mainMenu() {
-		Application.LoadLevel(1);
+		Application.LoadLevel(0);
 	}
 
 
@@ -36,12 +37,12 @@ public class SceneLoader : MonoBehaviour {
 		int timesPlayed = PlayerPrefs.GetInt("times played", 0);
 		timesPlayed++;
 		PlayerPrefs.SetInt("times played", timesPlayed);
-		sceneNumber = 2;
+		sceneNumber = 1;
 		ao = Application.LoadLevelAsync(sceneNumber);
 	}
 
 	public void restartLevel() {
-		ao = Application.LoadLevelAsync(2);
+		ao = Application.LoadLevelAsync(1);
 	}
 
 	public void RestartGame() {
@@ -57,12 +58,12 @@ public class SceneLoader : MonoBehaviour {
 		PlayerPrefs.DeleteKey("catering");
 		Debug.Log("Restart Game Run");
 		if (resume.Equals("home")) {
-			sceneNumber = 3;
+			sceneNumber = 2;
 
 		}
 
 		else {
-			sceneNumber = 2;
+			sceneNumber = 1;
 		}
 		Debug.Log("Loading Level " + sceneNumber);
 		ao = Application.LoadLevelAsync(sceneNumber);

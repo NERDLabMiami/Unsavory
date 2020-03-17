@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SocialPlatforms.GameCenter;
-using UnityEngine.SocialPlatforms;
 
 public class NoseWipeScript : MonoBehaviour {
 	private float timeBetweenSneezes = 10;
@@ -40,7 +38,6 @@ public class NoseWipeScript : MonoBehaviour {
 	public float startingHealth;
 
 	void Start () {
-		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
 		float healthEffect = PlayerPrefs.GetFloat("health effect", 0);
 		health = PlayerPrefs.GetFloat("health");
 		health = health - healthEffect;

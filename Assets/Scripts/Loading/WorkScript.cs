@@ -26,7 +26,7 @@ public class WorkScript : MonoBehaviour {
 
 	public void gotoWork() {
 		decreaseHealth();
-		Application.LoadLevel(2);
+		Application.LoadLevel(1);
 	}
 
 	public void stayHome() {
@@ -43,6 +43,6 @@ public class WorkScript : MonoBehaviour {
 			}
 		}
 		increaseHealth();
-		Application.LoadLevel(3);
+		Application.LoadLevel(2);
 	}
 }

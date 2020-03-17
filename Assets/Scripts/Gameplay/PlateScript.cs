@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.UI;
-using UnityEngine.SocialPlatforms;
 
 
 public class PlateScript : MonoBehaviour {
@@ -29,7 +27,7 @@ public class PlateScript : MonoBehaviour {
 	public bool perfectLevel = true;
 
 	void Start() {
-		GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
+		
 	}
 
 	private void OnMouseDown() {

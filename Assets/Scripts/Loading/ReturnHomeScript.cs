@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 using UnityEngine.UI;
-using UnityEngine.SocialPlatforms.GameCenter;
-using UnityEngine.SocialPlatforms;
 
 public class ReturnHomeScript : MonoBehaviour {
 	public GameObject phone;
@@ -240,7 +238,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			//returning to main menu as a loser
 			PlayerPrefs.SetInt("fired", 1);
 		}
-		Application.LoadLevel(1);
+		Application.LoadLevel(0);
 	}
 
 	public void continueToNextMonth() {
