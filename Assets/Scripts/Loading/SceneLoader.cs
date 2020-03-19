@@ -125,14 +125,14 @@ public class SceneLoader : MonoBehaviour {
 
 	public void QuitInGame() {
 		PlayerPrefs.SetString("resume game", "game");
-		setSceneNumber(1);
+		setSceneNumber(0);
 		newScene();
 
 	}
 	
 	public void QuitAtHome() {
 		PlayerPrefs.SetString("resume game", "home");
-		setSceneNumber(1);
+		setSceneNumber(0);
 		newScene();
 	}
 
