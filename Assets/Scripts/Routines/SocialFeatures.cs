@@ -13,7 +13,6 @@ public class SocialFeatures : MonoBehaviour {
 	public GameObject twitterInterface;
 	public GameObject twitterNotFoundPanel;
 	public GameObject activateButton;
-	private bool openTwitterAfterLogin = false;
 
 	void Start() {
 		if (PlayerPrefs.HasKey("activated") && activateButton != null) {
