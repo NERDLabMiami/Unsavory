@@ -25,9 +25,24 @@ public class WorkScript : MonoBehaviour {
 	}
 
 	public void gotoWork() {
+		int currentLetter = PlayerPrefs.GetInt("letter", 0);
+		currentLetter++;
+		PlayerPrefs.SetInt("letter", currentLetter);
+
 		decreaseHealth();
 		Application.LoadLevel(1);
 	}
+
+	public void lookForWork()
+	{
+		int currentLetter = PlayerPrefs.GetInt("letter", 0);
+		currentLetter++;
+		PlayerPrefs.SetInt("letter", currentLetter);
+
+		decreaseHealth();
+		Application.LoadLevel(2);
+	}
+
 
 	public void stayHome() {
 		if (PlayerPrefs.HasKey("using paid sick days")) {

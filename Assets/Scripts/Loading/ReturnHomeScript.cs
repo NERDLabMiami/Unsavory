@@ -80,6 +80,8 @@ public class ReturnHomeScript : MonoBehaviour {
 	}
 	
 	void Start () {
+		int currentLetter = PlayerPrefs.GetInt("letter", 0);
+		PlayerPrefs.SetInt("letter", currentLetter);
 
 		money = PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
@@ -114,11 +116,11 @@ public class ReturnHomeScript : MonoBehaviour {
 				if (PlayerPrefs.GetInt("bill" + i,0) == 1) {
 					//it's unpaid
 					gameObject.GetComponent<UnityAnalyticsIntegration>().overdueBill(i);
-					string effect = bills["bills"][i]["effect"];
-					int currentEffect = PlayerPrefs.GetInt(effect, 0);
-					currentEffect++;
-					PlayerPrefs.SetInt(effect, currentEffect);
-					Debug.Log(effect + " is now " + currentEffect);
+//					string effect = bills["bills"][i]["effect"];
+//					int currentEffect = PlayerPrefs.GetInt(effect, 0);
+//					currentEffect++;
+//					PlayerPrefs.SetInt(effect, currentEffect);
+//					Debug.Log(effect + " is now " + currentEffect);
 				}
 				else {
 					Debug.Log("This bill is already paid. No effect added");
@@ -137,6 +139,7 @@ public class ReturnHomeScript : MonoBehaviour {
 			finalDay = PlayerPrefs.GetInt("final day", 20);
 			Debug.Log("It's day " + day);
 			fruit.setFruit(day%5);
+/*
 			if (day % 5 == 0) {
 				//Pay Wages, Add Notification for Bill
 				weekend = true;
@@ -144,7 +147,7 @@ public class ReturnHomeScript : MonoBehaviour {
 				float health = PlayerPrefs.GetFloat("health");
 
 				if (health >= 50) {
-					PlayerPrefs.SetInt("letter", 0);
+	//				PlayerPrefs.SetInt("letter", 0);
 					PlayerPrefs.SetFloat("health", 20);
 				}
 				else if (health >= 30) {
@@ -157,6 +160,7 @@ public class ReturnHomeScript : MonoBehaviour {
 
 			}
 
+	*/
 				if (day%finalDay == 0 && day != 0) {
 				//add last paycheck
 					paycheckUI.text = calculateWages().ToString("$0");
@@ -166,13 +170,13 @@ public class ReturnHomeScript : MonoBehaviour {
 		
 					if (unpaidBills > 0) {
 						//LOST GAME, present game over panel
-						gameObject.GetComponent<UnityAnalyticsIntegration>().survivedWithUnpaidBills();
+		//				gameObject.GetComponent<UnityAnalyticsIntegration>().survivedWithUnpaidBills();
 						gameOverPanel.SetActive(true);
 						
 					}
 					else {
 						//Activate Month Complete Pane
-						gameObject.GetComponent<UnityAnalyticsIntegration>().survived();
+			//			gameObject.GetComponent<UnityAnalyticsIntegration>().survived();
 
 						monthCompletePanel.SetActive(true);
 						//GKAchievementReporter.ReportAchievement( Achievements.SURVIVED, 100, true);
@@ -206,7 +210,7 @@ public class ReturnHomeScript : MonoBehaviour {
 				}
 				gameObject.GetComponent<UnityAnalyticsIntegration>().weekend();
 				bankAccountUI.text = money.ToString("$0");
-					weekCompletePanel.SetActive(true);
+//					weekCompletePanel.SetActive(true);
 
 				//TODO: Offer Overtime Catering
 				//check if player has phone

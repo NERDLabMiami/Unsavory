@@ -84,9 +84,11 @@ public class SceneLoader : MonoBehaviour {
 			PlayerPrefs.SetInt("welcomed home", 1);
 			PlayerPrefs.SetString("resume game", "home");
 		}
+		/*
 		if (week == 1) {
 			PlayerPrefs.SetInt("letter",1);
 		}
+		*/
 
 		PlayerPrefs.SetInt("started career", 1);
 		PlayerPrefs.SetInt("current level", day);

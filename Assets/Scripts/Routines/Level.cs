@@ -110,6 +110,7 @@ public class Level : MonoBehaviour {
 	}
 
 	public void useRetry() {
+		
 		Debug.Log("Attempting Retry Use");
 		if (retries > 0) {
 			retries--;
@@ -192,6 +193,7 @@ public class Level : MonoBehaviour {
 		Debug.Log("INCOMPLETE SICK");
 		wagesUI_Sick.text = "You were caught being sick on the job. You can leave work early with "  + player.potentialWages(timeWorked).ToString("$0.00")  + " for your work today added to your next paycheck or try again.";
 		int sneezes = PlayerPrefs.GetInt("sneezes", 1);
+/*
 		if (sneezes > 1) {
 			PlayerPrefs.SetInt("letter", 2);
 
@@ -200,6 +202,7 @@ public class Level : MonoBehaviour {
 			PlayerPrefs.SetInt("letter", 1);
 
 		}
+*/
 		shiftIncompleteSick.SetActive(true);
 	}
 
@@ -227,8 +230,7 @@ public class Level : MonoBehaviour {
 		sick = _sick;
 		cleanupKitchen();
 		Camera.main.GetComponent<AudioSource>().Stop ();
-
-		if(fullday) {
+		if (fullday) {
 			completedFullDay();
 		}
 		
@@ -246,17 +248,18 @@ public class Level : MonoBehaviour {
 		Debug.Log ("Now Day " + currentLevel);
 		homeButton.SetActive(true);		
 		//FOR FINISHING!
-
+/*
 		if (currentLevel%5 == 0) {
 			Debug.Log("Weekend");
 			dialog.changeSpeechKey("weekend");
 			
 		}
 		else {
-			dialog.changeSpeechKey("complete" + score.ToString());
-			
+	*/
+		dialog.changeSpeechKey("complete" + score.ToString());
+		/*	
 		}
-		
+		*/
 		//cue boss
 		boss.SetTrigger("reappear");
 
@@ -266,7 +269,7 @@ public class Level : MonoBehaviour {
 		homeButton.SetActive(true);		
 
 		Debug.Log("Giving Sick Talk");
-		PlayerPrefs.SetInt("letter",1);
+//		PlayerPrefs.SetInt("letter",1);
 		PlayerPrefs.SetInt("activated",1);
 		dialog.changeSpeechKey("sneezed");
 		Debug.Log("GIving Sneeze Speech");
@@ -310,8 +313,10 @@ public class Level : MonoBehaviour {
 			PlayerPrefs.SetInt("can cater", 1);
 			Debug.Log("Too Many Warnings");
 			GetComponent<UnityAnalyticsIntegration>().fired ();
-			homeButton.SetActive(false);
-			//TODO: QUIT BUTTON SET ACTIVE
+			//pandemic change
+			homeButton.SetActive(true);
+			
+			
 			quitButton.SetActive(true);
 			return true;
 		}
