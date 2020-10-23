@@ -10,6 +10,7 @@ public class StartCareer : MonoBehaviour {
 	void Start () {
 
 		Time.timeScale = 1f;
+		/*
 		if (PlayerPrefs.HasKey("can cater")) {
 			mainMenu.SetTrigger("catering");
 		
@@ -19,7 +20,7 @@ public class StartCareer : MonoBehaviour {
 
 		}
 
-
+		*/
 		if (PlayerPrefs.HasKey("fired")) {
 			CustomFunctionScript.resetPlayerData(60, 0);
 			Debug.Log("Resetting Game");

@@ -419,20 +419,20 @@
  <Reference Include="UnityEditor.Lumin.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.6f1/Editor/Data/PlaybackEngines/LuminSupport/UnityEditor.Lumin.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="Google.IOSResolver_v1.2.156">
+ <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.IOSResolver_v1.2.156.dll</HintPath>
+ </Reference>
  <Reference Include="Google.JarResolver_v1.2.156">
  <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.JarResolver_v1.2.156.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.PackageManagerResolver_v1.2.156">
+ <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.PackageManagerResolver_v1.2.156.dll</HintPath>
  </Reference>
  <Reference Include="Google.VersionHandler">
  <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll</HintPath>
  </Reference>
  <Reference Include="Google.VersionHandlerImpl_v1.2.156">
  <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.VersionHandlerImpl_v1.2.156.dll</HintPath>
- </Reference>
- <Reference Include="Google.IOSResolver_v1.2.156">
- <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.IOSResolver_v1.2.156.dll</HintPath>
- </Reference>
- <Reference Include="Google.PackageManagerResolver_v1.2.156">
- <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Assets/ExternalDependencyManager/Editor/Google.PackageManagerResolver_v1.2.156.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/imfaculty/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
