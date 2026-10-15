@@ -60,11 +60,6 @@ public class Catering : MonoBehaviour {
 	}
 
 	public void sick() {
-		if (Social.localUser.authenticated) {
-			Social.ReportScore (plate.getOrders(), "challenge", success => {
-				Debug.Log(success ? "Reported score successfully" : "Failed to report score");
-			});
-		}
 		
 
 		finishedTitle.text = "You Blew It!";
@@ -74,11 +69,6 @@ public class Catering : MonoBehaviour {
 	}
 
 	public void tooSlow() {
-		if (Social.localUser.authenticated) {
-			Social.ReportScore (plate.getOrders(), "challenge", success => {
-				Debug.Log(success ? "Reported score successfully" : "Failed to report score");
-			});
-		}
 		finishedTitle.text = "Too Slow";
 		finishedDescription.text = "You've got too many orders backed up.";
 		Time.timeScale = 0f;

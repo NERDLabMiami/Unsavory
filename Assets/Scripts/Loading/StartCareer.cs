@@ -8,18 +8,7 @@ public class StartCareer : MonoBehaviour {
 	public int daysUntilComplete = 20;
 	// Use this for initialization
 	void Start () {
-
-		Time.timeScale = 1f;
-		if (PlayerPrefs.HasKey("can cater")) {
-			mainMenu.SetTrigger("catering");
 		
-		}
-		else {
-			mainMenu.SetTrigger("no catering");
-
-		}
-
-
 		if (PlayerPrefs.HasKey("fired")) {
 			CustomFunctionScript.resetPlayerData(60, 0);
 			Debug.Log("Resetting Game");
@@ -41,8 +30,7 @@ public class StartCareer : MonoBehaviour {
 		}
 
 		if (reset) {
-	
-			//			CustomFunctionScript.resetToDefaults();
+			CustomFunctionScript.resetToDefaults();
 		}
 	}
 
@@ -80,17 +68,6 @@ public class StartCareer : MonoBehaviour {
 
 
 	}
+	
 
-	public void unlockCareer() {
-		/*
-		Social.ReportProgress( "CgkIjOCjtq4PEAIQDA", 100, (result) => {
-			Debug.Log ( result ? "Reported First Day" : "Failed to report first day");
-		});
-*/
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

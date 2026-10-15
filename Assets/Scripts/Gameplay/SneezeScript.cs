@@ -23,11 +23,6 @@ public class SneezeScript : MonoBehaviour {
 		if (!launchedLevelEnd && !endless) {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
 				//TODO: Boogeyman
-				if (Social.localUser.authenticated) {
-					Social.ReportProgress( Achievements.SNEEZED, 100.0f, (result) => {
-						Debug.Log ( result ? "Reported Nose Wipe" : "Failed to report nose wipe");
-					});
-				}
 				PlayerPrefs.SetInt("sneezed", 1);
 				//ALLOW SICK DAYS
 				PlayerPrefs.SetInt("paid sick days achieved",1);
@@ -49,8 +44,6 @@ public class SneezeScript : MonoBehaviour {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
 				//END OF LEVEL POINT, NO STORY MODE
 				launchedLevelEnd = true;
-				Debug.Log("Endless Ends");
-				level.EndCatering(false);
 			}
 		}
 	}

@@ -1,94 +1,171 @@
 { 	
-   	"tutorial": [ ["one", "two"], ["three"]],
-  	"weekend": [ ["Oh look at that, it's the weekend. Your paycheck should be waiting for you at home."]],
-  	"weekend_response": [ ["Thanks!"]
-  						],
-  	"complete1":[ ["I thought you were sick... I guess not."],
-  						["I've got my eye on you..."],
-  						["I guess you want to stay?"],
-  						],
-  	"complete1_response": [ ["Nope!"], 
-  										["I'm I'll get the hang of this, eventually..."], 
-  										["Can't live without the money!"],
-  										],
+   	"post_tutorial": [
+  ["Not bad. Customers are already lining up.", "Try to keep up. The clock starts now."],
+  ["Good. You learn fast.", "Don't get used to the praise. Get to work."]
+],
+"post_tutorial_response": [
+  ["Thanks, boss.", "I'm ready."],
+  ["Thank you.", "Let's do this."]
+],
+"weekend": [
+  ["Look at that. Weekend already. Your paycheck will be waiting at home."]
+],
 
-  	"complete2":[ ["You were pretty good out there today!"],
-  						["Not too bad..."],
-  						],
-  	"complete2_response": [ ["It's all in the wrist."], 
-  										["I know a thing or two."], 
-  										],
+"weekend_response": [
+  ["Thanks."]
+]
+,
+"complete1": [
+  ["I thought you were sick. Guess I was wrong."],
+  ["You pushed through. I notice that."],
+  ["So you’re sticking around."]
+],
 
-  	"complete3":[ ["Now that's hard work! If only my other workers were as good as you."],
-  						["I'm glad we don't promote around here, otherwise you'd be my boss!"],
-  						["Wow, those are some amazing taco making skills you got there."],
-  						],
-  	"complete3_response": [ ["I know, right?"], 
-  										["Thanks?"], 
-  										["They call me the Taco Whisperer..."], 
-  										],
-  	
-  	  	
-  	  	  	
+"complete1_response": [
+  ["I’m fine."],
+  ["I’ll get the hang of this."],
+  ["I need the money."]
+],
+
+
+"complete2": [
+  ["You did alright today."],
+  ["See? If you were really sick, you couldn’t do that."]
+],
+
+"complete2_response": [
+  ["I know the routine."],
+  ["I can manage."]
+],
+
+"complete3": [
+  ["That’s real work right there."],
+  ["Most people would’ve quit by now."],
+  ["That’s the difference between commitment and excuses."]
+],
+
+"complete3_response": [
+  ["I guess."],
+  ["Someone has to show up."],
+  ["I do what I can."]
+],
+
    	"catering":[ ["Are you ready to test your taco making skills?"] ],
   	"catering_response": [ ["Bring it on!"] ],
   	"catering_complete":[ ["Here's some extra cash"] ],
   	"catering_complete_response": [ ["thanks"] ],
   	"catering_finished": [ ["Good job"] ],
   	"catering_finished_response": [ ["tacos forever!"] ],
-	"welcome":[["Now you very well know, no one starts at the top. I'll start you at $8.05 an hour, that's the minimum wage around here.", 
-						"That's what you get. Also, you won't receive paid sick days.", 
-						"It's just common practice, but you're not sick so who cares?", 
-						"Well I hope you wouldn't come to work. Look, as a sign of charity, I'm giving you with 3 re-shifts.", 
-						"Yeah, if you screw up your shift, you can do it again. Run out and you're fired! Now are you ready to start?"]],
-	"welcome_response":[["That's pretty low...", 
-											 "Why not?", 
-											 "But if I'm sick?",
-											 "Re-shifts?",
-											 "I'm ready!"]],
-    "return": [ 	
-  					["The taco calls... and you're here."], 
-  					["At Rocket Taco, our service is out of this world!"],
-  					["Your respect for this lifestyle moves me."],
-  					["Keep it up and you'll be my boss!"],
-  					["I can trust people who respect tacos."],
-  					["Rise and shine."],
-  					["I see I can't keep you away..."]
-  					],
-  	"return_response": [ 
-  									["The taco is my life."],
-  									["I'm ready to lift off!"],
-  									["I'm honored."],
-  									["That's the plan!"],
-  									["I respect burritos too."],
-  									["I'm awake."],
-  									["Don't even try."]
-  									],
-    "late_return": [ 	["The taco waits for no one.", "I'll just deduct that time from your paycheck."],
-  					["You're late!", "Tell it to your paycheck."], 
-  					],
-  	"late_return_response": [ ["I got a flat tire.", "Great..."],
-  									["I had some car troubles", "Great..."],
-  									],  									
- "fired_sick": [["That doesn't belong in a taco! And you don't belong at Rocket Taco!"], ["I can't afford to have you sick! You're fired!"]],
+"welcome": [
+  ["You want a job?"],
+  ["I started at the bottom. Just like you."],
+  ["Difference is, I figured things out."],
+  ["Most people here don’t."],
+  ["This is where they stay."],
+  ["I didn't."],
+  ["That’s why I'm running this station."],
+  ["You’ll be on tacos."],
+  ["Simple work."],
+  ["I'm starting you at $8.05 an hour. Minimum wage."],
+  ["That's fair pay for this level."],
+  ["Margins are tight."],
+  ["No paid sick days."],
+  ["You look healthy to me."],
+  ["If you mess up, I allow three re-shifts."],
+  ["A re-shift starts the whole day over."],
+  ["Same work. Same hours."],
+  ["You only get paid once."],
+  ["I'm pretty generous like that."],
+  ["Run out of re-shifts, and you're fired."],
+  ["So. Think you can keep up?"]
+],
+"welcome_response": [
+  ["I really need one."],
+  ["Just like you?"],
+  ["What do you mean?"],
+  ["So people don't move up?"],
+  ["I'll work hard."],
+  ["You did?"],
+  ["I understand."],
+  ["I can handle tacos."],
+  ["Got it."],
+  ["That's pretty low..."],
+  ["I get it."],
+  ["I understand."],
+  ["What if I get sick?"],
+  ["I feel fine."],
+  ["Re-shifts?"],
+  ["The whole day?"],
+  ["So I redo everything?"],
+  ["Without pay?"],
+  ["Very."],
+  ["I’ll be careful."],
+  ["Yes."]
+],
+
+"return": [
+  ["The taco calls… and you answered."],
+  ["Rocket Taco runs on commitment."],
+  ["You keep showing up. That’s how teams are built."],
+  ["I respect workers who respect the taco."],
+  ["This place rewards consistency."],
+  ["Another day, another chance to prove yourself."],
+  ["I see I can’t keep you away."]
+],
+"return_response": [
+  ["I need the hours."],
+  ["I’m doing my part."],
+  ["I’m here."],
+  ["Very."],
+  ["I get it."],
+  ["I’ll do my best."],
+  ["That’s the plan."]
+  ],
+"late_return": [
+  ["The taco waits for no one."],
+  ["You’re late. That time comes out of your paycheck."],
+  ["Rocket Taco runs on schedules."],
+  ["Showing up late costs everyone."],
+  ["We start on time here."]
+],
+"late_return_response": [
+  ["I had car trouble."],
+  ["Understood."],
+  ["Won’t happen again."],
+  ["I know."],
+  ["Sorry."]
+]
+									
+ "fired_sick": [["That doesn't belong in a taco! And you don't belong at Rocket Taco!"], ["Rocket Taco can’t afford sick workers."]],
  "fired_sick_response": [["The taco has deceived me!"], ["I can't afford it either..."]],  									
- "fired_slow":[["I trusted you with my business! You're fired!"]],
- "fired_slow_response":[["I guess the taco lied..."]],
-      "slow":[	["You knew this was hard work. If you continue screwing up, I'm going to fire you."],
-  				["You must work for the money! If I have to keep sending you home for not doing your job, I'm just going to hire someone else."], 
-  				["I knew you lied in the interview! Keep this up and you'll be fired."], 
-  				["I should really fire you, but I'm feeling generous..."],
-  				["You better be faster tomorrow, otherwise you're fired."],
-  			 ],
-  			 
-	"slow_response": [	["It's not the work. I'll do better tomorrow!"],
-									["Don't do that, I'll be better next time."],  			 
-  									["So I'm not getting promoted?"],
-  									["Thank you!"],
-  									["I'm still learning, I'll do better."],
-  									],	
-  "sneeze_tip": [["Sneezing on the food! Don't let me catch you swiping at your nose. That makes an unsavory taco!"], ["Have you heard of swiping at your nose to ward off a sneeze?"]],
-  "sneeze_tip_response": [["That makes sense."], ["I'll have to try that..."]],
-  "sneezed": [["If I catch you sick on the job again you're fired!"]],
-  "sneezed_response": [	["It won't happen again!"]]
+ "fired_slow":[["I trusted you with my station."]],
+ "fired_slow_response":[["I guess the taco lied."]],
+    "slow": [
+      ["You knew this was hard work."],
+      ["I expect people to earn their pay here."],
+      ["If I keep sending you home, I’ll find someone who won’t waste my time."],
+      ["I should fire you."],
+      ["I’m giving you another chance."]
+    ],
+
+"slow_response": [
+  ["I’ll do better tomorrow."],
+  ["I understand."],
+  ["Please don’t."],
+  ["Thank you."],
+  ["I won’t mess up again."]
+]
+
+"sneeze_tip": [
+  ["Sneezing on the food? That’s not the Rocket Taco way."],
+  ["You swipe your nose when you feel it coming. Stops it most of the time."]
+],
+
+"sneeze_tip_response": [
+  ["That makes sense."],
+  ["I’ll try that."]
+],
+
+  "sneezed": [["If I see you sick on the job again, you're fired."]],
+  "sneezed_response": [	["It won't happen again."]]
  }

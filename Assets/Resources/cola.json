@@ -1,0 +1,102 @@
+{
+  "baselineBills": {
+    "rent": 600,
+    "car": 150,
+    "carInsurance": 100,
+    "healthInsurance": 300,
+    "cableAndPhone": 100,
+    "electricity": 90
+  },
+  "metros": [
+    {
+      "id": "nyc",
+      "name": "New York City",
+      "billOverrides": {
+        "rent": 840,
+        "car": null,
+        "carInsurance": null,
+        "healthInsurance": 380,
+        "cableAndPhone": 110,
+        "electricity": 100
+      },
+      "systems": {
+        "carAvailable": false,
+        "transitReliability": 0.95,
+        "healthMultiplier": 1.3,
+        "healthLapseGraceDays": 2
+      }
+    },
+    {
+      "id": "miami",
+      "name": "Miami",
+      "billOverrides": {
+        "rent": 720,
+        "car": 150,
+        "carInsurance": 110,
+        "healthInsurance": 420,
+        "cableAndPhone": 110,
+        "electricity": 100
+      },
+      "systems": {
+        "carAvailable": true,
+        "transitReliability": 0.25,
+        "healthMultiplier": 1.4,
+        "healthLapseGraceDays": 1
+      }
+    },
+    {
+      "id": "la",
+      "name": "Los Angeles",
+      "billOverrides": {
+        "rent": 780,
+        "car": 150,
+        "carInsurance": 120,
+        "healthInsurance": 400,
+        "cableAndPhone": 110,
+        "electricity": 100
+      },
+      "systems": {
+        "carAvailable": true,
+        "transitReliability": 0.15,
+        "healthMultiplier": 1.3,
+        "healthLapseGraceDays": 1
+      }
+    },
+    {
+      "id": "chicago",
+      "name": "Chicago",
+      "billOverrides": {
+        "rent": 690,
+        "car": 150,
+        "carInsurance": 105,
+        "healthInsurance": 340,
+        "cableAndPhone": 100,
+        "electricity": 95
+      },
+      "systems": {
+        "carAvailable": true,
+        "transitReliability": 0.75,
+        "healthMultiplier": 1.2,
+        "healthLapseGraceDays": 2
+      }
+    },
+    {
+      "id": "atlanta",
+      "name": "Atlanta",
+      "billOverrides": {
+        "rent": 720,
+        "car": 150,
+        "carInsurance": 110,
+        "healthInsurance": 330,
+        "cableAndPhone": 100,
+        "electricity": 95
+      },
+      "systems": {
+        "carAvailable": true,
+        "transitReliability": 0.3,
+        "healthMultiplier": 1.2,
+        "healthLapseGraceDays": 2
+      }
+    }
+  ]
+}

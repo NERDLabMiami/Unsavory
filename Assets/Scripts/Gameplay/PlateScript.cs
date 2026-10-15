@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 
 
-public class PlateScript : MonoBehaviour {
+public class PlateScript : MonoBehaviour, IWorldInteractable {
 //	public GameObject[] droppedIngredients;
 	public List<GameObject> ingredients = new List<GameObject>();
 	public CurrentOrderScript current;
@@ -26,136 +26,195 @@ public class PlateScript : MonoBehaviour {
 	public UnityAnalyticsIntegration analytics;
 	public bool perfectLevel = true;
 
+	// Hot sauce is an optional bonus: it never counts toward matching or as a mistake, it only makes the rocket taco.
+	public bool sauced = false;
+	public AudioClip hotSauceSound;
+
+	// Plate clicks no longer submit: orders are checked as each ingredient is added.
+	public void Interact() { }
+
 	void Start() {
-		
+		// The plate slides in on a clip; run it on real time so it still plays while the tutorial holds timeScale at 0.
+		if (tray != null) {
+			var a = tray.GetComponent<Animator>();
+			if (a != null) a.updateMode = AnimatorUpdateMode.UnscaledTime;
+		}
 	}
 
-	private void OnMouseDown() {
-		if (ingredients.Count > 0) {
-			string msg = "";
-			//TODO: Create new recipe on right/wrong match
-			bool newOrderCreated = false;
-			GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
-			bool matched = false;
-			int matchedOrderIndex = -1;
-			for (int i = 0; i < current_recipes.Length; i++) {
-				if (doOrdersMatch(current_recipes[i].GetComponent<RecipeScript>().ingredients,ingredients)) {
+	Coroutine _seedRoutine;
 
-				//ADD JUICE!
-					//found a match
-					matched = true;
-					matchedOrderIndex = i;
-					orderCounter++;
-					matchedAggregate++;
-					if (matchedAggregate > bestMatchedAggregate) {
-						bestMatchedAggregate = matchedAggregate;
-					}
-	//COMBO COUNTER
-					if (matchedAggregate > 4) {
-						msg = matchedAggregate + " IN A ROW!";
-						playerMessage(msg);
+	// Every order starts with a tortilla already on the plate. This is the only place one is created.
+	// It does nothing if the plate already holds just a tortilla, so extra calls (tutorial end, game start) never
+	// destroy and re-place it. A delay lets the plate slide in or the old items fade out first.
+	public void SeedTortilla(bool clearExisting = true, float delay = 0f) {
+		if (_seedRoutine != null) { StopCoroutine(_seedRoutine); _seedRoutine = null; }
+		if (delay > 0f) _seedRoutine = StartCoroutine(SeedAfter(clearExisting, delay));
+		else PlaceTortilla(clearExisting);
+	}
 
-					}
+	IEnumerator SeedAfter(bool clearExisting, float delay) {
+		yield return new WaitForSecondsRealtime(delay);
+		_seedRoutine = null;
+		PlaceTortilla(clearExisting);
+	}
 
-					if (Social.localUser.authenticated) {
-						if (orderCounter == 25) {
-							//GKAchievementReporter.ReportAchievement( Achievements.TACOS_25, 100f, true);
-						}
-						if (orderCounter == 100) {
+	void PlaceTortilla(bool clearExisting) {
+		if (tortilla == null) return;
+		var tortillaTray = tortilla.GetComponent<AddIngredientScript>();
+		if (tortillaTray == null || tortillaTray.ingredient == null) return;
 
-							//GKAchievementReporter.ReportAchievement( Achievements.TACOS_100, 100f, true);
-						}
+		int placed = 0;
+		for (int i = 0; i < transform.childCount; i++)
+			if (transform.GetChild(i).CompareTag("Ingredient")) placed++;
+		if (placed == 1 && ingredients.Count == 1 && ingredients[0] == tortillaTray.ingredient) return;
 
-						if (orderCounter == 500) {
-							//GKAchievementReporter.ReportAchievement( Achievements.TACOS_500, 100f, true);
-						}
-					}
-					
-					
-	//				currentOrder.GetComponent<CurrentOrderScript>().setOrdersServed(orderCounter);
-	//				current.setOrdersServed(orderCounter);
-					break;
-				}
-
+		if (clearExisting) {
+			for (int i = transform.childCount - 1; i >= 0; i--) {
+				var child = transform.GetChild(i);
+				if (child.CompareTag("Ingredient")) Destroy(child.gameObject);
 			}
+		}
+		ingredients.Clear();
+		sauced = false;
+		ingredients.Add(tortillaTray.ingredient);
+		GameObject item = (GameObject)Instantiate(tortillaTray.ingredient, transform.position, Quaternion.identity);
+		item.transform.parent = transform;
+	}
 
-
+	// Clears the plate (finished or discarded) and brings the next tortilla in once the plate is ready for it.
+	public void ResetPlate(bool matched) {
+		ingredients.Clear();
+		sauced = false;
+		GameObject[] foodOnTheTable = GameObject.FindGameObjectsWithTag("Ingredient");
+		for (int j = 0; j < foodOnTheTable.Length; j++) {
 			if (matched) {
-				//clean up
-				//get rid of the current order
-				analytics.servedOrder(current_recipes[matchedOrderIndex].name,"true");
-				Vector3 tacoPosition = transform.position;
-				GameObject taco = (GameObject) Instantiate(current_recipes[0].GetComponent<RecipeScript>().completed, tacoPosition, Quaternion.identity);
-
-				for (int i = 0; i < current_recipes.Length; i++) {
-					current_recipes[i].GetComponent<Animator>().SetTrigger("matched");
-
-				}
-	//			Destroy(current_recipes[matchedOrderIndex]);
-				//			taco.transform.parent = transform;
-				tray.SetActive(false);
-				if (containsIngredient(ingredients, rocketSauce)) {
-					Debug.Log("Has Rocket Sauce");
-					music.GetComponent<MusicLibrary>().rocket();
-					taco.GetComponent<Animator>().SetTrigger("rocket");
-
-				}
-				else {
-					Debug.Log("No Rocket Sauce");
-					analytics.servedOrder(current_recipes[matchedOrderIndex].name,"false");
-					music.GetComponent<MusicLibrary>().plated();
-					taco.GetComponent<Animator>().SetTrigger("normal");
-
-				}
-				tray.SetActive(true);
-
+				Destroy(foodOnTheTable[j]);
 			}
-			else if (!tutorialMode) {
-	//			music.GetComponent<MusicLibrary>().misplated();
-				current.newOrder(current_recipes[0]);
-				newOrderCreated = true;
-				for (int i = 0; i < current_recipes.Length; i++) {
-					current_recipes[i].GetComponent<Animator>().SetTrigger("unmatched");					
-				}
-				current.numberOfUnmatchedOrders++;
-				if (current.warningTimer <= Time.time + 2f) {
-					playerWarning(current.numberOfUnmatchedOrders);
-					current.warningTimer = Time.time;
-				}
-
-				matchedAggregate = 0;
-				perfectLevel = false;
+			else {
+				var a = foodOnTheTable[j].GetComponent<Animator>();
+				if (a) a.SetTrigger("mismatch");
 			}
-			//remove the list of ingredients
+		}
+		// Served: the plate slides back in (0.33s). Discarded: the old items fade out (0.25s).
+		SeedTortilla(true, matched ? 0.35f : 0.3f);
+	}
 
-			ingredients.Clear();
-			//find all the placed ingredients and delete them
-			GameObject[] foodOnTheTable = GameObject.FindGameObjectsWithTag("Ingredient");
-			for(int j = 0; j < foodOnTheTable.Length; j++) {
-				//TODO: Animation instead of destroying it
-					if (matched) {
-						Destroy (foodOnTheTable[j]);
-					}
-					else {
-						foodOnTheTable[j].GetComponent<Animator>().SetTrigger("mismatch");
-					}
-			}
-			if (tutorialMode) {
-				//TODO: Pop up continue box
-				tutor.continueTutorial(matched);
-				if (!matched) {
-					current_recipes[0].GetComponent<Animator>().SetTrigger("unmatched");
+	public void ApplyHotSauce() {
+		if (sauced) return;
+		sauced = true;
+		if (rocketSauce != null) {
+			GameObject item = (GameObject)Instantiate(rocketSauce, transform.position, Quaternion.identity);
+			item.transform.parent = transform;
+		}
+		if (hotSauceSound != null && music != null) music.GetComponent<MusicLibrary>().playEffect(hotSauceSound);
+	}
 
-				}
-				//			tutorialMode = false;
-				msg = "";
-			}
-			else if (!newOrderCreated) {
-				current.newOrder();
+	GameObject GetTargetOrder() {
+		if (tutorialMode && tutor != null && tutor.CurrentRecipe != null) return tutor.CurrentRecipe;
+		var orders = current.GetActiveOrdersUnsafe();
+		for (int i = 0; i < orders.Count; i++) {
+			if (orders[i] != null) return orders[i];
+		}
+		return null;
+	}
 
+	// Tortilla and hot sauce are handled separately, so they never take part in matching.
+	List<GameObject> MatchableIngredients(List<GameObject> list) {
+		GameObject seeded = tortilla != null && tortilla.GetComponent<AddIngredientScript>() != null
+			? tortilla.GetComponent<AddIngredientScript>().ingredient : null;
+		return list.Where(i => i != rocketSauce && i != seeded).ToList();
+	}
+
+	// Called after each ingredient actually lands on the plate: a wrong one discards the order, a completing one serves it.
+	public void OnIngredientAdded(GameObject added) {
+		GameObject target = GetTargetOrder();
+		if (target == null) return;
+		var rs = target.GetComponent<RecipeScript>();
+		if (rs == null) return;
+
+		var needed = MatchableIngredients(rs.ingredients);
+		if (MatchableIngredients(new List<GameObject> { added }).Count > 0 && !needed.Contains(added)) {
+			DiscardOrder(target);
+			return;
+		}
+		if (doOrdersMatch(needed, MatchableIngredients(ingredients))) {
+			ConfirmOrder(target);
+		}
+	}
+
+	void ConfirmOrder(GameObject matchedOrder) {
+		orderCounter++;
+		matchedAggregate++;
+		if (matchedAggregate > bestMatchedAggregate) {
+			bestMatchedAggregate = matchedAggregate;
+		}
+		//COMBO COUNTER
+		if (matchedAggregate > 4) {
+			playerMessage(matchedAggregate + " IN A ROW!");
+		}
+
+		analytics.servedOrder(matchedOrder.name, "true");
+
+		var matchedRS = matchedOrder.GetComponent<RecipeScript>();
+		if (matchedRS != null && matchedRS.completed != null)
+		{
+			GameObject taco = (GameObject)Instantiate(matchedRS.completed, transform.position, Quaternion.identity);
+
+			tray.SetActive(false);
+			if (sauced)
+			{
+				music.GetComponent<MusicLibrary>().rocket();
+				taco.GetComponent<Animator>().SetTrigger("rocket");
 			}
-	//		playerMessage(msg);
-			tortilla.lockTrays();
+			else
+			{
+				analytics.servedOrder(matchedOrder.name, "false");
+				music.GetComponent<MusicLibrary>().plated();
+				taco.GetComponent<Animator>().SetTrigger("normal");
+			}
+			tray.SetActive(true);
+		}
+
+		var anim = matchedOrder.GetComponent<Animator>();
+		if (anim) anim.SetTrigger("matched");
+
+		if (tutorialMode) Destroy(matchedOrder, 0.35f);
+		else current.RemoveOrderAfterAnim(matchedOrder, 0.35f);
+
+		tray.SetActive(true);
+		ResetPlate(true);
+
+		if (tutorialMode) {
+			tutor.continueTutorial(true);
+		}
+		else {
+			current.newOrder();
+		}
+	}
+
+	// A wrong ingredient throws away the whole order and earns a warning.
+	void DiscardOrder(GameObject target) {
+		var anim = target.GetComponent<Animator>();
+		if (anim) anim.SetTrigger("unmatched");
+
+		if (!tutorialMode) {
+			current.RemoveOrderAfterAnim(target, 0.35f);
+			current.newOrder(null);
+
+			current.numberOfUnmatchedOrders++;
+			if (current.warningTimer <= Time.time + 2f) {
+				playerWarning(current.numberOfUnmatchedOrders);
+				current.warningTimer = Time.time;
+			}
+
+			matchedAggregate = 0;
+			perfectLevel = false;
+		}
+
+		ResetPlate(false);
+
+		if (tutorialMode) {
+			tutor.continueTutorial(false);
 		}
 	}
 
@@ -195,6 +254,7 @@ public class PlateScript : MonoBehaviour {
 			return false;
 		}
 	}
+
 
 	public bool doOrdersMatch(List<GameObject> list1, List<GameObject> list2) {
 		if (list1.Count != list2.Count) {

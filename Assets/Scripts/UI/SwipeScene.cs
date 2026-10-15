@@ -1,95 +1,112 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SwipeScene : MonoBehaviour {
-	private Vector2 firstPosition;
-	private Vector2 lastPosition;
-	private Vector2 firstPressPos;
-	private Vector2 secondPressPos;
-	private Vector2 currentSwipe;
-	public Transform[] places;
-	public AudioClip[] backgroundMusic;
-	public int currentPlace;
-	private Transform startPosition;
-	private Transform endPosition;
-	private float currentLerpTime = 0f;
-	private float lerpTime = 1f;
-	private bool moving = false;
-	private float movementStartTime;
+public class SwipeScene : MonoBehaviour
+{
+    public Transform[] places;
+    public AudioClip[] backgroundMusic;
 
+    [Header("Movement")]
+    public float lerpTime = 1f;
 
-	// Use this for initialization
-	void Start () {
-	}
+    private Transform startPosition;
+    private Transform endPosition;
+    private float currentLerpTime = 0f;
+    private bool moving = false;
 
-	void Update() {
-		if (moving) {
-			currentLerpTime += Time.deltaTime;
-			if (currentLerpTime > lerpTime) {
-				currentLerpTime = lerpTime;
-				moving = false;
-				if (gameObject.GetComponent<AudioSource>().clip != backgroundMusic[currentPlace]) {
-					gameObject.GetComponent<AudioSource>().clip = backgroundMusic[currentPlace];
-					gameObject.GetComponent<AudioSource>().Play();
-				}
-			}
-			
-			float perc = currentLerpTime / lerpTime;
-			Camera.main.transform.position = Vector3.Lerp (startPosition.position, endPosition.position,perc);
-		}
+    public event System.Action<int> OnPlaceChanged;
 
-		Swipe();
-	}
+    private int _currentPlace;
+    public int currentPlace
+    {
+        get => _currentPlace;
+        set
+        {
+            if (_currentPlace == value) return;
+            _currentPlace = value;
+            OnPlaceChanged?.Invoke(_currentPlace);
+        }
+    }
 
-	public void Swipe()
-		
-	{
-		
-		if(Input.GetMouseButtonDown(0)) {
-			firstPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-		}
-		
-		if(Input.GetMouseButtonUp(0)) {
-			secondPressPos = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-			currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y); 
-			//normalize the 2d vector
-			currentSwipe.Normalize();
-			//swipe upwards
-			if(currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) {
-				Debug.Log("up swipe");
-			}
-			
-			//swipe down			
-			if(currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f) {
-				Debug.Log("down swipe");
-			}
-			
-			//swipe left
-			
-			if(currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
-				Debug.Log("left swipe");
-				if (currentPlace < places.Length -1 && !moving) {
-					startPosition = places[currentPlace];
-					currentPlace++;
-					endPosition = places[currentPlace];
-					currentLerpTime = 0f;
-					moving = true;
-				}
-			}
-			
-			//swipe right
-			
-			if(currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f) {
-				if (currentPlace > 0 && !moving) {
-					startPosition = places[currentPlace];
-					currentPlace--;
-					endPosition = places[currentPlace];
-					Debug.Log("right swipe");				
-					moving = true;
-					currentLerpTime = 0f;
-				}
-			}
-			
-		}
-	}
+    void Start()
+    {
+        if (places == null || places.Length == 0) return;
+
+        // Start in the middle (Kitchen)
+        currentPlace = Mathf.Clamp(places.Length / 2, 0, places.Length - 1);
+
+        if (Camera.main)
+            Camera.main.transform.position = places[currentPlace].position;
+
+        TrySwapMusic();
+    }
+
+    void Update()
+    {
+        UpdateMovement();
+        NavigateRooms();
+    }
+
+    private void UpdateMovement()
+    {
+        if (!moving) return;
+
+        currentLerpTime += Time.deltaTime;
+        if (currentLerpTime >= lerpTime)
+        {
+            currentLerpTime = lerpTime;
+            moving = false;
+            TrySwapMusic();
+        }
+
+        float perc = (lerpTime <= 0f) ? 1f : (currentLerpTime / lerpTime);
+
+        if (Camera.main)
+            Camera.main.transform.position = Vector3.Lerp(startPosition.position, endPosition.position, perc);
+    }
+
+    private void NavigateRooms()
+    {
+        var input = GameInput.Instance;
+        if (moving || input == null) return;
+
+        // D-pad / shoulders / arrows / A-D; a modal's navigation must not pan the room behind it.
+        if (ModalFocus.HasFocus ||
+            (GameplayGate.Instance != null && !GameplayGate.Instance.InteractionEnabled))
+            return;
+
+        if (input.PreviousRoomPressed)
+            TryMove(-1);   // Left -> Bedroom
+        else if (input.NextRoomPressed)
+            TryMove(+1);   // Right -> Living Room / Door
+    }
+
+    private void TryMove(int delta)
+    {
+        if (places == null || places.Length == 0) return;
+
+        int next = Mathf.Clamp(currentPlace + delta, 0, places.Length - 1);
+        if (next == currentPlace) return;
+
+        startPosition = places[currentPlace];
+        currentPlace = next; // fires OnPlaceChanged
+        endPosition = places[currentPlace];
+
+        currentLerpTime = 0f;
+        moving = true;
+    }
+
+    private void TrySwapMusic()
+    {
+        var src = GetComponent<AudioSource>();
+        if (!src) return;
+
+        if (backgroundMusic != null &&
+            currentPlace >= 0 &&
+            currentPlace < backgroundMusic.Length &&
+            src.clip != backgroundMusic[currentPlace])
+        {
+            src.clip = backgroundMusic[currentPlace];
+            src.Play();
+        }
+    }
 }

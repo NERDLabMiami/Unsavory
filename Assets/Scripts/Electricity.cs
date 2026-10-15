@@ -1,25 +1,44 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Electricity : MonoBehaviour {
-	public Animator lights;
-	public BillScript electricityBill;
-	private bool switched = false;
+public class Electricity : MonoBehaviour
+{
+    public Animator lights;
+    public int electricityBillId = 0;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (!switched && electricityBill.overdue) {
-			lights.SetTrigger("lights off");
-			switched = true;
-		}
+    private bool lightsOff = false;
 
-		if (switched && !electricityBill.overdue) {
-			lights.SetTrigger("lights on");
-		}
-	}
+    void OnEnable()
+    {
+        BillsSignals.BillPaid += OnBillPaid;
+        BillsSignals.BillsRefreshed += Refresh;
+        Refresh();
+    }
+
+    void OnDisable()
+    {
+        BillsSignals.BillPaid -= OnBillPaid;
+        BillsSignals.BillsRefreshed -= Refresh;
+    }
+
+    private void OnBillPaid(int id)
+    {
+        if (id == electricityBillId)
+            Refresh();
+    }
+
+    public void Refresh()
+    {
+        bool overdue = BillsState.IsBillOverdue(electricityBillId);
+
+        if (!lightsOff && overdue)
+        {
+            if (lights) lights.SetTrigger("lights off");
+            lightsOff = true;
+        }
+        else if (lightsOff && !overdue)
+        {
+            if (lights) lights.SetTrigger("lights on");
+            lightsOff = false;
+        }
+    }
 }

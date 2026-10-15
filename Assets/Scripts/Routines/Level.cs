@@ -43,53 +43,135 @@ public class Level : MonoBehaviour {
 	private int score;
 	public int retries;
 	private float timeWorked;
-	public string appleId = "959296519";
-	public string apdroidAppUrl = "market://details?id=com.dataplayed.unsavory";
+	public ReadySetGo readySetGo;
+	public GameObject inGameGui; // if not already
+	public GameObject countdownUiRoot; 
+	private bool _bossIntroHandled = false;
 
+	void Awake()
+	{
+		// The tutorial must not start at scene load: CameraSequencing brings it up after the boss intro.
+		// Done here rather than in the scene file, whose saved active flag Unity keeps rewriting.
+		// Awake runs for every object before any Start, so TutorScript.Start never fires early.
+		var tutor = FindFirstObjectByType<TutorScript>();
+		if (tutor != null) tutor.gameObject.SetActive(false);
+	}
 
 	// Use this for initialization
-	void Start () {
-	 	currentLevel = PlayerPrefs.GetInt("current level");
-		int timesPlayed = PlayerPrefs.GetInt("times played", 0);
-		if (timesPlayed == 3 && !PlayerPrefs.HasKey("rated")) {
-			//Ask to rate the app
+	void Start()
+	{
+		// No ingredient picking behind the boss dialogue or the countdown (BeginGamePlay unlocks).
+		if (GameplayGate.Instance != null) GameplayGate.Instance.Lock(GameplayGate.GateLocks.BossFlow);
 
-			PlayerPrefs.SetInt("rated",1);
+		currentLevel = PlayerPrefs.GetInt("current level");
+		int timesPlayed = PlayerPrefs.GetInt("times played", 0);
+
+		if (timesPlayed == 3 && !PlayerPrefs.HasKey("rated"))
+		{
+			PlayerPrefs.SetInt("rated", 1);
 		}
+
 		retries = PlayerPrefs.GetInt("retries", 0);
 
+		// The intro plays itself; the end-of-shift dialogue keeps its Advance button.
+		dialog.autoAdvance = false;
+
 		bool catering = PlayerPrefs.HasKey("catering");
-		if (catering) {
+		if (catering)
+		{
 			dialog.changeSpeechKey("catering");
 		}
-		else if (currentLevel == 1) {
-			//first day of work
+		else if (currentLevel == 1)
+		{
 			Debug.Log("First Day of Work!");
 			dialog.changeSpeechKey("welcome");
 		}
-		else {
-			//return to work
+		else
+		{
 			float lateness = PlayerPrefs.GetFloat("late effect", 0);
-			if (lateness > 0) {
+			if (lateness > 0)
+			{
 				Debug.Log("Late to work");
 				dialog.changeSpeechKey("late_return");
-
 			}
-			else {
+			else
+			{
 				Debug.Log("Returned to work on time");
 				dialog.changeSpeechKey("return");
-
 			}
-
 		}
 
+		// Make dialogue a pure gate, not a gameplay starter:
+		dialog.legacyTriggerCameraPrepOnComplete = false;
+		dialog.legacyShowInGameGuiOnComplete = false;
+
+		// Avoid accidental multi-subscribe (if scene reloads / object persists unexpectedly)
+		dialog.OnDialogueComplete -= OnBossIntroComplete;
+		dialog.OnDialogueComplete += OnBossIntroComplete;
+
+		if (countdownUiRoot) countdownUiRoot.SetActive(false);
+
+		// Ensure ReadySetGo isn't running until we explicitly begin countdown
+		// (Requires the ReadySetGo refactor below)
+	}
+
+
+	private void OnBossIntroComplete()
+	{
+		if (_bossIntroHandled) return;
+		_bossIntroHandled = true;
+		dialog.autoAdvance = false;
+
+		// Keep gameplay UI off until the countdown finishes
+		if (inGameGui) inGameGui.SetActive(false);
+
+		StartCoroutine(AfterBossExit(() =>
+		{
+			// The pan's animation event (CameraSequencing.startCountdown) shows the tutorial on a first run,
+			// otherwise activates the countdown, which starts itself.
+			if (Camera.main)
+			{
+				var camAnim = Camera.main.GetComponent<Animator>();
+				if (camAnim) camAnim.SetTrigger("Prep");
+			}
+		}));
+	}
+
+	private IEnumerator AfterBossExit(Action next)
+	{
+		// Boss Disappears runs ~1s and has no completion event.
+		yield return new WaitForSecondsRealtime(1.1f);
+		next();
+	}
+
+	/// <summary>Called when the tutorial is finished: the boss returns, then the countdown follows his Continue.</summary>
+	public void BeginPostTutorial()
+	{
+		dialog.autoAdvance = false;
+		if (GameplayGate.Instance != null) GameplayGate.Instance.Lock(GameplayGate.GateLocks.BossFlow);
+		dialog.OnDialogueComplete -= OnPostTutorialComplete;
+		dialog.OnDialogueComplete += OnPostTutorialComplete;
+		dialog.changeSpeechKey("post_tutorial");
+		dialog.reappear(false);
+	}
+
+	private void OnPostTutorialComplete()
+	{
+		dialog.OnDialogueComplete -= OnPostTutorialComplete;
+		StartCoroutine(AfterBossExit(() =>
+		{
+			if (countdownUiRoot) countdownUiRoot.SetActive(true);
+		}));
 	}
 
 	public void setTimeWorked(float hours) {
 		timeWorked = hours;
 	}
 
-	public void beginLevel() {
+	public void BeginGamePlay() {
+		// The HUD (clock, pause button) stays hidden through the dialogue, tutorial and countdown.
+		if (inGameGui) inGameGui.SetActive(true);
+		if (GameplayGate.Instance != null) GameplayGate.Instance.Unlock(GameplayGate.GateLocks.BossFlow);
 		float lateness = PlayerPrefs.GetFloat("late effect", 0);
 
 		if (!levelBegan) {
@@ -113,8 +195,9 @@ public class Level : MonoBehaviour {
 		Debug.Log("Attempting Retry Use");
 		if (retries > 0) {
 			retries--;
-			//just using both, animating a disabled one shouldn't matter
-			sickTacos.useTaco(retries);
+            //just using both, animating a disabled one shouldn't matter
+			
+            sickTacos.useTaco(retries);
 			slowTacos.useTaco(retries);
 			PlayerPrefs.SetInt("retries", retries);
 		}
@@ -127,22 +210,7 @@ public class Level : MonoBehaviour {
 		dialog.changeSpeechKey("catering_complete");
 
 	}
-
-	public void EndCatering(bool tooSlow) {
 	
-		if (tooSlow) {
-			catering.tooSlow();
-			
-			GetComponent<UnityAnalyticsIntegration>().caterModeLevelFinished(Time.time, catering.plate.getOrders(), "slow");
-		}
-		
-		else {
-			GetComponent<UnityAnalyticsIntegration>().caterModeLevelFinished(Time.time, catering.plate.getOrders(), "sick");
-			
-			catering.sick();
-		}
-	}
-
 	private void cleanupKitchen() {
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 	
@@ -151,7 +219,7 @@ public class Level : MonoBehaviour {
 		}
 		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 		gameElements.SetTrigger("fade orders");
-		HUD.SetTrigger("Fade Out");
+		if (HUD != null && HUD.isActiveAndEnabled) HUD.SetTrigger("Fade Out");
 		homeButton.SetActive(false);
 
 	}
@@ -180,7 +248,7 @@ public class Level : MonoBehaviour {
 		}
 		
 		PlayerPrefs.SetInt("retries", retries);
-		wagesUI.text = "$" + player.addWages(8).ToString("0.00") + " added to your next paycheck, that's a full day of work at minimum wage.";
+		wagesUI.text = "$" + PlayerState.AddWagesHours(8f).ToString("0.00") + " added to your next paycheck, that's a full day of work at minimum wage.";
 		GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "full day", Time.time);
 	}
 
@@ -190,7 +258,7 @@ public class Level : MonoBehaviour {
 //		shiftCompleteText.text = "Sick on the Job";
 //		realWorldFact.SetActive(true);
 		Debug.Log("INCOMPLETE SICK");
-		wagesUI_Sick.text = "You were caught being sick on the job. You can leave work early with "  + player.potentialWages(timeWorked).ToString("$0.00")  + " for your work today added to your next paycheck or try again.";
+		wagesUI_Sick.text = "You were caught being sick on the job. You can leave work early with "  + PlayerState.PotentialWagesHours(timeWorked).ToString("$0.00")  + " for your work today added to your next paycheck or try again.";
 		int sneezes = PlayerPrefs.GetInt("sneezes", 1);
 		if (sneezes > 1) {
 			PlayerPrefs.SetInt("letter", 2);
@@ -206,7 +274,7 @@ public class Level : MonoBehaviour {
 	private void incompleteWarningsExceeded() {
 		GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "mismatches", Time.time);
 		Debug.Log("INCOMPLETE SLOW");
-		wagesUI_Slow.text = "Looks like you couldn't keep up with the orders! You can leave work and add "  + player.potentialWages(timeWorked).ToString("$0.00")  + " to your next paycheck for your work today or try again.";
+		wagesUI_Slow.text = "Looks like you couldn't keep up with the orders! You can leave work and add "  + PlayerState.PotentialWagesHours(timeWorked).ToString("$0.00")  + " to your next paycheck for your work today or try again.";
 
 		shiftIncompleteSlow.SetActive(true);
 		//		shiftCompleteText.text = "Oh No!";
@@ -216,7 +284,7 @@ public class Level : MonoBehaviour {
 //		levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
 	}
 	public void acceptWages() {
-		player.addWages(timeWorked);
+		PlayerState.AddWagesHours(timeWorked);
 	}
 
 	public void EndOfLevel(bool _fullday, bool _sick) {

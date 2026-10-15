@@ -4,16 +4,11 @@ using System.Collections;
 public class AnimationFunctions : MonoBehaviour {
 	public GameObject objectsWithCollisionToDisable;
 	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public string gateReason = "AnimationFunctions";
+
+	// Animation event: ingredient/recipe/panel clips call this when they finish ("destroy").
 	public void destroy() {
-		Destroy (gameObject);
+		Destroy(gameObject);
 	}
 
 	public void fadeAllRecipes() {
@@ -24,24 +19,17 @@ public class AnimationFunctions : MonoBehaviour {
 		Debug.Log("Fading Recipes");
 	}
 
-	public void disableCollisionOnObjects() {
+	public void disableCollisionOnObjects()
+	{
 		Debug.Log("RUNNING DISABLE COLLISION ON OBJECTS");
-		if (objectsWithCollisionToDisable != null) {
-			foreach(BoxCollider2D child in objectsWithCollisionToDisable.GetComponentsInChildren<BoxCollider2D>()) {
-				Debug.Log("Disabling " + child.name);
-				child.enabled = false;
-			}
-		}
+		if (GameplayGate.Instance != null)
+			GameplayGate.Instance.Lock(gateReason);
 	}
 
-	public void enableCollisionOnObjects() {
-		Debug.Log("RUNNING ENABLE COLLISION ON OBJECTS");
-
-		if (objectsWithCollisionToDisable != null) {
-			foreach(BoxCollider2D child in objectsWithCollisionToDisable.GetComponentsInChildren<BoxCollider2D>()) {
-				child.enabled = true;
-			}
-		}
+	public void enableCollisionOnObjects()
+	{
+		if (GameplayGate.Instance != null)
+			GameplayGate.Instance.Unlock(gateReason);
 	}
 
 	public void disable() {

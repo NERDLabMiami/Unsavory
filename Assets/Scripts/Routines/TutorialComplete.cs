@@ -26,6 +26,7 @@ public class TutorialComplete : MonoBehaviour {
 		PlayerPrefs.SetInt("tutorial", 1);
 		PlayerPrefs.SetInt ("sneeze tutor", 0);
 		tutor.plate.GetComponent<PlateScript>().tutorialMode = false;
+		tutor.plate.GetComponent<PlateScript>().SeedTortilla();
 		CustomFunctionScript.collisionOnObjects(tutor.allTrays, true);
 
 	}

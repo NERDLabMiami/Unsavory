@@ -18,21 +18,32 @@ public class DebugScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		healthSlider.value = PlayerPrefs.GetFloat("health");
-		healthText.text = healthSlider.value.ToString();
-		cashSlider.value = PlayerPrefs.GetFloat("money");
-		cashText.text = cashSlider.value.ToString();	
-		pillSlider.value = PlayerPrefs.GetInt("pills");
-		pillText.text = pillSlider.value.ToString();
-		wageSlider.value = PlayerPrefs.GetFloat ("hourly rate", 8.05f);
-		wageText.text = wageSlider.value.ToString();
-		firedSlider.value = PlayerPrefs.GetInt("max warnings");
-		firedText.text = firedSlider.value.ToString();
-		daySlider.value = PlayerPrefs.GetInt("current level", 0);
-		dayText.text = daySlider.value.ToString();
+		RefreshFromPrefs();
 	}
 
-	
+	// Shows the saved values. SetValueWithoutNotify so merely opening this scene (or a value outside a
+	// slider's range) doesn't write back through the onValueChanged handlers and change the save.
+	public void RefreshFromPrefs() {
+		SetSlider(healthSlider, healthText, PlayerPrefs.GetFloat("health"));
+		SetSlider(cashSlider, cashText, PlayerPrefs.GetFloat("money"), "$");
+		SetSlider(pillSlider, pillText, PlayerPrefs.GetInt("pills"));
+		SetSlider(wageSlider, wageText, PlayerPrefs.GetFloat("hourly rate", 8.05f));
+		SetSlider(firedSlider, firedText, PlayerPrefs.GetInt("max warnings"));
+		SetSlider(daySlider, dayText, PlayerPrefs.GetInt("current level", 0));
+	}
+
+	void SetSlider(Slider slider, Text label, float value, string prefix = "") {
+		if (slider != null) slider.SetValueWithoutNotify(value);
+		if (label != null) label.text = prefix + value.ToString();
+	}
+
+	/// <summary>Reset button: wipe the player data like a fresh save, then show the new values.</summary>
+	public void ResetAndRefresh() {
+		CustomFunctionScript.resetPlayerData(25, 0);
+		PlayerPrefs.Save();
+		RefreshFromPrefs();
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

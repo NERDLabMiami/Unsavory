@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TortillaFoundation : MonoBehaviour {
+public class TortillaFoundation : MonoBehaviour, IWorldInteractable {
 	public GameObject trays;
 	public bool tutoring = false;
 
 	// Use this for initialization
 	void Start () {
-		lockTrays();
+		// The plate now starts with a tortilla, so trays are no longer locked behind it.
 	}
 	
 	// Update is called once per frame
@@ -15,11 +15,7 @@ public class TortillaFoundation : MonoBehaviour {
 	
 	}
 
-	private void OnMouseDown() {
-		if (!tutoring) {
-			unlockTrays();
-		}
-	}
+	public void Interact() { }
 
 	public void lockTrays() {
 		foreach(BoxCollider2D child in trays.GetComponentsInChildren<BoxCollider2D>()) {

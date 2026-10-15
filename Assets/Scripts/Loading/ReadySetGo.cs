@@ -1,73 +1,111 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
+public class ReadySetGo : MonoBehaviour
+{
+    private float nextTime;
+    private int wordIndex = 0;
+    private bool finished = false;
+    private bool armed = false;
 
-public class ReadySetGo : MonoBehaviour {
-	private float startTime;
-	private float nextTime;
-	private int wordIndex = 0;
-	public Text display;
-	public string[] words;
-	public float secondsBetweenWords;
-	public GameObject gamePlayObject;
-	public GameObject timer;
-	public GameObject player;
-	public Level level;
-	public Button pauseButton;
-	public CurrentOrderScript currentOrder;
-	public MusicLibrary music;
-	private bool finished = false;
-	// Use this for initialization
-	void Start () {
-		nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
-		display.text = words[wordIndex];
-		Camera.main.GetComponent<AudioSource>().Stop ();
-//		music.prestart();
-		pauseButton.enabled = false;
-	}
+    public Text display;
+    public string[] words;
+    public float secondsBetweenWords;
+    public GameObject timer;
+    public Level level;
+    public Button pauseButton;
+    public CurrentOrderScript currentOrder;
+    public MusicLibrary music;
 
+    void OnEnable()
+    {
+        // Activated by CameraSequencing.startCountdown (camera pan) or TutorialComplete.startCountdown (tutorial finished).
+        if (!armed && !finished) BeginCountdown();
+    }
 
-	public void startGame() {
-	
-//		gamePlayObject.SetActive(true);
-//		orderHopper.GetComponent<CurrentOrderScript>().spawnMoreOrders = true;
-		timer.GetComponent<PauseScript>().gamePlayStarted = true;
-		level.beginLevel();
-		timer.GetComponent<TimerScript>().running = true;
-		//TODO: Switch between modes
-		//		currentOrder.spawnMoreOrders = true;
-//		currentOrder.Spawn();
-		currentOrder.newOrder();
-		Time.timeScale = 1f;
-		GetComponent<AudioSource>().Stop();
-		music.countdownFinished();
-		Debug.Log("Let's go");
-		pauseButton.enabled = true;
+    void Start()
+    {
+        // Don't begin automatically. This object starts inactive, so Start() first runs the frame after
+        // Level activates it, which is after BeginCountdown() has armed it; don't clobber that.
+        if (armed) return;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (!finished) {
-			if (nextTime <= Time.realtimeSinceStartup) {
-				nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
+        display.text = "";
+        finished = false;
 
-				//move to the next word
-				wordIndex++;
-				if (wordIndex >= words.Length) {
-					GetComponentInChildren<Animator>().SetTrigger("finished");
-					Debug.Log("Starting Game");
-					display.text = "Go!";
-					finished = true;
-					startGame();
-				}
-				else {
-					display.text = words[wordIndex];
-					GetComponentInChildren<Animator>().SetTrigger("wobble");
-				}
-			}
-		}
+        if (pauseButton) pauseButton.enabled = false;
+    }
 
-	}
+    /// <summary>
+    /// Starts the Ready-Set-Go countdown; runs automatically when this object is activated.
+    /// </summary>
+    public void BeginCountdown()
+    {
+        wordIndex = 0;
+        finished = false;
+        armed = true;
+
+        nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
+
+        if (display && words != null && words.Length > 0)
+            display.text = words[wordIndex];
+
+        // Your original audio/pause behavior:
+        if (Camera.main)
+        {
+            var a = Camera.main.GetComponent<AudioSource>();
+            if (a) a.Stop();
+        }
+
+        if (pauseButton) pauseButton.enabled = false;
+    }
+
+    public void startGame()
+    {
+        timer.GetComponent<PauseScript>().gamePlayStarted = true;
+        // A failure in BeginGamePlay must not stop the first order from appearing.
+        try { level.BeginGamePlay(); }
+        catch (System.Exception e) { Debug.LogException(e); }
+
+        timer.GetComponent<TimerScript>().running = true;
+        Time.timeScale = 1f;
+        currentOrder.plate.SeedTortilla();
+        currentOrder.newOrder();
+        if (currentOrder.GetActiveOrdersUnsafe().TrueForAll(o => o == null)) currentOrder.newOrder();
+        Debug.Log($"[Start] orders={currentOrder.GetActiveOrdersUnsafe().Count} timeScale={Time.timeScale}");
+
+        var a = GetComponent<AudioSource>();
+        if (a) a.Stop();
+
+        music.countdownFinished();
+        if (pauseButton) pauseButton.enabled = true;
+    }
+
+    void Update()
+    {
+        if (!armed || finished) return;
+
+        if (nextTime <= Time.realtimeSinceStartup)
+        {
+            nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
+
+            wordIndex++;
+
+            if (wordIndex >= words.Length)
+            {
+                var anim = GetComponentInChildren<Animator>();
+                if (anim) anim.SetTrigger("finished");
+
+                display.text = "Get to work.";
+                finished = true;
+
+                startGame();
+            }
+            else
+            {
+                display.text = words[wordIndex];
+                var anim = GetComponentInChildren<Animator>();
+                if (anim) anim.SetTrigger("wobble");
+            }
+        }
+    }
 }

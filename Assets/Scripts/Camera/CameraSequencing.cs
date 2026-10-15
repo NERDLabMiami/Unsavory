@@ -5,9 +5,6 @@ using UnityEngine.UI;
 public class CameraSequencing : MonoBehaviour {
 	public GameObject preStartObject;
 	public GameObject tutorObject;
-	// Use this for initialization
-	void Start () {
-	}
 
 	public void startCountdown() {
 		if (PlayerPrefs.HasKey("tutorial")) {
@@ -18,8 +15,4 @@ public class CameraSequencing : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

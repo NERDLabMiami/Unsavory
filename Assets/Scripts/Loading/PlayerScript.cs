@@ -1,85 +1,109 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using System.Linq;
 
-public class PlayerScript : MonoBehaviour {
-	public Text moneyUI;
-	public Text pillsUI;
-	private float money;
-	private int pills;
-	private float hourlyRate;
-	public bool reset = false;
-//	public float daysWage;
+public class PlayerScript : MonoBehaviour
+{
+    [Header("Optional UI")]
+    public Text moneyUI;
+    public Text pillsUI;
 
-	public void resetData() {
-		if (!PlayerPrefs.HasKey ("current level") || reset) {
-			//this resets
-			CustomFunctionScript.resetPlayerData(60, money);
-		}
+    [Header("Reset Behavior (debug)")]
+    public bool reset = false;
 
-	}
+    private const string PREF_MONEY = "money";
+    private const string PREF_PILLS = "pills";
+    private const string PREF_HOURLY_RATE = "hourly rate";
+    private const string PREF_EARNED_WAGES = "earned wages";
+    private const string PREF_CURRENT_LEVEL = "current level";
 
-	public float potentialWages(float timeWorked) {
-		Debug.Log("TIME WORKED: " + timeWorked);
-		return hourlyRate * timeWorked;
-	}
+    // ----------------------------
+    // Static API (scene-independent)
+    // ----------------------------
 
-	public float addWages(float timeWorked) {
-		float earnedWages = PlayerPrefs.GetFloat("earned wages",0);
-		Debug.Log("Earned Wages Before: " + earnedWages);
+    public static float GetHourlyRate() => PlayerPrefs.GetFloat(PREF_HOURLY_RATE, 8.05f);
 
-		float daysWage = potentialWages(timeWorked);
-		earnedWages += daysWage;
-		PlayerPrefs.SetFloat("earned wages", earnedWages);
-		Debug.Log("Earned Wages Now " + earnedWages);
-		return daysWage;
-	}
+    public static float GetMoney() => PlayerPrefs.GetFloat(PREF_MONEY, 0f);
 
-	public void cateringEvent() {
-		PlayerPrefs.SetInt("catering",1);
-	}
+    public static void SetMoney(float value)
+    {
+        PlayerPrefs.SetFloat(PREF_MONEY, value);
+        PlayerPrefs.Save();
+    }
 
+    public static int GetPills() => PlayerPrefs.GetInt(PREF_PILLS, 0);
 
+    public static void SetPills(int value)
+    {
+        PlayerPrefs.SetInt(PREF_PILLS, value);
+        PlayerPrefs.Save();
+    }
 
+    public static float PotentialWagesHours(float hoursWorked) => GetHourlyRate() * hoursWorked;
 
+    /// <summary>
+    /// Adds to "earned wages" (paycheck accumulator). ReturnHomeScript cashes this out.
+    /// </summary>
+    public static float AddWagesHours(float hoursWorked)
+    {
+        float earnedWages = PlayerPrefs.GetFloat(PREF_EARNED_WAGES, 0f);
+        float dayWage = PotentialWagesHours(hoursWorked);
 
+        earnedWages += dayWage;
+        PlayerPrefs.SetFloat(PREF_EARNED_WAGES, earnedWages);
+        PlayerPrefs.Save();
 
+        return dayWage;
+    }
 
-	void Start() {
-		//checks if values need to be reset
-		resetData();
-		hourlyRate = PlayerPrefs.GetFloat("hourly rate", 8.05f);
+    public static void SetCateringEventFlag()
+    {
+        PlayerPrefs.SetInt("catering", 1);
+        PlayerPrefs.Save();
+    }
 
-		if (PlayerPrefs.HasKey("pills")) {
-			pills = PlayerPrefs.GetInt("pills");
-		}
-		else {
-			PlayerPrefs.SetInt("pills", 0);
-			pills = 0;
-		}
+    // ----------------------------
+    // Instance (UI view + legacy)
+    // ----------------------------
 
-	
-		if (PlayerPrefs.HasKey("money")) {
-			money = PlayerPrefs.GetFloat ("money");
-		}
-		else {
-			PlayerPrefs.SetFloat("money", money);
-		}
+    private void Start()
+    {
+        EnsureDefaultsExist();
 
-		if (moneyUI) {
-			moneyUI.text = "$" + money.ToString("0");
-			Debug.Log("Set Money");
-			Debug.Log("Money: " + money);
-		}
+        // Your legacy debug reset behavior
+        if (!PlayerPrefs.HasKey(PREF_CURRENT_LEVEL) || reset)
+        {
+            // Reset player data (health + money)
+            CustomFunctionScript.resetPlayerData(60, GetMoney());
+            PlayerPrefs.Save();
+        }
 
-		if (pillsUI) {
-			pillsUI.text = pills.ToString();
-		}
+        RefreshUI();
+    }
 
-	}
+    private void OnEnable()
+    {
+        RefreshUI();
+    }
 
+    private void EnsureDefaultsExist()
+    {
+        if (!PlayerPrefs.HasKey(PREF_PILLS))
+            PlayerPrefs.SetInt(PREF_PILLS, 0);
 
+        if (!PlayerPrefs.HasKey(PREF_MONEY))
+            PlayerPrefs.SetFloat(PREF_MONEY, 0f);
 
+        PlayerPrefs.Save();
+    }
+
+    public void RefreshUI()
+    {
+        if (moneyUI) moneyUI.text = "$" + GetMoney().ToString("0");
+        if (pillsUI) pillsUI.text = GetPills().ToString();
+    }
+
+    // Preserve your existing instance method signatures (so old scripts don't break):
+    public float potentialWages(float timeWorkedHours) => PotentialWagesHours(timeWorkedHours);
+    public float addWages(float timeWorkedHours) => AddWagesHours(timeWorkedHours);
+    public void cateringEvent() => SetCateringEventFlag();
 }

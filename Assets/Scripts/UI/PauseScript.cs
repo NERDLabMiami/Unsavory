@@ -16,15 +16,6 @@ public class PauseScript : MonoBehaviour {
 
 	public void pause() {
 		if (!isPaused) {
-			/*
-			if (gameElements != null) {
-				foreach(BoxCollider2D child in gameElements.GetComponentsInChildren<BoxCollider2D>()) {
-//					child.enabled = false;
-				}
-
-			}
-
-			*/
 			Camera.main.GetComponent<AudioSource>().Pause();
 			Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 			GetComponentInParent<TimerScript>().running = false;
@@ -35,14 +26,6 @@ public class PauseScript : MonoBehaviour {
 			pauseButton.image.sprite = playImage;
 		}
 		else {
-			/*
-			if (gameElements != null) {
-				foreach(BoxCollider2D child in gameElements.GetComponentsInChildren<BoxCollider2D>()) {
-//					child.enabled = true;
-				}
-
-		}
-*/
 			pauseButton.image.sprite = pauseImage;
 			Debug.Log("Resuming");
 			music.unpause();
@@ -52,6 +35,8 @@ public class PauseScript : MonoBehaviour {
 			Time.timeScale = 1.0f;
 			isPaused = false;
 			pausedCanvas.SetActive(false);
+			// "Pause Panel Pop" locks the gate; the matching "out" clip never plays because the panel is just deactivated.
+			if (GameplayGate.Instance != null) GameplayGate.Instance.Unlock("AnimationFunctions");
 		}
 
 
@@ -61,6 +46,16 @@ public class PauseScript : MonoBehaviour {
 	if (!isPaused && gamePlayStarted) {
 			clock.text = GetComponent<TimerScript>().getClock();
 		}
+
+		var input = GameInput.Instance;
+		if (input == null) return;
+
+		// Start / Esc / P toggles pause; while paused, Cancel (B / Esc) also resumes.
+		// One pause() call per frame so Esc (bound to both) can't resume and re-pause.
+		// Pausing is only allowed when the HUD pause button is (not during tutorial/countdown) and no modal is up.
+		bool canPause = gamePlayStarted && pauseButton != null && pauseButton.enabled && !ModalFocus.HasFocus;
+		if (isPaused ? (input.PausePressed || input.CancelPressed) : (input.PausePressed && canPause))
+			pause();
 	}
 
 }

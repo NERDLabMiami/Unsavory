@@ -2,34 +2,20 @@
 using System.Collections;
 using UnityEngine.UI;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 
 public class SceneLoader : MonoBehaviour {
 	private int sceneNumber;
 	private static AsyncOperation ao = null;
-
-	void Update() {
-		if (ao != null) {
-//			Debug.Log("Progress: " + ao.progress);
-		}
-	}
-	private IEnumerator LoadALevel(int level) {
-		ao = Application.LoadLevelAsync (level);
-       
-		Debug.Log("Loading level...");
-		yield return ao;
-	}
+	
 
 	public void goHome() {
-		Application.LoadLevel(2);
+		SceneManager.LoadScene("Home");
 	}
-	public void mainMenu() {
-		Application.LoadLevel(0);
-	}
-
-
-	public void newScene() {
-		Application.LoadLevel(sceneNumber);
+	public void mainMenu()
+	{
+		SceneManager.LoadScene("MainMenu");
 	}
 
 	public void startCatering() {
@@ -38,7 +24,7 @@ public class SceneLoader : MonoBehaviour {
 		timesPlayed++;
 		PlayerPrefs.SetInt("times played", timesPlayed);
 		sceneNumber = 1;
-		ao = Application.LoadLevelAsync(sceneNumber);
+		SceneManager.LoadScene("Game");
 	}
 
 	public void restartLevel() {
@@ -46,27 +32,15 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void RestartGame() {
-		/*
-		if (Social.localUser.authenticated) {
-				Social.ReportProgress( Achievements.WIPED, 100f, (result) => {
-					Debug.Log ( result ? "Reported Wiped" : "Failed to report achievement wiped");
-				});
-			}
-*/
-		Camera.main.gameObject.GetComponent<Animator>().SetTrigger("fade out");
 		string resume = PlayerPrefs.GetString("resume game");
 		PlayerPrefs.DeleteKey("catering");
 		Debug.Log("Restart Game Run");
 		if (resume.Equals("home")) {
-			sceneNumber = 2;
-
+			SceneManager.LoadScene("Home");
 		}
-
 		else {
-			sceneNumber = 1;
+			SceneManager.LoadScene("Game");
 		}
-		Debug.Log("Loading Level " + sceneNumber);
-		ao = Application.LoadLevelAsync(sceneNumber);
 
 	}
 
@@ -125,21 +99,17 @@ public class SceneLoader : MonoBehaviour {
 
 	public void QuitInGame() {
 		PlayerPrefs.SetString("resume game", "game");
-		setSceneNumber(0);
-		newScene();
-
+		PlayerPrefs.Save();
+		SceneManager.LoadScene("MainMenu");
 	}
 	
 	public void QuitAtHome() {
 		PlayerPrefs.SetString("resume game", "home");
-		setSceneNumber(0);
-		newScene();
-	}
+		PlayerPrefs.Save();
+		SceneManager.LoadScene("MainMenu");
 
-	public void setSceneNumber(int sceneNum) {
-		sceneNumber = sceneNum;
 	}
-
+	
 	public void setEndless(bool endless) {
 		if (endless) {
 			PlayerPrefs.SetInt("endless", 1);

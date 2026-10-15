@@ -9,6 +9,9 @@ public class CurrentOrderScript : MonoBehaviour {
 	public TimerScript levelTimer;
 	public PlateScript plate;
 	public Level level;
+	public OrderQueueLayout2D layout;
+	private readonly List<GameObject> activeOrders = new List<GameObject>();
+
 
 	public GameObject spawningGround;
 
@@ -26,6 +29,8 @@ public class CurrentOrderScript : MonoBehaviour {
 
 	private string levelData;
 	private float timeBetweenOrders = 3;
+	[Tooltip("Scales the per-level 'waiting time' from levels.txt (1 = as authored). One shared timer covers the front order.")]
+	public float waitingTimeMultiplier = 3f;
 	private float orderTimer;
 
 	//	private bool catering = false;
@@ -76,7 +81,12 @@ public class CurrentOrderScript : MonoBehaviour {
 //			Debug.Log(numberOfRecipes + " Recipes Loaded");
 		}
 	}
-
+	public void RemoveOrderAfterAnim(GameObject order, float seconds = 0.4f)
+	{
+		if (order == null) return;
+		activeOrders.Remove(order);
+		Destroy(order, seconds);
+	}
 	public void incrementRecipeList() {
 		switch(cateringRecipeAmount) {
 		case 1:
@@ -296,88 +306,183 @@ public class CurrentOrderScript : MonoBehaviour {
 			break;
 		}
 	}
-	
+	void Update()
+{
+    // Keep the queue clean
+    PruneNullOrders();
+    if (Time.frameCount % 60 == 0)
+    {
+	    var c = Camera.main;
+	    if (c)
+	    {
+		    var left  = c.ViewportToWorldPoint(new Vector3(0f, 0.5f, 0f)).x;
+		    var right = c.ViewportToWorldPoint(new Vector3(1f, 0.5f, 0f)).x;
+		    var top   = c.ViewportToWorldPoint(new Vector3(0.5f, 1f, 0f)).y;
+		    var bot   = c.ViewportToWorldPoint(new Vector3(0.5f, 0f, 0f)).y;
 
-	// Update is called once per frame
-	void Update () {
-		if (timeTrial) {
-			GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
-			//TOO MANY ORDERS ON THE SCREEN
-			if (current_recipes.Length > maximumNumberOfBackedUpOrders && spawnMoreOrders && levelTimer.running) {
-				spawnMoreOrders = false;
-				if (levelTimer.catering) {
-					level.EndCatering(true);
-				}
-				else {
-					//Pay player for time worked
-					level.setTimeWorked(levelTimer.getTimeWorked());
-//					player.addWages( levelTimer.getTimeWorked());
-					level.EndOfLevel(false, false);
+		    Debug.Log($"[Cam] L={left:F2} R={right:F2} B={bot:F2} T={top:F2} camPos={c.transform.position}");
+	    }
 
-				}
-			}
-		}
-		else if(levelTimer.running){
-			orderTimer -= Time.deltaTime;
-			if (orderTimer < .5 && !orderTimerAlert) {
-				orderTimerAlert = true;
-				GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
-				current_recipes[0].GetComponent<Animator>().SetTrigger("alert");
-			}
+	    if (spawningGround)
+		    Debug.Log($"[SpawnGround] world={spawningGround.transform.position}");
+    }
 
-			if (orderTimer <= 0) {
-				Debug.Log("Number of Unmatched Orders: " + numberOfUnmatchedOrders);
-				GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
-				current_recipes[0].GetComponent<Animator>().SetTrigger("unmatched");
+    // Always layout while the level is active (or even always; your choice)
+    if (layout != null)
+        layout.Layout(activeOrders);
 
-				if (warningTimer <= Time.time + 2f) {
-					numberOfUnmatchedOrders++;
-					plate.playerWarning(numberOfUnmatchedOrders);
-					warningTimer = Time.time;
-					GameObject[] foodOnTheTable = GameObject.FindGameObjectsWithTag("Ingredient");
-					for(int j = 0; j < foodOnTheTable.Length; j++) {
-							foodOnTheTable[j].GetComponent<Animator>().SetTrigger("mismatch");
-						}
-					plate.ingredients.Clear();
-				}
-					
+    if (timeTrial)
+    {
+        // TOO MANY ORDERS ON THE SCREEN
+        if (activeOrders.Count > maximumNumberOfBackedUpOrders && spawnMoreOrders && levelTimer.running) {
+            spawnMoreOrders = false;
+	        // Pay player for time worked
+	        level.setTimeWorked(levelTimer.getTimeWorked());
+	        level.EndOfLevel(false, false);
+        }
+        return;
+    }
 
-				newOrder(null,orderTimer);
-			}
+    if (!levelTimer.running)
+        return;
 
-			if (numberOfUnmatchedOrders >= maxNumberOfUnmatchedOrders && !levelTimer.catering) {
-				levelTimer.running = false;
-				level.setTimeWorked(levelTimer.getTimeWorked());
-				level.EndOfLevel(false,false);
+    orderTimer -= Time.deltaTime;
 
-			}
+    // Alert the FRONT order when time is low
+    if (orderTimer < .5f && !orderTimerAlert)
+    {
+        orderTimerAlert = true;
+        var front = FrontOrderOrNull();
+        if (front != null)
+            front.GetComponent<Animator>().SetTrigger("alert");
+    }
 
-			if (numberOfUnmatchedOrders >= maxNumberOfUnmatchedOrders && levelTimer.catering) {
-				levelTimer.running = false;
-				level.EndCatering(true);
-			}
+    // Timer expired: front order becomes unmatched, then we spawn a new one
+    if (orderTimer <= 0f)
+    {
+        Debug.Log("Number of Unmatched Orders: " + numberOfUnmatchedOrders);
 
+        var front = FrontOrderOrNull();
+        if (front != null)
+            front.GetComponent<Animator>().SetTrigger("unmatched");
 
+        // Remove it from the queue immediately so the next becomes the "front"
+        RemoveFrontOrder();
 
-		}
+        if (warningTimer <= Time.time + 2f)
+        {
+            numberOfUnmatchedOrders++;
+            plate.playerWarning(numberOfUnmatchedOrders);
+            warningTimer = Time.time;
+        }
+
+        // The next order starts from a fresh plate with its tortilla.
+        plate.ResetPlate(false);
+
+        newOrder(null, orderTimer);
+    }
+
+    // Fail conditions
+    if (numberOfUnmatchedOrders >= maxNumberOfUnmatchedOrders)
+    {
+        levelTimer.running = false;
+        level.setTimeWorked(levelTimer.getTimeWorked());
+        level.EndOfLevel(false, false);
+    }
+
+}
+
+	private void PruneNullOrders()
+	{
+		activeOrders.RemoveAll(o => o == null);
 	}
 
-	public void newOrder(GameObject order = null, float timeBonus = 0) {
-		orderTimerAlert = false;
-		Debug.Log("New Order");
-		GameObject newRecipe;
-		if (order != null) {
-			 newRecipe =(GameObject) Instantiate(order, gameObject.transform.position, Quaternion.identity);
-		}
-		else {
-			newRecipe =(GameObject) Instantiate(recipes[Random.Range (0, recipes.Count)], gameObject.transform.position, Quaternion.identity);
-
-		}
-		newRecipe.transform.parent = spawningGround.transform;
-		orderTimer = timeBetweenOrders + timeBonus;
-		Debug.Log("Order Timer is Now: " + orderTimer);
-
+	private GameObject FrontOrderOrNull()
+	{
+		PruneNullOrders();
+		return (activeOrders.Count > 0) ? activeOrders[0] : null;
 	}
+
+	private void RemoveFrontOrder()
+	{
+		PruneNullOrders();
+		if (activeOrders.Count > 0)
+			activeOrders.RemoveAt(0);
+	}
+
+public void newOrder(GameObject order = null, float timeBonus = 0f)
+{
+    orderTimerAlert = false;
+
+    if (order == null && recipes.Count == 0)
+    {
+        Debug.LogError("[CurrentOrderScript] recipes is empty, so no order can be created (check 'current level' and levels.txt).");
+        return;
+    }
+
+    // Pick prefab
+    GameObject prefab = (order != null)
+        ? order
+        : recipes[Random.Range(0, recipes.Count)];
+
+    // Decide spawn position FIRST (world)
+    Vector3 spawnWorld = gameObject.transform.position; // fallback
+
+    if (layout != null)
+    {
+        // Offscreen right spawn computed by layout
+        spawnWorld = layout.OffscreenRightWorld;
+
+        // Force lane Y to match spawning ground (world)
+        if (spawningGround != null)
+            spawnWorld.y = spawningGround.transform.position.y;
+
+        spawnWorld.z = 0f;
+    }
+    else
+    {
+        var c = Camera.main;
+        if (c != null)
+        {
+            // Spawn beyond right edge
+            Vector3 rightEdge = c.ViewportToWorldPoint(new Vector3(1f, 0.5f, 0f));
+            spawnWorld = rightEdge;
+            spawnWorld.x += 2f;
+
+            if (spawningGround != null)
+                spawnWorld.y = spawningGround.transform.position.y;
+
+            spawnWorld.z = 0f;
+        }
+    }
+
+    // Instantiate AT spawnWorld (so no “snap” from parenting/local space)
+    GameObject newRecipe = (GameObject)Instantiate(prefab, spawnWorld, Quaternion.identity);
+    Debug.Log($"spawnGround world={spawningGround.transform.position} | recipe world={newRecipe.transform.position} | recipe local={newRecipe.transform.localPosition}");
+
+    // Parent AFTER setting world pos, preserving world space
+    if (spawningGround != null)
+        newRecipe.transform.SetParent(spawningGround.transform, true);
+
+    // Spawn-in lockout so layout doesn’t immediately yank it (visual)
+    var spawnIn = newRecipe.GetComponent<OrderSpawnIn>();
+    if (spawnIn == null) spawnIn = newRecipe.AddComponent<OrderSpawnIn>();
+    spawnIn.lockoutSeconds = 0.25f;
+
+    // Timer bookkeeping
+    orderTimer = (timeBetweenOrders * waitingTimeMultiplier) + timeBonus;
+    Debug.Log("Order Timer is Now: " + orderTimer);
+
+    // Track order in deterministic queue
+    activeOrders.Add(newRecipe);
+    var camMain = Camera.main;
+    Debug.Log($"[Order] spawned {prefab.name} at {newRecipe.transform.position}, slot {(layout != null ? layout.FrontSlotWorld.ToString() : "none")}, " +
+        $"viewport {(camMain ? camMain.WorldToViewportPoint(newRecipe.transform.position).ToString() : "no camera")}, queue={activeOrders.Count}");
+    StartCoroutine(DebugOrderPos(newRecipe));
+
+    // Optional: immediate sanity log (world vs local)
+    // Debug.Log($"[Order] spawnWorld={spawnWorld} parentWorldX={(spawningGround?spawningGround.transform.position.x:0)} newWorld={newRecipe.transform.position} newLocal={newRecipe.transform.localPosition}");
+}
 
 	public void Spawn() {
 		if (spawnMoreOrders) {
@@ -387,6 +492,33 @@ public class CurrentOrderScript : MonoBehaviour {
 
 		Invoke("Spawn", timeBetweenOrders);
 
+	}
+	public List<GameObject> GetActiveOrdersUnsafe()  // quick + dirty for now
+	{
+		return activeOrders;
+	}
+	IEnumerator DebugOrderPos(GameObject o)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (!o) yield break;
+			var sr = o.GetComponentInChildren<SpriteRenderer>();
+			var cam = Camera.main;
+			Debug.Log($"[OrderPos] {i} world={o.transform.position} local={o.transform.localPosition} " +
+				$"parentActive={(o.transform.parent ? o.transform.parent.gameObject.activeInHierarchy.ToString() : "none")} " +
+				$"renderer={(sr ? sr.enabled + "/order" + sr.sortingOrder : "none")} " +
+				$"viewport={(cam ? cam.WorldToViewportPoint(o.transform.position).ToString() : "no camera")} " +
+				$"orders={activeOrders.Count} timeScale={Time.timeScale}");
+			yield return null;
+		}
+	}
+
+
+	public void RemoveOrder(GameObject order)
+	{
+		if (order == null) return;
+		activeOrders.Remove(order);
+		Destroy(order); // or Destroy(order, 0.25f) if you want animations to play first
 	}
 
 }
