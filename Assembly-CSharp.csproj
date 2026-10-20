@@ -53,88 +53,116 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/ModalGateLock.cs" />
     <Compile Include="Assets/Scripts/Routines/Level.cs" />
-    <Compile Include="Assets/Scripts/OrderSpawnIn.cs" />
     <Compile Include="Assets/Scripts/Gameplay/SneezeTutor.cs" />
-    <Compile Include="Assets/Scripts/UI/NewsletterScript.cs" />
     <Compile Include="Assets/Scripts/Routines/CustomFunctionScript.cs" />
-    <Compile Include="Assets/Scripts/Loading/ReadySetGo.cs" />
     <Compile Include="Assets/Scripts/Gameplay/IngredientTutor.cs" />
-    <Compile Include="Assets/Scripts/ShiftEndReporter.cs" />
     <Compile Include="Assets/Scripts/UI/SlacktivistMachine.cs" />
-    <Compile Include="Assets/Scripts/MainMenuController.cs" />
-    <Compile Include="Assets/Scripts/Loading/SocialInit.cs" />
-    <Compile Include="Assets/Scripts/Routines/ShiftCompleteScript.cs" />
-    <Compile Include="Assets/Scripts/FailedShift.cs" />
-    <Compile Include="Assets/Scripts/BillsState.cs" />
-    <Compile Include="Assets/Scripts/UI/ConfirmPanel.cs" />
-    <Compile Include="Assets/Scripts/Input/GameInput.cs" />
+    <Compile Include="Assets/Scripts/ShiftEndReporter.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/TutorModal.cs" />
+    <Compile Include="Assets/Scripts/UI/PhoneScrollList.cs" />
+    <Compile Include="Assets/Scripts/Camera/CameraDirector.cs" />
     <Compile Include="Assets/Scripts/UnityAnalyticsIntegration.cs" />
-    <Compile Include="Assets/Scripts/Input/WorldInputRouter2D.cs" />
-    <Compile Include="Assets/Scripts/UI/PauseScript.cs" />
+    <Compile Include="Assets/Scripts/UI/ScrollIntoViewOnSelect.cs" />
     <Compile Include="Assets/Scripts/UI/StandardMenu.cs" />
     <Compile Include="Assets/Scripts/Loading/PlayerScript.cs" />
     <Compile Include="Assets/Scripts/HomeController.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/TraySet.cs" />
     <Compile Include="Assets/Scripts/Loading/SceneLoader.cs" />
     <Compile Include="Assets/Scripts/Input/IWorldInteractable.cs" />
-    <Compile Include="Assets/Scripts/CareerFlowManager.cs" />
-    <Compile Include="Assets/Scripts/HomeToast.cs" />
-    <Compile Include="Assets/Scripts/FruitBowl.cs" />
     <Compile Include="Assets/Scripts/EvaluationGroup.cs" />
     <Compile Include="Assets/Scripts/UI/BillScript.cs" />
-    <Compile Include="Assets/Scripts/Loading/ReturnHomeScript.cs" />
-    <Compile Include="Assets/Scripts/UI/BillPanelScript.cs" />
-    <Compile Include="Assets/Scripts/Loading/StartCareer.cs" />
-    <Compile Include="Assets/Scripts/Routines/AnimationFunctions.cs" />
     <Compile Include="Assets/Scripts/GameplayGate.cs" />
     <Compile Include="Assets/Scripts/Gameplay/TutorScript.cs" />
-    <Compile Include="Assets/Scripts/UI/Tweet.cs" />
-    <Compile Include="Assets/Scripts/UI/SwipeScene.cs" />
+    <Compile Include="Assets/Scripts/Tween/NoseAnim.cs" />
     <Compile Include="Assets/Scripts/Routines/TutorialComplete.cs" />
     <Compile Include="Assets/Scripts/UI/MoneyTextBinder.cs" />
     <Compile Include="Assets/Scripts/Gameplay/Catering.cs" />
-    <Compile Include="Assets/Scripts/Gameplay/IngredientGridSelector.cs" />
+    <Compile Include="Assets/Scripts/UI/BillSelectionRelay.cs" />
     <Compile Include="Assets/Scripts/Tween/Tween.cs" />
-    <Compile Include="Assets/Scripts/OrderQueueLayout2D.cs" />
-    <Compile Include="Assets/Scripts/Input/ModalFocus.cs" />
-    <Compile Include="Assets/Scripts/PlayerState.cs" />
-    <Compile Include="Assets/Scripts/Gameplay/CurrentOrderScript.cs" />
     <Compile Include="Assets/Scripts/Gameplay/PlateScript.cs" />
     <Compile Include="Assets/Scripts/Routines/Achievements.cs" />
-    <Compile Include="Assets/Scripts/Routines/DebugScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/ScalePanelAnim.cs" />
     <Compile Include="Assets/Scripts/UI/PillsTextBinder.cs" />
-    <Compile Include="Assets/Scripts/Electricity.cs" />
     <Compile Include="Assets/Scripts/Input/VirtualCursor.cs" />
     <Compile Include="Assets/Scripts/Routines/BackgroundSoundDefaults.cs" />
     <Compile Include="Assets/Scripts/Gameplay/SneezeScript.cs" />
     <Compile Include="Assets/Scripts/HomeInteractable.cs" />
     <Compile Include="Assets/Scripts/Routines/SocialFeatures.cs" />
-    <Compile Include="Assets/Scripts/UI/TacoBar.cs" />
     <Compile Include="Assets/Scripts/Messaging/FactScript.cs" />
+    <Compile Include="Assets/Scripts/Loading/WorkScript.cs" />
+    <Compile Include="Assets/Scripts/Routines/MusicLibrary.cs" />
+    <Compile Include="Assets/Scripts/Tween/WarningPanelAnim.cs" />
+    <Compile Include="Assets/Scripts/Tween/IngredientAnim.cs" />
+    <Compile Include="Assets/Scripts/Messaging/CharacterDialog.cs" />
+    <Compile Include="Assets/Scripts/Camera/CameraShakeScript.cs" />
+    <Compile Include="Assets/Scripts/UI/BuyDrugsScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/ComboTextAnim.cs" />
+    <Compile Include="Assets/Scripts/Routines/Settings.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/AddIngredientScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/PopTuning.cs" />
+    <Compile Include="Assets/Scripts/Tween/CountdownWordAnim.cs" />
+    <Compile Include="Assets/Scripts/UI/CreditSequenceScript.cs" />
+    <Compile Include="Assets/Scripts/UI/NewsletterScript.cs" />
+    <Compile Include="Assets/Scripts/UI/PhoneController.cs" />
+    <Compile Include="Assets/Scripts/Camera/KitchenStage.cs" />
+    <Compile Include="Assets/Scripts/Loading/ReadySetGo.cs" />
+    <Compile Include="Assets/Scripts/MainMenuController.cs" />
+    <Compile Include="Assets/Scripts/Loading/SocialInit.cs" />
+    <Compile Include="Assets/Scripts/Routines/ShiftCompleteScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/AnimUtil.cs" />
+    <Compile Include="Assets/Scripts/FailedShift.cs" />
+    <Compile Include="Assets/Scripts/BillsState.cs" />
+    <Compile Include="Assets/Scripts/UI/ConfirmPanel.cs" />
+    <Compile Include="Assets/Scripts/Input/GameInput.cs" />
+    <Compile Include="Assets/Scripts/Input/WorldInputRouter2D.cs" />
+    <Compile Include="Assets/Scripts/UI/PauseScript.cs" />
+    <Compile Include="Assets/Scripts/CareerFlowManager.cs" />
+    <Compile Include="Assets/Scripts/HomeToast.cs" />
+    <Compile Include="Assets/Scripts/FruitBowl.cs" />
+    <Compile Include="Assets/Scripts/Input/IHoverable.cs" />
+    <Compile Include="Assets/Scripts/Loading/ReturnHomeScript.cs" />
+    <Compile Include="Assets/Scripts/UI/BillPanelScript.cs" />
+    <Compile Include="Assets/Scripts/Loading/StartCareer.cs" />
+    <Compile Include="Assets/Scripts/Routines/AnimationFunctions.cs" />
+    <Compile Include="Assets/Scripts/Tween/SnotAnim.cs" />
+    <Compile Include="Assets/Scripts/UI/Tweet.cs" />
+    <Compile Include="Assets/Scripts/UI/SwipeScene.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/IngredientGridSelector.cs" />
+    <Compile Include="Assets/Scripts/OrderQueueLayout2D.cs" />
+    <Compile Include="Assets/Scripts/Input/ModalFocus.cs" />
+    <Compile Include="Assets/Scripts/Messaging/DialogueContext.cs" />
+    <Compile Include="Assets/Scripts/PlayerState.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/CurrentOrderScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/PanelPopAnim.cs" />
+    <Compile Include="Assets/Scripts/Routines/DebugScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/TacoAnim.cs" />
+    <Compile Include="Assets/Scripts/Electricity.cs" />
     <Compile Include="Assets/Scripts/Gameplay/RecipeScript.cs" />
     <Compile Include="Assets/Scripts/Loading/SoundEffectDefaults.cs" />
     <Compile Include="Assets/Scripts/Camera/CameraSequencing.cs" />
-    <Compile Include="Assets/Scripts/Loading/WorkScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/IngredientFeedback.cs" />
+    <Compile Include="Assets/Scripts/UI/PhoneMessageRow.cs" />
     <Compile Include="Assets/Scripts/BillsSignals.cs" />
-    <Compile Include="Assets/Scripts/Routines/MusicLibrary.cs" />
     <Compile Include="Assets/Scripts/Routines/ProgressScript.cs" />
-    <Compile Include="Assets/Scripts/Messaging/CharacterDialog.cs" />
+    <Compile Include="Assets/Scripts/Gameplay/HandPoseController.cs" />
     <Compile Include="Assets/Scripts/PlayerSignals.cs" />
-    <Compile Include="Assets/Scripts/Camera/CameraShakeScript.cs" />
-    <Compile Include="Assets/Scripts/UI/BuyDrugsScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/RecipeAnim.cs" />
     <Compile Include="Assets/Scripts/Gameplay/TortillaFoundation.cs" />
     <Compile Include="Assets/Scripts/Gameplay/TimerScript.cs" />
-    <Compile Include="Assets/Scripts/Routines/Settings.cs" />
-    <Compile Include="Assets/Scripts/Gameplay/AddIngredientScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/HudAnim.cs" />
     <Compile Include="Assets/Scripts/Gameplay/NoseWipeScript.cs" />
     <Compile Include="Assets/Scripts/Routines/TutorialRecipe.cs" />
     <Compile Include="Assets/Scripts/Routines/PaidSickDayScript.cs" />
-    <Compile Include="Assets/Scripts/UI/CreditSequenceScript.cs" />
+    <Compile Include="Assets/Scripts/Tween/BossPanelAnim.cs" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-mn-rMN/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-fi/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-da/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/wallet_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-hy-rAM/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-pl/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ja/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/wallet_styles.xml" />
     <None Include="Assets/Resources/gestures.xml" />
@@ -143,6 +171,7 @@
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-hr/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-es-rUS/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-el/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/Resources/bills.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/wallet_colors.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ru/common_strings.xml" />
@@ -152,7 +181,9 @@
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-sl/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-et-rEE/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ms-rMY/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-sw/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-fr/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-it/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/drawable/common_signin_btn_text_dark.xml" />
@@ -161,6 +192,8 @@
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-fr-rCA/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-lv/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/wallet_attrs.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SpaceWarp.shader" />
     <None Include="Assets/Resources/tweets.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-bg/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/drawable/common_signin_btn_icon_light.xml" />
@@ -169,7 +202,9 @@
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-fa/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/README.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/color/wallet_primary_text_holo_light.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" />
     <None Include="Assets/Resources/cola.json" />
+    <None Include="Assets/Resources/mail.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/version.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-pt-rBR/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ca/common_strings.xml" />
@@ -177,18 +212,28 @@
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-vi/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-iw/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ar/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-nb/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-hu/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-sk/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-zh-rTW/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-cs/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-pt/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-pt-rPT/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/proguard.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-tr/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/color/wallet_secondary_text_holo_dark.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SpaceWarp.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/admob_iap_style.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-nl/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
+    <None Include="Assets/Sprites/unsavory_email_ui_layers/layout.json" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-km-rKH/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-de/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/drawable/common_signin_btn_text_light.xml" />
@@ -197,6 +242,8 @@
     <None Include="Assets/Resources/levels.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-be/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ro/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD SpaceWarp.shader" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/drawable/common_signin_btn_icon_dark.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-sv/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-ka-rGE/common_strings.xml" />
@@ -209,13 +256,19 @@
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-sr/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-es/wallet_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-en-rGB/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values/admob_ads_attrs.xml" />
+    <None Include="Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-hi/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-af/common_strings.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-en-rIN/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/values-in/common_strings.xml" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-billing-services/amazon/amazon.sdktester.json" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD SpaceWarp.shader" />
     <None Include="Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google/google-play-services_lib/res/color/common_signin_btn_text_light.xml" />
+    <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/Unity.app/Contents/Resources/Scripting/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -678,8 +731,14 @@
     <Reference Include="UnityEditor.XRModule">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/Unity.app/Contents/Resources/Scripting/Managed/UnityEngine/UnityEditor.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.collections@10fff0607388/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.ext.nunit@0198eae3b53e/net472/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.nuget.mono-cecil@ecb9724e46ff/Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/PlaybackEngines/MacStandaloneSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -1089,14 +1148,8 @@
     <Reference Include="System.Text.Json">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/Unity.app/Contents/Resources/Scripting/BCLExtensions/TargetingPacks/netstandard2.1/ref/System.Text.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InternalAPIEngineBridge.004">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.004.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Multiplayer.Center.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
@@ -1107,23 +1160,98 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+    <Reference Include="Unity.Rendering.LightTransport.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InputSystem.ForUI.Editor">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.ForUI.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InputSystem">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Universal.2D.Editor.Overrides">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Editor.Overrides.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.PrivateJobNested">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.PrivateJobNested.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PathTracing.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.PathTracing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.RenderPipelines.Core.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.UnifiedRayTracing.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.UnifiedRayTracing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.PublicJobPrivateGeneric">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.PublicJobPrivateGeneric.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.ShaderGraph.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.GraphAuthoring.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.GraphAuthoring.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.ProtectedJobNested">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.ProtectedJobNested.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.SurfaceCache.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.SurfaceCache.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Profiling.Core">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Profiling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.ObjectDispatcher.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.ObjectDispatcher.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
@@ -1134,14 +1262,47 @@
     <Reference Include="Unity.Multiplayer.Center.Common">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AI.Navigation.Updater">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    <Reference Include="Unity.Burst">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.004">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.004.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Multiplayer.Center.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PathTracing.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.PathTracing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.RenderPipelines.Core.Runtime.Shared">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.InternalJobNestedPrivate">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.InternalJobNestedPrivate.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

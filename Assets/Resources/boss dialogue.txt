@@ -1,171 +1,580 @@
-{ 	
-   	"post_tutorial": [
-  ["Not bad. Customers are already lining up.", "Try to keep up. The clock starts now."],
-  ["Good. You learn fast.", "Don't get used to the praise. Get to work."]
-],
-"post_tutorial_response": [
-  ["Thanks, boss.", "I'm ready."],
-  ["Thank you.", "Let's do this."]
-],
-"weekend": [
-  ["Look at that. Weekend already. Your paycheck will be waiting at home."]
-],
-
-"weekend_response": [
-  ["Thanks."]
-]
-,
-"complete1": [
-  ["I thought you were sick. Guess I was wrong."],
-  ["You pushed through. I notice that."],
-  ["So you’re sticking around."]
-],
-
-"complete1_response": [
-  ["I’m fine."],
-  ["I’ll get the hang of this."],
-  ["I need the money."]
-],
-
-
-"complete2": [
-  ["You did alright today."],
-  ["See? If you were really sick, you couldn’t do that."]
-],
-
-"complete2_response": [
-  ["I know the routine."],
-  ["I can manage."]
-],
-
-"complete3": [
-  ["That’s real work right there."],
-  ["Most people would’ve quit by now."],
-  ["That’s the difference between commitment and excuses."]
-],
-
-"complete3_response": [
-  ["I guess."],
-  ["Someone has to show up."],
-  ["I do what I can."]
-],
-
-   	"catering":[ ["Are you ready to test your taco making skills?"] ],
-  	"catering_response": [ ["Bring it on!"] ],
-  	"catering_complete":[ ["Here's some extra cash"] ],
-  	"catering_complete_response": [ ["thanks"] ],
-  	"catering_finished": [ ["Good job"] ],
-  	"catering_finished_response": [ ["tacos forever!"] ],
-"welcome": [
-  ["You want a job?"],
-  ["I started at the bottom. Just like you."],
-  ["Difference is, I figured things out."],
-  ["Most people here don’t."],
-  ["This is where they stay."],
-  ["I didn't."],
-  ["That’s why I'm running this station."],
-  ["You’ll be on tacos."],
-  ["Simple work."],
-  ["I'm starting you at $8.05 an hour. Minimum wage."],
-  ["That's fair pay for this level."],
-  ["Margins are tight."],
-  ["No paid sick days."],
-  ["You look healthy to me."],
-  ["If you mess up, I allow three re-shifts."],
-  ["A re-shift starts the whole day over."],
-  ["Same work. Same hours."],
-  ["You only get paid once."],
-  ["I'm pretty generous like that."],
-  ["Run out of re-shifts, and you're fired."],
-  ["So. Think you can keep up?"]
-],
-"welcome_response": [
-  ["I really need one."],
-  ["Just like you?"],
-  ["What do you mean?"],
-  ["So people don't move up?"],
-  ["I'll work hard."],
-  ["You did?"],
-  ["I understand."],
-  ["I can handle tacos."],
-  ["Got it."],
-  ["That's pretty low..."],
-  ["I get it."],
-  ["I understand."],
-  ["What if I get sick?"],
-  ["I feel fine."],
-  ["Re-shifts?"],
-  ["The whole day?"],
-  ["So I redo everything?"],
-  ["Without pay?"],
-  ["Very."],
-  ["I’ll be careful."],
-  ["Yes."]
-],
-
-"return": [
-  ["The taco calls… and you answered."],
-  ["Rocket Taco runs on commitment."],
-  ["You keep showing up. That’s how teams are built."],
-  ["I respect workers who respect the taco."],
-  ["This place rewards consistency."],
-  ["Another day, another chance to prove yourself."],
-  ["I see I can’t keep you away."]
-],
-"return_response": [
-  ["I need the hours."],
-  ["I’m doing my part."],
-  ["I’m here."],
-  ["Very."],
-  ["I get it."],
-  ["I’ll do my best."],
-  ["That’s the plan."]
+{
+  "welcome": [
+    {
+      "lines": [
+        {
+          "text": "You're here for the WerkJerk training session?"
+        },
+        {
+          "who": "player",
+          "text": "Yeah."
+        },
+        {
+          "text": "Okay, let's see what you've got."
+        },
+        {
+          "who": "player",
+          "text": "I'm ready."
+        }
+      ]
+    }
   ],
-"late_return": [
-  ["The taco waits for no one."],
-  ["You’re late. That time comes out of your paycheck."],
-  ["Rocket Taco runs on schedules."],
-  ["Showing up late costs everyone."],
-  ["We start on time here."]
-],
-"late_return_response": [
-  ["I had car trouble."],
-  ["Understood."],
-  ["Won’t happen again."],
-  ["I know."],
-  ["Sorry."]
-]
-									
- "fired_sick": [["That doesn't belong in a taco! And you don't belong at Rocket Taco!"], ["Rocket Taco can’t afford sick workers."]],
- "fired_sick_response": [["The taco has deceived me!"], ["I can't afford it either..."]],  									
- "fired_slow":[["I trusted you with my station."]],
- "fired_slow_response":[["I guess the taco lied."]],
-    "slow": [
-      ["You knew this was hard work."],
-      ["I expect people to earn their pay here."],
-      ["If I keep sending you home, I’ll find someone who won’t waste my time."],
-      ["I should fire you."],
-      ["I’m giving you another chance."]
-    ],
-
-"slow_response": [
-  ["I’ll do better tomorrow."],
-  ["I understand."],
-  ["Please don’t."],
-  ["Thank you."],
-  ["I won’t mess up again."]
-]
-
-"sneeze_tip": [
-  ["Sneezing on the food? That’s not the Rocket Taco way."],
-  ["You swipe your nose when you feel it coming. Stops it most of the time."]
-],
-
-"sneeze_tip_response": [
-  ["That makes sense."],
-  ["I’ll try that."]
-],
-
-  "sneezed": [["If I see you sick on the job again, you're fired."]],
-  "sneezed_response": [	["It won't happen again."]]
- }
+  "post_tutorial": [
+    {
+      "lines": [
+        {
+          "text": "Wow! WerkJerk's algorithms really are something..."
+        },
+        {
+          "who": "player",
+          "text": "Their algorithm?"
+        },
+        {
+          "text": "Yeah!"
+        },
+        {
+          "text": "You wouldn't believe some of the people who I had to screen when we had that help wanted sign up in the window.",
+          "wait": 4
+        },
+        {
+          "who": "player",
+          "text": "I'm just happy to have a job."
+        },
+        {
+          "text": "Right.",
+          "wait": 4
+        },
+        {
+          "text": "What are you waiting for? Get to work."
+        }
+      ]
+    }
+  ],
+  "weekend": [
+    {
+      "lines": [
+        {
+          "text": "Look at that. Weekend already. Your paycheck will be waiting at home."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "Thanks."
+        }
+      ]
+    }
+  ],
+  "complete1": [
+    {
+      "lines": [
+        {
+          "text": "I thought you were sick. Guess I was wrong."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I’m fine."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "You pushed through. I notice that."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I’ll get the hang of this."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "So you’re sticking around."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I need the money."
+        }
+      ]
+    }
+  ],
+  "complete2": [
+    {
+      "lines": [
+        {
+          "text": "You did alright today."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I know the routine."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "See? If you were really sick, you couldn’t do that."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I can manage."
+        }
+      ]
+    }
+  ],
+  "complete3": [
+    {
+      "lines": [
+        {
+          "text": "That’s real work right there."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I guess."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "Most people would’ve quit by now."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "Someone has to show up."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "That’s the difference between commitment and excuses."
+        },
+        {
+          "text": "That's {wages} added to your next paycheck."
+        },
+        {
+          "who": "player",
+          "text": "I do what I can."
+        }
+      ]
+    }
+  ],
+  "catering": [
+    {
+      "lines": [
+        {
+          "text": "Are you ready to test your taco making skills?"
+        },
+        {
+          "who": "player",
+          "text": "Bring it on!"
+        }
+      ]
+    }
+  ],
+  "catering_complete": [
+    {
+      "lines": [
+        {
+          "text": "{orders} orders out. Here's {wages} extra."
+        },
+        {
+          "who": "player",
+          "text": "Thanks."
+        }
+      ]
+    }
+  ],
+  "return": [
+    {
+      "lines": [
+        {
+          "text": "The taco calls… and you answered."
+        },
+        {
+          "who": "player",
+          "text": "I need the hours."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "Rocket Taco runs on commitment."
+        },
+        {
+          "who": "player",
+          "text": "I’m doing my part."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "You keep showing up. That’s how teams are built."
+        },
+        {
+          "who": "player",
+          "text": "I’m here."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "I respect workers who respect the taco."
+        },
+        {
+          "who": "player",
+          "text": "Very."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "This place rewards consistency."
+        },
+        {
+          "who": "player",
+          "text": "I get it."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "Another day, another chance to prove yourself."
+        },
+        {
+          "who": "player",
+          "text": "I’ll do my best."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "I see I can’t keep you away."
+        },
+        {
+          "who": "player",
+          "text": "That’s the plan."
+        }
+      ]
+    }
+  ],
+  "late_return": [
+    {
+      "lines": [
+        {
+          "text": "The taco waits for no one."
+        },
+        {
+          "who": "player",
+          "text": "I had car trouble."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "You’re late. That time comes out of your paycheck."
+        },
+        {
+          "who": "player",
+          "text": "Understood."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "Rocket Taco runs on schedules."
+        },
+        {
+          "who": "player",
+          "text": "Won’t happen again."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "Showing up late costs everyone."
+        },
+        {
+          "who": "player",
+          "text": "I know."
+        }
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "We start on time here."
+        },
+        {
+          "who": "player",
+          "text": "Sorry."
+        }
+      ]
+    }
+  ],
+  "fired_sick": [
+    {
+      "lines": [
+        {
+          "text": "That doesn't belong in a taco! And you don't belong at Rocket Taco!"
+        },
+        {
+          "who": "player",
+          "text": "The taco has deceived me!"
+        },
+        {
+          "text": "Rocket Taco can’t afford sick workers."
+        },
+        {
+          "who": "player",
+          "text": "I can't afford it either..."
+        }
+      ]
+    }
+  ],
+  "fired_slow": [
+    {
+      "lines": [
+        {
+          "text": "I trusted you with my station."
+        },
+        {
+          "who": "player",
+          "text": "I guess the taco lied."
+        }
+      ]
+    }
+  ],
+  "slow": [
+    {
+      "lines": [
+        {
+          "text": "That's {wages} for today."
+        },
+        {
+          "text": "You knew this was hard work."
+        },
+        {
+          "who": "player",
+          "text": "I’ll do better tomorrow."
+        },
+        {
+          "text": "I expect people to earn their pay here."
+        },
+        {
+          "who": "player",
+          "text": "I understand."
+        },
+        {
+          "text": "If I keep sending you home, I’ll find someone who won’t waste my time."
+        },
+        {
+          "who": "player",
+          "text": "Please don’t."
+        },
+        {
+          "text": "I should fire you."
+        },
+        {
+          "who": "player",
+          "text": "Thank you."
+        },
+        {
+          "text": "I’m giving you another chance."
+        },
+        {
+          "who": "player",
+          "text": "I won’t mess up again."
+        }
+      ]
+    },
+    {
+      "when": {
+        "retries": ">0"
+      },
+      "lines": [
+        {
+          "text": "You couldn't keep up. Take {wages} and go home, or spend a retry and start the shift over."
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Try again ({retries} left)"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sneeze_tip": [
+    {
+      "lines": [
+        {
+          "text": "Sneezing on the food? That’s not the Rocket Taco way."
+        },
+        {
+          "who": "player",
+          "text": "That makes sense."
+        },
+        {
+          "text": "You swipe your nose when you feel it coming. Stops it most of the time."
+        },
+        {
+          "who": "player",
+          "text": "I’ll try that."
+        }
+      ]
+    }
+  ],
+  "sneezed": [
+    {
+      "lines": [
+        {
+          "text": "That's {wages} for today."
+        },
+        {
+          "text": "If I see you sick on the job again, you're fired."
+        },
+        {
+          "who": "player",
+          "text": "It won't happen again."
+        }
+      ]
+    },
+    {
+      "when": {
+        "retries": ">0"
+      },
+      "lines": [
+        {
+          "text": "You sneezed on the food. Take {wages} and go home, or spend a retry and start over?"
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Try again ({retries} left)"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "catering_slow": [
+    {
+      "lines": [
+        {
+          "text": "The orders piled up. Catering is not for you."
+        },
+        {
+          "who": "player",
+          "text": "Sorry."
+        }
+      ]
+    },
+    {
+      "when": {
+        "retries": ">0"
+      },
+      "lines": [
+        {
+          "text": "The orders piled up. Try again, or call it?"
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Try again ({retries} left)"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "catering_sick": [
+    {
+      "lines": [
+        {
+          "text": "You sneezed on a catering order. Out."
+        },
+        {
+          "who": "player",
+          "text": "Sorry."
+        }
+      ]
+    },
+    {
+      "when": {
+        "retries": ">0"
+      },
+      "lines": [
+        {
+          "text": "You sneezed on a catering order. Try again, or call it?"
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Try again ({retries} left)"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

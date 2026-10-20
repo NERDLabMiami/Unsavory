@@ -1,0 +1,380 @@
+{
+ "items": [
+  {
+   "file": "Kitchen",
+   "layer": "Artboard 1/Kitchen",
+   "x0": -1,
+   "y0": 0,
+   "x1": 1919,
+   "y1": 1080
+  },
+  {
+   "file": "prep-table",
+   "layer": "Artboard 1/Gameplay Area/table/prep-table",
+   "x0": 640,
+   "y0": 481,
+   "x1": 1659,
+   "y1": 1006
+  },
+  {
+   "file": "filled_out_order",
+   "layer": "Artboard 1/Gameplay Area/orders/filled out order",
+   "x0": 1085,
+   "y0": 502,
+   "x1": 1150,
+   "y1": 665
+  },
+  {
+   "file": "order-checkbox-background_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/item/order-checkbox-background copy",
+   "x0": 1095,
+   "y0": 529,
+   "x1": 1106,
+   "y1": 541
+  },
+  {
+   "file": "order-ingredient-background-inactive_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/item/order-ingredient-background-inactive copy",
+   "x0": 1109,
+   "y0": 523,
+   "x1": 1134,
+   "y1": 547
+  },
+  {
+   "file": "order-ingredient-background",
+   "layer": "Artboard 1/Gameplay Area/orders/item/order-ingredient-background",
+   "x0": 1109,
+   "y0": 522,
+   "x1": 1134,
+   "y1": 547
+  },
+  {
+   "file": "order-ingredient-beans",
+   "layer": "Artboard 1/Gameplay Area/orders/item/order-ingredient-beans",
+   "x0": 1112,
+   "y0": 529,
+   "x1": 1131,
+   "y1": 540
+  },
+  {
+   "file": "order-checkbox-checked",
+   "layer": "Artboard 1/Gameplay Area/orders/item/order-checkbox-checked",
+   "x0": 1094,
+   "y0": 530,
+   "x1": 1106,
+   "y1": 541
+  },
+  {
+   "file": "orders_second_item_order-checkbox-background_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/second item/order-checkbox-background copy",
+   "x0": 1095,
+   "y0": 558,
+   "x1": 1106,
+   "y1": 570
+  },
+  {
+   "file": "orders_second_item_order-ingredient-background-inactive_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/second item/order-ingredient-background-inactive copy",
+   "x0": 1109,
+   "y0": 552,
+   "x1": 1134,
+   "y1": 576
+  },
+  {
+   "file": "orders_second_item_order-ingredient-background",
+   "layer": "Artboard 1/Gameplay Area/orders/second item/order-ingredient-background",
+   "x0": 1109,
+   "y0": 551,
+   "x1": 1134,
+   "y1": 576
+  },
+  {
+   "file": "orders_second_item_order-ingredient-beans",
+   "layer": "Artboard 1/Gameplay Area/orders/second item/order-ingredient-beans",
+   "x0": 1112,
+   "y0": 558,
+   "x1": 1131,
+   "y1": 569
+  },
+  {
+   "file": "orders_second_item_order-checkbox-checked",
+   "layer": "Artboard 1/Gameplay Area/orders/second item/order-checkbox-checked",
+   "x0": 1094,
+   "y0": 559,
+   "x1": 1106,
+   "y1": 570
+  },
+  {
+   "file": "orders_item_copy_order-checkbox-background_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/item copy/order-checkbox-background copy",
+   "x0": 1095,
+   "y0": 587,
+   "x1": 1106,
+   "y1": 599
+  },
+  {
+   "file": "orders_item_copy_order-ingredient-background-inactive_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/item copy/order-ingredient-background-inactive copy",
+   "x0": 1109,
+   "y0": 581,
+   "x1": 1134,
+   "y1": 605
+  },
+  {
+   "file": "orders_item_copy_order-ingredient-background",
+   "layer": "Artboard 1/Gameplay Area/orders/item copy/order-ingredient-background",
+   "x0": 1109,
+   "y0": 580,
+   "x1": 1134,
+   "y1": 605
+  },
+  {
+   "file": "orders_item_copy_order-ingredient-beans",
+   "layer": "Artboard 1/Gameplay Area/orders/item copy/order-ingredient-beans",
+   "x0": 1112,
+   "y0": 587,
+   "x1": 1131,
+   "y1": 598
+  },
+  {
+   "file": "orders_item_copy_order-checkbox-checked",
+   "layer": "Artboard 1/Gameplay Area/orders/item copy/order-checkbox-checked",
+   "x0": 1094,
+   "y0": 588,
+   "x1": 1106,
+   "y1": 599
+  },
+  {
+   "file": "orders_second_item_copy_order-checkbox-background_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/second item copy/order-checkbox-background copy",
+   "x0": 1095,
+   "y0": 616,
+   "x1": 1106,
+   "y1": 628
+  },
+  {
+   "file": "orders_second_item_copy_order-ingredient-background-inactive_copy",
+   "layer": "Artboard 1/Gameplay Area/orders/second item copy/order-ingredient-background-inactive copy",
+   "x0": 1109,
+   "y0": 610,
+   "x1": 1134,
+   "y1": 634
+  },
+  {
+   "file": "orders_second_item_copy_order-ingredient-background",
+   "layer": "Artboard 1/Gameplay Area/orders/second item copy/order-ingredient-background",
+   "x0": 1109,
+   "y0": 609,
+   "x1": 1134,
+   "y1": 634
+  },
+  {
+   "file": "orders_second_item_copy_order-ingredient-beans",
+   "layer": "Artboard 1/Gameplay Area/orders/second item copy/order-ingredient-beans",
+   "x0": 1112,
+   "y0": 616,
+   "x1": 1131,
+   "y1": 627
+  },
+  {
+   "file": "orders_second_item_copy_order-checkbox-checked",
+   "layer": "Artboard 1/Gameplay Area/orders/second item copy/order-checkbox-checked",
+   "x0": 1094,
+   "y0": 617,
+   "x1": 1106,
+   "y1": 628
+  },
+  {
+   "file": "sour-cream",
+   "layer": "Artboard 1/Gameplay Area/food/sour-cream",
+   "x0": 1450,
+   "y0": 711,
+   "x1": 1551,
+   "y1": 762
+  },
+  {
+   "file": "tomatoes",
+   "layer": "Artboard 1/Gameplay Area/food/tomatoes",
+   "x0": 1316,
+   "y0": 708,
+   "x1": 1416,
+   "y1": 773
+  },
+  {
+   "file": "cheese",
+   "layer": "Artboard 1/Gameplay Area/food/cheese",
+   "x0": 1178,
+   "y0": 710,
+   "x1": 1287,
+   "y1": 761
+  },
+  {
+   "file": "chicken",
+   "layer": "Artboard 1/Gameplay Area/food/chicken",
+   "x0": 783,
+   "y0": 698,
+   "x1": 883,
+   "y1": 761
+  },
+  {
+   "file": "lettuce",
+   "layer": "Artboard 1/Gameplay Area/food/lettuce",
+   "x0": 1049,
+   "y0": 711,
+   "x1": 1146,
+   "y1": 767
+  },
+  {
+   "file": "beans",
+   "layer": "Artboard 1/Gameplay Area/food/beans",
+   "x0": 913,
+   "y0": 710,
+   "x1": 1017,
+   "y1": 769
+  },
+  {
+   "file": "foodtray",
+   "layer": "Artboard 1/Gameplay Area/player one/foodtray",
+   "x0": 804,
+   "y0": 759,
+   "x1": 991,
+   "y1": 855
+  },
+  {
+   "file": "Plate",
+   "layer": "Artboard 1/Gameplay Area/player one/Plate",
+   "x0": 852,
+   "y0": 783,
+   "x1": 943,
+   "y1": 831
+  },
+  {
+   "file": "Tortilla",
+   "layer": "Artboard 1/Gameplay Area/player one/Tortilla",
+   "x0": 861,
+   "y0": 792,
+   "x1": 931,
+   "y1": 818
+  },
+  {
+   "file": "hand-arm-search",
+   "layer": "Artboard 1/Gameplay Area/player one/hands/left hand/hand-arm-search",
+   "x0": 721,
+   "y0": 711,
+   "x1": 835,
+   "y1": 866
+  },
+  {
+   "file": "hand-arm-grab",
+   "layer": "Artboard 1/Gameplay Area/player one/hands/left hand/hand-arm-grab",
+   "x0": 692,
+   "y0": 744,
+   "x1": 804,
+   "y1": 910
+  },
+  {
+   "file": "hand-nose-wipe",
+   "layer": "Artboard 1/Gameplay Area/player one/hands/left hand/hand-nose-wipe",
+   "x0": 706,
+   "y0": 700,
+   "x1": 857,
+   "y1": 926
+  },
+  {
+   "file": "hand-arm-squeeze-sauce",
+   "layer": "Artboard 1/Gameplay Area/player one/hands/right hand/hand-arm-squeeze-sauce",
+   "x0": 898,
+   "y0": 759,
+   "x1": 1074,
+   "y1": 873
+  },
+  {
+   "file": "behind-nose",
+   "layer": "Artboard 1/Gameplay Area/player one/behind-nose",
+   "x0": 840,
+   "y0": 646,
+   "x1": 952,
+   "y1": 708
+  },
+  {
+   "file": "Boss",
+   "layer": "Artboard 1/Boss/Boss",
+   "x0": 1124,
+   "y0": 124,
+   "x1": 1865,
+   "y1": 1256
+  },
+  {
+   "file": "boss-character-bubble",
+   "layer": "Artboard 1/Boss/Boss Dialogue/boss-character-bubble",
+   "x0": 279,
+   "y0": 73,
+   "x1": 1332,
+   "y1": 365
+  },
+  {
+   "file": "player_other_response",
+   "layer": "Artboard 1/Boss/dialogue response options/previous dialogue option/player other response",
+   "x0": 1058,
+   "y0": 758,
+   "x1": 1865,
+   "y1": 872
+  },
+  {
+   "file": "dialogue_response_options_next_dialogue_option_player_other_response",
+   "layer": "Artboard 1/Boss/dialogue response options/next dialogue option/player other response",
+   "x0": 1058,
+   "y0": 1015,
+   "x1": 1865,
+   "y1": 1129
+  },
+  {
+   "file": "player_selected_response",
+   "layer": "Artboard 1/Boss/dialogue response options/selected dialogue option/player selected response",
+   "x0": 901,
+   "y0": 886,
+   "x1": 1708,
+   "y1": 1000
+  },
+  {
+   "file": "background_panel",
+   "layer": "Artboard 1/hud items/money/background panel",
+   "x0": 1434,
+   "y0": 235,
+   "x1": 1676,
+   "y1": 335
+  },
+  {
+   "file": "CashIcon",
+   "layer": "Artboard 1/hud items/money/CashIcon",
+   "x0": 1601,
+   "y0": 274,
+   "x1": 1650,
+   "y1": 293
+  },
+  {
+   "file": "hud_items_health_background_panel",
+   "layer": "Artboard 1/hud items/health/background panel",
+   "x0": 1245,
+   "y0": 235,
+   "x1": 1487,
+   "y1": 335
+  },
+  {
+   "file": "hud-pills-icon",
+   "layer": "Artboard 1/hud items/health/hud-pills-icon",
+   "x0": 1426,
+   "y0": 261,
+   "x1": 1451,
+   "y1": 302
+  },
+  {
+   "file": "comic-panel",
+   "layer": "Artboard 1/hud items/modal/comic-panel",
+   "x0": 873,
+   "y0": 361,
+   "x1": 1518,
+   "y1": 675
+  }
+ ]
+}

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// Single entry point for gameplay input. Wraps the "Game" map of the project-wide
@@ -60,7 +61,7 @@ public class GameInput : MonoBehaviour
         // With the ingredient grid up, the stick navigates the grid instead of driving the cursor.
         _virtualCursor.Tick(_point.ReadValue<Vector2>(), GridMode ? Vector2.zero : _cursor.ReadValue<Vector2>(),
                             !GridMode && _activate.WasPressedThisFrame() && _activate.activeControl?.device is Gamepad,
-                            !ModalFocus.HasFocus);
+                            !ModalFocus.HasFocus || ShowCursorInModal);
     }
 
     // Stick/d-pad/arrows become one step per push, so holding a direction doesn't skip across the grid.
@@ -105,6 +106,12 @@ public class GameInput : MonoBehaviour
             return axis != 0f ? axis : _dragScrub;
         }
     }
+
+    /// <summary>A modal (the Phone) wants the stick cursor reticle visible even though it owns focus.</summary>
+    public static bool ShowCursorInModal;
+
+    /// <summary>Raw stick value that drives the virtual cursor.</summary>
+    public Vector2 CursorStick => _cursor.ReadValue<Vector2>();
 
     /// <summary>True while the Game scene's ingredient grid owns the stick/d-pad and gamepad confirm.</summary>
     public static bool GridMode;
@@ -157,5 +164,23 @@ public class GameInput : MonoBehaviour
         // Distance to the z=0 plane, so this works for orthographic and perspective cameras.
         float z = cam.orthographic ? 0f : -cam.transform.position.z;
         return cam.ScreenToWorldPoint(new Vector3(p.x, p.y, z));
+    }
+
+    /// <summary>The topmost interactable uGUI Selectable under the pointer, or null.</summary>
+    public Selectable SelectableUnderPointer()
+    {
+        var es = EventSystem.current;
+        if (es == null) return null;
+
+        var data = new PointerEventData(es) { position = PointerPosition };
+        _uiHits.Clear();
+        es.RaycastAll(data, _uiHits);
+        foreach (var hit in _uiHits)
+        {
+            var sel = hit.gameObject.GetComponentInParent<Selectable>();
+            if (sel != null && sel.IsInteractable()) return sel;
+            if (hit.gameObject.GetComponentInParent<Graphic>() != null && sel == null) continue;
+        }
+        return null;
     }
 }

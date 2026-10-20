@@ -15,8 +15,13 @@ public class OrderQueueLayout2D : MonoBehaviour
     [Tooltip("How far beyond the right screen edge to spawn, in world units.")]
     public float offscreenMarginWorld = 1.5f;
 
+    [Header("Safety clamp (viewport 0-1)")]
+    [Tooltip("The front slot is only pulled in if the scene anchor is outside this part of the view. Anchors placed in view are used as authored.")]
+    public Vector2 viewportMin = new Vector2(0.03f, 0.05f);
+    public Vector2 viewportMax = new Vector2(0.97f, 0.95f);
+
     [Header("Motion")]
-    public float followSpeed = 14f; // larger = snappier
+    public float slideSpeed = 7f; // larger = snappier; 7 is roughly 0.4s from off-screen to the slot
 
     bool _warnedClamp;
 
@@ -27,8 +32,8 @@ public class OrderQueueLayout2D : MonoBehaviour
         if (!cam) return world;
 
         Vector3 v = cam.WorldToViewportPoint(world);
-        float cx = Mathf.Clamp(v.x, 0.1f, 0.8f);
-        float cy = Mathf.Clamp(v.y, 0.15f, 0.88f);
+        float cx = Mathf.Clamp(v.x, viewportMin.x, viewportMax.x);
+        float cy = Mathf.Clamp(v.y, viewportMin.y, viewportMax.y);
         if (Mathf.Approximately(cx, v.x) && Mathf.Approximately(cy, v.y)) return world;
 
         if (!_warnedClamp)
@@ -96,7 +101,7 @@ public class OrderQueueLayout2D : MonoBehaviour
 
             Vector3 target = anchorWorld + new Vector3(spacingWorldX * i, 0f, 0f);
 
-            float t = 1f - Mathf.Exp(-followSpeed * Time.unscaledDeltaTime);
+            float t = 1f - Mathf.Exp(-slideSpeed * Time.unscaledDeltaTime);
             go.transform.position = Vector3.Lerp(go.transform.position, target, t);
         }
     }

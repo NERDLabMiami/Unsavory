@@ -1,0 +1,701 @@
+fileFormatVersion: 2
+guid: 7a98cd0cae72849c6958f00f52276535
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4992902726581734477
+    second: cell-phone_0
+  - first:
+      213: -5351161611109339344
+    second: cell-phone_1
+  - first:
+      213: 4895776157666965763
+    second: cell-phone_2
+  - first:
+      213: 7312741806835197756
+    second: cell-phone_3
+  - first:
+      213: 5258352623436216884
+    second: cell-phone_4
+  - first:
+      213: 2914395300653100128
+    second: cell-phone_5
+  - first:
+      213: 5016906255042464296
+    second: cell-phone_6
+  - first:
+      213: 3202161310846839354
+    second: cell-phone_7
+  - first:
+      213: -9111243378935862539
+    second: cell-phone_8
+  - first:
+      213: 794512193574655337
+    second: cell-phone_9
+  - first:
+      213: -1481969991062732837
+    second: cell-phone_10
+  - first:
+      213: 6583045555793334642
+    second: cell-phone_11
+  - first:
+      213: 1966467520218225332
+    second: cell-phone_12
+  - first:
+      213: -299318624615623562
+    second: cell-phone_13
+  - first:
+      213: -3817716374133900281
+    second: cell-phone_14
+  - first:
+      213: -5893672739617039205
+    second: cell-phone_15
+  - first:
+      213: -4177599354834076723
+    second: cell-phone_16
+  - first:
+      213: 435156101923688526
+    second: cell-phone_17
+  - first:
+      213: -1239714788748443083
+    second: cell-phone_18
+  - first:
+      213: -762215853466211949
+    second: cell-phone_19
+  - first:
+      213: -7276202173171422913
+    second: cell-phone_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 100, y: 26, z: 79, w: 216}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cell-phone_0
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 0
+        width: 1279
+        height: 1004
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 184}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ccbf7839a5a4540800000000000000
+      internalID: 4992902726581734477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_1
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 970
+        width: 38
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03fee1acddadcb5b0800000000000000
+      internalID: -5351161611109339344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_2
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 1020
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 309f099f97a41f340800000000000000
+      internalID: 4895776157666965763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_3
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 947
+        width: 17
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c376f82cde31c7560800000000000000
+      internalID: 7312741806835197756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_4
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 1006
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43ab8afd9db69f840800000000000000
+      internalID: 5258352623436216884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_5
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 988
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06cee76b513027820800000000000000
+      internalID: 2914395300653100128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_6
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 971
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82acd3388a1af9540800000000000000
+      internalID: 5016906255042464296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_7
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 965
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3a66861fbc507c20800000000000000
+      internalID: 3202161310846839354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_8
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 931
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fae5689b6c5e8180800000000000000
+      internalID: -9111243378935862539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_9
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 940
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 965dbbb61aca60b00800000000000000
+      internalID: 794512193574655337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_10
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 929
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdfbaea152cfe6be0800000000000000
+      internalID: -1481969991062732837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_11
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 909
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2719645fd0dab5b50800000000000000
+      internalID: 6583045555793334642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_12
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 907
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ba53f47acb4a4b10800000000000000
+      internalID: 1966467520218225332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_13
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 890
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6749029fb4b98dbf0800000000000000
+      internalID: -299318624615623562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_14
+      rect:
+        serializedVersion: 2
+        x: 1293
+        y: 893
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c7e825f2fb40bc0800000000000000
+      internalID: -3817716374133900281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_15
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 874
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9c19bc8ed7753ea0800000000000000
+      internalID: -5893672739617039205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_16
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 872
+        width: 23
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcbb639458f2606c0800000000000000
+      internalID: -4177599354834076723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_17
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 860
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e40510d4b2cf90600800000000000000
+      internalID: 435156101923688526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_18
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 842
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 532c9d9c7f5abcee0800000000000000
+      internalID: -1239714788748443083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_19
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 569
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 399a9fb38b01c65f0800000000000000
+      internalID: -762215853466211949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_20
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 566
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f39213aacacb50b90800000000000000
+      internalID: -7276202173171422913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cell-phone_21
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 1009
+        width: 410
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da9421aa14225423abe9b3d2d7a38513
+      internalID: 65950935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c586b292d2816468983c7f47dfcf3393
+    internalID: -1179788983
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      cell-phone_0: 4992902726581734477
+      cell-phone_1: -5351161611109339344
+      cell-phone_10: -1481969991062732837
+      cell-phone_11: 6583045555793334642
+      cell-phone_12: 1966467520218225332
+      cell-phone_13: -299318624615623562
+      cell-phone_14: -3817716374133900281
+      cell-phone_15: -5893672739617039205
+      cell-phone_16: -4177599354834076723
+      cell-phone_17: 435156101923688526
+      cell-phone_18: -1239714788748443083
+      cell-phone_19: -762215853466211949
+      cell-phone_2: 4895776157666965763
+      cell-phone_20: -7276202173171422913
+      cell-phone_21: 65950935
+      cell-phone_3: 7312741806835197756
+      cell-phone_4: 5258352623436216884
+      cell-phone_5: 2914395300653100128
+      cell-phone_6: 5016906255042464296
+      cell-phone_7: 3202161310846839354
+      cell-phone_8: -9111243378935862539
+      cell-phone_9: 794512193574655337
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -514,8 +514,14 @@
     <Reference Include="UnityEditor.XRModule">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/Unity.app/Contents/Resources/Scripting/Managed/UnityEngine/UnityEditor.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.collections@10fff0607388/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.ext.nunit@0198eae3b53e/net472/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/PackageCache/com.unity.nuget.mono-cecil@ecb9724e46ff/Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/PlaybackEngines/MacStandaloneSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -925,14 +931,8 @@
     <Reference Include="System.Text.Json">
       <HintPath>/Applications/Unity/Hub/Editor/6000.6.2f1/Unity.app/Contents/Resources/Scripting/BCLExtensions/TargetingPacks/netstandard2.1/ref/System.Text.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InternalAPIEngineBridge.004">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.004.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Multiplayer.Center.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
@@ -943,23 +943,98 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+    <Reference Include="Unity.Rendering.LightTransport.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InputSystem.ForUI.Editor">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.ForUI.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InputSystem">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Universal.2D.Editor.Overrides">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Editor.Overrides.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.PrivateJobNested">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.PrivateJobNested.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PathTracing.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.PathTracing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.RenderPipelines.Core.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.UnifiedRayTracing.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.UnifiedRayTracing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.PublicJobPrivateGeneric">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.PublicJobPrivateGeneric.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.ShaderGraph.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.GraphAuthoring.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.GraphAuthoring.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.ProtectedJobNested">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.ProtectedJobNested.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.SurfaceCache.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.SurfaceCache.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Profiling.Core">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Profiling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.ObjectDispatcher.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.ObjectDispatcher.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
@@ -970,14 +1045,47 @@
     <Reference Include="Unity.Multiplayer.Center.Common">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AI.Navigation.Updater">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    <Reference Include="Unity.Burst">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.004">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.004.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Multiplayer.Center.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PathTracing.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.PathTracing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.RenderPipelines.Core.Runtime.Shared">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Tests.CoreCLR.InternalJobNestedPrivate">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Tests.CoreCLR.InternalJobNestedPrivate.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor">
-      <HintPath>/Users/clayewing/Documents/GitHub/Unsavory/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

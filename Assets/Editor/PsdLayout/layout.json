@@ -1,0 +1,1141 @@
+{
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "path": "Artboard 1",
+   "name": "Artboard 1",
+   "kind": "artboard",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    0,
+    0,
+    1920,
+    1080
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Kitchen",
+   "name": "Kitchen",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    -1,
+    0,
+    1919,
+    1080
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area",
+   "name": "Gameplay Area",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    640,
+    481,
+    1659,
+    1006
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/table",
+   "name": "table",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    640,
+    481,
+    1659,
+    1006
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/table/prep-table",
+   "name": "prep-table",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    640,
+    481,
+    1659,
+    1006
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders",
+   "name": "orders",
+   "kind": "group",
+   "visible": false,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1085,
+    502,
+    1150,
+    665
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/filled out order",
+   "name": "filled out order",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    1085,
+    502,
+    1150,
+    665
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item",
+   "name": "item",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    1094,
+    522,
+    1134,
+    547
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item/order-checkbox-background copy",
+   "name": "order-checkbox-background copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    1095,
+    529,
+    1106,
+    541
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item/order-ingredient-background-inactive copy",
+   "name": "order-ingredient-background-inactive copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    1109,
+    523,
+    1134,
+    547
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item/order-ingredient-background",
+   "name": "order-ingredient-background",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1109,
+    522,
+    1134,
+    547
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item/order-ingredient-beans",
+   "name": "order-ingredient-beans",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1112,
+    529,
+    1131,
+    540
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item/order-checkbox-checked",
+   "name": "order-checkbox-checked",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1094,
+    530,
+    1106,
+    541
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item",
+   "name": "second item",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1094,
+    551,
+    1134,
+    576
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item/order-checkbox-background copy",
+   "name": "order-checkbox-background copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    1095,
+    558,
+    1106,
+    570
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item/order-ingredient-background-inactive copy",
+   "name": "order-ingredient-background-inactive copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    1109,
+    552,
+    1134,
+    576
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item/order-ingredient-background",
+   "name": "order-ingredient-background",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1109,
+    551,
+    1134,
+    576
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item/order-ingredient-beans",
+   "name": "order-ingredient-beans",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1112,
+    558,
+    1131,
+    569
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item/order-checkbox-checked",
+   "name": "order-checkbox-checked",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1094,
+    559,
+    1106,
+    570
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item copy",
+   "name": "item copy",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1094,
+    580,
+    1134,
+    605
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item copy/order-checkbox-background copy",
+   "name": "order-checkbox-background copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    1095,
+    587,
+    1106,
+    599
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item copy/order-ingredient-background-inactive copy",
+   "name": "order-ingredient-background-inactive copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    1109,
+    581,
+    1134,
+    605
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item copy/order-ingredient-background",
+   "name": "order-ingredient-background",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1109,
+    580,
+    1134,
+    605
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item copy/order-ingredient-beans",
+   "name": "order-ingredient-beans",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1112,
+    587,
+    1131,
+    598
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/item copy/order-checkbox-checked",
+   "name": "order-checkbox-checked",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1094,
+    588,
+    1106,
+    599
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item copy",
+   "name": "second item copy",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1094,
+    609,
+    1134,
+    634
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item copy/order-checkbox-background copy",
+   "name": "order-checkbox-background copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    1095,
+    616,
+    1106,
+    628
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item copy/order-ingredient-background-inactive copy",
+   "name": "order-ingredient-background-inactive copy",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    1109,
+    610,
+    1134,
+    634
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item copy/order-ingredient-background",
+   "name": "order-ingredient-background",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1109,
+    609,
+    1134,
+    634
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item copy/order-ingredient-beans",
+   "name": "order-ingredient-beans",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1112,
+    616,
+    1131,
+    627
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/orders/second item copy/order-checkbox-checked",
+   "name": "order-checkbox-checked",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1094,
+    617,
+    1106,
+    628
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food",
+   "name": "food",
+   "kind": "group",
+   "visible": false,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    783,
+    698,
+    1551,
+    773
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food/sour-cream",
+   "name": "sour-cream",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 5,
+   "bbox": [
+    1450,
+    711,
+    1551,
+    762
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food/tomatoes",
+   "name": "tomatoes",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    1316,
+    708,
+    1416,
+    773
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food/cheese",
+   "name": "cheese",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    1178,
+    710,
+    1287,
+    761
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food/chicken",
+   "name": "chicken",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    783,
+    698,
+    883,
+    761
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food/lettuce",
+   "name": "lettuce",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1049,
+    711,
+    1146,
+    767
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/food/beans",
+   "name": "beans",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    913,
+    710,
+    1017,
+    769
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one",
+   "name": "player one",
+   "kind": "group",
+   "visible": false,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    692,
+    646,
+    1074,
+    926
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/foodtray",
+   "name": "foodtray",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 5,
+   "bbox": [
+    804,
+    759,
+    991,
+    855
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/Plate",
+   "name": "Plate",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 4,
+   "bbox": [
+    852,
+    783,
+    943,
+    831
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/Tortilla",
+   "name": "Tortilla",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 3,
+   "bbox": [
+    861,
+    792,
+    931,
+    818
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands",
+   "name": "hands",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    692,
+    700,
+    1074,
+    926
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands/left hand",
+   "name": "left hand",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    692,
+    700,
+    857,
+    926
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands/left hand/hand-arm-search",
+   "name": "hand-arm-search",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    721,
+    711,
+    835,
+    866
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands/left hand/hand-arm-grab",
+   "name": "hand-arm-grab",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    692,
+    744,
+    804,
+    910
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands/left hand/hand-nose-wipe",
+   "name": "hand-nose-wipe",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    706,
+    700,
+    857,
+    926
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands/right hand",
+   "name": "right hand",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    898,
+    759,
+    1074,
+    873
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/hands/right hand/hand-arm-squeeze-sauce",
+   "name": "hand-arm-squeeze-sauce",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    898,
+    759,
+    1074,
+    873
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/Plate",
+   "name": "Plate",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": null,
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Gameplay Area/player one/behind-nose",
+   "name": "behind-nose",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 0.788235294117647,
+   "z": 0,
+   "bbox": [
+    840,
+    646,
+    952,
+    708
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss",
+   "name": "Boss",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    279,
+    73,
+    1865,
+    1256
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/Boss",
+   "name": "Boss",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1124,
+    124,
+    1865,
+    1256
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/Boss Dialogue",
+   "name": "Boss Dialogue",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    279,
+    73,
+    1332,
+    365
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/Boss Dialogue/boss-character-bubble",
+   "name": "boss-character-bubble",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    279,
+    73,
+    1332,
+    365
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/Boss Dialogue/Welcome to the kitchen.  I’m your boss.",
+   "name": "Welcome to the kitchen.  I’m your boss.",
+   "kind": "type",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    346,
+    112,
+    962,
+    243
+   ],
+   "text": "Welcome to the kitchen. \rI’m your boss."
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options",
+   "name": "dialogue response options",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    901,
+    758,
+    1865,
+    1129
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/previous dialogue option",
+   "name": "previous dialogue option",
+   "kind": "group",
+   "visible": true,
+   "opacity": 0.5019607843137255,
+   "z": 2,
+   "bbox": [
+    1058,
+    758,
+    1865,
+    872
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/previous dialogue option/player other response",
+   "name": "player other response",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 0.5019607843137255,
+   "z": 1,
+   "bbox": [
+    1058,
+    758,
+    1865,
+    872
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/previous dialogue option/When do I get paid?",
+   "name": "When do I get paid?",
+   "kind": "type",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1106,
+    796,
+    1506,
+    843
+   ],
+   "text": "When do I get paid?"
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/next dialogue option",
+   "name": "next dialogue option",
+   "kind": "group",
+   "visible": true,
+   "opacity": 0.5019607843137255,
+   "z": 1,
+   "bbox": [
+    1058,
+    1015,
+    1865,
+    1129
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/next dialogue option/player other response",
+   "name": "player other response",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 0.5019607843137255,
+   "z": 1,
+   "bbox": [
+    1058,
+    1015,
+    1865,
+    1129
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/next dialogue option/Whatever.",
+   "name": "Whatever.",
+   "kind": "type",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1110,
+    1045,
+    1315,
+    1082
+   ],
+   "text": "Whatever."
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/selected dialogue option",
+   "name": "selected dialogue option",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    901,
+    886,
+    1708,
+    1000
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/selected dialogue option/player selected response",
+   "name": "player selected response",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    901,
+    886,
+    1708,
+    1000
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/Boss/dialogue response options/selected dialogue option/Nice to meet you.",
+   "name": "Nice to meet you.",
+   "kind": "type",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    949,
+    922,
+    1301,
+    965
+   ],
+   "text": "Nice to meet you."
+  },
+  {
+   "path": "Artboard 1/hud items",
+   "name": "hud items",
+   "kind": "group",
+   "visible": false,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    873,
+    235,
+    1676,
+    675
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/money",
+   "name": "money",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 2,
+   "bbox": [
+    1434,
+    235,
+    1676,
+    335
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/money/background panel",
+   "name": "background panel",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1434,
+    235,
+    1676,
+    335
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/money/CashIcon",
+   "name": "CashIcon",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1601,
+    274,
+    1650,
+    293
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/health",
+   "name": "health",
+   "kind": "group",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1245,
+    235,
+    1487,
+    335
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/health/background panel",
+   "name": "background panel",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    1245,
+    235,
+    1487,
+    335
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/health/hud-pills-icon",
+   "name": "hud-pills-icon",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1426,
+    261,
+    1451,
+    302
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/modal",
+   "name": "modal",
+   "kind": "group",
+   "visible": false,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    873,
+    361,
+    1518,
+    675
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/modal/comic-panel",
+   "name": "comic-panel",
+   "kind": "smartobject",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 1,
+   "bbox": [
+    873,
+    361,
+    1518,
+    675
+   ],
+   "text": null
+  },
+  {
+   "path": "Artboard 1/hud items/modal/This is a title card.",
+   "name": "This is a title card.",
+   "kind": "type",
+   "visible": true,
+   "opacity": 1.0,
+   "z": 0,
+   "bbox": [
+    1001,
+    492,
+    1391,
+    531
+   ],
+   "text": "This is a title card."
+  }
+ ]
+}

@@ -1,44 +1,47 @@
 {
   "bills": [
     {
-        "title": "Rent",
-        "amount": 600,
-        "due":20,
-        "effect": "gameover"
+      "title": "Rent",
+      "amount": 600,
+      "due": 20,
+      "effect": "gameover"
     },
-        {
-        "title": "Car",
-        "amount": 150,
-        "due":16,
-        "effect": "late effect"
+    {
+      "title": "Car",
+      "amount": 150,
+      "due": 16,
+      "effect": "late effect"
     },
-        {
-        "title": "Car Insurance",
-        "amount": 100,
-        "due":11,        
-        "effect": "late effect"
+    {
+      "title": "Car Insurance",
+      "amount": 100,
+      "due": 11,
+      "effect": "insurance effect"
     },
-        {
-        "title": "Health Insurance",
-        "amount": 20,
-        "due":6,
-        "effect": "health effect"
+    {
+      "title": "Health Insurance",
+      "amount": 20,
+      "due": 6,
+      "effect": "health effect"
     },
-        {
-        "title": "Cable & Phone",
-        "amount": 100,
-        "due":12,
-        "effect": "overtime effect"
+    {
+      "title": "Cable & Phone",
+      "amount": 100,
+      "due": 12,
+      "effect": "phone effect"
     },
-        {
-        "title": "Electricity",
-        "amount": 90,
-        "due":7,
-        "effect": "electricity effect"
+    {
+      "title": "Electricity",
+      "amount": 90,
+      "due": 7,
+      "effect": "electricity effect"
+    },
+    {
+      "title": "Groceries",
+      "amount": 32,
+      "due": 0,
+      "effect": "",
+      "type": "buy"
     }
-  ],
-  "groceries": [
-  		{"title": "Groceries", "amount": 32, "effect": "health effect"}
   ]
-  
- }
+}

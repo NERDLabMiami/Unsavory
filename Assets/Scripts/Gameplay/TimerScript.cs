@@ -8,7 +8,6 @@ public class TimerScript : MonoBehaviour {
 	public bool running = false;
 
 	private Transform startingPosition;
-	private DateTime today;
 	private float fullday;
 	private float startTime;
 	private float movementTime;
@@ -18,13 +17,24 @@ public class TimerScript : MonoBehaviour {
 		fullday = timer;
 	}
 	
-	public void setWorkday(TimeSpan workday) {
-		today = new DateTime(2020,1,1);
-		today = today.Add(workday);
+	// The shift runs from the arrival time to 5 PM on the clock, however late the player got in.
+	static readonly TimeSpan ShiftEnd = new TimeSpan(17, 0, 0);
+
+	public void setWorkday(TimeSpan arrival) {
+		shiftStart = arrival;
 	}
+
+	TimeSpan shiftStart = new TimeSpan(9, 0, 0);
+
+	public string getArrivalClock() {
+		return (new DateTime(2020,1,1) + shiftStart).ToString("h:mm tt");
+	}
+
+	// 5:00 PM lands exactly when the shift timer runs out.
 	public string getClock() {
-		today = today.AddSeconds(Time.deltaTime * 540);
-		return today.ToString("h:mm tt");
+		float progress = fullday > 0f ? Mathf.Clamp01((fullday - timer) / fullday) : 0f;
+		double minutes = shiftStart.TotalMinutes + (ShiftEnd.TotalMinutes - shiftStart.TotalMinutes) * progress;
+		return (new DateTime(2020,1,1).AddMinutes(minutes)).ToString("h:mm tt");
 	}
 
 	public float getTimeWorked() {
@@ -40,7 +50,7 @@ public class TimerScript : MonoBehaviour {
 			timer -= Time.deltaTime;
 				if (timer <= 0) {
 					//Continue onto next day, full day of work
-					level.EndOfLevel(true, false);
+					level.EndRound(RoundOutcome.Complete);
 					running = false;
 				}
 		}

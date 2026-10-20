@@ -22,11 +22,10 @@ public class TutorialComplete : MonoBehaviour {
 	public void finishTutorial() {
 		tutor.tortilla.tutoring = false;
 		Time.timeScale = 1.0f;
-		tutor.pauseButton.enabled = true;
+		if (tutor.pauseButton != null) tutor.pauseButton.enabled = true;
 		PlayerPrefs.SetInt("tutorial", 1);
 		PlayerPrefs.SetInt ("sneeze tutor", 0);
 		tutor.plate.GetComponent<PlateScript>().tutorialMode = false;
-		tutor.plate.GetComponent<PlateScript>().SeedTortilla();
 		CustomFunctionScript.collisionOnObjects(tutor.allTrays, true);
 
 	}
@@ -37,8 +36,9 @@ public class TutorialComplete : MonoBehaviour {
 	}
 
 	public void continueTutorial() {
-		GetComponent<Animator>().SetTrigger("continue");
+		// Panel shrinks away and switches itself off (was the Tutorial Continues clip).
+		var panel = AnimUtil.Get<ScalePanelAnim>(gameObject);
+		panel.Hide(() => gameObject.SetActive(false), 0.5f);
 		tutor.getTutorial();
-		tutor.gameObject.GetComponent<Animator>().SetTrigger("next");
 	}
 }

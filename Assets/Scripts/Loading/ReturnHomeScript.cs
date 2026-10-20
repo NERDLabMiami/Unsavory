@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
+using System.Collections;
+using TMPro;
 
 public class ReturnHomeScript : MonoBehaviour {
 	public GameObject phone;
@@ -27,15 +29,89 @@ public class ReturnHomeScript : MonoBehaviour {
 	// Use this for initialization
 	public SwipeScene room; // assign
 	public HomeToast toast;
+	public string newMonthCaption = "New month, another adventure.";
+	private bool rentPending = false;
+	private bool endingStarted = false;
 
 	private void OnEnable()
 	{
 		if (room != null) room.OnPlaceChanged += HandlePlaceChanged;
+		BillsSignals.BillPaid += HandleBillPaid;
 	}
 
 	private void OnDisable()
 	{
 		if (room != null) room.OnPlaceChanged -= HandlePlaceChanged;
+		BillsSignals.BillPaid -= HandleBillPaid;
+	}
+
+	// Paying rent is the last action of a month: fade out, caption, then the run ends.
+	private void HandleBillPaid(int id)
+	{
+		if (rentPending && BillsState.GetEffect(id) == "gameover")
+			StartNewMonthSequence();
+	}
+
+	private void StartNewMonthSequence()
+	{
+		if (endingStarted) return;
+		endingStarted = true;
+		rentPending = false;
+		StartCoroutine(NewMonthRoutine());
+	}
+
+	private IEnumerator NewMonthRoutine()
+	{
+		gameObject.GetComponent<UnityAnalyticsIntegration>()?.survived();
+
+		var canvasGO = new GameObject("NewMonthFade", typeof(Canvas));
+		var canvas = canvasGO.GetComponent<Canvas>();
+		canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+		canvas.sortingOrder = 32000;
+
+		var bgGO = new GameObject("Black", typeof(CanvasRenderer), typeof(Image));
+		bgGO.transform.SetParent(canvasGO.transform, false);
+		var bg = bgGO.GetComponent<Image>();
+		bg.color = new Color(0f, 0f, 0f, 0f);
+		bg.raycastTarget = true; // swallow input during the ending
+		Stretch(bgGO.GetComponent<RectTransform>());
+
+		var textGO = new GameObject("Caption", typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+		textGO.transform.SetParent(canvasGO.transform, false);
+		var caption = textGO.GetComponent<TextMeshProUGUI>();
+		caption.text = newMonthCaption;
+		caption.alignment = TextAlignmentOptions.Center;
+		caption.fontSize = 48;
+		caption.color = new Color(1f, 1f, 1f, 0f);
+		caption.raycastTarget = false;
+		Stretch(textGO.GetComponent<RectTransform>());
+
+		yield return FadeAlpha(bg, caption, 1.5f, 0f, 1f, false);
+		yield return FadeAlpha(bg, caption, 1.0f, 0f, 1f, true);
+		yield return new WaitForSecondsRealtime(2.5f);
+
+		continueToNextMonth();
+		gameOver(true);
+	}
+
+	private static void Stretch(RectTransform rt)
+	{
+		rt.anchorMin = Vector2.zero;
+		rt.anchorMax = Vector2.one;
+		rt.offsetMin = rt.offsetMax = Vector2.zero;
+	}
+
+	private static IEnumerator FadeAlpha(Image bg, TMP_Text text, float duration, float from, float to, bool captionPass)
+	{
+		for (float t = 0f; t < duration; t += Time.unscaledDeltaTime)
+		{
+			float a = Mathf.Lerp(from, to, t / duration);
+			if (captionPass) text.color = new Color(1f, 1f, 1f, a);
+			else bg.color = new Color(0f, 0f, 0f, a);
+			yield return null;
+		}
+		if (captionPass) text.color = new Color(1f, 1f, 1f, to);
+		else bg.color = new Color(0f, 0f, 0f, to);
 	}
 
 	private void HandlePlaceChanged(int place)
@@ -73,35 +149,17 @@ public class ReturnHomeScript : MonoBehaviour {
 		return paycheck;
 	}
 
-	private int payOutstandingBills() {
+	// Bills are only ever paid by the player (BillScript.payBill). At month end, an unpaid bill whose
+	// effect is "gameover" (rent) ends the run.
+	private int countUnpaidGameOverBills(bool pastDueOnly) {
 		JSONNode bills = JSON.Parse(billData);
-		int unpaidBills = 0;
-
+		int unpaid = 0;
 		for (int i = 0; i < bills["bills"].Count; i++) {
-			//if it's past the due date
-			if (bills["bills"][i]["due"].AsInt >= day) {
-				//check if it's unpaid
-				Debug.Log("ATTEMPTING BILL " + i);
-				if (PlayerPrefs.GetInt("bill" + i,0) == 0) {
-					Debug.Log("HAVEN'T PAID " + i);
-
-					//pay it
-					float remainingMoney =money - bills["bills"][i]["amount"].AsInt;
-					if (remainingMoney >= 0) {
-						money = remainingMoney;
-						PlayerPrefs.SetInt("bill" + i,1); 
-						Debug.Log("PAID " + i);
-
-					}
-					else {
-						Debug.Log("CAN'T PAY " + i);
-
-						unpaidBills++;
-					}
-				}
-			}
+			if (bills["bills"][i]["effect"].Value != "gameover" || PlayerPrefs.GetInt("bill" + i, 0) != 0) continue;
+			if (!pastDueOnly || bills["bills"][i]["due"].AsInt < day)
+				unpaid++;
 		}
-		return unpaidBills;
+		return unpaid;
 	}
 	
 	void Start () {
@@ -109,7 +167,9 @@ public class ReturnHomeScript : MonoBehaviour {
 		money = PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
 		Time.timeScale = 1f;
-		if (!PlayerPrefs.HasKey("welcomed home"))
+		// Arriving home for the very first time (New Game) is not the end of a workday: day 1 is still to come.
+		bool firstVisit = !PlayerPrefs.HasKey("welcomed home");
+		if (firstVisit)
 		{
 			if (toast) toast.Show("Welcome home. Pay bills, stock up on medicine, then head to work.");
 			PlayerPrefs.SetInt("welcomed home", 1);
@@ -125,7 +185,7 @@ public class ReturnHomeScript : MonoBehaviour {
 		JSONNode bills = JSON.Parse(billData);
 		for (int i = 0; i < bills["bills"].Count; i++)
 		{
-			if (bills["bills"][i]["due"].AsInt < day)
+			if (bills["bills"][i]["type"].Value != "buy" && bills["bills"][i]["due"].AsInt < day)
 			{
 				if (PlayerPrefs.GetInt("bill" + i, 0) == 0)
 				{
@@ -141,7 +201,10 @@ public class ReturnHomeScript : MonoBehaviour {
 		Debug.Log ("I have " + money.ToString());
 		finalDay = PlayerPrefs.GetInt("final day", 20);
 		Debug.Log("It's day " + day);
-		fruit.setFruit(day%5);
+		// Fruit only replenishes when the player buys groceries on the phone; it dwindles by one a day.
+		int fruitCount = Mathf.Max(0, PlayerPrefs.GetInt("fruit", 5) - (firstVisit ? 0 : 1));
+		PlayerPrefs.SetInt("fruit", fruitCount);
+		if (fruit) fruit.SetCount(fruitCount);
 // --- replacement for your block inside Start() ---
 
 		bool isMonthEnd = (day % finalDay == 0) && (day != 0);
@@ -152,24 +215,28 @@ public class ReturnHomeScript : MonoBehaviour {
 			ClampHealthForWeekend();
 		}
 
-		if (isMonthEnd)
+		if (countUnpaidGameOverBills(true) > 0)
 		{
-			// month end includes paycheck + groceries + bills check
+			// Rent was due on the last day of the month and never paid.
+			gameObject.GetComponent<UnityAnalyticsIntegration>()?.survivedWithUnpaidBills();
+			if (gameOverPanel) gameOverPanel.SetActive(true);
+		}
+		else if (isMonthEnd)
+		{
 			PaycheckAndGroceries();
 
-			int unpaidBills = payOutstandingBills();
-			if (unpaidBills > 0)
+			// The player ends the month by paying rent on the phone; that triggers the fade-out.
+			if (countUnpaidGameOverBills(false) == 0)
 			{
-				gameObject.GetComponent<UnityAnalyticsIntegration>()?.survivedWithUnpaidBills();
-				if (gameOverPanel) gameOverPanel.SetActive(true);
+				StartNewMonthSequence();
 			}
 			else
 			{
-				gameObject.GetComponent<UnityAnalyticsIntegration>()?.survived();
-				if (monthCompletePanel) monthCompletePanel.SetActive(true);
+				rentPending = true;
+				if (toast) toast.Show("Rent is due today. Pay it to start a new month.");
 			}
 
-			Debug.Log("Month is over, game ends");
+			Debug.Log("Month is over, waiting on rent");
 		}
 		else if (isWeekend)
 		{
@@ -186,7 +253,7 @@ public class ReturnHomeScript : MonoBehaviour {
 		}
 
 // Always advance day at end of Start() flow
-		UpdateEndOfDayUIAndAdvanceDay();
+		UpdateEndOfDayUIAndAdvanceDay(firstVisit);
 		PlayerPrefs.Save();
 		
 	}
@@ -230,31 +297,20 @@ public class ReturnHomeScript : MonoBehaviour {
 		float paycheck = calculateWages();
 		if (paycheckUI) paycheckUI.text = paycheck.ToString("$0");
 
-		// groceries (buyGroceries already handles health penalty when broke)
-		float groceryCost = buyGroceries();
-		if (groceryCost > 0f)
-		{
-			money -= groceryCost;
-			PlayerPrefs.SetFloat("money", money);
-			if (groceryUI) groceryUI.text = groceryCost.ToString("-$0");
-		}
-		else
-		{
-			if (groceryUI) groceryUI.text = "N/A";
-		}
-
+		if (groceryUI) groceryUI.text = "N/A";
+		float groceryCost = 0f;
 		return groceryCost;
 	}
 
-	private void UpdateEndOfDayUIAndAdvanceDay()
+	private void UpdateEndOfDayUIAndAdvanceDay(bool firstVisit)
 	{
-		day++;
+		if (!firstVisit) day++;
 		if (moneyUI) moneyUI.text = money.ToString("$0");
 		PlayerPrefs.SetInt("current level", day);
 
 		if (PlayerPrefs.HasKey("letter"))
 		{
-			toast.Show("You got a letter in the mail.");
+			if (toast) toast.Show("You got a letter in the mail.");
 		}
 	}
 
@@ -267,21 +323,5 @@ public class ReturnHomeScript : MonoBehaviour {
 		int currentMonth = PlayerPrefs.GetInt("month",1);
 		currentMonth++;
 		PlayerPrefs.SetInt("month", currentMonth);
-	}
-	
-	float buyGroceries() {
-		string billData =  Resources.Load<TextAsset>("bills").ToString();
-		JSONNode bills = JSON.Parse(billData);
-		money = PlayerPrefs.GetFloat ("money");
-		float costOfGroceries = bills["groceries"][0]["amount"].AsFloat;
-		if (money >= costOfGroceries) {
-			return costOfGroceries; 
-		}
-		else {
-			float health = PlayerPrefs.GetFloat("health");
-			health--;
-			PlayerPrefs.SetFloat("health", health);
-			return 0f;
-		}
 	}
 }

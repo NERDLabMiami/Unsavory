@@ -21,11 +21,15 @@ public class NoseWipeScript : MonoBehaviour {
 	private bool sweating = false;
 	float health;
 	public float startingHealth;
+	public float emptyFruitHealthPenalty = 3f; // applied while the fruit bowl is empty
 
 	void Start () {
-		float healthEffect = PlayerPrefs.GetFloat("health effect", 0);
+		// The snot splat animates itself whenever it is enabled.
+		if (snotImage) AnimUtil.Get<SnotAnim>(snotImage);
+		float healthEffect = PlayerPrefs.GetInt("health effect", 0);
 		health = PlayerPrefs.GetFloat("health");
 		health = health - healthEffect;
+		if (PlayerPrefs.GetInt("fruit", 5) <= 0) health -= emptyFruitHealthPenalty;
 		startingHealth = health;
 		Debug.Log("Starting Health: " + health);
 		Debug.Log($"[Sneeze] start health={health} sneezeAllowed={sneezeAllowed}");  // TEMP
@@ -80,7 +84,7 @@ public class NoseWipeScript : MonoBehaviour {
 			sweat.Play();
 			sweating = true;
 			Debug.Log("Sweating!");
-			GetComponent<Animator>().SetTrigger("twitch");
+			AnimUtil.Get<NoseAnim>(gameObject).Twitch(checkSneezeTutor);
 		}
 		if (sneezeTimer <= timeBeforeSneezeWarning)
 		{
@@ -152,8 +156,7 @@ public class NoseWipeScript : MonoBehaviour {
 
 	void Wipe(bool left)
 	{
-		var anim = GetComponent<Animator>();
-		if (anim) anim.SetTrigger(left ? "wipe left" : "wipe right");
+		AnimUtil.Get<NoseAnim>(gameObject).Wipe(left);
 		var audio = GetComponent<AudioSource>();
 		if (audio) audio.Play();
 		resetSneezeTimer();

@@ -1,0 +1,1250 @@
+fileFormatVersion: 2
+guid: 713f5a19abf714f03b34fde4aff88170
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8029286644832534529
+    second: player-bubble_0
+  - first:
+      213: -6135242551120021838
+    second: player-bubble_1
+  - first:
+      213: 6525112151249467468
+    second: player-bubble_2
+  - first:
+      213: -7940967941852058850
+    second: player-bubble_3
+  - first:
+      213: 7659909883684965664
+    second: player-bubble_4
+  - first:
+      213: -2420335846856844491
+    second: player-bubble_5
+  - first:
+      213: -8910363895087250626
+    second: player-bubble_6
+  - first:
+      213: -2429964311395971531
+    second: player-bubble_7
+  - first:
+      213: -7005184600339320399
+    second: player-bubble_8
+  - first:
+      213: -7363959874429314503
+    second: player-bubble_9
+  - first:
+      213: 7543502167509734846
+    second: player-bubble_10
+  - first:
+      213: -4312501945246176270
+    second: player-bubble_11
+  - first:
+      213: -7273681707432471022
+    second: player-bubble_12
+  - first:
+      213: 5349963111228452289
+    second: player-bubble_13
+  - first:
+      213: -2560980981904260036
+    second: player-bubble_14
+  - first:
+      213: -618150536455753825
+    second: player-bubble_15
+  - first:
+      213: 2537240022871661930
+    second: player-bubble_16
+  - first:
+      213: 3092410445846286982
+    second: player-bubble_17
+  - first:
+      213: 8962634205230511580
+    second: player-bubble_18
+  - first:
+      213: -7107445154198534685
+    second: player-bubble_19
+  - first:
+      213: 3703180227312300409
+    second: player-bubble_20
+  - first:
+      213: 4319439083714045770
+    second: player-bubble_21
+  - first:
+      213: 5980916696622860865
+    second: player-bubble_22
+  - first:
+      213: -8046956771439406700
+    second: player-bubble_23
+  - first:
+      213: 4317268110405931530
+    second: player-bubble_24
+  - first:
+      213: -1528163157432530566
+    second: player-bubble_25
+  - first:
+      213: 1165431306182729521
+    second: player-bubble_26
+  - first:
+      213: -2109548124436861381
+    second: player-bubble_27
+  - first:
+      213: 7854096133958694122
+    second: player-bubble_28
+  - first:
+      213: 8916405515848047998
+    second: player-bubble_29
+  - first:
+      213: 7639106913592428406
+    second: player-bubble_30
+  - first:
+      213: 1924732740796076390
+    second: player-bubble_31
+  - first:
+      213: -7786198250235409398
+    second: player-bubble_32
+  - first:
+      213: -1156537633216762765
+    second: player-bubble_33
+  - first:
+      213: -8753031783431533017
+    second: player-bubble_34
+  - first:
+      213: -2799076006441182442
+    second: player-bubble_35
+  - first:
+      213: -8334009738936064440
+    second: player-bubble_36
+  - first:
+      213: -2592424432937344692
+    second: player-bubble_37
+  - first:
+      213: -3449028860752129843
+    second: player-bubble_38
+  - first:
+      213: 3051729820740595686
+    second: player-bubble_39
+  - first:
+      213: 2937107889911175363
+    second: player-bubble_40
+  - first:
+      213: 3255892435648292619
+    second: player-bubble_41
+  - first:
+      213: 6840002634627609025
+    second: player-bubble_42
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: player-bubble_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 23
+        width: 2172
+        height: 683
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 100080999a1cd6f60800000000000000
+      internalID: 8029286644832534529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_1
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 691
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b631a9d76d3bdaa0800000000000000
+      internalID: -6135242551120021838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_2
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 677
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c483fc61eeadd8a50800000000000000
+      internalID: 6525112151249467468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_3
+      rect:
+        serializedVersion: 2
+        x: 947
+        y: 698
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1ba42ddab30cc190800000000000000
+      internalID: -7940967941852058850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_4
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 689
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02dcb8c84777d4a60800000000000000
+      internalID: 7659909883684965664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_5
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 691
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b14faee5d396ed0800000000000000
+      internalID: -2420335846856844491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_6
+      rect:
+        serializedVersion: 2
+        x: 1673
+        y: 697
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e33cbdd1f37085480800000000000000
+      internalID: -8910363895087250626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_7
+      rect:
+        serializedVersion: 2
+        x: 1949
+        y: 691
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53ecd525558074ed0800000000000000
+      internalID: -2429964311395971531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_8
+      rect:
+        serializedVersion: 2
+        x: 1971
+        y: 693
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b1fcb698b598ce90800000000000000
+      internalID: -7005184600339320399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_9
+      rect:
+        serializedVersion: 2
+        x: 1977
+        y: 689
+        width: 49
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93a19689285fdc990800000000000000
+      internalID: -7363959874429314503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_10
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 673
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb59ec01147efa860800000000000000
+      internalID: 7543502167509734846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_11
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 674
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fbab64545ae624c0800000000000000
+      internalID: -4312501945246176270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_12
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 659
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2161b335601be0b90800000000000000
+      internalID: -7273681707432471022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_13
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 665
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cd2736ba13ee3a40800000000000000
+      internalID: 5349963111228452289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_14
+      rect:
+        serializedVersion: 2
+        x: 1953
+        y: 661
+        width: 33
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c34c0199d51957cd0800000000000000
+      internalID: -2560980981904260036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_15
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 648
+        width: 27
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9f66d8bc53eb67f0800000000000000
+      internalID: -618150536455753825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_16
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 653
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d5b21ab56163320800000000000000
+      internalID: 2537240022871661930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_17
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 661
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 682106c8ae27aea20800000000000000
+      internalID: 3092410445846286982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_18
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd5b786d25ca16c70800000000000000
+      internalID: 8962634205230511580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_19
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 97
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e5cc630a484d5d90800000000000000
+      internalID: -7107445154198534685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_20
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 95
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9713334ebc6546330800000000000000
+      internalID: 3703180227312300409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_21
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 99
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a47e6b516fab1fb30800000000000000
+      internalID: 4319439083714045770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_22
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 101
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14a886d1c0c700350800000000000000
+      internalID: 5980916696622860865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_23
+      rect:
+        serializedVersion: 2
+        x: 1293
+        y: 94
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4911e637377735090800000000000000
+      internalID: -8046956771439406700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_24
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 99
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a021ed8f8740aeb30800000000000000
+      internalID: 4317268110405931530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_25
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 87
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79056274bfdacae0800000000000000
+      internalID: -1528163157432530566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_26
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 77
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13f142729917c2010800000000000000
+      internalID: 1165431306182729521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_27
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 87
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3e695e582169b2e0800000000000000
+      internalID: -2109548124436861381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_28
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 91
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae4706032da5ffc60800000000000000
+      internalID: 7854096133958694122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_29
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 87
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7dd475539f6dbb70800000000000000
+      internalID: 8916405515848047998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_30
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 79
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67748e1a34f830a60800000000000000
+      internalID: 7639106913592428406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_31
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 81
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 661d6b6ea3606ba10800000000000000
+      internalID: 1924732740796076390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_32
+      rect:
+        serializedVersion: 2
+        x: 1301
+        y: 69
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0c43f7c1fdd1f390800000000000000
+      internalID: -7786198250235409398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_33
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 71
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37c6eb2762723ffe0800000000000000
+      internalID: -1156537633216762765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_34
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 63
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72e0cd0f7fbf68680800000000000000
+      internalID: -8753031783431533017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_35
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 50
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61b11c8c33fa729d0800000000000000
+      internalID: -2799076006441182442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_36
+      rect:
+        serializedVersion: 2
+        x: 1593
+        y: 54
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 846e1144c46a75c80800000000000000
+      internalID: -8334009738936064440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_37
+      rect:
+        serializedVersion: 2
+        x: 1836
+        y: 55
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c41e9b7a6bbd50cd0800000000000000
+      internalID: -2592424432937344692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_38
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 61
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc09cce56869220d0800000000000000
+      internalID: -3449028860752129843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_39
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 49
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6efa5bb6a1ce95a20800000000000000
+      internalID: 3051729820740595686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_40
+      rect:
+        serializedVersion: 2
+        x: 1309
+        y: 47
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c8172d7014b2c820800000000000000
+      internalID: 2937107889911175363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_41
+      rect:
+        serializedVersion: 2
+        x: 1617
+        y: 49
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b07a2b57be04f2d20800000000000000
+      internalID: 3255892435648292619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-bubble_42
+      rect:
+        serializedVersion: 2
+        x: 988
+        y: 34
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c1f6b308229cee50800000000000000
+      internalID: 6840002634627609025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      player-bubble_0: 8029286644832534529
+      player-bubble_1: -6135242551120021838
+      player-bubble_10: 7543502167509734846
+      player-bubble_11: -4312501945246176270
+      player-bubble_12: -7273681707432471022
+      player-bubble_13: 5349963111228452289
+      player-bubble_14: -2560980981904260036
+      player-bubble_15: -618150536455753825
+      player-bubble_16: 2537240022871661930
+      player-bubble_17: 3092410445846286982
+      player-bubble_18: 8962634205230511580
+      player-bubble_19: -7107445154198534685
+      player-bubble_2: 6525112151249467468
+      player-bubble_20: 3703180227312300409
+      player-bubble_21: 4319439083714045770
+      player-bubble_22: 5980916696622860865
+      player-bubble_23: -8046956771439406700
+      player-bubble_24: 4317268110405931530
+      player-bubble_25: -1528163157432530566
+      player-bubble_26: 1165431306182729521
+      player-bubble_27: -2109548124436861381
+      player-bubble_28: 7854096133958694122
+      player-bubble_29: 8916405515848047998
+      player-bubble_3: -7940967941852058850
+      player-bubble_30: 7639106913592428406
+      player-bubble_31: 1924732740796076390
+      player-bubble_32: -7786198250235409398
+      player-bubble_33: -1156537633216762765
+      player-bubble_34: -8753031783431533017
+      player-bubble_35: -2799076006441182442
+      player-bubble_36: -8334009738936064440
+      player-bubble_37: -2592424432937344692
+      player-bubble_38: -3449028860752129843
+      player-bubble_39: 3051729820740595686
+      player-bubble_4: 7659909883684965664
+      player-bubble_40: 2937107889911175363
+      player-bubble_41: 3255892435648292619
+      player-bubble_42: 6840002634627609025
+      player-bubble_5: -2420335846856844491
+      player-bubble_6: -8910363895087250626
+      player-bubble_7: -2429964311395971531
+      player-bubble_8: -7005184600339320399
+      player-bubble_9: -7363959874429314503
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

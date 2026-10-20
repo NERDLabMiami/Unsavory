@@ -8,11 +8,18 @@ public class PauseScript : MonoBehaviour {
 	public GameObject pausedCanvas;
 	public GameObject gameElements;
 	public Text clock;
+	Level level;
 	public MusicLibrary music;
 	//TODO: Check if gameplaystarted varaible can be removed
 	public bool gamePlayStarted = false;
 	public Sprite pauseImage;
 	public Sprite playImage;
+
+	void Start() {
+		level = FindFirstObjectByType<Level>();
+		// The pause panel pops in each time it is enabled.
+		PanelPopAnim.Prepare(pausedCanvas, "", 0f, 0.5f, true);
+	}
 
 	public void pause() {
 		if (!isPaused) {
@@ -44,7 +51,9 @@ public class PauseScript : MonoBehaviour {
 
 	void Update() {
 	if (!isPaused && gamePlayStarted) {
-			clock.text = GetComponent<TimerScript>().getClock();
+			string time = GetComponent<TimerScript>().getClock();
+			clock.text = time;
+			if (level != null) level.SetHudClock(time);
 		}
 
 		var input = GameInput.Instance;

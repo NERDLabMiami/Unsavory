@@ -2,112 +2,112 @@
   "levels": [
     {
         "recipes": [1,2],
-        "waiting time": 8,
+        "waiting time": 4,
         "end": false
     },
     {
         "recipes": [2,3],
-        "waiting time": 8,
+        "waiting time": 4,
         "end": false
     },
     {
         "recipes": [4],
-        "waiting time": 8,
+        "waiting time": 4,
         "end": false
     },
     {
         "recipes": [5,6],
-        "waiting time": 8,
+        "waiting time": 4,
         "end": false
     },
     {
         "recipes": [7],
-        "waiting time": 7,
+        "waiting time": 3,
         "end": true
     },
     {
         "recipes": [8,2,3],
-        "waiting time": 7,
+        "waiting time": 3,
         "end": false
     },
     {
         "recipes": [9,2,3],
-        "waiting time": 7,
+        "waiting time": 3,
         "end": false
     },
     {
         "recipes": [10,7],
-        "waiting time": 7,
+        "waiting time": 2,
         "end": false
     },
     {
         "recipes": [11,2,3],
-        "waiting time": 7,
+        "waiting time": 2,
         "end": false
     },
     {
         "recipes": [12],
-        "waiting time": 6.5,
+        "waiting time": 4,
         "end": false
     },   
         {
         "recipes": [7,9],
-        "waiting time": 6.5,
+        "waiting time": 3.5,
         "end": false
     },
     {
         "recipes": [7,4],
-        "waiting time": 6.5,
+        "waiting time": 3,
         "end": false
     },
     {
         "recipes": [1,11,9],
-        "waiting time": 6.5,
+        "waiting time": 3,
         "end": false
     },
     {
         "recipes": [1,4,9],
-        "waiting time": 6.5,
+        "waiting time": 2,
         "end": false
     },
         {
         "recipes": [7,2,3],
-        "waiting time": 6,
+        "waiting time": 2,
         "end": false
     },
         {
         "recipes": [12,2],
-        "waiting time": 6,
+        "waiting time": 1.5,
         "end": false
     },
         {
         "recipes": [12,4],
-        "waiting time": 6,
+        "waiting time": 1.5,
         "end": false
     },
         {
         "recipes": [1,2,9,11],
-        "waiting time": 6,
+        "waiting time": 2,
         "end": false
     },
         {
         "recipes": [12,11,1],
-        "waiting time": 6,
+        "waiting time": 3,
         "end": false
     },
         {
         "recipes": [7,12],
-        "waiting time": 5.5,
+        "waiting time": 2.5,
         "end": false
     },
          {
         "recipes": [7,12],
-        "waiting time": 5.4,
+        "waiting time": 3,
         "end": false
     },
         {
         "recipes": [12,11,1],
-        "waiting time": 5.3,
+        "waiting time": 1,
         "end": false
     },    
 

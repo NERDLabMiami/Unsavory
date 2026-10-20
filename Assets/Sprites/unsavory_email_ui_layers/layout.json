@@ -1,0 +1,107 @@
+{
+  "units": "pixels",
+  "coordinate_system": "top-left",
+  "row": {
+    "canvas": [
+      2172,
+      724
+    ],
+    "panel": "row_panel_blank.png",
+    "tight_content_bounds": [
+      63,
+      166,
+      2110,
+      549
+    ],
+    "unread_dot": {
+      "sprite": "row_unread_dot.png",
+      "center": [
+        155,
+        339
+      ]
+    },
+    "sender_icon_anchor": [
+      369,
+      345
+    ],
+    "text_layout": {
+      "sender_origin": [
+        530,
+        256
+      ],
+      "subject_origin": [
+        530,
+        352
+      ],
+      "date_right_edge": 1930
+    }
+  },
+  "message_view": {
+    "canvas": [
+      941,
+      1672
+    ],
+    "background": "detail_background_blank.png",
+    "sections": {
+      "status_strip": {
+        "sprite": "detail_status_strip.png",
+        "top": 0,
+        "height": 114
+      },
+      "title_strip": {
+        "sprite": "detail_title_strip.png",
+        "top": 114,
+        "height": 144
+      },
+      "metadata_strip": {
+        "sprite": "detail_metadata_strip.png",
+        "top": 258,
+        "height": 184
+      },
+      "body_panel": {
+        "sprite": "detail_body_panel.png",
+        "top": 442,
+        "height": 1019
+      },
+      "nav_strip": {
+        "sprite": "detail_nav_strip.png",
+        "top": 1461,
+        "height": 211
+      }
+    },
+    "sender_icon_center": [
+      98,
+      350
+    ],
+    "sender_origin": [
+      180,
+      307
+    ],
+    "subject_origin": [
+      180,
+      360
+    ],
+    "date_right_edge": 886,
+    "body_text_bounds": [
+      43,
+      474,
+      889,
+      1446
+    ],
+    "nav_hit_areas": {
+      "email": [
+        38,
+        1463,
+        463,
+        1671
+      ],
+      "bills": [
+        463,
+        1463,
+        916,
+        1671
+      ]
+    }
+  },
+  "note": "All gray text bars and example avatar marks removed from the main panels. Overlays are separate PNGs; layer-ready ORA included."
+}

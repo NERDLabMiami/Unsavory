@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
 	private int sceneNumber;
-	private static AsyncOperation ao = null;
 	
 
 	public void goHome() {
+		Debug.Log("[Shift] goHome: loading Home");
 		SceneManager.LoadScene("Home");
 	}
 	public void mainMenu()
@@ -25,10 +25,6 @@ public class SceneLoader : MonoBehaviour {
 		PlayerPrefs.SetInt("times played", timesPlayed);
 		sceneNumber = 1;
 		SceneManager.LoadScene("Game");
-	}
-
-	public void restartLevel() {
-		ao = Application.LoadLevelAsync(1);
 	}
 
 	public void RestartGame() {
@@ -82,6 +78,8 @@ public class SceneLoader : MonoBehaviour {
 		PlayerPrefs.SetInt("late effect", 0);
 		PlayerPrefs.SetInt("overtime effect", 0);
 		PlayerPrefs.SetInt("electricity effect", 0);
+		PlayerPrefs.SetInt("phone effect", 0);
+		PlayerPrefs.SetInt("insurance effect", 0);
 		
 		//read bills JSON
 		string billData =  Resources.Load<TextAsset>("bills").ToString();

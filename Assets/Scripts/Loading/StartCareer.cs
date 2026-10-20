@@ -56,6 +56,8 @@ public class StartCareer : MonoBehaviour {
 			PlayerPrefs.SetInt("late effect", 0);
 			PlayerPrefs.SetInt("overtime effect", 0);
 			PlayerPrefs.SetInt("electricity effect", 0);
+			PlayerPrefs.SetInt("phone effect", 0);
+			PlayerPrefs.SetInt("insurance effect", 0);
 
 		//read bills JSON
 			string billData =  Resources.Load<TextAsset>("bills").ToString();

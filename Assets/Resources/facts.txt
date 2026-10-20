@@ -10,11 +10,312 @@
 				{"fact":	"Only 24% of food preparation and service workers have access to paid sick days."},
 				{"fact":	"California, Connecticut and Massachusetts have state-paid sick day laws."},
 				{"fact":	"Three quarters of restaurant workers surveyed who worked while sick reported doing so because they could not afford to take the day off."}
-				  	]  
- },
- {
+			],
+	"letter_types": ["Dear Leader", "News", "Employer", "CDC"],
  	"letters": [
-					"Flu season is upon us! If you're feeling sick, you shouldn't go to work. In 2009 during the H1N1 pandemic, it's estimated that an additional 7 million people were infected because contagious employees didn't stay home from work to recover. Stay healthy!",
-  					"You don't look so well, maybe you caught that bug that was going around. It'd probably be best for you to take a day off right? Wrong! You can't afford to! Almost 90 percent of restaurant workers today are forced to work through their illness because they aren't given sick leave! That's not healthy for them or the customers! The Healthy Families Act would mandate up to 7 days of paid sick leave for almost all workers. Help spread the word!",
- 					"Your poor health is affecting your ability to do your job. Unfortunately your employer doesn't provide paid sick leave. Lack of benefits and minimum wage are putting you in a tight spot, like millions of other people. Isn't it time to do something about this?"]
+ 					{
+ 						"text": "By now you may have heard from the lamestream media about this coronavirus. There is no need to worry, everything is going to be handled very well. We have a plan. We are banning travel to and from China. These experts tell me that we should do more, but I'm doing plenty.",
+ 						"type": 0,
+ 						"action": "",
+ 						"fired": false
+ 					},
+ 					{
+ 						"text": "A patient near Seattle, Washington, has died from the coronavirus. Trump administration officials declined an offer for congressional coronavirus funding. Health and Human Services Secretary Alex Azar has said that the United States didn't need emergency funding and that states would be able to handle it within existing appropriations.",
+ 						"type": 1,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The Coronavirus is very much under control in the USA. We are in contact with everyone and all relevant countries. CDC & World Health have been working hard and very smart. We've taken the most aggressive actions to confront the coronavirus. They are the most aggressive taken by any country. And we're the No. 1 travel destination anywhere in the world, yet we have far fewer cases of the disease than even countries with much less travel or a much smaller population. Stock market is starting to look very good to me!",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_earn.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "Can you believe this stock market activity? My portfolio is looking great! It’s unfortunate that we don’t have a retirement savings plan for our employees. We totally would have the money to do it if we could pay you less hourly. We also had to let our cashiers go as they were too expensive to employ. Don’t worry, we’re not asking you to take on additional responsibilities. We purchased these really cool robots that take orders for our customers. Plus, now customers are safer because they don’t have to worry about contracting the virus from one of you.",
+ 						"type": 2,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_relief.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "Please be advised that for the next 8 weeks, you should not hold gatherings of 50 people or more. This includes weddings, festivals, parades, concerts, sporting events and conferences. Additionally, we have lifted all federal restrictions on coronavirus testing. If you feel sick, go get tested!",
+ 						"type": 3,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The lamestream media is saying that we don't have enough Personal Protection Equipment. WRONG! I saw some on Amazon for sale, so if you want to be a wuss and wear a mask, go ahead and buy one!!! We will have a vaccine ready in 3 or 4 months. Last year 37,000 Americans died from the common Flu. It averages between 27,000 and 70,000 per year. Nothing is shut down, life & the economy go on. At this moment there are 546 confirmed cases of CoronaVirus, with 22 deaths. Think about that! Last year 37,000 Americans died from the common Flu. It averages between 27,000 and 70,000 per year. Nothing is shut down, life & the economy go on. At this moment there are 546 confirmed cases of CoronaVirus, with 22 deaths. Think about that! But you know, I am declaring a national emergency.",
+ 						"type": 0,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "This pandemic is really affecting our bottom line. In order for us to avoid bankruptcy, we will be transitioning you to part time employment. If it makes you feel better, I've heard that nearly 10 million other Americans are now unemployed. You should be grateful that you still have a job.",
+ 						"type": 2,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_inequality.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "Protests have popped up in several U.S. states against government-imposed lockdowns in response to the COVID-19 pandemic in the United States. They range in size from a few hundred to several thousand people. Public health experts have condemned these events as unsafe and ill-advised.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_vulnerable.html",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "LIBERATE MICHIGAN! LIBERATE MINNESOTA! These are people expressing their views and they seem to be very responsible people to me. I think they're being treated very rough.",
+ 						"action": "http://games.nerdlab.miami/unsavory/action_relaxation.html",
+ 						"type": 0,
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "Over 100,000 Americans have died of Covid-19. The death toll in the United States is far higher than any other nation in the world. In the wake of George Floyd's death while in the custody of Minneapolis Police, protests against police brutality have broken out across the United States. There is a fear that the close proximity of protesters might create conditions for spreading the virus. In New York City, notably where most protestors wore masks, a surge in cases has not been seen.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_mental_health.html",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "Great job last night at the White House by the U.S. @SecretService. They were not only totally professional, but very cool. I was inside, watched every move, and couldn’t have felt more safe. They let the 'protesters' scream & rant as much as they wanted, but whenever someone got too frisky or out of line, they would quickly come down on them, hard - didn't know what hit them. The front line was replaced with fresh agents, like magic. Big crowd, professionally organized, but nobody came close to breaching the fence. If they had they would have been greeted with the most vicious dogs and most ominous weapons I have ever seen. That's when people would have been really badly hurt, at least. Many Secret Service agents are just waiting for action. 'We put the young ones on the front line, sir, they love it, and good practice.' As you saw last night, they were very cool & very professional. Never let it get out of hand. Thank you! On the bad side, the D.C. Mayor, who is always looking for money & help, wouldn't let the D.C. Police get involved. 'Not their job.' Nice!",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_race.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "States in the south are seeing a sharp rise in Covid-19 cases. As of June 19, the United States reported more than 30,000 new infections, the highest since May 1st.",
+ 						"type": 1,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "More than 5 million Americans have lost their health insurance between February and May. This is due to health insurance being tied to an employer, thus losing a job results in a loss of health insurance. The U.S. Public Interest Research Group (PIRG) and 150 health professionals have sent a letter asking the government to shut down now and implement a new quarantine order for 6 to 8 weeks, believing that a lockdown would restore the country by October 1st, in time to reopen schools and have an in-person election.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_follow_orders.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "I've sent a formal notice to the World Health Organization that the United States is withdrawing, effective July 6th, 2021. Also, I’m sure you’ve seen the lamestream media talking about how I wore a mask for the first time. Look, I'm a beautiful man, and masks hide my natural beauty. I don't think I'll be wearing one again.",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_response.html",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "Dang, business has been pretty brutal. I'd really like to keep you working part time, but we'll have to reduce your hours. Don't worry, we have purchased additional robots to assemble orders when you're not working. Our customers seem to like them. So, don't worry about the company, our dear leader has this handled and it should all be fixed soon. Once it's fixed, I'm sure Rocket Taco will become highly profitable, maybe enough that we can have you work more hours.",
+ 						"type": 2,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_poverty.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The United States of America has surpassed 7 million covid cases with over 200,000 deaths. The country has the highest case and death count in the world.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_response.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "It's October! That means the loan we received from the government to keep paying you doesn't have to be paid back. It's been a pleasure having you as an employee for however long you've been with us. Unfortunately our customers are pretty happy with our new robot workforce, so we will be transitioning to a fully automated workforce at each of our restaurants. Good thing they can’t automate my job, right? Well, anyways, good luck.",
+ 						"type": 2,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_donate.html",
+ 						"fired": true
+ 					},
+
+ 					{
+ 						"text": "I got the rona! Don't worry about me, I'm headed off to Walter Reed to get the best health care money can buy. I'll be fine.",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_vote.html",
+ 						"fired": true
+ 					}
+				],
+
+ 	"unemployed_letters": [
+ 					{
+ 						"text": "By now you may have heard from the lamestream media about this coronavirus. There is no need to worry, everything is going to be handled very well. We have a plan. We are banning travel to and from China. These experts tell me that we should do more, but I'm doing plenty.",
+ 						"type": 0,
+ 						"action": "",
+ 						"fired": false
+ 					},
+ 					{
+ 						"text": "A patient near Seattle, Washington, has died from the coronavirus. Trump administration officials declined an offer for congressional coronavirus funding. Health and Human Services Secretary Alex Azar has said that the United States didn't need emergency funding and that states would be able to handle it within existing appropriations.",
+ 						"type": 1,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The Coronavirus is very much under control in the USA. We are in contact with everyone and all relevant countries. CDC & World Health have been working hard and very smart. We've taken the most aggressive actions to confront the coronavirus. They are the most aggressive taken by any country. And we're the No. 1 travel destination anywhere in the world, yet we have far fewer cases of the disease than even countries with much less travel or a much smaller population. Stock market is starting to look very good to me!",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_earn.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The job market has cratered. The monthly unemployment rate for the month of April, 2020 is 14.7%",
+ 						"type": 1,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "Please be advised that for the next 8 weeks, you should not hold gatherings of 50 people or more. This includes weddings, festivals, parades, concerts, sporting events and conferences. Additionally, we have lifted all federal restrictions on coronavirus testing. If you feel sick, go get tested!",
+ 						"type": 3,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The lamestream media is saying that we don't have enough Personal Protection Equipment. WRONG! I saw some on Amazon for sale, so if you want to be a wuss and wear a mask, go ahead and buy one!!! We will have a vaccine ready in 3 or 4 months. Last year 37,000 Americans died from the common Flu. It averages between 27,000 and 70,000 per year. Nothing is shut down, life & the economy go on. At this moment there are 546 confirmed cases of CoronaVirus, with 22 deaths. Think about that! Last year 37,000 Americans died from the common Flu. It averages between 27,000 and 70,000 per year. Nothing is shut down, life & the economy go on. At this moment there are 546 confirmed cases of CoronaVirus, with 22 deaths. Think about that! But you know, I am declaring a national emergency.",
+ 						"type": 0,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "The job market is still depressed. The monthly unemployment rate for the month of May, 2020 is 13.3%",
+ 						"type": 2,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_inequality.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "Protests have popped up in several U.S. states against government-imposed lockdowns in response to the COVID-19 pandemic in the United States. They range in size from a few hundred to several thousand people. Public health experts have condemned these events as unsafe and ill-advised.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_vulnerable.html",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "LIBERATE MICHIGAN! LIBERATE MINNESOTA! These are people expressing their views and they seem to be very responsible people to me. I think they're being treated very rough.",
+ 						"action": "http://games.nerdlab.miami/unsavory/action_relaxation.html",
+ 						"type": 0,
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "Over 100,000 Americans have died of Covid-19. The death toll in the United States is far higher than any other nation in the world. In the wake of George Floyd's death while in the custody of Minneapolis Police, protests against police brutality have broken out across the United States. There is a fear that the close proximity of protesters might create conditions for spreading the virus. In New York City, notably where most protestors wore masks, a surge in cases has not been seen.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_mental_health.html",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "Great job last night at the White House by the U.S. @SecretService. They were not only totally professional, but very cool. I was inside, watched every move, and couldn’t have felt more safe. They let the 'protesters' scream & rant as much as they wanted, but whenever someone got too frisky or out of line, they would quickly come down on them, hard - didn't know what hit them. The front line was replaced with fresh agents, like magic. Big crowd, professionally organized, but nobody came close to breaching the fence. If they had they would have been greeted with the most vicious dogs and most ominous weapons I have ever seen. That's when people would have been really badly hurt, at least. Many Secret Service agents are just waiting for action. 'We put the young ones on the front line, sir, they love it, and good practice.' As you saw last night, they were very cool & very professional. Never let it get out of hand. Thank you! On the bad side, the D.C. Mayor, who is always looking for money & help, wouldn't let the D.C. Police get involved. 'Not their job.' Nice!",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_race.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "States in the south are seeing a sharp rise in Covid-19 cases. As of June 19, the United States reported more than 30,000 new infections, the highest since May 1st.",
+ 						"type": 1,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "More than 5 million Americans have lost their health insurance between February and May. This is due to health insurance being tied to an employer, thus losing a job results in a loss of health insurance. The U.S. Public Interest Research Group (PIRG) and 150 health professionals have sent a letter asking the government to shut down now and implement a new quarantine order for 6 to 8 weeks, believing that a lockdown would restore the country by October 1st, in time to reopen schools and have an in-person election.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_follow_orders.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "I've sent a formal notice to the World Health Organization that the United States is withdrawing, effective July 6th, 2021. Also, I’m sure you’ve seen the lamestream media talking about how I wore a mask for the first time. Look, I'm a beautiful man, and masks hide my natural beauty. I don't think I'll be wearing one again.",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_response.html",
+ 						"fired": false
+ 					},
+
+
+ 					{
+ 						"text": "The job market is still depressed. The monthly unemployment rate for the month of July, 2020 is 10.2%",
+ 						"type": 1,
+ 						"action": "",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "The United States of America has surpassed 7 million covid cases with over 200,000 deaths. The country has the highest case and death count in the world.",
+ 						"type": 1,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_response.html",
+ 						"fired": false
+ 					},
+
+ 					{
+ 						"text": "It's October! That means the loan we received from the government to keep paying you doesn't have to be paid back. It's been a pleasure having you as an employee for however long you've been with us. Unfortunately our customers are pretty happy with our new robot workforce, so we will be transitioning to a fully automated workforce at each of our restaurants. Good thing they can’t automate my job, right? Well, anyways, good luck.",
+ 						"type": 2,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_donate.html",
+ 						"fired": true
+ 					},
+
+ 					{
+ 						"text": "I got the rona! Don't worry about me, I'm headed off to Walter Reed to get the best health care money can buy. I'll be fine.",
+ 						"type": 0,
+ 						"action": "http://games.nerdlab.miami/unsavory/action_vote.html",
+ 						"fired": true
+ 					}
+				],
+  "timeline": [	
+  				{"text_employed": "",
+  				 "text_unemployed": "You are unemployed. That was fast."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You are still unemployed."},
+  				{"text_employed": "You cannot stop worrying about how you are going to pay for bills. The economy is a source of stress for 70% of Americans compared to the usual 46%.",
+  				 "text_unemployed": "You cannot stop worrying about how you are going to pay for bills. The economy is a source of stress for 70% of Americans compared to the usual 46%."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You take up couponing so that you can finally start eating more. It works but do not know how you are going to coupon your way out of your next month's rent."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You enter a restraurant out of curiosity and see a party of 45 people. The employees have to serve them. You feel conflicted in your jealousy."},
+  				{"text_employed": "The constant stress of barely getting by has took a toll on your mental health. More than one third of Americans have displayed clinical signs of anxiety, depression, or both since the pandemic.",
+  				 "text_unemployed": "The constant stress of barely getting by has took a toll on your mental health. More than one third of Americans have displayed clinical signs of anxiety, depression, or both since the pandemic."},
+  				{"text_employed": "",
+  				 "text_unemployed": "Your old coworkers want to start a union. Their boss finds out and fires all of them explaining that budget cuts were needed in these hard times."},
+  				{"text_employed": "You have finally received a government stimulus check for $1200.",
+  				 "text_unemployed": "You are shopping and a protester gives you a badge to show solidarity of the death of George Floyd. You put the pin on your pocket and continue shopping. A customer notices it and complains that you are holding violent political views. You are asked to vacate the store premises or they'll call the police."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You are at the post office and someone comes in without a mask. You tell them that they should put on a mask. The customer tells you that it is their constitutional right. The customer gets violent and tries to swing at you, which you thankfully dodge."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You have no longer have health insurance as it was tied to your former employer. You desperately look for a new policy, but the cheapest options cost more than you can afford."},
+  				{"text_employed": "You hear that a co-worker has been diagnosed with Covid-19. You had a shift with him last week.",
+  				 "text_unemployed": "A former co-worker has been hospitalized with Covid-19. You worry you might have contracted it. You want to go get tested but it is extremely expensive. You cannot afford it."},
+  				{"text_employed": "",
+  				 "text_unemployed": "Does anyone know how to cope with the conditions of this pandemic? You are stressed out and are trying not to watch the news as thousands of new cases are showing up every day."},
+  				{"text_employed": "You're definitely sick, but you aren't sure if it is Covid-19. You have already had your hours cut and you're worried that if you stay home to get better you might be laid off.",
+  				 "text_unemployed": "You miss your family dearly, unfortunately your mother is very suceptible to catching the virus. You suck it up and keep your distance. "},
+  				{"text_employed": "",
+  				 "text_unemployed": "Your television breaks. A new TV is too expensive. You stay inside, sitting around with no entertainment."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You are unemployed."},
+  				{"text_employed": "No need to show up for work, you're officially unemployed. You're not sure if you'll be able to get your old job back when this is all over.",
+  				 "text_unemployed": "You're not sure if you'll be able to find a job before your landlord evicts you."},
+  				{"text_employed": "",
+  				 "text_unemployed": "Fortunately, you have no dependents. It's a good thing too, you're barely able to afford food for yourself."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You spend the day researching new careers, but you don't feel unqualified for any of them. If only you could afford to go back to school..."},
+  				{"text_employed": "",
+  				 "text_unemployed": "You'd like to get out of the house, but you're worried as people in your neighborhood don't wear masks."},
+  				{"text_employed": "",
+  				 "text_unemployed": ""}
+			]				
+
  }

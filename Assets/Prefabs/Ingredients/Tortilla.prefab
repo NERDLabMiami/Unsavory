@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 21261618}
   - component: {fileID: 9509562}
   - component: {fileID: 11444190}
-  - component: {fileID: 11442916}
   m_Layer: 0
   m_Name: Tortilla
   m_TagString: Ingredient
@@ -30,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,11 +79,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingLayerID: 656579237
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: fa8d7cc3e065c43e284803239f737fa5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca7febbb3b5eb4961bb94a0aadde8136, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -131,16 +130,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsWithCollisionToDisable: {fileID: 0}
   gateReason: AnimationFunctions
---- !u!114 &11442916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1386ef2c17462445191dae9de9fe10d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  message: The tortilla is your foundation!

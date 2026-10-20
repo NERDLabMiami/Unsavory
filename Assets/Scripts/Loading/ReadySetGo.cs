@@ -68,7 +68,8 @@ public class ReadySetGo : MonoBehaviour
 
         timer.GetComponent<TimerScript>().running = true;
         Time.timeScale = 1f;
-        currentOrder.plate.SeedTortilla();
+        // The first order of the shift starts on a fresh tray, whatever was left on the table before.
+        currentOrder.plate.NewTray(false);
         currentOrder.newOrder();
         if (currentOrder.GetActiveOrdersUnsafe().TrueForAll(o => o == null)) currentOrder.newOrder();
         Debug.Log($"[Start] orders={currentOrder.GetActiveOrdersUnsafe().Count} timeScale={Time.timeScale}");
@@ -93,7 +94,7 @@ public class ReadySetGo : MonoBehaviour
             if (wordIndex >= words.Length)
             {
                 var anim = GetComponentInChildren<Animator>();
-                if (anim) anim.SetTrigger("finished");
+                if (anim) AnimUtil.Get<CountdownWordAnim>(anim.gameObject).Finished();
 
                 display.text = "Get to work.";
                 finished = true;
@@ -104,7 +105,7 @@ public class ReadySetGo : MonoBehaviour
             {
                 display.text = words[wordIndex];
                 var anim = GetComponentInChildren<Animator>();
-                if (anim) anim.SetTrigger("wobble");
+                if (anim) AnimUtil.Get<CountdownWordAnim>(anim.gameObject).Wobble();
             }
         }
     }

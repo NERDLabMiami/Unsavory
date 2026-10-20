@@ -326,7 +326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1a14a438b91854e418adf14161619eb9, type: 3}
+  m_Sprite: {fileID: 3718635276971278462, guid: d19e487d9356a4223866d3b5995946f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2157,6 +2157,8 @@ MonoBehaviour:
   paidSickDays: {fileID: 2047955502}
   mixer: {fileID: 24100000, guid: 54ae4077a8bd34f76ba9e06a2627c382, type: 2}
   mainAudio: {fileID: 1903043189}
+  sfxSlider: {fileID: 0}
+  backgroundSlider: {fileID: 0}
 --- !u!82 &402971050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2677,10 +2679,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 584416891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.18437403}
-  m_AnchorMax: {x: 1, y: 0.8392011}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 10.975002}
+  m_SizeDelta: {x: 0, y: -38.050003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &543483327
 MonoBehaviour:
@@ -2703,8 +2705,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 264db7c1a98704b95b5a8e19a67ceaee, type: 3}
-    m_FontSize: 92
+    m_Font: {fileID: 12800000, guid: 789879f1121584fee8c6a5e14c6ed47f, type: 3}
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2715,7 +2717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CONTINUE
+  m_Text: Continue
 --- !u!222 &543483328
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3356,7 +3358,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 675.1467, y: 188}
+  m_SizeDelta: {x: 523.2819, y: 176.5964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &584416892
 MonoBehaviour:
@@ -3567,7 +3569,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a4e9be642bb3471ba298ea9b4a1198a, type: 3}
+  m_Sprite: {fileID: 2530564911472380330, guid: bfe92eae2f9f949c6baf6271e67a619f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3795,7 +3797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: -260}
+  m_AnchoredPosition: {x: 123.69, y: -403.6}
   m_SizeDelta: {x: 807.207, y: 520}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &745241509
@@ -5358,7 +5360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -81.8, y: -200}
+  m_AnchoredPosition: {x: -51.2, y: -346.1}
   m_SizeDelta: {x: 364, y: 90}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1046216564
@@ -7798,7 +7800,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 675.1467, y: 188}
+  m_SizeDelta: {x: 523.2819, y: 176.5964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856997564
 MonoBehaviour:
@@ -7900,7 +7902,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a4e9be642bb3471ba298ea9b4a1198a, type: 3}
+  m_Sprite: {fileID: 2530564911472380330, guid: bfe92eae2f9f949c6baf6271e67a619f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8301,10 +8303,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1856997563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.18437403}
-  m_AnchorMax: {x: 1, y: 0.8392011}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 10.975002}
+  m_SizeDelta: {x: 0, y: -38.050003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1895754843
 MonoBehaviour:
@@ -8327,8 +8329,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 264db7c1a98704b95b5a8e19a67ceaee, type: 3}
-    m_FontSize: 92
+    m_Font: {fileID: 12800000, guid: 789879f1121584fee8c6a5e14c6ed47f, type: 3}
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -8339,7 +8341,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NEW GAME
+  m_Text: New Game
 --- !u!222 &1895754844
 CanvasRenderer:
   m_ObjectHideFlags: 0

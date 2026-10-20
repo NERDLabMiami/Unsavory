@@ -35,7 +35,7 @@ public class SneezeScript : MonoBehaviour {
 				launchedLevelEnd = true;
 				timer.GetComponent<TimerScript>().running = false;
 				level.setTimeWorked(timer.getTimeWorked());
-				level.EndOfLevel(false, true);
+				level.EndRound(RoundOutcome.Sick);
 
 			}
 		}

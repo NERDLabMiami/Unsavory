@@ -1,0 +1,574 @@
+fileFormatVersion: 2
+guid: a28572883e3314a54875477aa6c69b3f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 909926395323082316
+    second: phone-icons-sprite-sheet_0
+  - first:
+      213: -7915751026437336049
+    second: phone-icons-sprite-sheet_1
+  - first:
+      213: 2581397680487730382
+    second: phone-icons-sprite-sheet_2
+  - first:
+      213: 7820600318983705201
+    second: phone-icons-sprite-sheet_3
+  - first:
+      213: -1065256020038591038
+    second: phone-icons-sprite-sheet_4
+  - first:
+      213: -4705910278509890974
+    second: phone-icons-sprite-sheet_5
+  - first:
+      213: 7259704147340864710
+    second: phone-icons-sprite-sheet_6
+  - first:
+      213: -6633600848593840211
+    second: phone-icons-sprite-sheet_7
+  - first:
+      213: -5500744550235881625
+    second: phone-icons-sprite-sheet_8
+  - first:
+      213: -9216496835501742895
+    second: phone-icons-sprite-sheet_9
+  - first:
+      213: 2323551693343840885
+    second: phone-icons-sprite-sheet_10
+  - first:
+      213: 58621795466103762
+    second: phone-icons-sprite-sheet_11
+  - first:
+      213: 4565089615270306905
+    second: phone-icons-sprite-sheet_12
+  - first:
+      213: -1015292270696053380
+    second: phone-icons-sprite-sheet_13
+  - first:
+      213: 1834308482549935043
+    second: phone-icons-sprite-sheet_14
+  - first:
+      213: 8415031361936951264
+    second: phone-icons-sprite-sheet_15
+  - first:
+      213: -1217826782276725276
+    second: phone-icons-sprite-sheet_16
+  - first:
+      213: -5364924524706355722
+    second: phone-icons-sprite-sheet_17
+  - first:
+      213: 6419105345184052041
+    second: phone-icons-sprite-sheet_18
+  - first:
+      213: 979367869652853252
+    second: phone-icons-sprite-sheet_19
+  - first:
+      213: -3222648001258649443
+    second: phone-icons-sprite-sheet_20
+  - first:
+      213: 466813040293309799
+    second: phone-icons-sprite-sheet_21
+  - first:
+      213: 6636656123527100878
+    second: phone-icons-sprite-sheet_22
+  - first:
+      213: 2215069508507013736
+    second: phone-icons-sprite-sheet_23
+  - first:
+      213: -5722111137651522376
+    second: phone-icons-sprite-sheet_24
+  - first:
+      213: -3489184006968506576
+    second: phone-icons-sprite-sheet_25
+  - first:
+      213: -6508199975775591877
+    second: phone-icons-sprite-sheet_26
+  - first:
+      213: -44444570021210954
+    second: phone-icons-sprite-sheet_27
+  - first:
+      213: 7747378683428871260
+    second: phone-icons-sprite-sheet_28
+  - first:
+      213: -4545071509466690702
+    second: phone-icons-sprite-sheet_29
+  - first:
+      213: 1116399433802931506
+    second: phone-icons-sprite-sheet_30
+  - first:
+      213: 7455164398438640747
+    second: phone-icons-sprite-sheet_31
+  - first:
+      213: -232974611973862171
+    second: phone-icons-sprite-sheet_32
+  - first:
+      213: 6649292461790826433
+    second: phone-icons-sprite-sheet_33
+  - first:
+      213: -545690479115898364
+    second: phone-icons-sprite-sheet_34
+  - first:
+      213: 8488094441110564235
+    second: phone-icons-sprite-sheet_35
+  - first:
+      213: -3489767902250379974
+    second: phone-icons-sprite-sheet_36
+  - first:
+      213: 4847019825058405862
+    second: phone-icons-sprite-sheet_37
+  - first:
+      213: -1387668812169529881
+    second: phone-icons-sprite-sheet_38
+  - first:
+      213: 4438400579398068146
+    second: phone-icons-sprite-sheet_39
+  - first:
+      213: 5605178257388179458
+    second: phone-icons-sprite-sheet_40
+  - first:
+      213: 6088364866694117057
+    second: phone-icons-sprite-sheet_41
+  - first:
+      213: -3008466901405328066
+    second: phone-icons-sprite-sheet_42
+  - first:
+      213: 6017489876010046760
+    second: phone-icons-sprite-sheet_43
+  - first:
+      213: 1731746511844064530
+    second: phone-icons-sprite-sheet_44
+  - first:
+      213: 832643931296681253
+    second: phone-icons-sprite-sheet_45
+  - first:
+      213: -393779214278181909
+    second: phone-icons-sprite-sheet_46
+  - first:
+      213: 7175022441818558067
+    second: phone-icons-sprite-sheet_47
+  - first:
+      213: -6315882001765674058
+    second: phone-icons-sprite-sheet_48
+  - first:
+      213: -8432602754287712153
+    second: phone-icons-sprite-sheet_49
+  - first:
+      213: 8482581660322962945
+    second: phone-icons-sprite-sheet_50
+  - first:
+      213: -5964195426809823284
+    second: phone-icons-sprite-sheet_51
+  - first:
+      213: 3713205754992646291
+    second: phone-icons-sprite-sheet_52
+  - first:
+      213: 2096948743588051535
+    second: phone-icons-sprite-sheet_53
+  - first:
+      213: 5080046168905773920
+    second: phone-icons-sprite-sheet_54
+  - first:
+      213: 6518602246059318035
+    second: phone-icons-sprite-sheet_55
+  - first:
+      213: -4457868260870941631
+    second: phone-icons-sprite-sheet_56
+  - first:
+      213: 8020434657446352108
+    second: phone-icons-sprite-sheet_57
+  - first:
+      213: -8541746762412187610
+    second: phone-icons-sprite-sheet_58
+  - first:
+      213: 2170419408902997724
+    second: phone-icons-sprite-sheet_59
+  - first:
+      213: 5538477213657938734
+    second: phone-icons-sprite-sheet_60
+  - first:
+      213: 8832581738429996757
+    second: phone-icons-sprite-sheet_61
+  - first:
+      213: 8801165123067022250
+    second: phone-icons-sprite-sheet_62
+  - first:
+      213: -3658248684892630701
+    second: phone-icons-sprite-sheet_63
+  - first:
+      213: -3093535915782121683
+    second: phone-icons-sprite-sheet_64
+  - first:
+      213: -5338738502678867679
+    second: phone-icons-sprite-sheet_65
+  - first:
+      213: 420564387890930812
+    second: phone-icons-sprite-sheet_66
+  - first:
+      213: 3679735774307985402
+    second: phone-icons-sprite-sheet_67
+  - first:
+      213: -4950985729280478742
+    second: phone-icons-sprite-sheet_68
+  - first:
+      213: -6683386349201053601
+    second: phone-icons-sprite-sheet_69
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 599
+        width: 308
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c46ebfc4c35b0ac00800000000000000
+      internalID: 909926395323082316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_1
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 604
+        width: 340
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3095445a7cc6437aa5400cbd015e809
+      internalID: -7915751026437336049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_2
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 543
+        width: 289
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23045fc04301d49bcb26b746c1c8296f
+      internalID: 2581397680487730382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_3
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 571
+        width: 292
+        height: 328
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a95448be73e7040caa2de2f1c1db00c4
+      internalID: 7820600318983705201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 579
+        width: 290
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c68351901eea4210805b433830f912b
+      internalID: -1065256020038591038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_5
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 194
+        width: 200
+        height: 276
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d371b6d7e85c649a69bd23ae630375a7
+      internalID: -4705910278509890974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_6
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 195
+        width: 178
+        height: 268
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1426b9109d684c6db1832466f360a10
+      internalID: 7259704147340864710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_7
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 228
+        width: 245
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e7a4bc99acb04610af8512787dce8f3
+      internalID: -6633600848593840211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_8
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 184
+        width: 244
+        height: 276
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 462e6b52f5e524d4b95e52a602375aad
+      internalID: -5500744550235881625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: phone-icons-sprite-sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 191
+        width: 253
+        height: 262
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b20b9eabe5cb44a00844448966977ba6
+      internalID: -9216496835501742895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: cf8aebcc8b2d14ae99bc446f57048624
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":2.0},"gridSpriteSize":{"x":289.0,"y":543.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      phone-icons-sprite-sheet_0: 909926395323082316
+      phone-icons-sprite-sheet_1: -7915751026437336049
+      phone-icons-sprite-sheet_2: 2581397680487730382
+      phone-icons-sprite-sheet_3: 7820600318983705201
+      phone-icons-sprite-sheet_4: -1065256020038591038
+      phone-icons-sprite-sheet_5: -4705910278509890974
+      phone-icons-sprite-sheet_6: 7259704147340864710
+      phone-icons-sprite-sheet_7: -6633600848593840211
+      phone-icons-sprite-sheet_8: -5500744550235881625
+      phone-icons-sprite-sheet_9: -9216496835501742895
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

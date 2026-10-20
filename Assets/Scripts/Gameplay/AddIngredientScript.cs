@@ -20,32 +20,19 @@ public class AddIngredientScript : MonoBehaviour, IWorldInteractable {
 
 	public void TryAdd()
 	{
-		GetComponent<Animator>().SetTrigger("tapped");
-		bool added = false;
-		if (ingredient != null)
-		{
-			if (!plate.GetComponent<PlateScript>().hasIngredient(ingredient))
-			{
-				Spawn();
-				if (music) music.playEffect(soundEffect);
-				plate.GetComponent<PlateScript>().ingredients.Add(ingredient);
-				added = true;
-			}
-		}
+		if (ingredient == null) return;
+		var plateScript = plate.GetComponent<PlateScript>();
+		if (plateScript.hasIngredient(ingredient)) return;
+		if (!plateScript.HasOrderToBuild) return;
 
-		if (added) {
-			var plateScript = plate.GetComponent<PlateScript>();
-			if (plateScript.tutorialMode && plateScript.tutor != null) plateScript.tutor.OnTutorialIngredientAdded();
-			// Check the order last, so a completing ingredient serves it after the tutorial has noted the add.
-			plateScript.OnIngredientAdded(ingredient);
-		}
+		plateScript.EnsureTray();
+		plateScript.SpawnOnTray(ingredient);
+		if (music) music.playEffect(soundEffect);
+		plateScript.ingredients.Add(ingredient);
+
+		if (plateScript.tutorialMode && plateScript.tutor != null) plateScript.tutor.OnTutorialIngredientAdded();
+		// Check the order last, so a completing ingredient serves it after the tutorial has noted the add.
+		plateScript.OnIngredientAdded(ingredient);
 	}
 
-	void Spawn() {
-		Vector3 newIngredientPosition = plate.transform.position;
-		GameObject item = (GameObject) Instantiate(ingredient, newIngredientPosition, Quaternion.identity);
-		item.transform.parent = plate.transform;
-	}
-
-	
 }

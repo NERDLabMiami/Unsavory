@@ -22,8 +22,18 @@ public class IngredientGridSelector : MonoBehaviour
     public HandSide handSide = HandSide.RightOfTray;
     [Tooltip("How far the fingertip reaches into the tray, in world units.")]
     public float tipOverlap = 0.15f;
+    [Tooltip("Tip Overlap was tuned for trays this wide (world units); it is scaled by the selected tray's width relative to this, so smaller trays get a proportionally smaller reach. 0 = use Tip Overlap as is.")]
+    public float referenceTrayWidth = 2.5f;
+    [Tooltip("The Player object (grabbing hand, tray, sauce hand). Moved as a whole so the grabbing hand sits on the bin. Defaults to the highlight's parent.")]
+    public Transform playerRoot;
+    [Tooltip("The hand that holds the sauce. Defaults to the Player's 'Right Hand' child.")]
+    public Transform sauceHand;
+    public float moveTime = 0.12f;
     public PlateScript plate;
     public NoseWipeScript nose;
+
+    /// <summary>Raised when the highlight lands on a different tray (not when a press is stopped by an edge).</summary>
+    public event System.Action SelectionChanged;
 
     int _row, _col;
     bool _blockedLastFrame = true;
@@ -31,7 +41,7 @@ public class IngredientGridSelector : MonoBehaviour
     void OnEnable()  { GameInput.GridMode = true; }
     void OnDisable() { GameInput.GridMode = false; }
 
-    void Start() { MoveHighlight(); }
+    void Start() { MoveHighlight(true); }
 
     void Update()
     {
@@ -47,9 +57,6 @@ public class IngredientGridSelector : MonoBehaviour
 
         var step = input.NavigateStep;
         if (step != Vector2Int.zero) Move(step);
-        // During the tutorial's "move the stick" prompt the hand can move but nothing can be added yet.
-        if (plate && plate.tutorialMode && plate.tutor && plate.tutor.IntroPlaying) return;
-
         if (input.ConfirmPressed) SelectedTray()?.Interact();
         if (input.HotSaucePressed && plate) plate.ApplyHotSauce();
         if (input.SwipePressed && nose) nose.SwipeFinger();
@@ -65,6 +72,7 @@ public class IngredientGridSelector : MonoBehaviour
     void Move(Vector2Int step)
     {
         if (rows == null || rows.Length == 0) return;
+        int oldRow = _row, oldCol = _col;
 
         if (step.y != 0)
         {
@@ -81,31 +89,59 @@ public class IngredientGridSelector : MonoBehaviour
             _col = Mathf.Clamp(_col + step.x, 0, Mathf.Max(len - 1, 0));
         }
         MoveHighlight();
+        if (_row != oldRow || _col != oldCol) SelectionChanged?.Invoke();
     }
 
-    void MoveHighlight()
+    // The Player object holds the grabbing hand (highlight), the tray and the sauce hand; it moves as one.
+    Transform PlayerRoot()
+    {
+        if (playerRoot) return playerRoot;
+        return highlight && highlight.parent ? highlight.parent : highlight;
+    }
+
+    SpriteRenderer SauceHandRenderer(Transform root)
+    {
+        if (!sauceHand) sauceHand = root.Find("Right Hand");
+        return sauceHand ? sauceHand.GetComponentInChildren<SpriteRenderer>() : null;
+    }
+
+    void MoveHighlight(bool snap = false)
     {
         var tray = SelectedTray();
         if (!highlight || !tray) return;
 
         var trayRenderer = tray.GetComponentInChildren<SpriteRenderer>();
         var handRenderer = highlight.GetComponentInChildren<SpriteRenderer>();
+        var root = PlayerRoot();
         if (!trayRenderer || !handRenderer)
         {
-            highlight.position = tray.transform.position;
+            root.position += tray.transform.position - highlight.position;
             return;
         }
 
-        // Put the fingertip at the tray's near edge, reaching in by tipOverlap, vertically centred on the tray.
         Bounds trayBounds = trayRenderer.bounds;
         Bounds handBounds = handRenderer.bounds;
-        float handHalfWidth = handBounds.extents.x;
-        float targetCenterX = handSide == HandSide.LeftOfTray
-            ? trayBounds.min.x + tipOverlap - handHalfWidth
-            : trayBounds.max.x - tipOverlap + handHalfWidth;
-        Vector3 targetCenter = new Vector3(targetCenterX, trayBounds.center.y, highlight.position.z);
+        Vector3 delta;
+        if (root == highlight)
+        {
+            // Lone hand: put the fingertip at the tray's near edge, reaching in by tipOverlap, vertically centred on the tray.
+            float overlap = referenceTrayWidth > 0f ? tipOverlap * (trayBounds.size.x / referenceTrayWidth) : tipOverlap;
+            float targetCenterX = handSide == HandSide.LeftOfTray
+                ? trayBounds.min.x + overlap - handBounds.extents.x
+                : trayBounds.max.x - overlap + handBounds.extents.x;
+            delta = new Vector3(targetCenterX - handBounds.center.x, trayBounds.center.y - handBounds.center.y, 0f);
+        }
+        else
+        {
+            // Whole Player: the span from the grabbing hand to the sauce hand is centred on the bin, so the grabbing hand
+            // reaches in from the left. Height stays where the Player is placed in the scene.
+            Bounds span = handBounds;
+            var sauceRenderer = SauceHandRenderer(root);
+            if (sauceRenderer) span.Encapsulate(sauceRenderer.bounds);
+            delta = new Vector3(trayBounds.center.x - span.center.x, 0f, 0f);
+        }
 
-        // The hand's pivot is not necessarily its centre, so move by the difference.
-        highlight.position += targetCenter - new Vector3(handBounds.center.x, handBounds.center.y, highlight.position.z);
+        if (snap) root.position += delta;
+        else Tween.Move(root, root.position + delta, moveTime, Tween.Ease.OutQuad);
     }
 }

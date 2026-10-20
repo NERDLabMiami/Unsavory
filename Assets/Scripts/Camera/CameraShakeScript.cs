@@ -11,7 +11,6 @@ public class CameraShakeScript : MonoBehaviour {
 	private float sneezeTimer = 10;
 	private float ShakeDecay = .02f;
 	private float ShakeIntensity  = 0.3f;   
-	private Vector3 OriginalPos;
 	private Quaternion OriginalRot;
 	public GameObject player;
 	private bool isPaused = false;
@@ -20,13 +19,13 @@ public class CameraShakeScript : MonoBehaviour {
 	{
 		Sneezing = false;
 		SneezeWarning = false;
-		OriginalPos = player.transform.position;
-		OriginalRot = player.transform.rotation;
+		// The camera's own rest rotation. (This used to copy the Player's pose, which put the camera at the origin after a sneeze.)
+		OriginalRot = transform.rotation;
 	}
 
 	public void resetCameraToOriginalPosition() {
+		// Only the shake is undone; the camera's position belongs to CameraDirector.
 		transform.rotation = OriginalRot;
-		transform.position = OriginalPos;
 	}
 	public void giveSneezeWarning(float timeBeforeWarning) {
 		SneezeWarning = true;

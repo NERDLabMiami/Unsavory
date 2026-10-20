@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 100000, guid: 6cc7cd02dda9848c894f54cc9b324f68, type: 3}
   - {fileID: 121280, guid: f2a602a9b1dca4ab0986fcbe23a22b77, type: 3}
   completed: {fileID: 199078, guid: 12d6d36ef7d7443049f9e3b769921f3a, type: 3}
+  slipBackground: {fileID: 8424704504685863069, guid: b41f876641efa4d6f9007f2a001ca346, type: 3}
 --- !u!95 &9591162
 Animator:
   serializedVersion: 7

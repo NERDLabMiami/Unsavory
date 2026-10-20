@@ -11,7 +11,7 @@ using UnityEngine.UI;
 // key cancels the old one without calling its onComplete, which replaces the
 // "re-fired Animator trigger restarts the clip" behaviour.
 public sealed class Tween : CustomYieldInstruction {
-	public enum Ease { Linear, OutQuad, InQuad, InOutCubic, OutBack, OutCubic }
+	public enum Ease { Linear, OutQuad, InQuad, InOutCubic, OutBack, OutCubic, InBack }
 
 	public static Ease DefaultEase = Ease.OutQuad;
 
@@ -165,6 +165,11 @@ public sealed class Tween : CustomYieldInstruction {
 		return Run(l, "intensity", duration, v => { if (l == null) return; if (!init) { from = l.intensity; init = true; } l.intensity = Mathf.LerpUnclamped(from, to, v); }, ease, delay, done);
 	}
 
+	public static Tween OrthoSize(Camera c, float to, float duration, Ease? ease = null, float delay = 0f, Action done = null) {
+		float from = 0f; bool init = false;
+		return Run(c, "ortho", duration, v => { if (c == null) return; if (!init) { from = c.orthographicSize; init = true; } c.orthographicSize = Mathf.LerpUnclamped(from, to, v); }, ease, delay, done);
+	}
+
 	// ---- Easing ----
 
 	public static float Evaluate(Ease e, float x) {
@@ -172,6 +177,7 @@ public sealed class Tween : CustomYieldInstruction {
 			case Ease.InQuad: return x * x;
 			case Ease.OutQuad: return 1f - (1f - x) * (1f - x);
 			case Ease.OutCubic: { float y = 1f - x; return 1f - y * y * y; }
+			case Ease.InBack: { const float c1 = 1.70158f, c3 = c1 + 1f; return c3 * x * x * x - c1 * x * x; }
 			case Ease.InOutCubic: return x < 0.5f ? 4f * x * x * x : 1f - Mathf.Pow(-2f * x + 2f, 3f) / 2f;
 			case Ease.OutBack: { const float c1 = 1.70158f, c3 = c1 + 1f; float y = x - 1f; return 1f + c3 * y * y * y + c1 * y * y; }
 			default: return x;

@@ -116,6 +116,10 @@ public sealed class CareerFlowManager : MonoBehaviour
         PlayerPrefs.SetInt("late effect", 0);
         PlayerPrefs.SetInt("overtime effect", 0);
         PlayerPrefs.SetInt("electricity effect", 0);
+        PlayerPrefs.SetInt("phone effect", 0);
+        PlayerPrefs.SetInt("insurance effect", 0);
+
+        PlayerPrefs.SetInt("fruit", 5);
 
         // Bills reset
         ResetBillsFromResource();

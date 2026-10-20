@@ -14,6 +14,10 @@ public class ModalFocus : MonoBehaviour
     public Selectable firstSelected;
     [Tooltip("Cancel (B / Esc) presses the panel's Close/No button.")]
     public bool allowCancel;
+    [Tooltip("The panel sets Selectable.navigation itself; ModalFocus keeps focus/cancel but doesn't rebuild navigation.")]
+    public bool manualNavigation;
+    [Tooltip("A pointer (mouse / stick cursor) is driving selection: don't snap it back into the panel.")]
+    public bool pointerMode;
 
     static readonly string[] CancelNames = { "Close Button", "Close", "No Button", "No" };
     static readonly List<ModalFocus> All = new List<ModalFocus>();
@@ -51,7 +55,10 @@ public class ModalFocus : MonoBehaviour
         foreach (var m in All)
         {
             if (m.FirstVisible() != null) m._lastSeen = Time.unscaledTime;
-            bool visible = m._lastSeen >= 0f && Time.unscaledTime - m._lastSeen <= HideGrace;
+            // A switched-off canvas is hidden at once; the grace period is only for animation dips.
+            var canvas = m.GetComponentInParent<Canvas>();
+            bool canvasOff = canvas != null && !canvas.rootCanvas.enabled;
+            bool visible = !canvasOff && m._lastSeen >= 0f && Time.unscaledTime - m._lastSeen <= HideGrace;
             if (!visible) { m._visibleSince = -1f; m._lastSeen = -1f; continue; }
             if (m._visibleSince < 0f) m._visibleSince = Time.unscaledTime;
             if (best == null || m._visibleSince >= best._visibleSince) best = m;
@@ -69,7 +76,7 @@ public class ModalFocus : MonoBehaviour
         {
             var cur = es.currentSelectedGameObject;
             var sel = cur != null ? cur.GetComponent<Selectable>() : null;
-            if (sel == null || !sel.isActiveAndEnabled || !sel.transform.IsChildOf(_top.transform))
+            if (!_top.pointerMode && (sel == null || !sel.isActiveAndEnabled || !sel.transform.IsChildOf(_top.transform)))
             {
                 if (cur != null && Time.unscaledTime - _lastLeaveLog > 1f)
                 {
@@ -88,7 +95,7 @@ public class ModalFocus : MonoBehaviour
         // Keep stick/d-pad moves inside the top modal. Automatic navigation searches every Selectable in the
         // scene, so it would otherwise jump to buttons of panels that are only hidden by animation.
         if (_top != _navOwner) RestoreNavigation();
-        if (_top != null) _top.ApplyLocalNavigation();
+        if (_top != null && !_top.manualNavigation) _top.ApplyLocalNavigation();
 
         if (cancelPressed && _top != null && _top.allowCancel)
             _top.PressCancel();
@@ -190,9 +197,23 @@ public class ModalFocus : MonoBehaviour
         }
     }
 
+    /// <summary>Why IsVisible would reject this selectable (null if it passes). For diagnostics.</summary>
+    public static string WhyHidden(Selectable s)
+    {
+        if (!s.isActiveAndEnabled) return "inactive";
+        if (!s.IsInteractable()) return "not interactable";
+        var rt = s.transform as RectTransform;
+        if (rt == null) return "no RectTransform";
+        if (rt.lossyScale.x < 0.01f || rt.lossyScale.y < 0.01f) return "scale " + rt.lossyScale.x.ToString("0.0000");
+        return IsVisible(s) ? null : "off-screen or alpha 0";
+    }
+
     static bool IsVisible(Selectable s)
     {
         if (!s.isActiveAndEnabled || !s.IsInteractable()) return false;
+        // Panels often hide themselves by switching their Canvas component off; the buttons are still active but unseen.
+        var rootCanvas = s.GetComponentInParent<Canvas>();
+        if (rootCanvas != null && !rootCanvas.rootCanvas.enabled) return false;
 
         var rt = s.transform as RectTransform;
         if (rt == null) return false;

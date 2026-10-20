@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class TutorScript : MonoBehaviour {
-	public List<TutorialRecipe> recipes = new List<TutorialRecipe>();
+	// The tutorial order is always this card (bean and cheese): Resources/Recipes/3-B.
+	const string TutorialRecipePath = "Recipes/3-B";
 	public GameObject spawningArea;
 	public GameObject plate;
 	public AudioClip tutorialFinished;
 	public Button pauseButton;
-	private int selectedTutorial = 0;
 	public string tutorialEnd;
 
 	public GameObject continueTutorialDialog;
@@ -17,48 +17,66 @@ public class TutorScript : MonoBehaviour {
 	public TortillaFoundation tortilla;
 	/// <summary>The recipe currently shown by the tutorial (PlateScript matches against it in tutorial mode).</summary>
 	public GameObject CurrentRecipe { get; private set; }
+	GameObject _recipePrefab;
 	// Use this for initialization
+	// The old Tutor Panel object is only a host for this script now (the hints are TutorModal windows). Its scene
+	// Animator would play "Tutor Appears" when the object turns on, and its OK button would take gamepad focus.
+	void RetireLegacyPanel() {
+		AnimUtil.DisableAnimator(gameObject);
+		var focus = GetComponent<ModalFocus>();
+		if (focus != null) focus.enabled = false;
+		transform.localScale = Vector3.zero;
+		foreach (var g in GetComponentsInChildren<Graphic>(true)) g.raycastTarget = false;
+		foreach (var b in GetComponentsInChildren<Button>(true)) b.gameObject.SetActive(false);
+	}
+
+	void OnDisable() {
+		TutorModal.CloseAll();
+		_modal = null;
+		if (_selector != null) _selector.SelectionChanged -= OnSelectionChanged;
+	}
+
 	void Start () {
+		RetireLegacyPanel();
 
 		// The boss has left; the tutorial itself needs the trays.
 		if (GameplayGate.Instance != null) GameplayGate.Instance.Unlock(GameplayGate.GateLocks.BossFlow);
 		tortilla.tutoring = true;
-		plate.GetComponent<BoxCollider2D>().enabled = false;
+		// The redesigned Plate may have no collider; the tutorial must still start.
+		if (plate.TryGetComponent<BoxCollider2D>(out var plateCollider)) plateCollider.enabled = false;
 		plate.GetComponent<PlateScript>().tutorialMode = true;
 		Time.timeScale = 0;
-		pauseButton.enabled = false;
-		// Text moves on by itself or when the player acts; there is nothing to press.
-		foreach (var b in GetComponentsInChildren<Button>(true))
-			if (b.name == "OK") b.gameObject.SetActive(false);
-
+		if (pauseButton != null) pauseButton.enabled = false;
 		// Plate, tortilla and recipe card are on screen before any text.
 		getTutorial();
 
-		// The Tutor Appears clip is already showing the panel.
-		_panelShown = true;
-		IntroPlaying = true;
+		_selector = FindFirstObjectByType<IngredientGridSelector>();
+		if (_selector != null) _selector.SelectionChanged += OnSelectionChanged;
 		_intro = StartCoroutine(ControlsIntro());
 	}
 
-	/// <summary>True during the "move the stick" prompt, when nothing may be added yet.</summary>
-	public bool IntroPlaying { get; private set; }
+	// A hint stays up this long (real seconds) unless the player does what it says first.
+	const float PromptSeconds = 5f;
+	// How long the "Oops" panel stays up.
+	const float ResultHoldSeconds = 3f;
 
-	[Header("Text timing (real seconds)")]
-	[Tooltip("How long a controls prompt stays on screen. -1 = until the player does what it asks. After the timeout the panel clears but the tutorial still waits for the input.")]
-	public float promptTimeout = 10f;
-	[Tooltip("How long the 'Nice job' / 'Oops' text stays up.")]
-	public float resultHoldTime = 3f;
+	IngredientGridSelector _selector;
+	bool _selectionChanged;
+
+	void OnSelectionChanged() { _selectionChanged = true; }
+
+	// The instruction window currently on screen (a timed modal copied from the Sneeze Tutor object), if any.
+	TutorModal _modal;
 
 	Coroutine _intro;
-	bool _panelShown;
 	bool _ingredientAdded;
 	bool _showingResult;
 
-	// One command per prompt, worded for the device in use.
+	// One command per hint, worded for the device in use.
 	string[] ControlsPrompts() {
 		if (UnityEngine.InputSystem.Gamepad.current != null)
-			return new[] { "Use the stick or D-pad to move.", "Press A to confirm your selection." };
-		return new[] { "Use the arrow keys to move.", "Press Enter to confirm your selection." };
+			return new[] { "Use the D-pad or stick to select an ingredient.", "Press the A button to add the ingredient to the order." };
+		return new[] { "Use the arrow keys to select an ingredient.", "Press Enter to add the ingredient to the order." };
 	}
 
 	/// <summary>Called by a tray when an ingredient lands on the plate during the tutorial.</summary>
@@ -66,60 +84,43 @@ public class TutorScript : MonoBehaviour {
 		_ingredientAdded = true;
 	}
 
+	// Two hints, one after the other. Nothing here blocks the player: the tutorial itself ends when the order is made.
 	IEnumerator ControlsIntro() {
 		var prompts = ControlsPrompts();
 
-		// 1. Move. Nothing can be added until the stick/D-pad (or a pointer press) is used.
-		yield return RunPrompt(prompts[0], () => GameInput.Instance != null &&
-			(GameInput.Instance.NavigateStep != Vector2Int.zero || GameInput.Instance.NavigateHeld != Vector2Int.zero ||
-			 (GameInput.Instance.ActivatePressed && GameInput.Instance.ActivateFromPointer)));
-
-		// 2. Confirm. Ingredients can be picked from here on.
-		IntroPlaying = false;
+		_selectionChanged = false;
 		_ingredientAdded = false;
-		yield return RunPrompt(prompts[1], () => _ingredientAdded ||
-			(GameInput.Instance != null && (GameInput.Instance.ConfirmPressed || GameInput.Instance.ActivatePressed)));
+		yield return RunPrompt(prompts[0], () => _selectionChanged || _ingredientAdded);
+
+		if (!_ingredientAdded)
+			yield return RunPrompt(prompts[1], () => _ingredientAdded);
 
 		_intro = null;
 	}
 
-	// Shows the prompt until the player does what it asks, or until promptTimeout (-1 = never) clears the panel.
-	// The next step never starts before the input has arrived, even if the panel has already gone.
+	// Shows a hint until the player does what it says or PromptSeconds pass, then pops it away.
 	IEnumerator RunPrompt(string text, System.Func<bool> done) {
-		GetComponentInChildren<Text>().text = text;
-		if (!_panelShown) { GetComponent<Animator>().SetTrigger("next"); _panelShown = true; }
+		_modal = TutorModal.Show(text);
 
-		float end = Time.realtimeSinceStartup + promptTimeout;
-		yield return null;   // let the press that started this frame go by
+		float end = Time.realtimeSinceStartup + PromptSeconds;
+		while (!done() && Time.realtimeSinceStartup < end) yield return null;
 
-		// The input is a single-frame press, so remember it once seen, including while the panel is shrinking away.
-		bool satisfied = false;
-		while (!satisfied && (promptTimeout < 0f || Time.realtimeSinceStartup < end)) {
-			if (done()) satisfied = true; else yield return null;
-		}
-
-		if (_panelShown) {
-			_panelShown = false;
-			confirmInstruction();
-			float hidden = Time.realtimeSinceStartup + 0.4f;
-			while (Time.realtimeSinceStartup < hidden) {
-				if (!satisfied && done()) satisfied = true;
-				yield return null;
-			}
-		}
-
-		// Timed out without the input: the panel is gone, but the tutorial still waits for it.
-		while (!satisfied) {
-			if (done()) satisfied = true; else yield return null;
-		}
+		var hiding = DismissModal();
+		while (hiding != null && !hiding.IsDone) yield return null;
 	}
 
-	// The panel's "confirmed" trigger shrinks it away; only send it when it is up, so no trigger is left pending.
+	// Pops the window away; null when none is up.
+	Tween DismissModal() {
+		if (_modal == null) return null;
+		var hiding = _modal.Dismiss();
+		_modal = null;
+		return hiding;
+	}
+
+	// Pops the window away and waits until it has gone; does nothing when none is up.
 	IEnumerator HidePanel() {
-		if (!_panelShown) yield break;
-		_panelShown = false;
-		confirmInstruction();
-		yield return new WaitForSecondsRealtime(0.4f);
+		var hiding = DismissModal();
+		if (hiding != null) yield return hiding;
 	}
 
 	// Same slot real orders use (the Tutor Panel's own position is in screen pixels, far off-screen).
@@ -131,17 +132,20 @@ public class TutorScript : MonoBehaviour {
 	// Creates the recipe card and makes sure the plate holds just a tortilla. Used at the start and after a mistake.
 	public void getTutorial() {
 		if (CurrentRecipe != null) Destroy(CurrentRecipe);
+		if (_recipePrefab == null) _recipePrefab = Resources.Load<GameObject>(TutorialRecipePath);
+		if (_recipePrefab == null) { Debug.LogError("[TutorScript] missing tutorial recipe at Resources/" + TutorialRecipePath); return; }
 		// Free choice: every tray can be picked.
 		CustomFunctionScript.collisionOnObjects(allTrays, true);
-		plate.GetComponent<PlateScript>().SeedTortilla();
+		plate.GetComponent<PlateScript>().EnsureTray();
 
-		selectedTutorial = Random.Range (0, recipes.Count);
-		GameObject newRecipe =(GameObject) Instantiate(recipes[selectedTutorial].recipe, CardSlot(), Quaternion.identity);
+		// The card slides in from beyond the right edge, the same way real orders arrive.
+		var layout = FindFirstObjectByType<OrderQueueLayout2D>();
+		Vector3 slot = CardSlot();
+		Vector3 start = layout != null ? layout.OffscreenRightWorld : slot;
+		GameObject newRecipe =(GameObject) Instantiate(_recipePrefab, start, Quaternion.identity);
 		newRecipe.transform.parent = spawningArea.transform;
+		Tween.Move(newRecipe.transform, slot, 0.45f, Tween.Ease.OutCubic);
 		CurrentRecipe = newRecipe;
-		Debug.Log($"[Tutorial] recipe card {newRecipe.name} world={newRecipe.transform.position} parent={spawningArea.name} " +
-			$"viewport={(Camera.main ? Camera.main.WorldToViewportPoint(newRecipe.transform.position).ToString() : "no camera")} " +
-			$"renderers={newRecipe.GetComponentsInChildren<SpriteRenderer>().Length} timeScale={Time.timeScale}");
 	}
 
 	// Shows the result as animated text, then moves on by itself: a finished tutorial starts the countdown,
@@ -154,17 +158,17 @@ public class TutorScript : MonoBehaviour {
 	IEnumerator ShowResult(bool matched) {
 		_showingResult = true;
 		if (_intro != null) { StopCoroutine(_intro); _intro = null; }
-		IntroPlaying = false;
+
+		// After a mistake the next card slides in with the new tray at once, rather than after the "Oops" text.
+		if (!matched) Tween.Delay(0.35f, getTutorial);
 
 		// Put away any prompt still on screen, then bring the panel back with the result.
 		yield return HidePanel();
-		// A finished tutorial has no panel text of its own; the boss's post-tutorial dialogue covers it.
+		// A finished tutorial has no window of its own; the boss's post-tutorial dialogue covers it.
 		if (!matched) {
-			GetComponentInChildren<Text>().text = "Oops, try again!";
-			GetComponent<Animator>().SetTrigger("next");
-			_panelShown = true;
+			_modal = TutorModal.Show("Oops, try again!");
 
-			yield return new WaitForSecondsRealtime(resultHoldTime);
+			yield return new WaitForSecondsRealtime(ResultHoldSeconds);
 
 			yield return HidePanel();
 		}
@@ -179,16 +183,12 @@ public class TutorScript : MonoBehaviour {
 			else done.startCountdown();
 			gameObject.SetActive(false);
 		}
-		else {
-			// New recipe, clean plate; the prompts are not replayed.
-			getTutorial();
-		}
 	}
 
 	public void tutorialComplete() {
-//		GetComponent<Animator>().SetTrigger("disappear");
+
 	}
 	public void confirmInstruction() {
-		GetComponent<Animator>().SetTrigger("confirmed");
+		DismissModal();
 	}
 }

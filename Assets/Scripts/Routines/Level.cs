@@ -6,47 +6,28 @@ using System;
 using UnityEngine.UI;
 //using UnionAssets.FLE;
 
+public enum RoundOutcome { Complete, Slow, Sick }
+
 public class Level : MonoBehaviour {
-	//public GameObject timer;
 	public TimerScript timer;
-	//TODO: What's gametimer for
-	public float gameTimer = 0;
-	public bool timerOn = false;
 	public GameObject nose;
-	public Catering catering;
 	public CharacterDialog dialog;
-	public PlayerScript player;
 	public PlateScript plate;
-	public TacoBar slowTacos;
-	public TacoBar sickTacos;
-	public TacoBar successTacos;
 
-	public GameObject shiftCompletedCanvas;
-	public GameObject shiftIncompleteSick;
-	public GameObject shiftIncompleteSlow;
-
-	public Animator boss;
 	public Animator gameElements;
 	public Animator HUD;
 
-	public Text wagesUI;
-	public Text wagesUI_Sick;
-	public Text wagesUI_Slow;
-
 	public AudioClip gamePlayBackground;
-	public GameObject homeButton;
-	public GameObject quitButton;
 	private bool levelBegan = false;
-	private bool sick = false;
-	private bool fullday = false;
+	private bool roundEnded = false;
 	private int currentLevel;
-	private int score;
 	public int retries;
 	private float timeWorked;
 	public ReadySetGo readySetGo;
 	public GameObject inGameGui; // if not already
 	public GameObject countdownUiRoot; 
 	private bool _bossIntroHandled = false;
+	private Text hudClock; // HUD/Clock/Time
 
 	void Awake()
 	{
@@ -55,6 +36,21 @@ public class Level : MonoBehaviour {
 		// Awake runs for every object before any Start, so TutorScript.Start never fires early.
 		var tutor = FindFirstObjectByType<TutorScript>();
 		if (tutor != null) tutor.gameObject.SetActive(false);
+
+		// The HUD stays off until the player reaches the table (AfterBossExit); switching it on plays its slide-in.
+		if (inGameGui) inGameGui.SetActive(false);
+		if (HUD != null) HudAnim.Prepare(HUD.gameObject);
+		if (inGameGui)
+		{
+			var t = inGameGui.transform.Find("Clock/Time");
+			if (t != null) hudClock = t.GetComponent<Text>();
+		}
+	}
+
+	/// <summary>The HUD's clock text, kept in step with the Pause Panel's.</summary>
+	public void SetHudClock(string text)
+	{
+		if (hudClock) hudClock.text = text;
 	}
 
 	// Use this for initialization
@@ -63,56 +59,50 @@ public class Level : MonoBehaviour {
 		// No ingredient picking behind the boss dialogue or the countdown (BeginGamePlay unlocks).
 		if (GameplayGate.Instance != null) GameplayGate.Instance.Lock(GameplayGate.GateLocks.BossFlow);
 
+		// Boss dialogue plays zoomed out on the whole kitchen with the gameplay area hidden (CameraDirector's Dialogue shot);
+		// the move back to the Gameplay shot reveals it.
+		CameraDirector.Cut(CameraDirector.Dialogue);
+
+		// The Boss Canvas can be saved inactive in the scene; the intro cannot run (or finish) without it.
+		if (dialog != null && !dialog.gameObject.activeSelf) dialog.gameObject.SetActive(true);
+
 		currentLevel = PlayerPrefs.GetInt("current level");
-		int timesPlayed = PlayerPrefs.GetInt("times played", 0);
-
-		if (timesPlayed == 3 && !PlayerPrefs.HasKey("rated"))
-		{
-			PlayerPrefs.SetInt("rated", 1);
-		}
-
 		retries = PlayerPrefs.GetInt("retries", 0);
 
-		// The intro plays itself; the end-of-shift dialogue keeps its Advance button.
-		dialog.autoAdvance = false;
 
-		bool catering = PlayerPrefs.HasKey("catering");
-		if (catering)
+		// Arrival at work: 9 AM, up to an hour later when late. Fixed now so the boss's mood and the clock agree.
+		float lateness = PlayerPrefs.GetInt("late effect", 0);
+		int minutesLate = lateness > 0 ? UnityEngine.Random.Range(10, 61) : 0;
+		timer.setWorkday(new TimeSpan(9, minutesLate, 0));
+
+		string introKey;
+		if (PlayerPrefs.HasKey("catering"))
 		{
-			dialog.changeSpeechKey("catering");
+			introKey = "catering";
 		}
-		else if (currentLevel == 1)
+		else if (!PlayerPrefs.HasKey("tutorial"))
 		{
+			// The tutorial hasn't been done yet: the boss's welcome leads into it, whatever the day number says.
 			Debug.Log("First Day of Work!");
-			dialog.changeSpeechKey("welcome");
+			introKey = "welcome";
+		}
+		else if (PlayerPrefs.GetInt("late effect", 0) > 0)
+		{
+			Debug.Log("Late to work");
+			introKey = "late_return";
 		}
 		else
 		{
-			float lateness = PlayerPrefs.GetFloat("late effect", 0);
-			if (lateness > 0)
-			{
-				Debug.Log("Late to work");
-				dialog.changeSpeechKey("late_return");
-			}
-			else
-			{
-				Debug.Log("Returned to work on time");
-				dialog.changeSpeechKey("return");
-			}
+			Debug.Log("Returned to work on time");
+			introKey = "return";
 		}
 
-		// Make dialogue a pure gate, not a gameplay starter:
-		dialog.legacyTriggerCameraPrepOnComplete = false;
-		dialog.legacyShowInGameGuiOnComplete = false;
-
-		// Avoid accidental multi-subscribe (if scene reloads / object persists unexpectedly)
-		dialog.OnDialogueComplete -= OnBossIntroComplete;
-		dialog.OnDialogueComplete += OnBossIntroComplete;
+		Debug.Log($"[Level] intro '{introKey}' (current level={currentLevel}, tutorial done={PlayerPrefs.HasKey("tutorial")}, late effect={PlayerPrefs.GetInt("late effect", 0)}, catering={PlayerPrefs.HasKey("catering")})");
+		// The boss slides in and speaks; OnBossIntroComplete follows his last line.
+		_bossIntroHandled = false;
+		dialog.Say(introKey, OnBossIntroComplete);
 
 		if (countdownUiRoot) countdownUiRoot.SetActive(false);
-
-		// Ensure ReadySetGo isn't running until we explicitly begin countdown
-		// (Requires the ReadySetGo refactor below)
 	}
 
 
@@ -120,48 +110,53 @@ public class Level : MonoBehaviour {
 	{
 		if (_bossIntroHandled) return;
 		_bossIntroHandled = true;
-		dialog.autoAdvance = false;
-
-		// Keep gameplay UI off until the countdown finishes
-		if (inGameGui) inGameGui.SetActive(false);
 
 		StartCoroutine(AfterBossExit(() =>
 		{
-			// The pan's animation event (CameraSequencing.startCountdown) shows the tutorial on a first run,
-			// otherwise activates the countdown, which starts itself.
+			// Shows the tutorial on a first run, otherwise activates the countdown, which starts itself.
 			if (Camera.main)
-			{
-				var camAnim = Camera.main.GetComponent<Animator>();
-				if (camAnim) camAnim.SetTrigger("Prep");
-			}
-		}));
+				AnimUtil.Get<CameraSequencing>(Camera.main.gameObject).Prep();
+		}, CameraDirector.Gameplay));
 	}
 
-	private IEnumerator AfterBossExit(Action next)
+	private IEnumerator AfterBossExit(Action next, string thenShot = null)
 	{
-		// Boss Disappears runs ~1s and has no completion event.
-		yield return new WaitForSecondsRealtime(1.1f);
+		// Wait for the boss's exit fade itself rather than a guessed duration.
+		if (dialog.HideTween != null) yield return dialog.HideTween;
+		if (thenShot == CameraDirector.Gameplay)
+		{
+			// The player is at the table: the HUD slides in showing the time they arrived.
+			SetHudClock(timer.getArrivalClock());
+			if (inGameGui) inGameGui.SetActive(true);
+			// No camera move: cut to the gameplay framing and let the trays, plate and nose fade in.
+			var reveal = CameraDirector.CutAndReveal(thenShot);
+			if (reveal != null) yield return reveal;
+		}
+		else if (thenShot != null)
+		{
+			var move = CameraDirector.Go(thenShot);
+			if (move != null) yield return move;
+		}
 		next();
 	}
 
 	/// <summary>Called when the tutorial is finished: the boss returns, then the countdown follows his Continue.</summary>
 	public void BeginPostTutorial()
 	{
-		dialog.autoAdvance = false;
+		TutorModal.CloseAll();
 		if (GameplayGate.Instance != null) GameplayGate.Instance.Lock(GameplayGate.GateLocks.BossFlow);
-		dialog.OnDialogueComplete -= OnPostTutorialComplete;
-		dialog.OnDialogueComplete += OnPostTutorialComplete;
-		dialog.changeSpeechKey("post_tutorial");
-		dialog.reappear(false);
+		// Back to the boss: the gameplay HUD goes away until the countdown (AfterBossExit brings it back).
+		if (HUD != null && HUD.gameObject.activeInHierarchy) AnimUtil.Get<HudAnim>(HUD.gameObject).Hide();
+		CameraDirector.Go(CameraDirector.Dialogue);
+		dialog.Say("post_tutorial", OnPostTutorialComplete);
 	}
 
 	private void OnPostTutorialComplete()
 	{
-		dialog.OnDialogueComplete -= OnPostTutorialComplete;
 		StartCoroutine(AfterBossExit(() =>
 		{
 			if (countdownUiRoot) countdownUiRoot.SetActive(true);
-		}));
+		}, CameraDirector.Gameplay));
 	}
 
 	public void setTimeWorked(float hours) {
@@ -169,48 +164,100 @@ public class Level : MonoBehaviour {
 	}
 
 	public void BeginGamePlay() {
-		// The HUD (clock, pause button) stays hidden through the dialogue, tutorial and countdown.
+		TutorModal.CloseAll();
+		if (ModalFocus.HasFocus) Debug.LogWarning("[Level] a modal still owns input as the shift begins; see the [ModalFocus] log lines above.");
 		if (inGameGui) inGameGui.SetActive(true);
 		if (GameplayGate.Instance != null) GameplayGate.Instance.Unlock(GameplayGate.GateLocks.BossFlow);
-		float lateness = PlayerPrefs.GetFloat("late effect", 0);
 
 		if (!levelBegan) {
-			timerOn = true;
 			Camera.main.GetComponent<AudioSource>().clip = gamePlayBackground;
 			Camera.main.GetComponent<AudioSource>().Play();
 			nose.GetComponent<NoseWipeScript>().sneezeAllowed = true;
 
 		}
 
-		float minutesLate = UnityEngine.Random.Range(0, lateness);
-		TimeSpan workday = new TimeSpan(8,(int)minutesLate,0);
-
-		//TODO: Broadcast Late Message to Update Boss Dialogue for arriving late
-		timer.setWorkday(workday);
 		Debug.Log("Begin Level");
 		levelBegan = true;
 	}
 
-	public void useRetry() {
-		Debug.Log("Attempting Retry Use");
-		if (retries > 0) {
-			retries--;
-            //just using both, animating a disabled one shouldn't matter
-			
-            sickTacos.useTaco(retries);
-			slowTacos.useTaco(retries);
+	private bool IsCatering { get { return PlayerPrefs.HasKey("catering"); } }
+
+	/// <summary>The one way a round ends: the timer ran out, too many orders backed up, or the player sneezed.
+	/// State is settled first, then the boss speaks the outcome and the shift is left from his last line.</summary>
+	public void EndRound(RoundOutcome outcome) {
+		if (roundEnded) return;
+		roundEnded = true;
+
+		TutorModal.CloseAll();
+		PlayerPrefs.SetInt("tutorial", 1);   // no more tutorial
+		Time.timeScale = 0;
+		cleanupKitchen();
+		CameraDirector.Go(CameraDirector.Dialogue);
+		Camera.main.GetComponent<AudioSource>().Stop();
+
+		var analytics = GetComponent<UnityAnalyticsIntegration>();
+		string key;
+		float wages;
+		int score = 0;
+		bool fired = false;
+
+		if (outcome == RoundOutcome.Complete) {
+			score = ScoreRound();
+			wages = PlayerState.AddWagesHours(8f);
+			retries = Mathf.Min(retries + score, 5);
 			PlayerPrefs.SetInt("retries", retries);
+			analytics.careerModeLevelFinished(currentLevel, "full day", Time.time);
+			key = IsCatering ? "catering_complete" : (currentLevel % 5 == 0 ? "weekend" : "complete" + score);
+		}
+		else {
+			bool sick = outcome == RoundOutcome.Sick;
+			wages = PlayerState.PotentialWagesHours(timeWorked);
+			fired = PlayerPrefs.GetInt("warnings") + 1 > PlayerPrefs.GetInt("max warnings");
+			analytics.careerModeLevelFinished(currentLevel, sick ? "sick" : "mismatches", Time.time);
+			if (sick) PlayerPrefs.SetInt("letter", PlayerPrefs.GetInt("sneezes", 1) > 1 ? 2 : 1);
+			string kind = sick ? "sick" : "slow";
+			key = fired ? "fired_" + kind : (IsCatering ? "catering_" + kind : (sick ? "sneezed" : "slow"));
 		}
 
-
+		var vars = new Dictionary<string, string> {
+			{ "wages", wages.ToString("$0.00") },
+			{ "score", score.ToString() },
+			{ "retries", retries.ToString() },
+			{ "orders", plate.getOrders().ToString() },
+			{ "day", currentLevel.ToString() },
+		};
+		var extra = new Dictionary<string, float> { { "retries", retries } };
+		dialog.Say(key, choice => OnRoundDialogueDone(outcome, fired, choice), extra, vars);
 	}
 
-	public void completeCatering() {
-		homeButton.SetActive(true);
-		dialog.changeSpeechKey("catering_complete");
-
+	private int ScoreRound() {
+		int score = 1;
+		if (plate.bestMatchedAggregate >= 10) score++;   // longest streak
+		if (plate.perfectLevel) score++;
+		return score;
 	}
-	
+
+	// The boss's last line has been answered. A failed round is paid and warned about only if the player leaves it, not if they retry.
+	private void OnRoundDialogueDone(RoundOutcome outcome, bool fired, string choice) {
+		if (choice == "retry" && retries > 0) {
+			retries--;
+			PlayerPrefs.SetInt("retries", retries);
+			StartCoroutine(LeaveAfterBoss(RetryShift));
+			return;
+		}
+		if (outcome != RoundOutcome.Complete) {
+			PlayerState.AddWagesHours(timeWorked);
+			PlayerPrefs.SetInt("warnings", PlayerPrefs.GetInt("warnings") + 1);
+			if (outcome == RoundOutcome.Sick) PlayerPrefs.SetInt("activated", 1);
+			if (fired) {
+				PlayerPrefs.SetInt("fired", 1);
+				PlayerPrefs.SetInt("can cater", 1);
+				GetComponent<UnityAnalyticsIntegration>().fired();
+			}
+		}
+		StartCoroutine(LeaveAfterBoss(fired ? (Action)GoToMainMenu : GoHome));
+	}
+
 	private void cleanupKitchen() {
 		GameObject[] current_recipes = GameObject.FindGameObjectsWithTag("Recipe");
 	
@@ -219,179 +266,25 @@ public class Level : MonoBehaviour {
 		}
 		Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 		gameElements.SetTrigger("fade orders");
-		if (HUD != null && HUD.isActiveAndEnabled) HUD.SetTrigger("Fade Out");
-		homeButton.SetActive(false);
-
+		if (HUD != null && HUD.gameObject.activeInHierarchy) AnimUtil.Get<HudAnim>(HUD.gameObject).Hide();
 	}
 
-
-	private void completedFullDay() {
-		Debug.Log ("running wage update");
-		shiftCompletedCanvas.SetActive(true);
-		score = 1;
-		//LONGEST STREAK?
-		if (plate.bestMatchedAggregate >= 10) {
-			score++;
-		}
-		//PERFECT?
-		if (plate.perfectLevel) {
-			score++;
-		}
-		Debug.Log("TACO BAR: Retries: " + retries + " Score: " + score); 
-		successTacos.addTacos(retries,score);
-		//add retries for player
-	//	int retries = PlayerPrefs.GetInt("retries", 0);
-		retries += score;
-		//MORE THAN 5?
-		if (retries > 5) {
-			retries = 5;
-		}
-		
-		PlayerPrefs.SetInt("retries", retries);
-		wagesUI.text = "$" + PlayerState.AddWagesHours(8f).ToString("0.00") + " added to your next paycheck, that's a full day of work at minimum wage.";
-		GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "full day", Time.time);
+	private IEnumerator LeaveAfterBoss(Action leave) {
+		if (dialog.HideTween != null) yield return dialog.HideTween;
+		leave();
 	}
 
-	private void incompleteSick() {
-		GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "sick", Time.time);
-	//TODO: Add Wages when end shift button clicked instead of before this runs.	
-//		shiftCompleteText.text = "Sick on the Job";
-//		realWorldFact.SetActive(true);
-		Debug.Log("INCOMPLETE SICK");
-		wagesUI_Sick.text = "You were caught being sick on the job. You can leave work early with "  + PlayerState.PotentialWagesHours(timeWorked).ToString("$0.00")  + " for your work today added to your next paycheck or try again.";
-		int sneezes = PlayerPrefs.GetInt("sneezes", 1);
-		if (sneezes > 1) {
-			PlayerPrefs.SetInt("letter", 2);
-
-		}
-		else {
-			PlayerPrefs.SetInt("letter", 1);
-
-		}
-		shiftIncompleteSick.SetActive(true);
+	private void GoHome() {
+		if (CareerFlowManager.Instance != null) CareerFlowManager.Instance.LoadHome();
+		else UnityEngine.SceneManagement.SceneManager.LoadScene("Home");
 	}
 
-	private void incompleteWarningsExceeded() {
-		GetComponent<UnityAnalyticsIntegration>().careerModeLevelFinished(currentLevel, "mismatches", Time.time);
-		Debug.Log("INCOMPLETE SLOW");
-		wagesUI_Slow.text = "Looks like you couldn't keep up with the orders! You can leave work and add "  + PlayerState.PotentialWagesHours(timeWorked).ToString("$0.00")  + " to your next paycheck for your work today or try again.";
-
-		shiftIncompleteSlow.SetActive(true);
-		//		shiftCompleteText.text = "Oh No!";
-//		realWorldFact.SetActive(false);
-//		Camera.main.GetComponent<AudioSource>().Stop ();
-//		levelCompleteCanvas.SetActive(true);
-//		levelCompleteCanvas.GetComponent<ShiftCompleteScript>().failed();
-	}
-	public void acceptWages() {
-		PlayerState.AddWagesHours(timeWorked);
+	private void GoToMainMenu() {
+		if (CareerFlowManager.Instance != null) CareerFlowManager.Instance.LoadMainMenu();
+		else UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
 	}
 
-	public void EndOfLevel(bool _fullday, bool _sick) {
-		//stop showing the tutorial
-		PlayerPrefs.SetInt("tutorial", 1);
-		Time.timeScale = 0;
-		fullday = _fullday;
-		sick = _sick;
-		cleanupKitchen();
-		Camera.main.GetComponent<AudioSource>().Stop ();
-
-		if(fullday) {
-			completedFullDay();
-		}
-		
-		else if(sick) {
-			incompleteSick();
-		}
-		
-		else {
-			incompleteWarningsExceeded();
-		}
-		
-	}
-
-	public void initializeBossEndOfFullday() {
-		Debug.Log ("Now Day " + currentLevel);
-		homeButton.SetActive(true);		
-		//FOR FINISHING!
-
-		if (currentLevel%5 == 0) {
-			Debug.Log("Weekend");
-			dialog.changeSpeechKey("weekend");
-			
-		}
-		else {
-			dialog.changeSpeechKey("complete" + score.ToString());
-			
-		}
-		
-		//cue boss
-		boss.SetTrigger("reappear");
-
-	}
-
-	public void initializeBossSick() {
-		homeButton.SetActive(true);		
-
-		Debug.Log("Giving Sick Talk");
-		PlayerPrefs.SetInt("letter",1);
-		PlayerPrefs.SetInt("activated",1);
-		dialog.changeSpeechKey("sneezed");
-		Debug.Log("GIving Sneeze Speech");
-
-		if (checkWarnings(giveWarning())) {
-			//FIRE
-			dialog.changeSpeechKey("fired_sick");
-
-		}
-
-	}
-
-
-	public void initializeBossSlow() {
-		homeButton.SetActive(true);		
-
-		dialog.changeSpeechKey("slow");
-		if (checkWarnings(giveWarning())) {
-			//FIRE
-			dialog.changeSpeechKey("fired_slow");
-
-		}
-		Debug.Log("GIving Slow Talk");
-
-	}
-
-	private int giveWarning() {
-		int warnings = PlayerPrefs.GetInt ("warnings");
-		warnings+=1;
-		PlayerPrefs.SetInt("warnings", warnings);
-		return warnings;
-	}
-
-	private bool checkWarnings(int warnings) {
-		int maxWarnings = PlayerPrefs.GetInt("max warnings");
-
-		if (warnings > maxWarnings) {
-			//TODO: Fire Player
-			Debug.Log("Player should be fired");
-			PlayerPrefs.SetInt("fired",1);
-			PlayerPrefs.SetInt("can cater", 1);
-			Debug.Log("Too Many Warnings");
-			GetComponent<UnityAnalyticsIntegration>().fired ();
-			homeButton.SetActive(false);
-			//TODO: QUIT BUTTON SET ACTIVE
-			quitButton.SetActive(true);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (timerOn) {
-			gameTimer += Time.deltaTime;
-		}
+	private void RetryShift() {
+		UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
 	}
 }

@@ -14,6 +14,13 @@ public class FruitBowl : MonoBehaviour {
 	
 	}
 
+	/// <summary>Shows the first n pieces of fruit (0..fruit.Length).</summary>
+	public void SetCount(int n) {
+		for (int i = 0; i < fruit.Length; i++) {
+			if (fruit[i]) fruit[i].SetActive(i < n);
+		}
+	}
+
 	public void setFruit(int dayOfWeek) {
 		switch(dayOfWeek) {
 		case 3:
