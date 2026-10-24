@@ -1,0 +1,33 @@
+{
+  "home_enter": [
+    { "when": { "run_end": "==1" }, "text": "You've been laid off. Check your email." },
+    { "when": { "run_end": "==2" }, "text": "You've been evicted. Check your email." },
+    { "when": { "run_end": "==0", "first_visit": "==1" }, "text": "You have bills to pay. You should figure out how you're going to make some money." },
+    { "when": { "run_end": "==0", "rent_pending": "==1" }, "text": "Rent is due today, don't get evicted!" },
+    { "when": { "run_end": "==0", "missed_bills": ">=1", "rent_pending": "==0", "first_visit": "==0" }, "text": "You have {missed_bills} overdue bill(s)! You should pay them before something bad happens." },
+    { "when": { "run_end": "==0", "letter": "==1", "missed_bills": "==0", "rent_pending": "==0", "first_visit": "==0" }, "text": "Your phone beckons you." }
+  ],
+  "hover_phone": [
+    { "when": { "bill_due": ">=1" }, "text": "You have a bill due." },
+    { "when": { "unread_mail": ">=1" }, "text": "You have mail." },
+    { "when": { "bill_due": "==0", "unread_mail": "==0" }, "text": "Nothing new on your phone." }
+  ],
+  "hover_bed": [
+    { "when": { "health": ">=30" }, "text": "Skip work and sleep in? That's an option." },
+    { "when": { "health": "<30" }, "text": "Skipping work won't pay the bills, but you might feel better with some rest." }
+  ],
+  "hover_door": [
+    { "when": { "health": ">=30", "car_ok": "==1" }, "text": "Better get to work, don't want to be late." },
+    { "when": { "health": "<30", "car_ok": "==1" }, "text": "You don't feel great, but you don't have paid sick days." },
+    { "when": { "car_ok": "==0" }, "text": "You better get moving, public transportation isn't always reliable." }
+  ],
+  "hover_pills": [
+    { "when": { "pills": ">=1" }, "text": "Pills. Not cheap, but neither is being sick." },
+    { "when": { "pills": "==0" }, "text": "You're out of pills." }
+  ],
+  "work_enter": [
+    { "when": { "tutorial_done": "==0", "catering": "==0" }, "text": "First day at Rocket Taco." },
+    { "when": { "tutorial_done": "==1", "catering": "==0", "late": "==0" }, "text": "Another day making tacos..." },
+    { "when": { "tutorial_done": "==1", "catering": "==0", "late": ">0" }, "text": "Public transit is so unreliable..." }
+  ]
+}

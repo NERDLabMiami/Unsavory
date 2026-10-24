@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class TutorScript : MonoBehaviour {
-	// The tutorial order is always this card (bean and cheese): Resources/Recipes/3-B.
-	const string TutorialRecipePath = "Recipes/3-B";
+	// The tutorial order is always this card (bean and cheese): Resources/Recipes/Data/Beans and Cheese.
+	const string TutorialRecipePath = CurrentOrderScript.RecipeDataFolder + "Beans and Cheese";
 	public GameObject spawningArea;
 	public GameObject plate;
 	public AudioClip tutorialFinished;
@@ -18,6 +18,7 @@ public class TutorScript : MonoBehaviour {
 	/// <summary>The recipe currently shown by the tutorial (PlateScript matches against it in tutorial mode).</summary>
 	public GameObject CurrentRecipe { get; private set; }
 	GameObject _recipePrefab;
+	RecipeData _recipeData;
 	// Use this for initialization
 	// The old Tutor Panel object is only a host for this script now (the hints are TutorModal windows). Its scene
 	// Animator would play "Tutor Appears" when the object turns on, and its OK button would take gamepad focus.
@@ -55,8 +56,8 @@ public class TutorScript : MonoBehaviour {
 		_intro = StartCoroutine(ControlsIntro());
 	}
 
-	// A hint stays up this long (real seconds) unless the player does what it says first.
-	const float PromptSeconds = 5f;
+	// A hint is held back this long (real seconds); if the player does what it says first, it is never shown.
+	const float PromptDelaySeconds = 3f;
 	// How long the "Oops" panel stays up.
 	const float ResultHoldSeconds = 3f;
 
@@ -98,12 +99,15 @@ public class TutorScript : MonoBehaviour {
 		_intro = null;
 	}
 
-	// Shows a hint until the player does what it says or PromptSeconds pass, then pops it away.
+	// Waits PromptDelaySeconds for the player to do it unaided (skipping the hint if they do),
+	// otherwise shows the hint and keeps it up until they do, then pops it away.
 	IEnumerator RunPrompt(string text, System.Func<bool> done) {
-		_modal = TutorModal.Show(text);
+		float showAt = Time.realtimeSinceStartup + PromptDelaySeconds;
+		while (!done() && Time.realtimeSinceStartup < showAt) yield return null;
+		if (done()) yield break;
 
-		float end = Time.realtimeSinceStartup + PromptSeconds;
-		while (!done() && Time.realtimeSinceStartup < end) yield return null;
+		_modal = TutorModal.Show(text);
+		while (!done()) yield return null;
 
 		var hiding = DismissModal();
 		while (hiding != null && !hiding.IsDone) yield return null;
@@ -132,8 +136,9 @@ public class TutorScript : MonoBehaviour {
 	// Creates the recipe card and makes sure the plate holds just a tortilla. Used at the start and after a mistake.
 	public void getTutorial() {
 		if (CurrentRecipe != null) Destroy(CurrentRecipe);
-		if (_recipePrefab == null) _recipePrefab = Resources.Load<GameObject>(TutorialRecipePath);
-		if (_recipePrefab == null) { Debug.LogError("[TutorScript] missing tutorial recipe at Resources/" + TutorialRecipePath); return; }
+		if (_recipePrefab == null) _recipePrefab = Resources.Load<GameObject>(CurrentOrderScript.RecipePrefabPath);
+		if (_recipeData == null) _recipeData = Resources.Load<RecipeData>(TutorialRecipePath);
+		if (_recipePrefab == null || _recipeData == null) { Debug.LogError("[TutorScript] missing tutorial recipe at Resources/" + TutorialRecipePath); return; }
 		// Free choice: every tray can be picked.
 		CustomFunctionScript.collisionOnObjects(allTrays, true);
 		plate.GetComponent<PlateScript>().EnsureTray();
@@ -143,6 +148,7 @@ public class TutorScript : MonoBehaviour {
 		Vector3 slot = CardSlot();
 		Vector3 start = layout != null ? layout.OffscreenRightWorld : slot;
 		GameObject newRecipe =(GameObject) Instantiate(_recipePrefab, start, Quaternion.identity);
+		newRecipe.GetComponent<RecipeScript>().Init(_recipeData);
 		newRecipe.transform.parent = spawningArea.transform;
 		Tween.Move(newRecipe.transform, slot, 0.45f, Tween.Ease.OutCubic);
 		CurrentRecipe = newRecipe;

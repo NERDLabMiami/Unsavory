@@ -1,15 +1,18 @@
 {
+  "nationalMinimumHourlyWage": 7.25,
   "baselineBills": {
     "rent": 600,
     "car": 150,
     "carInsurance": 100,
     "healthInsurance": 300,
     "cableAndPhone": 100,
-    "electricity": 90
+    "electricity": 90,
+    "groceries": 88
   },
   "metros": [
     {
       "id": "nyc",
+      "minimumHourlyWage": 17.00,
       "name": "New York City",
       "billOverrides": {
         "rent": 840,
@@ -17,7 +20,8 @@
         "carInsurance": null,
         "healthInsurance": 380,
         "cableAndPhone": 110,
-        "electricity": 100
+        "electricity": 100,
+        "groceries": 95
       },
       "systems": {
         "carAvailable": false,
@@ -29,13 +33,15 @@
     {
       "id": "miami",
       "name": "Miami",
+      "minimumHourlyWage": 15.00,
       "billOverrides": {
         "rent": 720,
         "car": 150,
         "carInsurance": 110,
         "healthInsurance": 420,
         "cableAndPhone": 110,
-        "electricity": 100
+        "electricity": 100,
+        "groceries": 93
       },
       "systems": {
         "carAvailable": true,
@@ -47,13 +53,15 @@
     {
       "id": "la",
       "name": "Los Angeles",
+      "minimumHourlyWage": 18.42,
       "billOverrides": {
         "rent": 780,
         "car": 150,
         "carInsurance": 120,
         "healthInsurance": 400,
         "cableAndPhone": 110,
-        "electricity": 100
+        "electricity": 100,
+        "groceries": 87
       },
       "systems": {
         "carAvailable": true,
@@ -65,13 +73,15 @@
     {
       "id": "chicago",
       "name": "Chicago",
+      "minimumHourlyWage": 17.05,
       "billOverrides": {
         "rent": 690,
         "car": 150,
         "carInsurance": 105,
         "healthInsurance": 340,
         "cableAndPhone": 100,
-        "electricity": 95
+        "electricity": 95,
+        "groceries": 89
       },
       "systems": {
         "carAvailable": true,
@@ -83,13 +93,15 @@
     {
       "id": "atlanta",
       "name": "Atlanta",
+      "minimumHourlyWage": 7.25,
       "billOverrides": {
         "rent": 720,
         "car": 150,
         "carInsurance": 110,
         "healthInsurance": 330,
         "cableAndPhone": 100,
-        "electricity": 95
+        "electricity": 95,
+        "groceries": 88
       },
       "systems": {
         "carAvailable": true,

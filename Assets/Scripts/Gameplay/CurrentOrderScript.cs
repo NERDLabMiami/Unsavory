@@ -5,11 +5,16 @@ using SimpleJSON;
 using UnityEngine.UI;
 
 public class CurrentOrderScript : MonoBehaviour {
-	public List<GameObject> recipes = new List<GameObject>();
+	public List<RecipeData> recipes = new List<RecipeData>();
+	public const string RecipePrefabPath = "Recipes/Recipe";
+	public const string RecipeDataFolder = "Recipes/Data/";
+	GameObject recipePrefab;
 	public TimerScript levelTimer;
 	public PlateScript plate;
 	public Level level;
 	public OrderQueueLayout2D layout;
+	// Keyframes for the cash that replaces a served order slip.
+	public Sprite cashStack, cashCrumple, cashExplode, cashSingle;
 	private readonly List<GameObject> activeOrders = new List<GameObject>();
 
 
@@ -26,6 +31,8 @@ public class CurrentOrderScript : MonoBehaviour {
 	public bool spawnMoreOrders = false;
 	public bool timeTrial = false;
 	private bool orderTimerAlert = false;
+	private bool sauceGraceGiven = false;
+	const float SauceGrace = 4f;   // seconds a rocket order may still wait for its sauce once every other ingredient is down
 
 	private string levelData;
 	private float timeBetweenOrders = 3;
@@ -33,6 +40,10 @@ public class CurrentOrderScript : MonoBehaviour {
 	public float waitingTimeMultiplier = 3f;
 	private float orderTimer;
 	private float arrivalTimer;
+	// Day length in orders, and the seconds the front order waits (0 = waiting time x multiplier).
+	private int ordersInDay = 8;
+	private float paceSeconds = 0f;
+	private int ordersSpawned;
 
 	//	private bool catering = false;
 	//	private int numberOfOrdersServed = 0;
@@ -53,6 +64,7 @@ public class CurrentOrderScript : MonoBehaviour {
 		if (PlayerPrefs.HasKey("catering")) {
 //			catering = true;
 			timeBetweenOrders = 5;
+			levelTimer.SetTotalOrders(ordersInDay);
 			incrementRecipeList();
 			incrementRecipeList();
 		}
@@ -61,252 +73,55 @@ public class CurrentOrderScript : MonoBehaviour {
 			currentLevel = PlayerPrefs.GetInt("current level",0);
 			levelData =  Resources.Load<TextAsset>("levels").ToString();
 			JSONNode levels = JSON.Parse(levelData);
-			timeBetweenOrders = levels["levels"][currentLevel]["waiting time"].AsFloat;
+			int lastLevel = levels["levels"].Count - 1;
+			if (currentLevel > lastLevel) {
+				Debug.LogWarning("[CurrentOrderScript] day " + currentLevel + " is past the last entry in levels.txt; using entry " + lastLevel + ".");
+				currentLevel = lastLevel;
+			}
+			JSONNode entry = levels["levels"][currentLevel];
+			timeBetweenOrders = entry["waiting time"].AsFloat;
 			if (timeBetweenOrders <= 0) {
 				timeBetweenOrders = 5;
 			}
 			Debug.Log("TIME BETWEEN ORDERS: " + timeBetweenOrders);
 
-//			numberOfRecipes = levels["levels"][currentLevel]["recipes"].AsInt;
-			int numberOfSets = levels["levels"][currentLevel]["recipes"].AsArray.Count;
-			if (numberOfSets == 0) {
-				for (int i = 0; i < currentLevel; i++) {
-					incrementRecipeList();
-				}
+			var orders = entry["orders"].AsInt;
+			if (orders > 0) ordersInDay = orders;
+			paceSeconds = entry["pace"].AsFloat;
+			levelTimer.SetTotalOrders(ordersInDay);
 
-			}
-			for (int i = 0; i < numberOfSets; i++) {
-				loadRecipeSet(levels["levels"][currentLevel]["recipes"][i].AsInt);
-			}
-//			loadRecipes(numberOfRecipes);
-//			Debug.Log(numberOfRecipes + " Recipes Loaded");
+			var names = entry["recipes"].AsArray;
+			for (int i = 0; i < names.Count; i++) AddRecipe(names[i].Value);
 		}
+		// A sneeze gives the player the same seconds a clock step is worth.
+		levelTimer.SetWipeWindow(FrontDeadlineSeconds);
 	}
+
+	private float FrontDeadlineSeconds { get { return paceSeconds > 0f ? paceSeconds : timeBetweenOrders * waitingTimeMultiplier; } }
 	public void RemoveOrderAfterAnim(GameObject order, float seconds = 0.4f)
 	{
 		if (order == null) return;
 		activeOrders.Remove(order);
 		Destroy(order, seconds);
 	}
-	public void incrementRecipeList() {
-		switch(cateringRecipeAmount) {
-		case 1:
-			recipes.Add((GameObject)Resources.Load("Recipes/2-A"));
-				break;
-		case 2:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-				break;
-		case 3:
-			recipes.Add((GameObject)Resources.Load("Recipes/4-A"));
-			break;
-		case 4:
-			recipes.Add((GameObject)Resources.Load("Recipes/3-D"));
-			break;
-		case 5:
-			recipes.Add((GameObject)Resources.Load("Recipes/4-C"));
-			break;
-		case 6:
-			recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-			break;
-		case 7:
-			recipes.Add((GameObject)Resources.Load("Recipes/5-E"));
-			break;
-		case 8:
-			recipes.Add((GameObject)Resources.Load("Recipes/2-A-R"));
-			break;
-		case 9:
-			recipes.Add((GameObject)Resources.Load("Recipes/3-A-R"));
-			break;
-		case 10:
-			recipes.Add((GameObject)Resources.Load("Recipes/3-C-R"));
-			break;
-		case 11:
-			recipes.Add((GameObject)Resources.Load("Recipes/4-B-R"));
-			break;
-		case 12:
-			recipes.Add((GameObject)Resources.Load("Recipes/4-D-R"));
-			break;
-		case 13:
-			recipes.Add((GameObject)Resources.Load("Recipes/5-A-R"));
-			break;
-		case 14:
-			recipes.Add((GameObject)Resources.Load("Recipes/5-B-R"));
-			break;
-		case 15:
-			recipes.Add((GameObject)Resources.Load("Recipes/6-A"));
-			break;
-		case 16:
-			recipes.Add((GameObject)Resources.Load("Recipes/6-B-R"));
-			break;
+	// Catering orders unlock one more recipe each time it is called, easiest first.
+	static readonly string[] CateringRecipes = {
+		"Quesadilla", "Beans and Cheese", "Creamy Tomato", "Vegan", "Bean and Cheese with Sour Cream",
+		"Spicy Quesadilla", "Spicy Bean and Cheese", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite",
+	};
 
-		}
+	public void incrementRecipeList() {
+		if (cateringRecipeAmount <= CateringRecipes.Length) AddRecipe(CateringRecipes[cateringRecipeAmount - 1]);
 		cateringRecipeAmount++;
 	}
 
-	void loadRecipeSet(int set) {
-		switch(set) {
-			case 1:
-				recipes.Add((GameObject)Resources.Load("Recipes/2-A"));
-				recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-				recipes.Add((GameObject)Resources.Load("Recipes/4-A"));
-				break;
-			case 2:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-D"));
-				recipes.Add((GameObject)Resources.Load("Recipes/4-C"));
-				break;
-			case 3:
-				recipes.Add((GameObject)Resources.Load("Recipes/2-A"));
-				recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-				break;
-			case 4:
-				recipes.Add((GameObject)Resources.Load("Recipes/6-A"));
-				recipes.Add((GameObject)Resources.Load("Recipes/5-E"));
-				recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-				break;
-			case 5:
-				recipes.Add((GameObject)Resources.Load("Recipes/5-E"));
-				recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-				break;
-			case 6:
-				recipes.Add((GameObject)Resources.Load("Recipes/2-A-R"));
-				recipes.Add((GameObject)Resources.Load("Recipes/3-A-R"));
-				break;
-			case 7:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-				recipes.Add((GameObject)Resources.Load("Recipes/6-A"));
-				recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-				recipes.Add((GameObject)Resources.Load("Recipes/2-A-R"));
-				recipes.Add((GameObject)Resources.Load("Recipes/4-A"));
-				break;
-			case 8:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-C-R"));
-				break;
-			case 9:
-				recipes.Add((GameObject)Resources.Load("Recipes/4-B-R"));
-				recipes.Add((GameObject)Resources.Load("Recipes/4-D-R"));
-				break;
-			case 10:
-				recipes.Add((GameObject)Resources.Load("Recipes/6-B-R"));
-				break;
-			case 11:
-				recipes.Add((GameObject)Resources.Load("Recipes/5-B-R"));
-				recipes.Add((GameObject)Resources.Load("Recipes/5-A-R"));
-				break;
-			case 12:
-				recipes.Add((GameObject)Resources.Load("Recipes/2-A"));
-				recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-				recipes.Add((GameObject)Resources.Load("Recipes/3-C-R"));
-				recipes.Add((GameObject)Resources.Load("Recipes/4-A"));
-				recipes.Add((GameObject)Resources.Load("Recipes/4-B-R"));
-				recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-				recipes.Add((GameObject)Resources.Load("Recipes/6-A"));
-				break;
-
-		}
+	// Adds a recipe asset (Resources/Recipes/Data/<name>) to the pool once; a name listed twice would double its odds.
+	void AddRecipe(string recipeName) {
+		var data = Resources.Load<RecipeData>(RecipeDataFolder + recipeName);
+		if (data == null) { Debug.LogError("[CurrentOrderScript] no recipe asset '" + recipeName + "' in Resources/" + RecipeDataFolder); return; }
+		if (!recipes.Contains(data)) recipes.Add(data);
 	}
 
-	
-	void pickShortRecipes(int amount) {
-		recipes.Add((GameObject)Resources.Load("Recipes/2-A"));
-		recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-		recipes.Add((GameObject)Resources.Load("Recipes/4-A"));
-		recipes.Add((GameObject)Resources.Load("Recipes/3-D"));
-		recipes.Add((GameObject)Resources.Load("Recipes/4-C"));
-
-
-	}
-
-	void pickShortRocketRecipes(int amount) {
-		recipes.Add((GameObject)Resources.Load("Recipes/2-A-R"));
-		recipes.Add((GameObject)Resources.Load("Recipes/3-A-R"));
-		recipes.Add((GameObject)Resources.Load("Recipes/3-C-R"));
-		recipes.Add((GameObject)Resources.Load("Recipes/4-B-R"));
-		recipes.Add((GameObject)Resources.Load("Recipes/4-D-R"));
-
-	}
-
-	void pickLongRecipes(int amount) {
-		recipes.Add((GameObject)Resources.Load("Recipes/6-A"));
-		recipes.Add((GameObject)Resources.Load("Recipes/5-E"));
-		recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-
-	}
-
-	void pickLongRocketRecipes(int amount) {
-		recipes.Add((GameObject)Resources.Load("Recipes/6-B-R"));
-		recipes.Add((GameObject)Resources.Load("Recipes/5-B-R"));
-		recipes.Add((GameObject)Resources.Load("Recipes/5-A-R"));
-
-	}
-
-	void loadRecipes(int amount) {
-		switch (amount) {
-
-			case 16:
-				recipes.Add((GameObject)Resources.Load("Recipes/6-B-R"));
-				goto case 15;
-
-			case 15:
-				recipes.Add((GameObject)Resources.Load("Recipes/6-A"));
-				goto case 14;
-
-			case 14:
-				recipes.Add((GameObject)Resources.Load("Recipes/5-B-R"));
-				goto case 13;
-	
-			case 13:
-				recipes.Add((GameObject)Resources.Load("Recipes/5-A-R"));
-				goto case 12;
-
-			case 12:
-				recipes.Add((GameObject)Resources.Load("Recipes/4-D-R"));
-				goto case 11;
-	
-			case 11:
-				recipes.Add((GameObject)Resources.Load("Recipes/4-B-R"));
-				goto case 10;
-
-			case 10:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-C-R"));
-				goto case 9;
-
-			case 9:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-A-R"));
-				goto case 8;
-
-			case 8:
-				recipes.Add((GameObject)Resources.Load("Recipes/2-A-R"));
-				goto case 7;
-		
-			case 7:
-				recipes.Add((GameObject)Resources.Load("Recipes/5-E"));
-				goto case 6;
-		
-			case 6:
-				recipes.Add((GameObject)Resources.Load("Recipes/5-D"));
-				goto case 5;
-	
-			case 5:
-				recipes.Add((GameObject)Resources.Load("Recipes/4-C"));
-				goto case 4;
-	
-			case 4:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-D"));
-				goto case 3;
-	
-			case 3:
-				recipes.Add((GameObject)Resources.Load("Recipes/4-A"));
-				goto case 2;		
-
-			case 2:
-				recipes.Add((GameObject)Resources.Load("Recipes/3-B"));
-				goto case 1;	
-		
-			case 1:
-			recipes.Add((GameObject)Resources.Load("Recipes/2-A"));
-			break;
-		}
-	}
 	void Update()
 {
     // Keep the queue clean
@@ -335,11 +150,19 @@ public class CurrentOrderScript : MonoBehaviour {
     if (arrivalTimer <= 0f)
     {
         arrivalTimer = timeBetweenOrders;
-        if (activeOrders.Count < maximumNumberOfBackedUpOrders)
+        if (activeOrders.Count < maximumNumberOfBackedUpOrders && ordersSpawned < ordersInDay)
             newOrder();
     }
 
     orderTimer -= Time.deltaTime;
+
+    // Every ingredient is down and only the hot sauce is missing: the order gets a few extra seconds to wait for it.
+    if (!sauceGraceGiven && plate.AwaitingSauce)
+    {
+        sauceGraceGiven = true;
+        orderTimer = Mathf.Max(orderTimer, SauceGrace);
+        orderTimerAlert = false;
+    }
 
     // Alert the FRONT order when time is low
     if (orderTimer < .5f && !orderTimerAlert)
@@ -351,7 +174,8 @@ public class CurrentOrderScript : MonoBehaviour {
     }
 
     // Timer expired: front order becomes unmatched, then we spawn a new one
-    if (orderTimer <= 0f)
+    // (An order already being served or thrown away is settled by that; its own finish starts the next deadline.)
+    if (orderTimer <= 0f && !plate.IsResolving)
     {
         Debug.Log("Number of Unmatched Orders: " + numberOfUnmatchedOrders);
 
@@ -363,12 +187,15 @@ public class CurrentOrderScript : MonoBehaviour {
             RemoveOrderAfterAnim(front, 0.5f);
         }
 
+        // The warning panel no longer buzzes on its own (a wrong ingredient already did), so a timeout does it here.
+        plate.PlayMistakeSound();
         if (warningTimer <= Time.time + 2f)
         {
             numberOfUnmatchedOrders++;
             plate.playerWarning(numberOfUnmatchedOrders);
             warningTimer = Time.time;
         }
+        plate.BreakStreak();
 
         // The next order starts from a fresh plate with its tortilla.
         plate.NewTray(false);
@@ -402,18 +229,20 @@ public class CurrentOrderScript : MonoBehaviour {
 	public void OnFrontFinished()
 	{
 		PruneNullOrders();
+		levelTimer.AdvanceOrder();
 		StartFrontDeadline();
-		if (activeOrders.Count == 0) newOrder();
+		if (activeOrders.Count == 0 && ordersSpawned < ordersInDay) newOrder();
 	}
 
 	private void StartFrontDeadline()
 	{
-		orderTimer = timeBetweenOrders * waitingTimeMultiplier;
+		orderTimer = FrontDeadlineSeconds;
 		orderTimerAlert = false;
+		sauceGraceGiven = false;
 	}
 
 // Creates an order just beyond the right edge; OrderQueueLayout2D slides it to the next free slot in the row.
-public void newOrder(GameObject order = null)
+public void newOrder(RecipeData order = null)
 {
     if (order == null && recipes.Count == 0)
     {
@@ -421,7 +250,13 @@ public void newOrder(GameObject order = null)
         return;
     }
 
-    GameObject prefab = (order != null) ? order : recipes[Random.Range(0, recipes.Count)];
+    RecipeData data = (order != null) ? order : recipes[Random.Range(0, recipes.Count)];
+    if (recipePrefab == null) recipePrefab = Resources.Load<GameObject>(RecipePrefabPath);
+    if (data == null || recipePrefab == null)
+    {
+        Debug.LogError("[CurrentOrderScript] missing recipe data or Resources/" + RecipePrefabPath + ".");
+        return;
+    }
 
     Vector3 spawnWorld;
     if (layout != null)
@@ -436,7 +271,8 @@ public void newOrder(GameObject order = null)
     spawnWorld.z = 0f;
 
     // Instantiate AT spawnWorld, then parent keeping world space, so there is no snap.
-    GameObject newRecipe = (GameObject)Instantiate(prefab, spawnWorld, Quaternion.identity);
+    GameObject newRecipe = (GameObject)Instantiate(recipePrefab, spawnWorld, Quaternion.identity);
+    newRecipe.GetComponent<RecipeScript>().Init(data);
     if (spawningGround != null)
         newRecipe.transform.SetParent(spawningGround.transform, true);
 
@@ -445,6 +281,7 @@ public void newOrder(GameObject order = null)
     arrivalTimer = timeBetweenOrders;
 
     activeOrders.Add(newRecipe);
+    if (order == null) ordersSpawned++;
 }
 
 	public List<GameObject> GetActiveOrdersUnsafe()  // quick + dirty for now

@@ -70,7 +70,7 @@ public class SceneLoader : MonoBehaviour {
 
 		}
 		PlayerPrefs.SetFloat("hourly rate", 8.05f);
-		PlayerPrefs.SetInt("retries", 3);
+		TacoLedger.Reset();
 
 		//set effect levels
 		

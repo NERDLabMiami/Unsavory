@@ -153,10 +153,28 @@ public class HandPoseController : MonoBehaviour
     {
         var s = Show(wipeNose, holdTime);
         if (s == null) return;
+        // The nose dips to meet the hand on every swipe press, not only when a sneeze is building.
+        var nose = NoseWipeScript.Active;
+        if (nose != null) AnimUtil.Get<NoseAnim>(nose.gameObject).Drop();
         s.sequence = true;
         MoveOffset(s, wipeRise, wipeRiseTime, Tween.Ease.OutQuad, () =>
             MoveOffset(s, wipeSwipe, wipeSwipeTime, Tween.Ease.OutQuad, () =>
                 MoveOffset(s, Vector2.zero, wipeReturnTime, Tween.Ease.OutQuad, () => Restore(s))));
+    }
+
+    /// <summary>Where and when the wiping fingertip arrives, so the nose can dip to meet it. False if no wipe pose is set.</summary>
+    public bool TryGetWipeContact(out Vector3 tipWorld, out float riseTime, out float swipeTime, out float returnTime)
+    {
+        tipWorld = default;
+        riseTime = wipeRiseTime; swipeTime = wipeSwipeTime; returnTime = wipeReturnTime;
+        if (wipeNose == null || !wipeNose.hand || !wipeNose.sprite) return false;
+        var hand = wipeNose.hand.transform;
+        if (!_hands.TryGetValue(wipeNose.hand, out var s)) return false;
+        float k = PoseScale(wipeNose, s);
+        // The arm sprite is centred on its pivot with the finger at the top.
+        Vector3 at = s.restPosition + (Vector3)(wipeSwipe + wipeNose.localOffset) + new Vector3(0f, wipeNose.sprite.bounds.max.y * k, 0f);
+        tipWorld = hand.parent ? hand.parent.TransformPoint(at) : at;
+        return true;
     }
 
     // ---- Helpers ----
@@ -169,13 +187,17 @@ public class HandPoseController : MonoBehaviour
         s.until = Time.unscaledTime + hold;
 
         s.renderer.sprite = pose.sprite;
-        float k = pose.scaleMultiplier;
-        if (pose.scaleMode == ScaleMode.FitHeight && s.idleHeight > 0f && pose.sprite.bounds.size.y > 0f)
-            k *= s.idleHeight / pose.sprite.bounds.size.y;
-        else
-            k *= s.idleScale.x;
+        float k = PoseScale(pose, s);
         s.t.localScale = new Vector3(k, k, s.idleScale.z);
         return s;
+    }
+
+    static float PoseScale(Pose pose, HandState s)
+    {
+        float k = pose.scaleMultiplier;
+        if (pose.scaleMode == ScaleMode.FitHeight && s.idleHeight > 0f && pose.sprite.bounds.size.y > 0f)
+            return k * s.idleHeight / pose.sprite.bounds.size.y;
+        return k * s.idleScale.x;
     }
 
     // Tweens the hand's action offset (added on top of the rest position every frame). A new move replaces the old one.

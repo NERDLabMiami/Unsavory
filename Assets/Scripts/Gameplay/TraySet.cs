@@ -1,16 +1,13 @@
 using UnityEngine;
 
 // One tray + plate (+ tortilla and whatever gets added to it) for a single order. Ingredients are children, so
-// finiing or botching the order tosses the whole set aside and a fresh one takes its place. Nothing is ever
-// cleared in place, so a new set can't lose ingredients to a pending reset.
+// finishing or botching the order slides the whole set off to the left and a fresh one slides in from the right.
+// Nothing is ever cleared in place, so a new set can't lose ingredients to a pending reset.
 public class TraySet : MonoBehaviour {
-	public const float FadeIn = 0.4f;
-	// A new set starts this far right of its resting spot (just past the sauce hand) and slides in.
-	static readonly Vector3 SlideInOffset = new Vector3(3.5f, 0f, 0f);
-	// A served set crosses the table to the left; a botched one drops off the bottom.
-	static readonly Vector3 ServedToss = new Vector3(-7f, 0f, 0f);
-	static readonly Vector3 DiscardToss = new Vector3(0f, -4f, 0f);
-	const float ServedTime = 0.45f, DiscardTime = 0.4f;
+	public const float SlideTime = 0.4f;
+	// A set enters from just off the right of the view and leaves just off the left; this is the gap past the edge.
+	const float OffscreenMargin = 0.5f;
+	const float ExitTime = 0.5f;
 
 	// Art for the tray body, taken once from the scene's PlateScript sprite (see PlateScript.TakeTemplates).
 	public struct TrayArt {
@@ -30,7 +27,7 @@ public class TraySet : MonoBehaviour {
 		var go = new GameObject("Tray Set");
 		var t = go.transform;
 		t.SetParent(anchor.parent, false);
-		t.localPosition = anchor.localPosition + SlideInOffset;
+		t.localPosition = anchor.localPosition;
 		t.localRotation = anchor.localRotation;
 		t.localScale = anchor.localScale;
 
@@ -55,30 +52,40 @@ public class TraySet : MonoBehaviour {
 		return set;
 	}
 
+	// Starts fully off the right edge of the camera view and slides to the resting spot.
 	void SlideIn(Vector3 restLocal) {
-		Tween.MoveLocal(transform, restLocal, FadeIn, Tween.Ease.OutCubic);
-		foreach (var s in GetComponentsInChildren<SpriteRenderer>(true)) {
-			float a = s.color.a;
-			var c = s.color; c.a = 0f; s.color = c;
-			Tween.Alpha(s, a, FadeIn, Tween.Ease.Linear);
-		}
+		var b = WorldBounds();
+		var cam = Camera.main;
+		if (cam != null) transform.position += Vector3.right * (RightEdge(cam) + OffscreenMargin - b.min.x);
+		Tween.MoveLocal(transform, restLocal, SlideTime, Tween.Ease.OutCubic);
 	}
 
-	// Throws the set away and removes it. A served set crosses the table to the left; a botched one drops down.
-	// When served, the ingredients are already part of the finished taco, so they vanish at once and only the tray and plate leave.
+	static float RightEdge(Camera cam) { return cam.transform.position.x + cam.orthographicSize * cam.aspect; }
+	static float LeftEdge(Camera cam) { return cam.transform.position.x - cam.orthographicSize * cam.aspect; }
+
+	// World bounds of every sprite in the set (tray, plate, and whatever is on it).
+	Bounds WorldBounds() {
+		var rs = GetComponentsInChildren<SpriteRenderer>(true);
+		var b = new Bounds(transform.position, Vector3.zero);
+		for (int i = 0; i < rs.Length; i++) if (rs[i].sprite != null) b.Encapsulate(rs[i].bounds);
+		return b;
+	}
+
+	// Removes the ingredients (tortilla, fillings, sauce) so only the tray and plate are left.
+	public void ClearIngredients() {
+		foreach (var s in GetComponentsInChildren<SpriteRenderer>(true)) if (s.CompareTag("Ingredient")) Destroy(s.gameObject);
+	}
+
+	// Slides the set off the left of the view and removes it, for a served order and a botched one alike.
+	// A served set carries its taco with it (the ingredients were already swapped for the taco).
 	public void Toss(bool served) {
-		// Leave the Player so it keeps flying where it is while the Player moves on.
+		// Leave the Player so it keeps moving where it is while the Player moves on.
 		transform.SetParent(null, true);
 		foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
 
-		float time = served ? ServedTime : DiscardTime;
-		foreach (var s in GetComponentsInChildren<SpriteRenderer>(true)) {
-			if (served && s.CompareTag("Ingredient")) { Destroy(s.gameObject); continue; }
-			Tween.Cancel(s, "alpha");
-			Tween.Alpha(s, 0f, time, Tween.Ease.InQuad);
-		}
-		if (!served) Tween.Rotate(transform, new Vector3(0f, 0f, 12f), time, Tween.Ease.InQuad);
+		var cam = Camera.main;
+		float dx = cam != null ? LeftEdge(cam) - OffscreenMargin - WorldBounds().max.x : -10f;
 		Tween.Cancel(transform, "pos");
-		Tween.Move(transform, transform.position + (served ? ServedToss : DiscardToss), time, Tween.Ease.InQuad, 0f, () => Destroy(gameObject));
+		Tween.Move(transform, transform.position + Vector3.right * dx, ExitTime, Tween.Ease.InQuad, 0f, () => Destroy(gameObject));
 	}
 }

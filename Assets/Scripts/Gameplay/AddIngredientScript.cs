@@ -1,21 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 
 public class AddIngredientScript : MonoBehaviour, IWorldInteractable {
 	public GameObject ingredient = null;
 	public GameObject plate;
 	public MusicLibrary music;
 	public AudioClip soundEffect;
-	private bool tainted = false;
-	public string tutorialLesson;
-	public GameObject tutorial;
+	public Sprite lessSprite; // the tray's "-less" art, shown briefly when an ingredient is taken
+	public float lessScale = 1f; // uniform size tweak for the less art (its import size already matches the full pile's width)
 
-	public bool getTainted() {
-		return tainted;
-	}
-	public void setTainted(bool taint) {
-		tainted = taint;
-	}
 	public void Interact() { TryAdd(); }
 
 	public void TryAdd()
@@ -27,12 +19,14 @@ public class AddIngredientScript : MonoBehaviour, IWorldInteractable {
 
 		plateScript.EnsureTray();
 		plateScript.SpawnOnTray(ingredient);
-		if (music) music.playEffect(soundEffect);
+		if (lessSprite) TrayFeedback.Dip(GetComponent<SpriteRenderer>(), lessSprite, lessScale);
 		plateScript.ingredients.Add(ingredient);
 
 		if (plateScript.tutorialMode && plateScript.tutor != null) plateScript.tutor.OnTutorialIngredientAdded();
 		// Check the order last, so a completing ingredient serves it after the tutorial has noted the add.
-		plateScript.OnIngredientAdded(ingredient);
+		// A wrong ingredient gets only the buzz, not the pickup sound on top of it.
+		bool wrong = plateScript.OnIngredientAdded(ingredient);
+		if (!wrong && music) music.playEffect(soundEffect);
 	}
 
 }

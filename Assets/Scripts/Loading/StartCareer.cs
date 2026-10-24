@@ -44,11 +44,12 @@ public class StartCareer : MonoBehaviour {
 			PlayerPrefs.SetFloat("health", 60);
 			PlayerPrefs.SetFloat ("paycheck", 0);
 			PlayerPrefs.SetFloat("earned wages", 0);
+			PlayerState.ResetPaychecks();
+			MailArchive.Reset();
+			MailArchive.DeliverDue();   // day-1 mail
 			PlayerPrefs.SetFloat("bank account", 0);
 			PlayerPrefs.SetFloat("hourly rate", 8.05f);
-			PlayerPrefs.SetInt("retries", 3);
-		int r = PlayerPrefs.GetInt("retries", -1);
-		Debug.Log("RETRIES: " + r);
+			TacoLedger.Reset();
 
 		//set effect levels
 

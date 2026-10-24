@@ -3,18 +3,27 @@
     {
       "lines": [
         {
-          "text": "You're here for the WerkJerk training session?"
+          "text": "Are you here from WerkJerk?",
+          "face": "curious",
+          "view": "side"
         },
         {
           "who": "player",
-          "text": "Yeah."
+          "text": "Yeah. I've been looking for work."
         },
         {
-          "text": "Okay, let's see what you've got."
+          "text": "Great! Nice to meet you.",
+          "face": "greeting",
+          "view": "straight"
         },
         {
           "who": "player",
-          "text": "I'm ready."
+          "text": "Nice to meet you too."
+        },
+        {
+          "text": "Well, let's see what you can do...",
+          "face": "thinking",
+          "view": "straight"
         }
       ]
     }
@@ -23,29 +32,76 @@
     {
       "lines": [
         {
-          "text": "Wow! WerkJerk's algorithms really are something..."
+          "text": "Wow!",
+          "face": "excited",
+          "view": "side"
+        },
+        {
+          "text": "WerkJerk's algorithms really are something...",
+          "face": "wonder",
+          "view": "straight"
         },
         {
           "who": "player",
           "text": "Their algorithm?"
         },
         {
-          "text": "Yeah!"
+          "text": "Yeah! You know, like, innovation and stuff.",
+          "face": "nostalgic",
+          "view": "side"
         },
         {
-          "text": "You wouldn't believe some of the people who I had to screen when we had that help wanted sign up in the window.",
-          "wait": 4
+          "text": "I needed a person who could make tacos. You made a taco.",
+          "face": "thinking",
+          "view": "side"
+        },
+        {
+          "text": "WerkJerk delivered.",
+          "face": "satisfied",
+          "view": "side",
+          "wait": 2
         },
         {
           "who": "player",
-          "text": "I'm just happy to have a job."
+          "text": "So I'm hired?"
         },
         {
-          "text": "Right.",
-          "wait": 4
+          "text": "What do you mean? You're a WerkJerk contractor.",
+          "face": "confused",
+          "view": "side"
         },
         {
-          "text": "What are you waiting for? Get to work."
+          "who": "player",
+          "text": "How do I get paid?"
+        },
+        {
+          "text": "WerkJerk tracks your hours, and I approve them.",
+          "face": "satisfied",
+          "view": "side"
+        },
+        {
+          "text": "If you screw up, I can terminate your contract.",
+          "face": "satisfied",
+          "view": "side"
+        },
+        {
+          "who": "player",
+          "text": "Oh."
+        },
+        {
+          "text": "Well?",
+          "face": "thinking",
+          "view": "straight"
+        },
+        {
+          "text": "What are you waiting for?",
+          "face": "confused",
+          "view": "straight"
+        },
+        {
+          "text": "Get to work!",
+          "face": "angry",
+          "view": "straight"
         }
       ]
     }
@@ -54,132 +110,607 @@
     {
       "lines": [
         {
-          "text": "Look at that. Weekend already. Your paycheck will be waiting at home."
-        },
-        {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "Another week down!",
+          "face": "satisfied",
+          "view": "straight"
         },
         {
           "who": "player",
           "text": "Thanks."
+        },
+        {
+          "text": "WerkJerk processes timecards at the end of the week.",
+          "face": "satisfied",
+          "view": "side"
+        },
+        {
+          "text": "That means you get paid.",
+          "face": "satisfied",
+          "view": "straight"
+        },
+        {
+          "who": "player",
+          "text": "Finally."
+        },
+        {
+          "text": "Eh, don't blow it all in one place.",
+          "face": "condescending"
         }
       ]
     }
   ],
-  "complete1": [
+  "complete_unsatisfactory": [
     {
       "lines": [
         {
-          "text": "I thought you were sick. Guess I was wrong."
+          "text": "That was...",
+          "face": "thinking",
+          "view": "side",
+          "wait": 3
         },
         {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "Not great...",
+          "face": "upset",
+          "view": "straight",
+          "wait": 3
         },
         {
           "who": "player",
-          "text": "I’m fine."
+          "text": "I’ll try harder next time."
+        },
+        {
+          "text": "I guess we'll see about that...",
+          "view": "straight",
+          "face": "thinking"
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "You pushed through. I notice that."
-        },
-        {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "You can do better than that.",
+          "face": "thinking",
+          "view": "side"
         },
         {
           "who": "player",
-          "text": "I’ll get the hang of this."
+          "text": "I know."
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "So you’re sticking around."
-        },
-        {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "I can't believe you made {wages} today for that slop.",
+          "face": "confused",
+          "view": "side"
         },
         {
           "who": "player",
-          "text": "I need the money."
+          "text": "Can I get an advance on my paycheck?"
+        },
+        {
+          "text": "Of course not!",
+          "face": "condescension",
+          "view": "straight"
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==1"
+      },
+      "lines": [
+        {
+          "text": "It's a good thing management knows how to improve productivity.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "What?"
+        },
+        {
+          "text": "WerkJerk came up with this reward system. Corporate calls 'em Trust Tacos. Pretty innovative.",
+          "face": "proud"
+        },
+        {
+          "who": "player",
+          "text": "Can I eat it?"
+        },
+        {
+          "text": "What? No! When you screw up, spend one and I'll give you another chance to earn my trust.",
+          "face": "unamused"
+        },
+        {
+          "who": "player",
+          "text": "What if I don't have any tacos to give you?"
+        },
+        {
+          "text": "Then I can terminate your contract.",
+          "face": "smug",
+          "wait": 2
+        },
+        {
+          "text": "It's pretty brilliant. Takes the guesswork out of management!",
+          "face": "wonder"
+        }
+
+      ]
+    },
+    {
+      "when": {
+        "day": "==2"
+      },
+      "lines": [
+        {
+          "text": "I'm not so sure about WerkJerk's algorithm...",
+          "face": "thinking",
+          "view": "side"
+        },
+        {
+          "text": "At least WerkJerk makes you easy to replace.",
+          "face": "satisfied",
+          "view": "straight"
+        },
+        {
+          "who": "player",
+          "text": "I'll try harder."
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==3"
+      },
+      "lines": [
+        {
+          "text": "{wages} for that performance? Geez...",
+          "face": "upset"
+        },
+        {
+          "who": "player",
+          "text": "It got busy."
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==4"
+      },
+      "lines": [
+        {
+          "text": "C'mon now, we've barely got to know each other.",
+          "face": "upset"
+        },
+        {
+          "text": "I'd rather not replace you.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "I'm not replaceable."
         }
       ]
     }
   ],
-  "complete2": [
+  "complete_satisfactory": [
     {
       "lines": [
         {
-          "text": "You did alright today."
+          "text": "That's decent work.",
+          "face": "satisfied"
         },
         {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "I guess that's fair for {wages}.",
+          "face": "confused"
         },
         {
           "who": "player",
-          "text": "I know the routine."
+          "text": "Can I get that now?"
+        },
+        {
+          "text": "Nice try. Take that up with WerkJerk.",
+          "face": "condescension"
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "See? If you were really sick, you couldn’t do that."
+          "text": "Not bad.",
+          "face": "thinking"
         },
         {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "I mean, you made mistakes...",
+          "face": "givesup",
+          "wait": 2
+        },
+        {
+          "text": "But somebody has to make tacos...",
+          "face": "thinking"
         },
         {
           "who": "player",
-          "text": "I can manage."
+          "text": "That's the job"
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==2"
+      },
+      "lines": [
+        {
+          "text": "You seem to be getting the hang of this.",
+          "face": "satisfied"
+
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==3"
+      },
+      "lines": [
+        {
+          "text": "That WerkJerk algorithm is magic.",
+          "face": "satisfied"
+        },
+        {
+          "who": "player",
+          "text": "I'll see you tomorrow."
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==4"
+      },
+      "lines": [
+        {
+          "text": "You do any investing?",
+          "face": "curious"
+
+        },
+        {
+          "who": "player",
+          "text": "I'd need to be able to save something first"
+        },
+        {
+          "text": "Maybe get another job? You gotta hustle in this economy.",
+          "face": "confused",
+          "wait": 2
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==1",
+        "first_satisfactory": "==1",
+        "tacos_earned": "==0"
+      },
+      "lines": [
+        {
+          "text": "Not bad... I think you'll like this reward system WerkJerk came up with.",
+          "face": "surprised"
+        },
+        {
+          "text": "Trust Tacos. It's pretty innovative.",
+          "face": "excited"
+        },
+        {
+          "who": "player",
+          "text": "Trust Tacos?"
+        },
+        {
+          "text": "When you do flawless work, I reward you with a trust taco.",
+          "face": "resting"
+        },
+        {
+          "who": "player",
+          "text": "How do I use it?"
+        },
+        {
+          "text": "Screw up, hand one over, and I'll give you another shot at earning my trust.",
+          "face": "satisfied"
+        },
+        {
+          "who": "player",
+          "text": "What if I don't have any tacos to give you?"
+        },
+        {
+          "text": "Then I can terminate your contract.",
+          "face": "satisfied",
+          "wait": 4
+        }
+      ]
+    },
+    {
+      "when": {
+        "first_satisfactory": "==1",
+        "tacos_earned": "==0"
+      },
+      "lines": [
+        {
+          "text": "Decent work. Not quite Trust Taco material.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "I'll try harder next time."
+        }
+      ]
+    },
+    {
+      "when": {
+        "first_satisfactory": "==1",
+        "tacos_earned": ">0",
+        "taco_standing": "<0"
+      },
+      "lines": [
+        {
+          "text": "Hey, that wasn't disappointing...",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "I'm working on it."
+        },
+        {
+          "text": "One decent shift doesn't erase the others...",
+          "face": "condescending"
         }
       ]
     }
   ],
-  "complete3": [
+  "complete_above_average": [
     {
       "lines": [
         {
-          "text": "That’s real work right there."
-        },
-        {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "You're a model of efficiency.",
+          "face": "proud"
         },
         {
           "who": "player",
-          "text": "I guess."
+          "text": "Thanks?"
+        },
+        {
+          "text": "This WerkJerk algorithm is next level. We're living in the future!",
+          "face": "happy"
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "Most people would’ve quit by now."
-        },
-        {
-          "text": "That's {wages} added to your next paycheck."
+          "text": "You've got a hustle about you.",
+          "face": "proud"
         },
         {
           "who": "player",
-          "text": "Someone has to show up."
+          "text": "I'm just trying to make my rent"
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "That’s the difference between commitment and excuses."
+          "text": "If you were an employee, your picture would be up on the wall.",
+          "view": "side",
+          "face": "thinking"
         },
         {
-          "text": "That's {wages} added to your next paycheck."
+         "text": "We'd all be eating some cake.",
+         "view": "straight",
+         "face": "thinking"
+        },
+        {
+          "text": "That's a bit extravagant. I prefer trust tacos.",
+          "face": "grumpy"
+        },
+        {
+          "text": "Gotta respect WerkJerk, they know how to eliminate paperwork.",
+          "face": "wonder",
+          "view": "side"
         },
         {
           "who": "player",
-          "text": "I do what I can."
+          "text": "I wouldn't mind a cake break"
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==1",
+        "taco": "==1"
+      },
+      "lines": [
+        {
+          "text": "You just earned a Trust Taco. It's something WerkJerk just rolled out.",
+          "face": "happy"
+        },
+
+        {
+          "text": "It's pretty innovative.",
+          "face": "excited"
+        },
+        {
+          "who": "player",
+          "text": "Trust Tacos?"
+        },
+        {
+          "text": "It holds people accountable and it rewards the right attitude.",
+          "face": "condescension"
+        },
+        {
+          "who": "player",
+          "text": "I have the right attitude?"
+        },
+        {
+          "text": "Yeah, you respect the work.",
+          "face": "satisfied"
+
+        },
+        {
+          "who": "player",
+          "text": "Can I bank these and take a vacation?"
+        },
+
+        {
+          "text": "What? No! When you screw up, spend one, and you get another shot.",
+          "face": "serious"
+        },
+        {
+          "who": "player",
+          "text": "Good to know."
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==2",
+        "taco": "==1"
+      },
+      "lines": [
+        {
+          "text": "That's Trust Taco worthy work right there.",
+          "face": "proud"
+        },
+        {
+          "who": "player",
+          "text": "I'll take it."
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==3",
+        "taco": "==1"
+      },
+      "lines": [
+        {
+          "text": "That was fast and clean. You earned a Trust Taco.",
+          "face": "proud"
+        },
+        {
+          "who": "player",
+          "text": "Thanks"
+        }
+      ]
+    },
+    {
+      "when": {
+        "day": "==4",
+        "taco": "==1"
+      },
+      "lines": [
+        {
+          "text": "You earned a Trust Taco.",
+          "face": "proud"
+        },
+        {
+          "text": "WerkJerk algorithm working that magic."
+        },
+        {
+          "who": "player",
+          "text": "I guess so"
+        }
+      ]
+    },
+    {
+      "when": {
+        "taco": "==1",
+        "tacos_earned": "==1"
+      },
+      "lines": [
+        {
+          "text": "Your first Trust Taco! WerkJerk tracks these, you know.",
+          "face": "satisfied"
+        },
+        {
+          "who": "player",
+          "text": "I'll save it."
+        },
+        { "text": "That's smart. Shows responsibility.",
+        "face": "happy" }
+      ],
+      "once": "true",
+      "weight": 5
+    },
+    {
+      "when": {
+        "taco": "==1",
+        "tacos_spent": ">0",
+        "tacos_earned": ">1",
+        "taco_standing": "<=0"
+      },
+      "lines": [
+        {
+          "text": "That's the algorithm dialing in efficiency.",
+          "face": "proud"
+        },
+        {
+          "text": "You spent one, worked your way back, and earned another. The system works.",
+          "face": "satisfied"
+        },
+        {
+          "who": "player",
+          "text": "I'm keeping this one."
+        }
+      ]
+    },
+    {
+      "when": {
+        "taco": "==1",
+        "performance_streak": ">=3"
+      },
+      "lines": [
+        {
+          "text": "You're pretty consistent earning Trust Tacos.",
+          "face": "proud"
+        },
+        {
+        "text": "Consistency like that tells me what kind of person you are.",
+          "face": "satisfied"
+        },
+        {
+          "who": "player",
+          "text": "I'll keep the streak going."
+        }
+      ]
+    },
+    {
+      "when": {
+        "taco": "==1"
+      },
+      "lines": [
+        {
+          "text": "That's Trust Taco earning work right there.",
+          "face": "happy"
+        },
+        {
+          "who": "player",
+          "text": "I'll bank it."
+        }
+      ]
+    },
+    {
+      "when": {
+        "taco": "==0",
+        "trust_tacos": "==3"
+      },
+      "lines": [
+        {
+          "text": "Looks like you've hit the Trust Taco limit.",
+          "face": "thinking"
+        },
+        {
+          "text": "But don't worry, your hard work is being recorded.",
+          "face": "happy"
+        },
+        {
+          "who": "player",
+          "text": "Recorded?"
         }
       ]
     }
@@ -214,62 +745,92 @@
     {
       "lines": [
         {
-          "text": "The taco calls… and you answered."
+          "text": "It's a beautiful day for tacos.",
+          "face": "happy"
         },
         {
           "who": "player",
-          "text": "I need the hours."
+          "text": "I just need the hours."
+        },
+        {
+          "text": "There's a line forming.",
+          "face": "thinking",
+          "view": "side"
+        },
+        {
+          "text": "Get to work.",
+          "face": "thinking",
+          "view": "straight"
+        }
+
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "I love the smell of tacos in the morning!",
+          "face": "happy"
+        },
+        {
+          "who": "player",
+          "text": "I can't get the smell off me"
+        },
+        {
+          "text": "It's the smell of hard work!",
+          "face": "proud"
+        },        
+        {
+          "text": "Speaking of which... get to work.",
+          "face": "serious"
+        }        
+ 
+      ]
+    },
+    {
+      "lines": [
+        {
+          "text": "Showing up, every day...",
+          "face": "thinking"
+        },
+        {
+          "text": "That's how you get ahead.",
+          "face": "happy"
+        },
+        {
+          "who": "player",
+          "text": "I’m trying."
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "Rocket Taco runs on commitment."
+          "text": "When someone wants it spicy, you gotta give 'em that sauce.",
+          "face": "thinking"
         },
         {
           "who": "player",
-          "text": "I’m doing my part."
+          "text": "I squeeze as hard as I can."
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "You keep showing up. That’s how teams are built."
+          "text": "When life gives you tacos...",
+          "face": "thinking"
         },
         {
           "who": "player",
-          "text": "I’m here."
+          "text": "Make sure to add hot sauce?"
         }
       ]
     },
     {
       "lines": [
         {
-          "text": "I respect workers who respect the taco."
-        },
-        {
-          "who": "player",
-          "text": "Very."
-        }
-      ]
-    },
-    {
-      "lines": [
-        {
-          "text": "This place rewards consistency."
-        },
-        {
-          "who": "player",
-          "text": "I get it."
-        }
-      ]
-    },
-    {
-      "lines": [
-        {
-          "text": "Another day, another chance to prove yourself."
+          "text": "Another day, another chance to prove yourself.",
+          "face": "thinking"
         },
         {
           "who": "player",
@@ -278,22 +839,183 @@
       ]
     },
     {
+      "when": {
+        "day": "==7"
+      },
       "lines": [
         {
-          "text": "I see I can’t keep you away."
+          "text": "Did I tell you I worked this weekend?",
+          "face": "thinking"
         },
         {
           "who": "player",
-          "text": "That’s the plan."
+          "text": "No"
+        },
+        {
+          "text": "Managers do what it takes, no breaks.",
+          "face": "serious"
         }
-      ]
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==17"
+      },
+      "lines": [
+        {
+          "text": "Corporate called us heroes. Nice to see leadership recognize the sacrifice.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "Does that come with anything?"
+        },
+        {
+          "text": "Recognition. That matters.",
+          "face": "proud"
+        }
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==21"
+      },
+      "lines": [
+        {
+          "text": "My job's been so much easier with WerkJerk doing all the boring stuff."
+        },
+        {
+          "text": "Schedules, hiring, performance reports. Blah. Blah.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "What do you do?"
+        },
+        {
+          "text": "I lead. You can't automate that.",
+          "face": "proud"
+        }
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==25"
+      },
+      "lines": [
+        {
+          "text": "You hear about the merger? Might be some changes.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "Like what?"
+        },
+        {
+          "text": "They'll still need people who know how to run a restaurant. So I'm safe.",
+          "face": "proud"
+        }
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==27"
+      },
+      "lines": [
+        {
+          "text": "I guess we're both WerkJerks now.",
+          "face": "confused"
+        },
+        {
+          "text": "Management had to apply for positions using WerkJerk. Standard process, apparently.",
+          "face": "serious"
+        },
+        {
+          "who": "player",
+          "text": "Have you applied?"
+        },
+        {
+          "text": "Of course. They've got my numbers. I should be a perfect match.",
+          "face": "proud"
+        }
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==30"
+      },
+      "lines": [
+        {
+          "text": "Still no word on my interview. I get it though, the process can take some time.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "You think so?"
+        },
+        {
+          "text": "They'd be crazy to lose the experience I bring.",
+          "face": "proud"
+        }
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==25",
+        "taco_standing": ">0"
+      },
+      "lines": [
+        {
+          "text": "With this merger, I could be moving up. Your WerkJerk productivity scores look pretty good too...",
+          "face": "serious"
+        },
+        {
+          "who": "player",
+          "text": "You think that helps?"
+        },
+        {
+          "text": "Data is everything.",
+          "face": "thinking"
+        }
+      ],
+      "once": "true"
+    },
+    {
+      "when": {
+        "day": "==25",
+        "taco_standing": "<0"
+      },
+      "lines": [
+        { "text": "This merger could come with a promotion for me.",
+          "face": "happy"
+        },
+        {
+          "text": "You might want to look for other jobs though...",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "Why is that?"
+        },
+        {
+          "text": "Your WerkJerk productivity scores are pretty low.",
+          "face": "serious"
+        }
+      ],
+      "once": "true"
     }
   ],
   "late_return": [
     {
       "lines": [
         {
-          "text": "The taco waits for no one."
+          "text": "The customers are lined up outside. The taco waits for no one!"
         },
         {
           "who": "player",
@@ -304,7 +1026,7 @@
     {
       "lines": [
         {
-          "text": "You’re late. That time comes out of your paycheck."
+          "text": "You’re late. That time comes out of your WerkJerk check."
         },
         {
           "who": "player",
@@ -315,11 +1037,11 @@
     {
       "lines": [
         {
-          "text": "Rocket Taco runs on schedules."
+          "text": "Rocket Taco runs on schedules. Do you?"
         },
         {
           "who": "player",
-          "text": "Won’t happen again."
+          "text": "I won’t be late again."
         }
       ]
     },
@@ -354,7 +1076,7 @@
         },
         {
           "who": "player",
-          "text": "The taco has deceived me!"
+          "text": "I was trying not to sneeze."
         },
         {
           "text": "Rocket Taco can’t afford sick workers."
@@ -370,11 +1092,11 @@
     {
       "lines": [
         {
-          "text": "I trusted you with my station."
+          "text": "I trusted you with the prep station."
         },
         {
           "who": "player",
-          "text": "I guess the taco lied."
+          "text": "I thought I still had a chance."
         }
       ]
     }
@@ -383,65 +1105,118 @@
     {
       "lines": [
         {
-          "text": "That's {wages} for today."
-        },
-        {
-          "text": "You knew this was hard work."
-        },
-        {
-          "who": "player",
-          "text": "I’ll do better tomorrow."
-        },
-        {
-          "text": "I expect people to earn their pay here."
+          "text": "That wasn't good enough today.",
+          "face": "upset"
         },
         {
           "who": "player",
-          "text": "I understand."
+          "text": "I need the work."
         },
         {
-          "text": "If I keep sending you home, I’ll find someone who won’t waste my time."
-        },
-        {
-          "who": "player",
-          "text": "Please don’t."
-        },
-        {
-          "text": "I should fire you."
-        },
-        {
-          "who": "player",
-          "text": "Thank you."
-        },
-        {
-          "text": "I’m giving you another chance."
-        },
-        {
-          "who": "player",
-          "text": "I won’t mess up again."
+          "text": "Then give me a reason to keep you.",
+          "face": "upset"
         }
+
       ]
     },
     {
       "when": {
-        "retries": ">0"
+        "trust_tacos": ">0"
       },
       "lines": [
         {
-          "text": "You couldn't keep up. Take {wages} and go home, or spend a retry and start the shift over."
+          "text": "You couldn't keep up. Take {wages} and go home, or use a Trust Taco and start the shift over."
         },
         {
           "who": "player",
           "choices": [
             {
               "id": "retry",
-              "text": "Try again ({retries} left)"
+              "text": "Try again (Use {taco})"
             },
             {
               "id": "leave",
               "text": "End shift"
             }
           ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "trust_tacos": ">0",
+        "was_trusted": "==1",
+        "taco_standing": "<=0"
+      },
+      "lines": [
+        {
+          "text": "I've been sticking my neck out for you. Now I'm wondering what I saw in you.",
+          "face": "angry"
+        },
+        {
+          "text": "You can still use a Trust Taco. Your call."
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Use Trust Taco {taco}"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "trust_tacos": ">0",
+        "tacos_spent": ">=2"
+      },
+      "lines": [
+        {
+          "text": "That's another bad shift. Those second chances add up.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "I can earn them back."
+        },
+        {
+          "text": "That's what the system is for."
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Use Trust Taco {taco}"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "trust_tacos": "==0",
+        "was_trusted": "==1",
+        "taco_standing": "<=0"
+      },
+      "lines": [
+        {
+          "text": "I trusted you. Now I'm questioning my own judgment.",
+          "face": "angry"
+        },
+        {
+          "who": "player",
+          "text": "I was doing my best."
         }
       ]
     }
@@ -470,37 +1245,127 @@
     {
       "lines": [
         {
-          "text": "That's {wages} for today."
+          "text": "That's disgusting!",
+          "face": "disgust"
         },
         {
-          "text": "If I see you sick on the job again, you're fired."
+          "text": "If you sneeze on the food again, you're fired.",
+          "face": "upset"
         },
         {
           "who": "player",
           "text": "It won't happen again."
+        },
+        {
+          "text": "It better not. Use LB to wipe your nose.",
+          "face": "grumbling"
         }
+        ,
+        {
+          "who": "player",
+          "text": "Left shoulder button. Got it."
+        }
+
       ]
     },
     {
       "when": {
-        "retries": ">0"
+        "trust_tacos": ">0"
       },
       "lines": [
         {
-          "text": "You sneezed on the food. Take {wages} and go home, or spend a retry and start over?"
+          "text": "You sneezed on the food. Take {wages} and go home, or use a Trust Taco and start over?"
         },
         {
           "who": "player",
           "choices": [
             {
               "id": "retry",
-              "text": "Try again ({retries} left)"
+              "text": "Try again (Use {taco})"
             },
             {
               "id": "leave",
               "text": "End shift"
             }
           ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "trust_tacos": ">0",
+        "was_trusted": "==1",
+        "taco_standing": "<=0"
+      },
+      "lines": [
+        {
+          "text": "I trusted you to keep the food safe. Now you're making me question that.",
+          "face": "angry"
+        },
+        {
+          "text": "You can still use a Trust Taco. Your call."
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Use Trust Taco {taco}"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "trust_tacos": ">0",
+        "tacos_spent": ">=2"
+      },
+      "lines": [
+        {
+          "text": "That's another bad shift. Those second chances add up.",
+          "face": "thinking"
+        },
+        {
+          "who": "player",
+          "text": "I can earn them back."
+        },
+        {
+          "text": "That's what the system's for."
+        },
+        {
+          "who": "player",
+          "choices": [
+            {
+              "id": "retry",
+              "text": "Use Trust Taco {taco}"
+            },
+            {
+              "id": "leave",
+              "text": "End shift"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "trust_tacos": "==0",
+        "was_trusted": "==1",
+        "taco_standing": "<=0"
+      },
+      "lines": [
+        {
+          "text": "I trusted you. Now I'm questioning my own judgment.",
+          "face": "angry"
+        },
+        {
+          "who": "player",
+          "text": "I was doing my best."
         }
       ]
     }
@@ -519,7 +1384,7 @@
     },
     {
       "when": {
-        "retries": ">0"
+        "trust_tacos": ">0"
       },
       "lines": [
         {
@@ -530,7 +1395,7 @@
           "choices": [
             {
               "id": "retry",
-              "text": "Try again ({retries} left)"
+              "text": "Try again (Use {taco})"
             },
             {
               "id": "leave",
@@ -555,7 +1420,7 @@
     },
     {
       "when": {
-        "retries": ">0"
+        "trust_tacos": ">0"
       },
       "lines": [
         {
@@ -566,7 +1431,7 @@
           "choices": [
             {
               "id": "retry",
-              "text": "Try again ({retries} left)"
+              "text": "Try again (Use {taco})"
             },
             {
               "id": "leave",

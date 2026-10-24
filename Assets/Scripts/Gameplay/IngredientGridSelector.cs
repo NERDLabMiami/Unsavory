@@ -59,7 +59,11 @@ public class IngredientGridSelector : MonoBehaviour
         if (step != Vector2Int.zero) Move(step);
         if (input.ConfirmPressed) SelectedTray()?.Interact();
         if (input.HotSaucePressed && plate) plate.ApplyHotSauce();
-        if (input.SwipePressed && nose) nose.SwipeFinger();
+        if (input.SwipePressed)
+        {
+            var wipeTarget = nose ? nose : NoseWipeScript.Active;
+            if (wipeTarget) wipeTarget.SwipeFinger();
+        }
     }
 
     AddIngredientScript SelectedTray()

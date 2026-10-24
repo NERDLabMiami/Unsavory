@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Pointer that follows the mouse/touch, or is driven by the gamepad stick. Switches
-/// source on actual input from either, and shows a reticle only for the stick cursor.
+/// source on actual input from either, and shows a hand (or fallback ring) only for the stick cursor.
 /// </summary>
 public class VirtualCursor
 {
@@ -15,7 +15,9 @@ public class VirtualCursor
     public bool Active { get; private set; }
 
     Vector2 _lastPoint;
-    readonly RawImage _reticle;
+    readonly RawImage _reticle; // fallback ring when no HandCursorSprites asset exists
+    readonly Image _hand;
+    readonly HandCursorSprites _sprites;
 
     public VirtualCursor(Transform parent)
     {
@@ -34,9 +36,23 @@ public class VirtualCursor
         _reticle.raycastTarget = false;
         _reticle.rectTransform.sizeDelta = new Vector2(48, 48);
         _reticle.enabled = false;
+
+        _sprites = Resources.Load<HandCursorSprites>("HandCursorSprites");
+        if (_sprites != null)
+        {
+            var handGo = new GameObject("Hand");
+            handGo.transform.SetParent(canvasGo.transform, false);
+            _hand = handGo.AddComponent<Image>();
+            _hand.raycastTarget = false;
+            _hand.preserveAspect = true;
+            _hand.rectTransform.sizeDelta = _sprites.size;
+            _hand.rectTransform.pivot = _sprites.hotspot;
+            _hand.enabled = false;
+        }
     }
 
-    public void Tick(Vector2 point, Vector2 stick, bool gamepadActivated, bool showReticle)
+    public void Tick(Vector2 point, Vector2 stick, bool gamepadActivated, bool showReticle,
+                     CursorState state = CursorState.Point, bool hideHand = false)
     {
         if (point != _lastPoint)
         {
@@ -58,7 +74,19 @@ public class VirtualCursor
             Position = point; // keep in sync so switching to the stick doesn't jump
         }
 
-        _reticle.enabled = Active && showReticle;
+        bool show = Active && showReticle;
+        if (_hand != null)
+        {
+            _reticle.enabled = false;
+            _hand.enabled = show && !hideHand;
+            if (!_hand.enabled) return;
+            var sprite = _sprites.For(state);
+            if (_hand.sprite != sprite) _hand.sprite = sprite;
+            _hand.rectTransform.position = Position;
+            return;
+        }
+
+        _reticle.enabled = show;
         if (Active) _reticle.rectTransform.position = Position;
     }
 

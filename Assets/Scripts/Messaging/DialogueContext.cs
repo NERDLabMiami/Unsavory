@@ -18,8 +18,30 @@ public static class DialogueContext
             { "insurance", PlayerPrefs.GetInt("insurance effect", 0) },
             { "day", PlayerPrefs.GetInt("current level", 1) },
             { "warnings", PlayerPrefs.GetInt("warnings", 0) },
-            { "retries", PlayerPrefs.GetInt("retries", 0) },
+            { "retries", TacoLedger.Trust },   // older name for trust_tacos
             { "sneezes", PlayerPrefs.GetInt("sneezes", 0) },
+            // Good will tacos: trust_tacos are spendable retries; balance is earned - missed, standing its sign (-1, 0, +1).
+            { "trust_tacos", TacoLedger.Trust },
+            { "tacos_earned", TacoLedger.Earned },
+            { "tacos_missed", TacoLedger.Missed },
+            { "tacos_spent", TacoLedger.Spent },
+            { "taco_balance", TacoLedger.Balance },
+            { "taco_standing", TacoLedger.Standing },
+            { "was_trusted", TacoLedger.WasTrusted ? 1 : 0 },
+            // Consecutive earned (+) or missed (-) tacos.
+            { "performance_streak", TacoLedger.Streak },
+            { "first_satisfactory", PlayerPrefs.GetInt("satisfactory played", 0) == 0 ? 1 : 0 },
+            // Bills past their due day and still unpaid (the "<name> effect" counters above are what they cause).
+            { "missed_bills", BillsState.MissedCount() },
+            // Bills due today or earlier and unpaid, unopened mail, and whether the car bill is paid up (0 = lost the car).
+            { "bill_due", BillsState.DueCount() },
+            { "unread_mail", MailArchive.UnreadCount() },
+            { "car_ok", BillsState.IsEffectActive("late effect") ? 0 : 1 },
+            { "money",PlayerPrefs.GetFloat("money", 0) },
+            { "pills", PlayerPrefs.GetInt("pills", 0) },
+            // Career wages: the last paycheck cashed out and the sum of all of them.
+            { "wages_paid", PlayerState.GetLastPaycheck() },
+            { "wages_total", PlayerState.GetWagesTotal() },
         };
     }
 }
@@ -28,14 +50,15 @@ public static class DialogueContext
 // ties are broken at random by "weight". "once" variants are skipped after they have played.
 public static class DialogueSelector
 {
-    public static int Pick(string key, JSONNode variants, Dictionary<string, float> context)
+    public static int Pick(string key, JSONNode variants, Dictionary<string, float> context, System.Func<int, bool> alreadyPlayed = null)
     {
         int bestScore = -1;
         var candidates = new List<int>();
         for (int i = 0; i < variants.Count; i++)
         {
             var v = variants[i];
-            if (v["lines"].Count <= 0 || (v["once"].Value == "true" && HasPlayed(key, i))) continue;
+            if (v["lines"].Count <= 0 && v["text"].Value == "") continue;   // toasts carry "text" instead of "lines"
+            if (v["once"].Value == "true" && (alreadyPlayed != null ? alreadyPlayed(i) : HasPlayed(key, i))) continue;
             if (!Matches(v["when"], context)) continue;
 
             int score = v["when"].Count;

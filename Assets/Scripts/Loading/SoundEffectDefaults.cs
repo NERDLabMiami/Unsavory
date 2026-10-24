@@ -5,14 +5,10 @@ using UnityEngine.Audio;
 public class SoundEffectDefaults : MonoBehaviour {
 	public AudioMixer mixer;
 	void Start () {
-		if(PlayerPrefs.GetFloat("sfx volume", 1) == 1) {
-			mixer.SetFloat("sfxVolume", 0);
-
-		}
-		else {
-			mixer.SetFloat("sfxVolume", -80f);
-
-		}
+		float vol = PlayerPrefs.GetFloat("sfx volume", 1);
+		float db = vol <= 0.0001f ? -80f : Mathf.Max(-80f, Mathf.Log10(vol) * 20f);
+		mixer.SetFloat("sfxVolume", db);
+		Debug.Log("[SFX] pref 'sfx volume'=" + vol + " -> mixer sfxVolume=" + db + " dB"); // TEMP
 	}
 	
 /*	public void setVolume(float sfxLevel) {

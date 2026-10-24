@@ -26,13 +26,16 @@ public class ConfirmPanel : MonoBehaviour
     {
         _pending = pending;
 
-        if (titleText) titleText.text = (pending.action == HomeInteractable.HomeAction.GoToWork)
-            ? "Go to work?"
-            : "Stay home?";
+        bool goToWork = pending.action == HomeInteractable.HomeAction.GoToWork;
+        bool runEnded = CareerFlowManager.Instance.RunEnded;
 
-        if (bodyText) bodyText.text = (pending.action == HomeInteractable.HomeAction.GoToWork)
-            ? "You'll lose a little health from the trip, but you can earn wages today."
-            : "You'll recover health, but you won't earn wages unless you have paid sick days.";
+        if (titleText) titleText.text = runEnded ? "Head out?" : goToWork ? "Go to work?" : "Stay home?";
+
+        if (bodyText) bodyText.text = runEnded
+            ? "There's nothing left for you here. Time to find something else."
+            : goToWork
+                ? "You'll lose a little health from the trip, but you can earn wages today."
+                : "You'll recover health, but you won't earn wages unless you have paid sick days.";
 
         if (root) root.SetActive(true);
 

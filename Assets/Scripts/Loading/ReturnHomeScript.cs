@@ -2,31 +2,15 @@ using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 
 public class ReturnHomeScript : MonoBehaviour {
-	public GameObject phone;
-	public bool electricity = true;
-	public Text moneyUI;
-	public Text paycheckUI;
-	public Text bankAccountUI;
-	public Text groceryUI;
 	public FruitBowl fruit;
-	public GameObject gameOverPanel;
-	public GameObject monthCompletePanel;
-	public GameObject weekCompletePanel;
-	public GameObject letterButton;
-	public GameObject firstTimeHomePanel;
-	public MusicLibrary music;
-	private bool weekend = false;
 	private int day;
 	private int finalDay;
 	private float money;
-//	private float wages;
 	private string billData;
-	private bool visitedBedroom = false;
-	private bool visitedExit = false;
-	// Use this for initialization
 	public SwipeScene room; // assign
 	public HomeToast toast;
 	public string newMonthCaption = "New month, another adventure.";
@@ -35,17 +19,15 @@ public class ReturnHomeScript : MonoBehaviour {
 
 	private void OnEnable()
 	{
-		if (room != null) room.OnPlaceChanged += HandlePlaceChanged;
 		BillsSignals.BillPaid += HandleBillPaid;
 	}
 
 	private void OnDisable()
 	{
-		if (room != null) room.OnPlaceChanged -= HandlePlaceChanged;
 		BillsSignals.BillPaid -= HandleBillPaid;
 	}
 
-	// Paying rent is the last action of a month: fade out, caption, then the run ends.
+	// Paying rent is the last action of a month: fade out, caption, then the layoff mail arrives.
 	private void HandleBillPaid(int id)
 	{
 		if (rentPending && BillsState.GetEffect(id) == "gameover")
@@ -90,8 +72,33 @@ public class ReturnHomeScript : MonoBehaviour {
 		yield return FadeAlpha(bg, caption, 1.0f, 0f, 1f, true);
 		yield return new WaitForSecondsRealtime(2.5f);
 
-		continueToNextMonth();
-		gameOver(true);
+		// Laid off. The player stays home with the email; the door now leads to the credits.
+		EndRun("layoff");
+		yield return FadeAlpha(bg, caption, 1.0f, 1f, 0f, true);
+		yield return FadeAlpha(bg, caption, 1.5f, 1f, 0f, false);
+		Destroy(canvasGO);
+		ShowRunEndToast();
+	}
+
+	// How a run ends: record it, deliver the ending mail (see mail.txt "ending"), and tell the player to read it.
+	private void EndRun(string how)
+	{
+		CareerFlowManager.Instance.EndRun(how);
+	}
+
+	private void ShowRunEndToast()
+	{
+		if (toast) toast.ShowKey("home_enter", new Dictionary<string, float> { { "run_end", RunEndCode() } });
+	}
+
+	private static float RunEndCode()
+	{
+		switch (MailArchive.RunEnd())
+		{
+			case "layoff": return 1;
+			case "eviction": return 2;
+			default: return 0;
+		}
 	}
 
 	private static void Stretch(RectTransform rt)
@@ -114,29 +121,6 @@ public class ReturnHomeScript : MonoBehaviour {
 		else bg.color = new Color(0f, 0f, 0f, to);
 	}
 
-	private void HandlePlaceChanged(int place)
-	{
-		// Example mapping: 0 bedroom, 1 living room, 2 door (your old mapping)
-		if (place == 0 && !PlayerPrefs.HasKey("seen bedroom"))
-		{
-			PlayerPrefs.SetInt("seen bedroom", 1);
-			PlayerPrefs.Save();
-			if (toast) toast.Show("Bedroom: Rest here to stay home and recover.");
-		}
-		else if (place == 2 && !PlayerPrefs.HasKey("seen door"))
-		{
-			PlayerPrefs.SetInt("seen door", 1);
-			PlayerPrefs.Save();
-			if (toast) toast.Show("Door: Go to work to earn wages (but it costs health).");
-		}
-		else if (place == 1 && !PlayerPrefs.HasKey("seen living"))
-		{
-			PlayerPrefs.SetInt("seen living", 1);
-			PlayerPrefs.Save();
-			if (toast) toast.Show("Living room: Use your phone to pay bills.");
-		}
-	}
-
 	private float calculateWages() {
 		money = PlayerPrefs.GetFloat("money");
 		float paycheck = PlayerPrefs.GetFloat("earned wages", 0);
@@ -144,7 +128,8 @@ public class ReturnHomeScript : MonoBehaviour {
 		money += paycheck;
 		//set earned wages back to nothing
 		PlayerPrefs.SetFloat("earned wages", 0);
-		PlayerPrefs.SetFloat("money", money);
+		PlayerState.RecordPaycheck(paycheck);
+		PlayerState.SetMoney(money);
 		Debug.Log("Player has $" + money);
 		return paycheck;
 	}
@@ -164,9 +149,20 @@ public class ReturnHomeScript : MonoBehaviour {
 	
 	void Start () {
 
+		// The scene opens black: a toast reads on the black, then the scene fades in as it leaves.
+		ScreenFade.Black(toast != null ? toast.RootCanvas : null);
+
 		money = PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
 		Time.timeScale = 1f;
+
+		// The run is over: nothing here advances any more, the player reads their email and leaves by the door.
+		if (CareerFlowManager.Instance.RunEnded)
+		{
+			ShowRunEndToast();
+			if (toast == null || !toast.IsShowing) ScreenFade.FadeIn(HomeToast.RevealSeconds);
+			return;
+		}
 		// Arriving home for the very first time (New Game) is not the end of a workday: day 1 is still to come.
 		bool firstVisit = !PlayerPrefs.HasKey("welcomed home");
 		if (firstVisit)
@@ -174,9 +170,6 @@ public class ReturnHomeScript : MonoBehaviour {
 			if (toast) toast.Show("Welcome home. Pay bills, stock up on medicine, then head to work.");
 			PlayerPrefs.SetInt("welcomed home", 1);
 
-			// Optional: keep your “attention” animations without blocking
-			// billButton.GetComponent<Animator>().SetTrigger("attention");
-			// drugButton.GetComponent<Animator>().SetTrigger("attention");
 		}
 
 		//Apply Effects Based on Unpaid Bills
@@ -185,7 +178,7 @@ public class ReturnHomeScript : MonoBehaviour {
 		JSONNode bills = JSON.Parse(billData);
 		for (int i = 0; i < bills["bills"].Count; i++)
 		{
-			if (bills["bills"][i]["type"].Value != "buy" && bills["bills"][i]["due"].AsInt < day)
+			if (bills["bills"][i]["type"].Value != "buy" && BillsState.IsAvailable(i) && bills["bills"][i]["due"].AsInt < day)
 			{
 				if (PlayerPrefs.GetInt("bill" + i, 0) == 0)
 				{
@@ -205,25 +198,21 @@ public class ReturnHomeScript : MonoBehaviour {
 		int fruitCount = Mathf.Max(0, PlayerPrefs.GetInt("fruit", 5) - (firstVisit ? 0 : 1));
 		PlayerPrefs.SetInt("fruit", fruitCount);
 		if (fruit) fruit.SetCount(fruitCount);
-// --- replacement for your block inside Start() ---
-
 		bool isMonthEnd = (day % finalDay == 0) && (day != 0);
 		bool isWeekend  = (day % 5 == 0);
 
-		if (isWeekend)
-		{
-			ClampHealthForWeekend();
-		}
+		if (!firstVisit) DecayHealth();
+		if (isWeekend && PlayerPrefs.GetFloat("health", 0f) >= 30f) PlayerPrefs.SetInt("letter", 0);
 
 		if (countUnpaidGameOverBills(true) > 0)
 		{
 			// Rent was due on the last day of the month and never paid.
 			gameObject.GetComponent<UnityAnalyticsIntegration>()?.survivedWithUnpaidBills();
-			if (gameOverPanel) gameOverPanel.SetActive(true);
+			EndRun("eviction");
 		}
 		else if (isMonthEnd)
 		{
-			PaycheckAndGroceries();
+			calculateWages();
 
 			// The player ends the month by paying rent on the phone; that triggers the fade-out.
 			if (countUnpaidGameOverBills(false) == 0)
@@ -245,40 +234,30 @@ public class ReturnHomeScript : MonoBehaviour {
 			Debug.Log("It's the weekend");
 			PlayerPrefs.SetInt("can cater", 1);
 
-			PaycheckAndGroceries();
+			calculateWages();
 
 			gameObject.GetComponent<UnityAnalyticsIntegration>()?.weekend();
-			if (bankAccountUI) bankAccountUI.text = money.ToString("$0");
-			if (weekCompletePanel) weekCompletePanel.SetActive(true);
 		}
 
 // Always advance day at end of Start() flow
 		UpdateEndOfDayUIAndAdvanceDay(firstVisit);
 		PlayerPrefs.Save();
-		
+
+		// No entry toast to carry the reveal.
+		if (toast == null || !toast.IsShowing) ScreenFade.FadeIn(HomeToast.RevealSeconds);
+
 	}
 	
-	private void ClampHealthForWeekend()
+	// Health is the seconds between sneezes. It wears down a little every workday, quickly at first and then more slowly
+	// (60 on day 1, about 31 on day 5, about 12 on day 11), and stops at the floor, which unpaid health insurance then eats into.
+	const float HealthDecayFactor = 0.85f;
+	const float HealthFloor = 10f;
+
+	private void DecayHealth()
 	{
 		float health = PlayerPrefs.GetFloat("health", 0f);
-
-		// original behavior:
-		// >=50 => set letter=0 and health=20
-		// >=30 => set health=15
-		// >=15 => set health=10
-		if (health >= 50f)
-		{
-			PlayerPrefs.SetInt("letter", 0);
-			PlayerPrefs.SetFloat("health", 20f);
-		}
-		else if (health >= 30f)
-		{
-			PlayerPrefs.SetFloat("health", 15f);
-		}
-		else if (health >= 15f)
-		{
-			PlayerPrefs.SetFloat("health", 10f);
-		}
+		if (health > HealthFloor)
+			PlayerPrefs.SetFloat("health", Mathf.Max(HealthFloor, health * HealthDecayFactor));
 	}
 
 	private void ApplyPaidSickDayUsageIfNeeded()
@@ -291,37 +270,19 @@ public class ReturnHomeScript : MonoBehaviour {
 		}
 	}
 
-	private float PaycheckAndGroceries()
-	{
-		// paycheck
-		float paycheck = calculateWages();
-		if (paycheckUI) paycheckUI.text = paycheck.ToString("$0");
-
-		if (groceryUI) groceryUI.text = "N/A";
-		float groceryCost = 0f;
-		return groceryCost;
-	}
-
 	private void UpdateEndOfDayUIAndAdvanceDay(bool firstVisit)
 	{
 		if (!firstVisit) day++;
-		if (moneyUI) moneyUI.text = money.ToString("$0");
 		PlayerPrefs.SetInt("current level", day);
+		MailArchive.DeliverDue();
 
-		if (PlayerPrefs.HasKey("letter"))
+		// One toast for arriving home, chosen from toasts.txt by day, missed bills, rent, letter, first visit.
+		if (toast) toast.ShowKey("home_enter", new Dictionary<string, float>
 		{
-			if (toast) toast.Show("You got a letter in the mail.");
-		}
-	}
-
-	public void gameOver(bool won)
-	{
-		CareerFlowManager.Instance.GameOver(won);
-	}
-
-	public void continueToNextMonth() {
-		int currentMonth = PlayerPrefs.GetInt("month",1);
-		currentMonth++;
-		PlayerPrefs.SetInt("month", currentMonth);
+			{ "first_visit", firstVisit ? 1 : 0 },
+			{ "rent_pending", rentPending ? 1 : 0 },
+			{ "letter", PlayerPrefs.HasKey("letter") ? 1 : 0 },
+			{ "run_end", RunEndCode() },
+		});
 	}
 }

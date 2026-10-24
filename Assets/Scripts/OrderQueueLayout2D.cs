@@ -82,6 +82,19 @@ public class OrderQueueLayout2D : MonoBehaviour
         }
     }
 
+    public Vector3 OffscreenLeftWorld
+    {
+        get
+        {
+            if (!cam) cam = Camera.main;
+            if (!cam)
+                return FrontSlotWorld + Vector3.left * 10f;
+
+            Vector3 leftEdge = cam.ViewportToWorldPoint(new Vector3(0f, 0.5f, 0f));
+            return new Vector3(leftEdge.x - offscreenMarginWorld, FrontSlotWorld.y, z);
+        }
+    }
+
     // Call this from CurrentOrderScript every frame
     public void Layout(List<GameObject> activeOrders)
     {

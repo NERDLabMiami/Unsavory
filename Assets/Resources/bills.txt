@@ -2,42 +2,49 @@
   "bills": [
     {
       "title": "Rent",
+      "cola": "rent",
       "amount": 600,
       "due": 20,
       "effect": "gameover"
     },
     {
       "title": "Car",
+      "cola": "car",
       "amount": 150,
       "due": 16,
       "effect": "late effect"
     },
     {
       "title": "Car Insurance",
+      "cola": "carInsurance",
       "amount": 100,
       "due": 11,
       "effect": "insurance effect"
     },
     {
       "title": "Health Insurance",
+      "cola": "healthInsurance",
       "amount": 20,
       "due": 6,
       "effect": "health effect"
     },
     {
       "title": "Cable & Phone",
+      "cola": "cableAndPhone",
       "amount": 100,
       "due": 12,
       "effect": "phone effect"
     },
     {
       "title": "Electricity",
+      "cola": "electricity",
       "amount": 90,
       "due": 7,
       "effect": "electricity effect"
     },
     {
       "title": "Groceries",
+      "cola": "groceries",
       "amount": 32,
       "due": 0,
       "effect": "",

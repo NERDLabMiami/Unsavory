@@ -26,9 +26,41 @@ public class HomeInteractable : MonoBehaviour, IWorldInteractable, IHoverable
     readonly System.Collections.Generic.List<SpriteRenderer> _glows = new System.Collections.Generic.List<SpriteRenderer>();
     bool _glowBuilt;
 
+    [Header("Hover toast")]
+    public string hoverToastKey;           // Resources/toasts.txt key; blank uses the action's default
+    HomeToast _toast;
+
+    string HoverKey()
+    {
+        if (!string.IsNullOrEmpty(hoverToastKey)) return hoverToastKey;
+        switch (action)
+        {
+            case HomeAction.GoToWork: return "hover_door";
+            case HomeAction.StayHome: return "hover_bed";
+            case HomeAction.OpenBills: return "hover_phone";
+            case HomeAction.OpenPills: return "hover_pills";
+            default: return null;
+        }
+    }
+
+    void Start()
+    {
+        if (action == HomeAction.OpenBills) AnimUtil.Get<PhoneNotifyAnim>(gameObject);
+    }
+
     public void SetHover(bool hovered)
     {
         if (hovered && GameplayGate.Instance != null && !GameplayGate.Instance.InteractionEnabled) return;
+        if (hovered)
+        {
+            string key = HoverKey();
+            if (key != null)
+            {
+                if (_toast == null) _toast = FindObjectOfType<HomeToast>();
+                if (_toast != null) _toast.ShowHover(key);
+            }
+        }
+        else if (_toast != null) _toast.HideHover();
         if (!_glowBuilt) BuildGlows();
         foreach (var g in _glows)
         {
@@ -75,6 +107,8 @@ public class HomeInteractable : MonoBehaviour, IWorldInteractable, IHoverable
                 break;
 
             case HomeAction.OpenBills:
+                var notify = GetComponent<PhoneNotifyAnim>();
+                if (notify != null) notify.Stop();
                 if (billsModalRoot) billsModalRoot.SetActive(true);
                 break;
 

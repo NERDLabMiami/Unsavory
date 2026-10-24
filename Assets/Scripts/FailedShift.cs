@@ -9,7 +9,7 @@ public class FailedShift : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		retries = PlayerPrefs.GetInt("retries", 0);
+		retries = TacoLedger.Trust;
 		//TODO: Set Existing Taco Hearts to Full
 
 

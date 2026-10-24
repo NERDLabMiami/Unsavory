@@ -53,9 +53,8 @@ public class IngredientAnim : MonoBehaviour {
 		float duration;
 		if (!PlaceDuration.TryGetValue(_kind, out duration)) duration = DefaultPlaceDuration;
 
-		// Parenting kept the prefab's world scale; relative to the plate it is one.
+		// Parenting kept the prefab's world scale; keep its local scale and just center it on the plate.
 		transform.localPosition = Vector3.zero;
-		transform.localScale = Vector3.one;
 		if (_sprite != null) {
 			SetAlpha(0f);
 			Tween.Alpha(_sprite, 1f, duration, Tween.Ease.Linear);

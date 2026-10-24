@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd58a05a2b1f47cbaf2f8b2b4c5c1a8, type: 3}
+  m_Name: Spicy Chicken X
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeData
+  ingredients:
+  - {fileID: 161618, guid: aa196c348db2e4eb799b7938ac7eeb1d, type: 3}
+  - {fileID: 162480, guid: 2847cdf0e86c14cdc856d9a2fb8921b1, type: 3}
+  - {fileID: 100000, guid: 6cc7cd02dda9848c894f54cc9b324f68, type: 3}
+  - {fileID: 164254, guid: ecad408daa27e44cdb747bfbcde1f7d6, type: 3}
+  - {fileID: 121280, guid: f2a602a9b1dca4ab0986fcbe23a22b77, type: 3}
+  completed: {fileID: 199078, guid: 12d6d36ef7d7443049f9e3b769921f3a, type: 3}
+  rocket: 1

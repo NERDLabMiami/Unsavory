@@ -37,12 +37,12 @@ public class BillScript : MonoBehaviour
     public void Init(int billId)
     {
         id = billId;
-        var text = Resources.Load<TextAsset>("bills");
-        var node = text != null ? JSON.Parse(text.ToString())?["bills"][billId] : null;
+        var bills = BillsState.Bills();
+        var node = bills != null ? bills[billId] : null;
         if (node != null && node["title"] != null)
         {
             title = node["title"];
-            amount = node["amount"].AsInt;
+            amount = Mathf.RoundToInt(BillsState.GetAmount(billId));
             dueDate = node["due"].AsInt;
             effect = node["effect"];
             isBuyItem = node["type"].Value == "buy";
@@ -94,7 +94,7 @@ public class BillScript : MonoBehaviour
         if (BillsState.IsPhoneDead())
         {
             if (dueUI) dueUI.text = "PHONE DEAD";
-            if (!paid) { SetButtonLabel(isBuyItem ? "Buy" : "Pay"); Disable(); }
+            if (!paid) { SetButtonLabel(isBuyItem ? "Buy" : AmountLabel()); Disable(); }
             else SetPaidVisualState();
             return;
         }
@@ -103,7 +103,7 @@ public class BillScript : MonoBehaviour
         {
             bool full = PlayerPrefs.GetInt("fruit", MaxFruit) >= MaxFruit;
             SetButtonLabel(full ? "Full" : "Buy");
-            if (dueUI) dueUI.text = full ? "Fruit bowl is full" : "Restocks the fruit bowl";
+            if (dueUI) dueUI.text = "";
             SetPayButtonEnabled(!full && money >= amount);
             return;
         }
@@ -127,15 +127,18 @@ public class BillScript : MonoBehaviour
                 dueUI.text = "Due Today";
                 effectAmount = 0;
             }
-            else
+            else if(!isBuyItem)
             {
                 dueUI.text = "OVERDUE!";
                 effectAmount = currentDay - dueDate; // days overdue
             }
         }
 
+        SetButtonLabel(AmountLabel());
         SetPayButtonEnabled(money >= amount);
     }
+
+    string AmountLabel() => "$" + amount.ToString("0");
 
     // An unaffordable bill keeps a selectable (but dimmed) Pay button so it can be focused;
     // pressing it shakes instead of paying (see payBill).

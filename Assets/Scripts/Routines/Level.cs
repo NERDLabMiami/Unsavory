@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,17 @@ public enum RoundOutcome { Complete, Slow, Sick }
 
 public class Level : MonoBehaviour {
 	public TimerScript timer;
-	public GameObject nose;
+	[Tooltip("The NoseWipeScript on the Player prefab's Nose child.")]
+	public NoseWipeScript nose;
+	[Tooltip("Scene-only sneeze pieces; the nose lives on the Player prefab and cannot reference them, so they are handed over as the shift begins.")]
+	public ParticleSystem noseSnot, noseSweat;
+	public GameObject noseSnotImage, noseSneezeTutor;
 	public CharacterDialog dialog;
 	public PlateScript plate;
+
+	// Optional toast shown before the boss intro; toasts.txt "work_enter" decides whether (and which) one plays.
+	public HomeToast toast;
+	[HideInInspector] public string welcomeToast, cateringToast, returnToast, lateReturnToast;   // superseded by toasts.txt
 
 	public Animator gameElements;
 	public Animator HUD;
@@ -48,14 +56,19 @@ public class Level : MonoBehaviour {
 	}
 
 	/// <summary>The HUD's clock text, kept in step with the Pause Panel's.</summary>
-	public void SetHudClock(string text)
+	public void SetHudClock(string text, bool fade = false)
 	{
-		if (hudClock) hudClock.text = text;
+		if (!hudClock) return;
+		if (fade) AnimUtil.Get<ClockAnim>(hudClock.gameObject).ChangeTo(text);
+		else hudClock.text = text;
 	}
 
 	// Use this for initialization
 	void Start()
 	{
+		// The scene opens black: the toast (if any) reads on the black, then the scene fades in as it leaves.
+		ScreenFade.Black(toast != null ? toast.RootCanvas : null);
+
 		// No ingredient picking behind the boss dialogue or the countdown (BeginGamePlay unlocks).
 		if (GameplayGate.Instance != null) GameplayGate.Instance.Lock(GameplayGate.GateLocks.BossFlow);
 
@@ -64,10 +77,20 @@ public class Level : MonoBehaviour {
 		CameraDirector.Cut(CameraDirector.Dialogue);
 
 		// The Boss Canvas can be saved inactive in the scene; the intro cannot run (or finish) without it.
-		if (dialog != null && !dialog.gameObject.activeSelf) dialog.gameObject.SetActive(true);
+		// When a toast opens the day, the canvas stays hidden until the toast is gone (ToastThenSay shows it).
+		var toastStats = new Dictionary<string, float>
+		{
+			{ "place", 3 },
+			{ "catering", PlayerPrefs.HasKey("catering") ? 1 : 0 },
+			{ "tutorial_done", PlayerPrefs.HasKey("tutorial") ? 1 : 0 },
+		};
+		string toastText = toast != null ? ToastData.Pick("work_enter", toastStats) : null;
+		bool playToast = toastText != null;
+		if (dialog != null) dialog.gameObject.SetActive(!playToast);
 
 		currentLevel = PlayerPrefs.GetInt("current level");
-		retries = PlayerPrefs.GetInt("retries", 0);
+		retries = TacoLedger.Trust;
+		TrustTacoHud.Attach();
 
 
 		// Arrival at work: 9 AM, up to an hour later when late. Fixed now so the boss's mood and the clock agree.
@@ -100,11 +123,23 @@ public class Level : MonoBehaviour {
 		Debug.Log($"[Level] intro '{introKey}' (current level={currentLevel}, tutorial done={PlayerPrefs.HasKey("tutorial")}, late effect={PlayerPrefs.GetInt("late effect", 0)}, catering={PlayerPrefs.HasKey("catering")})");
 		// The boss slides in and speaks; OnBossIntroComplete follows his last line.
 		_bossIntroHandled = false;
-		dialog.Say(introKey, OnBossIntroComplete);
+		if (playToast) StartCoroutine(ToastThenSay(toastText, introKey));
+		else
+		{
+			ScreenFade.FadeIn(HomeToast.RevealSeconds);
+			dialog.Say(introKey, OnBossIntroComplete);
+		}
 
 		if (countdownUiRoot) countdownUiRoot.SetActive(false);
 	}
 
+
+	private IEnumerator ToastThenSay(string text, string introKey)
+	{
+		yield return toast.ShowAndWait(text);
+		dialog.gameObject.SetActive(true);
+		dialog.Say(introKey, OnBossIntroComplete);
+	}
 
 	private void OnBossIntroComplete()
 	{
@@ -172,13 +207,25 @@ public class Level : MonoBehaviour {
 		if (!levelBegan) {
 			Camera.main.GetComponent<AudioSource>().clip = gamePlayBackground;
 			Camera.main.GetComponent<AudioSource>().Play();
-			nose.GetComponent<NoseWipeScript>().sneezeAllowed = true;
+			if (nose != null) {
+				nose.Bind(noseSnot, noseSweat, noseSnotImage, noseSneezeTutor, timer.TotalOrders, timer.WipeWindow);
+				nose.sneezeAllowed = true;
+			}
+			else Debug.LogWarning("[Level] nose is not wired to the Player's NoseWipeScript: no sneezing this shift.");
 
 		}
 
 		Debug.Log("Begin Level");
 		levelBegan = true;
 	}
+
+	// A finished day counts as a sick one when the player is actually ill (health is only dropped below this by the first weekend,
+	// so early days never qualify) and the nose nearly ran this many times. Both are guesses to tune in playtest.
+	private const float SickHealth = NoseWipeScript.SickHealth;
+	private const int SickNearSneezes = 2;
+
+	private const float EndOfDayMusicLevel = 0.25f;   // fraction of the player's music volume left under the boss dialogue
+	private const float EndOfDayMusicFade = 1.5f;     // seconds
 
 	private bool IsCatering { get { return PlayerPrefs.HasKey("catering"); } }
 
@@ -188,30 +235,40 @@ public class Level : MonoBehaviour {
 		if (roundEnded) return;
 		roundEnded = true;
 
+		// The boss is arriving: whatever stage the sneeze is at, it stops here (nearSneezes is kept for the verdict below).
+		if (nose != null) nose.StopSneezing();
 		TutorModal.CloseAll();
 		PlayerPrefs.SetInt("tutorial", 1);   // no more tutorial
 		Time.timeScale = 0;
 		cleanupKitchen();
 		CameraDirector.Go(CameraDirector.Dialogue);
-		Camera.main.GetComponent<AudioSource>().Stop();
+		var music = Camera.main.GetComponent<AudioSource>();
+		Tween.Volume(music, music.volume * EndOfDayMusicLevel, EndOfDayMusicFade);
 
 		var analytics = GetComponent<UnityAnalyticsIntegration>();
 		string key;
 		float wages;
 		int score = 0;
 		bool fired = false;
+		bool taco = false;
+		bool sick = false;
 
 		if (outcome == RoundOutcome.Complete) {
 			score = ScoreRound();
 			wages = PlayerState.AddWagesHours(8f);
-			retries = Mathf.Min(retries + score, 5);
-			PlayerPrefs.SetInt("retries", retries);
+			// The boss only hands out a good will taco for a flawless day on which the player was neither late nor sick.
+			sick = PlayerPrefs.GetFloat("health", 60f) < SickHealth && nose != null && nose.nearSneezes >= SickNearSneezes;
+			taco = score == 3 && PlayerPrefs.GetInt("late effect", 0) == 0 && !sick;
+			if (!IsCatering) TacoLedger.RecordResult(taco);
+			retries = TacoLedger.Trust;
 			analytics.careerModeLevelFinished(currentLevel, "full day", Time.time);
-			key = IsCatering ? "catering_complete" : (currentLevel % 5 == 0 ? "weekend" : "complete" + score);
+			key = IsCatering ? "catering_complete" : (currentLevel % 5 == 0 ? "weekend" : CompleteKey(score));
 		}
 		else {
-			bool sick = outcome == RoundOutcome.Sick;
+			sick = outcome == RoundOutcome.Sick;
 			wages = PlayerState.PotentialWagesHours(timeWorked);
+			if (!IsCatering) TacoLedger.RecordResult(false);   // a failed day is a missed chance too
+			retries = TacoLedger.Trust;
 			fired = PlayerPrefs.GetInt("warnings") + 1 > PlayerPrefs.GetInt("max warnings");
 			analytics.careerModeLevelFinished(currentLevel, sick ? "sick" : "mismatches", Time.time);
 			if (sick) PlayerPrefs.SetInt("letter", PlayerPrefs.GetInt("sneezes", 1) > 1 ? 2 : 1);
@@ -226,22 +283,29 @@ public class Level : MonoBehaviour {
 			{ "orders", plate.getOrders().ToString() },
 			{ "day", currentLevel.ToString() },
 		};
-		var extra = new Dictionary<string, float> { { "retries", retries } };
+		var extra = new Dictionary<string, float> { { "retries", retries }, { "trust_tacos", retries }, { "score", score }, { "taco", taco ? 1 : 0 }, { "sick", sick ? 1 : 0 } };
 		dialog.Say(key, choice => OnRoundDialogueDone(outcome, fired, choice), extra, vars);
+		// Say has already picked its variant, so this only affects later days.
+		if (key == "complete_satisfactory") PlayerPrefs.SetInt("satisfactory played", 1);
 	}
 
+	// A finished day has 0-2 mistakes (a third ends the shift): wrong ingredients, timeouts and trashed orders all count.
 	private int ScoreRound() {
-		int score = 1;
-		if (plate.bestMatchedAggregate >= 10) score++;   // longest streak
-		if (plate.perfectLevel) score++;
-		return score;
+		return Mathf.Clamp(3 - plate.current.numberOfUnmatchedOrders, 1, 3);
+	}
+
+	private static string CompleteKey(int score) {
+		switch (score) {
+			case 3: return "complete_above_average";
+			case 2: return "complete_satisfactory";
+			default: return "complete_unsatisfactory";
+		}
 	}
 
 	// The boss's last line has been answered. A failed round is paid and warned about only if the player leaves it, not if they retry.
 	private void OnRoundDialogueDone(RoundOutcome outcome, bool fired, string choice) {
-		if (choice == "retry" && retries > 0) {
-			retries--;
-			PlayerPrefs.SetInt("retries", retries);
+		if (choice == "retry" && TacoLedger.SpendTrust()) {
+			retries = TacoLedger.Trust;
 			StartCoroutine(LeaveAfterBoss(RetryShift));
 			return;
 		}

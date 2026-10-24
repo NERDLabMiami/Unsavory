@@ -109,8 +109,7 @@ public class MusicLibrary : MonoBehaviour {
 
 	}
 	public void misplated() {
-		GetComponent<AudioSource>().clip = orderWrongEffect;
-		play ();
+		GetComponent<AudioSource>().PlayOneShot(orderWrongEffect);
 
 	}
 

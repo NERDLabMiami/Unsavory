@@ -42,6 +42,12 @@ public class WorkScript : MonoBehaviour
     /// </summary>
     public void gotoWork()
     {
+        // The run is over (laid off or evicted): the door leads out of the game, not to a shift.
+        if (CareerFlowManager.Instance.RunEnded)
+        {
+            CareerFlowManager.Instance.LoadCredits();
+            return;
+        }
         DecreaseHealth();
         CareerFlowManager.Instance.BeginShift();
     }
@@ -51,6 +57,7 @@ public class WorkScript : MonoBehaviour
     /// </summary>
     public void stayHome()
     {
+        if (CareerFlowManager.Instance.RunEnded) return;
         TryUsePaidSickDay();
         IncreaseHealth();
         CareerFlowManager.Instance.LoadHome();

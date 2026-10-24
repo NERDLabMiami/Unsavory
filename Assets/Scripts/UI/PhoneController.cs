@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using SimpleJSON;
 using TMPro;
 using UnityEngine;
@@ -39,6 +40,8 @@ public class PhoneController : MonoBehaviour
     public PhoneMessageRow messagePrefab;
     public TMP_Text viewInfo;
     public TMP_Text viewBody;
+    public ScrollRect viewScroll;       // the letter's ScrollRect (found from viewBody if unset)
+    public float letterScrollSpeed = 600f;
 
     public Screen Current { get; private set; } = Screen.Home;
 
@@ -129,6 +132,99 @@ public class PhoneController : MonoBehaviour
         UpdateInputMode(input);
         if (this == null || !isActiveAndEnabled) return;
         UpdateClickOutside(input);
+        if (Current == Screen.MailView) UpdateLetterScroll(input);
+    }
+
+    // ---- Letter scrolling ----
+
+    ScrollRect LetterScroll()
+    {
+        if (viewScroll == null && viewBody != null) viewScroll = viewBody.GetComponentInParent<ScrollRect>(true);
+        return viewScroll;
+    }
+
+    void FitLetter()
+    {
+        var sr = LetterScroll();
+        if (sr == null || sr.content == null) return;
+        viewBody.ForceMeshUpdate();
+        float viewH = sr.viewport != null ? sr.viewport.rect.height : ((RectTransform)sr.transform).rect.height;
+        sr.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Max(viewH, viewBody.preferredHeight + 16f));
+        sr.velocity = Vector2.zero;
+        sr.verticalNormalizedPosition = 1f;
+    }
+
+    // D-pad / arrows / right stick scroll; holding the stick cursor on the text and moving drags it.
+    void UpdateLetterScroll(GameInput input)
+    {
+        var sr = LetterScroll();
+        if (sr == null || sr.content == null) return;
+
+        float axis = _move != null ? _move.ReadValue<Vector2>().y : 0f;
+        var pad = Gamepad.current;
+        if (pad != null && Mathf.Abs(pad.rightStick.y.ReadValue()) > Mathf.Abs(axis)) axis = pad.rightStick.y.ReadValue();
+        if (Mathf.Abs(axis) > 0.2f)
+        {
+            float viewH = sr.viewport != null ? sr.viewport.rect.height : ((RectTransform)sr.transform).rect.height;
+            float max = Mathf.Max(0f, sr.content.rect.height - viewH);
+            var pos = sr.content.anchoredPosition;
+            pos.y = Mathf.Clamp(pos.y - axis * letterScrollSpeed * Time.unscaledDeltaTime, 0f, max);
+            sr.content.anchoredPosition = pos;
+            sr.velocity = Vector2.zero;
+        }
+
+        UpdateCursorDrag(input, sr);
+    }
+
+    PointerEventData _dragData;
+    bool _dragging;
+    static readonly List<RaycastResult> _dragHits = new List<RaycastResult>();
+
+    void UpdateCursorDrag(GameInput input, ScrollRect sr)
+    {
+        var es = EventSystem.current;
+        if (es == null) return;
+        var handler = sr.gameObject;
+
+        if (input.ActivatePressed && _pointerMode && input.UsingVirtualCursor && input.SelectableUnderPointer() == null)
+        {
+            var data = new PointerEventData(es) { position = input.PointerPosition, pressPosition = input.PointerPosition, button = PointerEventData.InputButton.Left };
+            _dragHits.Clear();
+            es.RaycastAll(data, _dragHits);
+            foreach (var hit in _dragHits)
+            {
+                if (!hit.gameObject.transform.IsChildOf(sr.transform)) continue;
+                data.pointerCurrentRaycast = data.pointerPressRaycast = hit;
+                data.pointerPress = handler;
+                data.pointerDrag = handler;
+                ExecuteEvents.Execute(handler, data, ExecuteEvents.initializePotentialDrag);
+                _dragData = data;
+                break;
+            }
+        }
+
+        if (_dragData == null) return;
+
+        if (input.ActivateHeld)
+        {
+            var pos = input.PointerPosition;
+            _dragData.delta = pos - _dragData.position;
+            _dragData.position = pos;
+            if (!_dragging && (pos - _dragData.pressPosition).sqrMagnitude > es.pixelDragThreshold * es.pixelDragThreshold)
+            {
+                _dragging = true;
+                _dragData.dragging = true;
+                ExecuteEvents.Execute(handler, _dragData, ExecuteEvents.beginDragHandler);
+            }
+            else if (_dragging && _dragData.delta != Vector2.zero)
+                ExecuteEvents.Execute(handler, _dragData, ExecuteEvents.dragHandler);
+        }
+        else
+        {
+            if (_dragging) ExecuteEvents.Execute(handler, _dragData, ExecuteEvents.endDragHandler);
+            _dragging = false;
+            _dragData = null;
+        }
     }
 
     // ---- Input modes ----
@@ -436,12 +532,16 @@ public class PhoneController : MonoBehaviour
         Clear(content);
         _bills.Clear();
 
-        var text = Resources.Load<TextAsset>("bills");
-        var bills = text != null ? JSON.Parse(text.ToString())?["bills"] : null;
+        var bills = BillsState.Bills();
         if (bills == null) return;
 
-        for (int i = 0; i < bills.Count; i++)
+        // Soonest due first; purchases (no due date) go last. OrderBy is stable, so ties keep file order.
+        var order = Enumerable.Range(0, bills.Count)
+            .OrderBy(n => bills[n]["type"].Value == "buy" ? int.MaxValue : bills[n]["due"].AsInt);
+
+        foreach (int i in order)
         {
+            if (!BillsState.IsAvailable(i)) continue;   // this metro doesn't have the bill
             var bill = Instantiate(billPrefab, content);
             bill.name = "Bill " + bills[i]["title"];
             bill.Init(i);
@@ -455,8 +555,7 @@ public class PhoneController : MonoBehaviour
     JSONNode MailData()
     {
         if (_mail != null) return _mail;
-        var text = Resources.Load<TextAsset>("mail");
-        _mail = text != null ? JSON.Parse(text.ToString())["mail"] : null;
+        _mail = MailArchive.Mail();
         return _mail;
     }
 
@@ -470,14 +569,13 @@ public class PhoneController : MonoBehaviour
         var mail = MailData();
         if (mail == null) return;
 
-        int day = PlayerPrefs.GetInt("current level", 0);
         // Newest first.
         for (int i = mail.Count - 1; i >= 0; i--)
         {
-            if (mail[i]["unlockDay"].AsInt > day) continue;
+            if (!MailArchive.IsAvailable(i)) continue;
             var row = Instantiate(messagePrefab, content);
             row.name = "Message " + i;
-            row.Setup(i, mail[i]["sender"], mail[i]["subject"], PlayerPrefs.GetInt("mail" + i, 0) == 1, OpenMessage);
+            row.Setup(i, mail[i]["sender"], MailArchive.Subject(i), PlayerPrefs.GetInt("mail" + i, 0) == 1, OpenMessage);
             PhoneScrollList.Register(row, row.button);
             _rows.Add(row);
         }
@@ -498,12 +596,13 @@ public class PhoneController : MonoBehaviour
         _openedMessage = index;
         PlayerPrefs.SetInt("mail" + index, 1);
 
-        if (viewInfo) viewInfo.text = "From: " + mail[index]["sender"] + "  |  Day " + mail[index]["unlockDay"].AsInt;
-        if (viewBody) viewBody.text = "<b>" + mail[index]["subject"] + "</b>\n\n" + mail[index]["body"];
+        if (viewInfo) viewInfo.text = "From: " + mail[index]["sender"] + "  |  Day " + MailArchive.Day(index);
+        if (viewBody) viewBody.text = "<b>" + MailArchive.Subject(index) + "</b>\n\n" + MailArchive.Body(index);
 
         var row = RowFor(index);
-        if (row != null) row.Setup(index, mail[index]["sender"], mail[index]["subject"], true, OpenMessage);
+        if (row != null) row.Setup(index, mail[index]["sender"], MailArchive.Subject(index), true, OpenMessage);
 
         Show(Screen.MailView);
+        FitLetter();
     }
 }

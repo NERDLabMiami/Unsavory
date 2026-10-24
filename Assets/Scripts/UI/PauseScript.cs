@@ -23,6 +23,7 @@ public class PauseScript : MonoBehaviour {
 
 	public void pause() {
 		if (!isPaused) {
+			if (clock != null) clock.text = GetComponentInParent<TimerScript>().getClock();
 			Camera.main.GetComponent<AudioSource>().Pause();
 			Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 			GetComponentInParent<TimerScript>().running = false;
@@ -50,12 +51,6 @@ public class PauseScript : MonoBehaviour {
 	}
 
 	void Update() {
-	if (!isPaused && gamePlayStarted) {
-			string time = GetComponent<TimerScript>().getClock();
-			clock.text = time;
-			if (level != null) level.SetHudClock(time);
-		}
-
 		var input = GameInput.Instance;
 		if (input == null) return;
 

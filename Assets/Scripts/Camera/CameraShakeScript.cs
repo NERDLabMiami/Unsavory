@@ -43,6 +43,15 @@ public class CameraShakeScript : MonoBehaviour {
 
 	}
 
+	/// <summary>The day is over: forget any sneeze or warning in progress and put the camera back.</summary>
+	public void ResetSneeze() {
+		Sneezing = false;
+		SneezeWarning = false;
+		didSneeze = false;
+		ShakeIntensity = 0f;
+		resetCameraToOriginalPosition();
+	}
+
 	public void pauseSneezing() {
 		isPaused = true;
 	}

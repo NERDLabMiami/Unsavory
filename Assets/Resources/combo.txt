@@ -1,0 +1,15 @@
+{
+  "streak": {
+    "2": "Nice work!",
+    "3": "Keep it up!",
+    "5": "Great work ethic!"
+  },
+  "fallbackFrom": 5,
+  "fallback": "{n} IN A ROW!",
+  "breakMin": 3,
+  "broken": [
+    "Consistency is key!",
+    "Every order counts!",
+    "Let's get back to WERK!"
+  ]
+}

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 // (was the Combo UI controller's Combo Text clip).
 public class ComboTextAnim : MonoBehaviour {
 	const float Total = 0.45f;
+	public const float Duration = Total;
 
 	Vector3 _rest = Vector3.one;
 

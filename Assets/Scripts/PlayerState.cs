@@ -7,6 +7,8 @@ public static class PlayerState
     private const string PREF_HOURLY_RATE = "hourly rate";
     private const string PREF_EARNED_WAGES = "earned wages";
     private const string PREF_HEALTH = "health";
+    private const string PREF_LAST_PAYCHECK = "last paycheck";
+    private const string PREF_WAGES_TOTAL = "wages total";
 
     public static float GetHourlyRate() => PlayerPrefs.GetFloat(PREF_HOURLY_RATE, 8.05f);
 
@@ -35,6 +37,23 @@ public static class PlayerState
         PlayerPrefs.SetFloat(PREF_EARNED_WAGES, value);
         if (save) PlayerPrefs.Save();
         PlayerSignals.RaiseEarnedWagesChanged(value);
+    }
+
+    public static float GetLastPaycheck() => PlayerPrefs.GetFloat(PREF_LAST_PAYCHECK, 0f);
+
+    public static float GetWagesTotal() => PlayerPrefs.GetFloat(PREF_WAGES_TOTAL, 0f);
+
+    /// <summary>Called when a paycheck is cashed out: remembers it and adds it to the career total.</summary>
+    public static void RecordPaycheck(float paycheck)
+    {
+        PlayerPrefs.SetFloat(PREF_LAST_PAYCHECK, paycheck);
+        PlayerPrefs.SetFloat(PREF_WAGES_TOTAL, GetWagesTotal() + paycheck);
+    }
+
+    public static void ResetPaychecks()
+    {
+        PlayerPrefs.SetFloat(PREF_LAST_PAYCHECK, 0f);
+        PlayerPrefs.SetFloat(PREF_WAGES_TOTAL, 0f);
     }
 
     public static float GetHealth() => PlayerPrefs.GetFloat(PREF_HEALTH, 60f);

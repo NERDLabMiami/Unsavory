@@ -99,14 +99,16 @@ public static class FitCameraAndBackground {
 		float kitchenOrtho = Mathf.Max(bg.extents.y, bg.extents.x / Aspect);
 		var kitchenPos = (Vector2)bg.center;
 
-		// Gameplay area = table, what sits on it, the player, rocket sauce and the order queue anchor.
-		var parts = new[] { "Game Elements/Table", "Game Elements/Table/Trays", "Game Elements/Player", "Game Elements/Rocket Sauce" };
+		// Gameplay area = table, what sits on it, the player and the order queue anchor. Rocket Sauce sits well to the right of
+		// the table and is left out so it does not zoom the shot out.
+		var parts = new[] { "Game Elements/Table", "Game Elements/Table/Trays", "Game Elements/Player" };
 		Bounds? area = null;
 		foreach (var p in parts) {
 			var t = Find(p);
 			if (t == null) { log.AppendLine("  (missing " + p + ")"); continue; }
-			var b = WorldBounds(t.transform);
+			var b = VisibleBounds(t.transform);
 			if (b.size == Vector3.zero) continue;
+			log.AppendLine("  part " + p + " -> " + (Vector2)b.min + " .. " + (Vector2)b.max);
 			if (area == null) area = b; else { var a = area.Value; a.Encapsulate(b); area = a; }
 		}
 		var queue = Find("Game Elements/Order Queue");
@@ -114,7 +116,7 @@ public static class FitCameraAndBackground {
 		if (area == null) { Debug.LogError("[PsdLayout] Found nothing to frame for the Gameplay shot."); return; }
 
 		var ab = area.Value;
-		float gameplayOrtho = Mathf.Max(ab.extents.y, ab.extents.x / Aspect) * 1.08f;
+		float gameplayOrtho = Mathf.Max(ab.extents.y, ab.extents.x / Aspect) * 1.02f;
 		gameplayOrtho = Mathf.Clamp(gameplayOrtho, 1.5f, kitchenOrtho);
 		var gp = (Vector2)ab.center;
 		// Keep the view inside the background where it fits.
@@ -160,6 +162,18 @@ public static class FitCameraAndBackground {
 		var b = new Bounds(c[0], Vector3.zero);
 		for (int i = 1; i < 4; i++) b.Encapsulate(c[i]);
 		return b;
+	}
+
+	// Bounds of the sprites that are actually drawn under t: active, enabled, non-transparent. Unlike WorldBounds this
+	// ignores inactive objects and UI rect corners, which would otherwise make the Gameplay shot too wide.
+	static Bounds VisibleBounds(Transform t) {
+		bool any = false;
+		var b = new Bounds();
+		foreach (var sr in t.GetComponentsInChildren<SpriteRenderer>(false)) {
+			if (!sr.enabled || sr.sprite == null || sr.color.a <= 0.01f) continue;
+			if (!any) { b = sr.bounds; any = true; } else b.Encapsulate(sr.bounds);
+		}
+		return any ? b : new Bounds(t.position, Vector3.zero);
 	}
 
 	// Union of every renderer's bounds under t, plus RectTransform corners (UI-style objects such as the Table).

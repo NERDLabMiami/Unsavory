@@ -8,10 +8,18 @@ using UnityEngine.UI;
 public class BossPanelAnim : MonoBehaviour {
 	public float popDuration = 0.4f;
 	public float popOutDuration = 0.22f;
+	[Tooltip("Boss portrait sliding in from the right edge.")]
+	public float slideDuration = 0.45f;
+	[Tooltip("Speech bubble scale/fade in, after the portrait has landed.")]
+	public float bubbleDuration = 0.25f;
 
-	RectTransform _container;
+	const float BubbleStartScale = 0.85f;
+
+	RectTransform _container, _imageRt;
 	Graphic _image, _panel, _text;
+	CanvasGroup _panelGroup;
 	Vector3 _imageRest, _panelRest;
+	Vector2 _imageRestPos;
 
 	void Awake() {
 		AnimUtil.DisableAnimator(gameObject);
@@ -20,8 +28,15 @@ public class BossPanelAnim : MonoBehaviour {
 		_panel = Find("Big Container/Container/Panel");
 		_text = Find("Big Container/Container/Panel/Text");
 		// Remember the scene's sizes; panels saved collapsed come back at 1.
-		if (_panel != null) _panelRest = AnimUtil.RestScale(_panel.transform);
-		if (_image != null) _imageRest = AnimUtil.RestScale(_image.transform);
+		if (_panel != null) {
+			_panelRest = AnimUtil.RestScale(_panel.transform);
+			_panelGroup = AnimUtil.Get<CanvasGroup>(_panel.gameObject);
+		}
+		if (_image != null) {
+			_imageRest = AnimUtil.RestScale(_image.transform);
+			_imageRt = _image.rectTransform;
+			_imageRestPos = _imageRt.anchoredPosition;
+		}
 	}
 
 	Graphic Find(string path) {
@@ -59,13 +74,27 @@ public class BossPanelAnim : MonoBehaviour {
 		}, Tween.Ease.Linear, delay, () => { if (t != null) t.localRotation = Quaternion.identity; });
 	}
 
+	// ---- Expression ----
+
+	Sprite _neutral;
+
+	/// <summary>Swaps the portrait sprite (a null sprite restores the one the scene started with). The pop is left alone.</summary>
+	public void SetFace(Sprite sprite) {
+		var img = _image as Image;
+		if (img == null) return;
+		if (_neutral == null) _neutral = img.sprite;
+		img.sprite = sprite != null ? sprite : _neutral;
+	}
+
 	// ---- Boss panel ----
 
 	bool _shown;
 	Tween _showTween;
 
+	// The portrait slides in from the right, then the speech bubble scales/fades in. The returned tween completes
+	// once the bubble has landed (callers hang the player's answers off it).
 	public Tween Show() {
-		// A second call (a double press on Continue) must not restart the pop-in.
+		// A second call (a double press on Continue) must not restart the animation.
 		if (_shown) return _showTween;
 		_shown = true;
 		SetBlocking(true);
@@ -74,36 +103,67 @@ public class BossPanelAnim : MonoBehaviour {
 		SetAlpha(_image, 1f);
 		if (_container != null) _container.anchoredPosition = new Vector2(0f, _container.anchoredPosition.y);
 
-		Tween panel = _panel != null ? PopIn(_panel.transform, _panelRest, popDuration) : null;
-		Tween portrait = _image != null ? PopIn(_image.transform, _imageRest, popDuration, 0.08f) : null;
-		_showTween = portrait ?? panel;
+		float slide = 0f;
+		if (_imageRt != null) {
+			Tween.Cancel(_imageRt.transform, "jiggle");
+			_imageRt.localRotation = Quaternion.identity;
+			_imageRt.localScale = _imageRest;
+			_imageRt.anchoredPosition = _imageRestPos + OffscreenRight();
+			slide = slideDuration;
+			Tween.Anchored(_imageRt, _imageRestPos, slide, Tween.Ease.OutCubic);
+		}
+		if (_panel != null) BubbleIn(slide, bubbleDuration);
+		_showTween = Tween.Delay(slide + (_panel != null ? bubbleDuration : 0f));
 		return _showTween;
 	}
 
-	// Everything pops out. The returned tween completes when the boss is gone (null if nothing to pop).
+	// The bubble fades and the portrait slides back out to the right. The returned tween completes when the boss is gone (null if nothing to animate).
 	public Tween Hide() {
 		_shown = false;
 		Tween last = null;
-		if (_panel != null) last = PopOut(_panel.transform, popOutDuration);
-		if (_image != null) last = PopOut(_image.transform, popOutDuration, 0.06f);
+		if (_panel != null) last = BubbleOut(popOutDuration);
+		if (_imageRt != null) last = Tween.Anchored(_imageRt, _imageRestPos + OffscreenRight(), popOutDuration + 0.1f, Tween.Ease.InQuad, 0.05f);
 		// A hidden boss is still on a canvas above the other panels; once he is gone he must not swallow their clicks.
 		if (last != null) last.OnComplete(() => SetBlocking(false));
 		else SetBlocking(false);
 		return last;
 	}
 
-	// New line of text: the speech panel pops out, the text changes, and it pops back in with a jiggle.
+	// New line of text: the speech bubble fades out, the text changes, and it fades back in.
 	public void Swap(Action setText, Action landed = null) {
 		if (_panel == null) {
 			if (setText != null) setText();
 			if (landed != null) landed();
 			return;
 		}
-		var t = _panel.transform;
-		PopOut(t, 0.15f, 0f, () => {
+		BubbleOut(0.15f, () => {
 			if (setText != null) setText();
-			PopIn(t, _panelRest, popDuration * 0.8f, 0f, landed);
+			BubbleIn(0f, bubbleDuration * 0.8f, landed);
 		});
+	}
+
+	// Far enough right that the portrait is clear of the screen edge whatever its pivot.
+	Vector2 OffscreenRight() {
+		return new Vector2(_imageRt.rect.width + 150f, 0f);
+	}
+
+	// Simple scale + fade, no overshoot.
+	Tween BubbleIn(float delay, float duration, Action done = null) {
+		var t = _panel.transform;
+		Tween.Cancel(t, "jiggle");
+		t.localRotation = Quaternion.identity;
+		t.localScale = _panelRest * BubbleStartScale;
+		Tween.Cancel(_panelGroup, "alpha");
+		_panelGroup.alpha = 0f;
+		Tween.Alpha(_panelGroup, 1f, duration, Tween.Ease.OutQuad, delay);
+		return Tween.Scale(t, _panelRest, duration, Tween.Ease.OutQuad, delay, done);
+	}
+
+	Tween BubbleOut(float duration, Action done = null) {
+		var t = _panel.transform;
+		Tween.Cancel(t, "jiggle");
+		Tween.Alpha(_panelGroup, 0f, duration, Tween.Ease.InQuad);
+		return Tween.Scale(t, _panelRest * BubbleStartScale, duration, Tween.Ease.InQuad, 0f, done);
 	}
 
 	// Invisible graphics still catch pointer clicks. While the boss is hidden, stop his non-button graphics from

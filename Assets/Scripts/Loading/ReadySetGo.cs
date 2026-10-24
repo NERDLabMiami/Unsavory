@@ -44,19 +44,10 @@ public class ReadySetGo : MonoBehaviour
         finished = false;
         armed = true;
 
-        nextTime = Time.realtimeSinceStartup + secondsBetweenWords;
-
-        if (display && words != null && words.Length > 0)
-            display.text = words[wordIndex];
-
-        // Your original audio/pause behavior:
-        if (Camera.main)
-        {
-            var a = Camera.main.GetComponent<AudioSource>();
-            if (a) a.Stop();
-        }
-
-        if (pauseButton) pauseButton.enabled = false;
+        // No 3-2-1 any more: the shift starts as soon as the player is at the table.
+        if (display) display.text = "";
+        finished = true;
+        startGame();
     }
 
     public void startGame()

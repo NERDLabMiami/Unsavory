@@ -15,6 +15,11 @@ public class TacoAnim : MonoBehaviour {
 		if (taco != null) Tween.Alpha(taco, 0f, 0.434f, Tween.Ease.Linear, 0.383f);
 	}
 
+	// The taco stays put and rides along with its parent (the tray set) instead of leaving on its own.
+	public void Stay() {
+		SetAlpha(FindSprite("Taco"), 1f);
+	}
+
 	public void Rocket() {
 		var start = transform.position;
 		Tween.Move(transform, new Vector3(start.x, TopOfView(), start.z), 1f, Tween.Ease.Linear, 0f, () => Destroy(gameObject));

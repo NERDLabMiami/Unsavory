@@ -14,6 +14,9 @@ using System.Collections.Generic;
 // Text may hold {name} tokens, filled from the vars passed to Say (e.g. "You earned {wages}.").
 // A player line may instead offer choices: { "who": "player", "choices": [ { "id": "retry", "text": "Try again" }, { "id": "leave", "text": "End shift" } ] }.
 // The first choice sits on the Advance button, the second on Choice Button. Picking one ends the speech and passes its id to onFinished.
+// A boss line may set his expression: "face": "angry", "view": "straight"|"side" (sprite Resources/Boss/boss-<face>-<view>).
+// Both stick until a later line changes them; view defaults to straight, and with no face the original portrait shows.
+// If a face has no sprite in the requested view, the other view is used.
 // Which variant plays is decided by DialogueSelector from the conditions in "when" (see DialogueContext).
 public class CharacterDialog : MonoBehaviour
 {
@@ -47,6 +50,10 @@ public class CharacterDialog : MonoBehaviour
     Vector3 _buttonRest;
     bool _haveButtonRest;
     Vector3 _choiceRest;
+    // Completes once the portrait has slid in and the bubble has landed; answers and the first line's timer wait for it.
+    Tween _showTween;
+    // The boss's current expression; a line that names no face/view keeps the last one.
+    string _face = "", _view = "straight";
 
     void Awake()
     {
@@ -57,6 +64,9 @@ public class CharacterDialog : MonoBehaviour
             _choiceRest = AnimUtil.RestScale(choiceButton.transform);
             choiceButton.SetActive(false);
         }
+        // ModalFocus would rebuild the buttons' navigation from screen positions every frame; RevealAnswers links the two itself.
+        var modal = advanceButton ? advanceButton.GetComponentInParent<ModalFocus>() : null;
+        if (modal) modal.manualNavigation = true;
     }
 
     /// <summary>Starts a speech. If the key is missing the speech ends at once, so the caller's flow is never stranded.</summary>
@@ -99,7 +109,10 @@ public class CharacterDialog : MonoBehaviour
         if (variants[variant]["once"].Value == "true") DialogueSelector.MarkPlayed(key, variant);
         _lines = variants[variant]["lines"];
         if (dialogBox) dialogBox.text = "";
-        AnimUtil.Get<BossPanelAnim>(gameObject).Show();
+        _face = "";
+        _view = "straight";
+        AnimUtil.Get<BossPanelAnim>(gameObject).SetFace(null);
+        _showTween = AnimUtil.Get<BossPanelAnim>(gameObject).Show();
         ShowLine();
     }
 
@@ -205,33 +218,26 @@ public class CharacterDialog : MonoBehaviour
             if (advanceButton)
             {
                 if (!_haveButtonRest) { _buttonRest = AnimUtil.RestScale(advanceButton.transform); _haveButtonRest = true; }
-                var label = advanceButton.GetComponentInChildren<Text>();
+                string text2 = null;
                 if (CurrentHasChoices)
                 {
                     text = Fill(node["choices"][0]["text"].Value);
                     // Only offer the second choice if the speech wrote one.
-                    if (choiceButton && node["choices"].Count > 1)
-                    {
-                        var label2 = choiceButton.GetComponentInChildren<Text>();
-                        if (label2) label2.text = Fill(node["choices"][1]["text"].Value);
-                        choiceButton.SetActive(true);
-                        BossPanelAnim.PopIn(choiceButton.transform, _choiceRest, 0.4f, 0.2f);
-                    }
+                    if (choiceButton && node["choices"].Count > 1) text2 = Fill(node["choices"][1]["text"].Value);
                 }
-                if (label) label.text = text;
-                advanceButton.SetActive(true);
-                BossPanelAnim.PopIn(advanceButton.transform, _buttonRest, 0.4f, 0.1f);
-                // Selected = highlighted, and Submit presses it.
-                var es = UnityEngine.EventSystems.EventSystem.current;
-                if (es != null) es.SetSelectedGameObject(advanceButton);
+                StartCoroutine(RevealAnswers(_line, text, text2));
             }
             return;
         }
 
         if (advanceButton) advanceButton.SetActive(false);
         float wait = node["wait"].Value != "" ? node["wait"].AsFloat : -1f;
+        if (node["face"].Value != "") _face = node["face"].Value;
+        if (node["view"].Value != "") _view = node["view"].Value;
+        Sprite face = ResolveFace();
         if (_line == 0)
         {
+            if (face) AnimUtil.Get<BossPanelAnim>(gameObject).SetFace(face);
             if (dialogBox) dialogBox.text = text;
             _wait = StartCoroutine(WaitThenNext(text, wait));
             return;
@@ -240,12 +246,103 @@ public class CharacterDialog : MonoBehaviour
         // A follow-up: the old panel pops out and comes back with the new words.
         _busy = true;
         AnimUtil.Get<BossPanelAnim>(gameObject).Swap(
-            () => { if (dialogBox) dialogBox.text = text; },
+            () =>
+            {
+                if (face) AnimUtil.Get<BossPanelAnim>(gameObject).SetFace(face);
+                if (dialogBox) dialogBox.text = text;
+            },
             () =>
             {
                 _busy = false;
                 if (_active) _wait = StartCoroutine(WaitThenNext(text, wait));
             });
+    }
+
+    // The player's answers appear after the bubble: the first (bottom) button pops, then the second above it.
+    IEnumerator RevealAnswers(int line, string text, string text2)
+    {
+        if (_showTween != null) yield return _showTween;
+        if (!_active || _line != line) yield break;
+
+        var label = advanceButton.GetComponentInChildren<Text>();
+        if (label) SetLabel(label, text);
+        advanceButton.SetActive(true);
+        BossPanelAnim.PopIn(advanceButton.transform, _buttonRest, 0.4f, 0.05f);
+        if (text2 != null)
+        {
+            var label2 = choiceButton.GetComponentInChildren<Text>();
+            if (label2) SetLabel(label2, text2);
+            choiceButton.SetActive(true);
+            BossPanelAnim.PopIn(choiceButton.transform, _choiceRest, 0.4f, 0.2f);
+        }
+        LinkAnswers(text2 != null);
+        // Selected = highlighted, and Submit presses it.
+        var es = UnityEngine.EventSystems.EventSystem.current;
+        if (es != null) es.SetSelectedGameObject(advanceButton);
+    }
+
+    // The second answer sits above the first: up from Advance reaches it, down from it comes back.
+    void LinkAnswers(bool both)
+    {
+        var advance = advanceButton.GetComponent<Selectable>();
+        var choice = choiceButton ? choiceButton.GetComponent<Selectable>() : null;
+        if (advance) advance.navigation = both && choice
+            ? new Navigation { mode = Navigation.Mode.Explicit, selectOnUp = choice }
+            : new Navigation { mode = Navigation.Mode.None };
+        if (choice) choice.navigation = both
+            ? new Navigation { mode = Navigation.Mode.Explicit, selectOnDown = advance }
+            : new Navigation { mode = Navigation.Mode.None };
+    }
+
+    const string IconName = "Inline Icon";
+
+    // A "{taco}" in an answer is drawn as the trust taco image: room is left in the text and the icon is parked there.
+    void SetLabel(Text label, string text)
+    {
+        var old = label.transform.Find(IconName);
+        if (old) Destroy(old.gameObject);
+        int at = text.IndexOf("{taco}");
+        var sprite = TrustTacoHud.FullSprite;
+        if (at < 0 || sprite == null || label.font == null)
+        {
+            label.text = text.Replace("{taco}", "1 taco");
+            return;
+        }
+
+        float size = label.fontSize * 1.1f;
+        label.font.RequestCharactersInTexture("\u00A0", label.fontSize, label.fontStyle);
+        CharacterInfo info;
+        float advance = label.font.GetCharacterInfo('\u00A0', out info, label.fontSize, label.fontStyle) ? info.advance : label.fontSize * 0.3f;
+        int count = Mathf.Max(1, Mathf.CeilToInt(size / Mathf.Max(1f, advance)));
+        label.text = text.Substring(0, at) + new string('\u00A0', count) + text.Substring(at + "{taco}".Length);
+
+        var rect = label.rectTransform.rect;
+        label.cachedTextGenerator.Populate(label.text, label.GetGenerationSettings(rect.size));
+        var chars = label.cachedTextGenerator.characters;
+        if (at >= chars.Count) return;
+        float x = chars[at].cursorPos.x / label.pixelsPerUnit;
+
+        var go = new GameObject(IconName, typeof(RectTransform), typeof(Image));
+        var rt = (RectTransform)go.transform;
+        rt.SetParent(label.transform, false);
+        rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
+        rt.pivot = new Vector2(0f, 0.5f);
+        rt.sizeDelta = new Vector2(size, size);
+        rt.anchoredPosition = new Vector2(x, -rect.height * 0.5f);
+        var image = go.GetComponent<Image>();
+        image.sprite = sprite;
+        image.preserveAspect = true;
+        image.raycastTarget = false;
+    }
+
+    // Resources/Boss/boss-<face>-<view>; if that view doesn't exist for the face, the other one is tried. Null keeps the current sprite.
+    Sprite ResolveFace()
+    {
+        if (_face == "") return null;
+        string other = _view == "side" ? "straight" : "side";
+        var sprite = Resources.Load<Sprite>($"Boss/boss-{_face}-{_view}") ?? Resources.Load<Sprite>($"Boss/boss-{_face}-{other}");
+        if (sprite == null) Debug.LogWarning($"[CharacterDialog] no boss sprite for face '{_face}' (view '{_view}').");
+        return sprite;
     }
 
     void Update()
@@ -264,6 +361,7 @@ public class CharacterDialog : MonoBehaviour
 
     IEnumerator WaitThenNext(string text, float wait)
     {
+        if (_line == 0 && _showTween != null) yield return _showTween;
         bool replyNext = _line + 1 < _lines.Count && _lines[_line + 1]["who"].Value == "player";
         if (wait < 0f && replyNext) wait = ReplyLead;
         else if (wait < 0f) wait = Mathf.Clamp(1.2f + text.Length * 0.04f, 2f, 6f);

@@ -10,13 +10,14 @@ public sealed class CareerFlowManager : MonoBehaviour
     public string mainMenuSceneName = "MainMenu";
     public string homeSceneName     = "Home";
     public string workSceneName     = "Game";
+    public string creditsSceneName  = "Credits";
 
     [Header("Career Defaults")]
     public int defaultMaxWarnings   = 3;
     public int defaultDaysUntilComplete = 20;
     public float defaultStartingHealth = 60f;
     public float defaultHourlyRate = 8.05f;
-    public int defaultRetries = 3;
+    public int defaultRetries = 3;   // unused: trust tacos now start at 0 (TacoLedger.Reset)
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Bootstrap()
@@ -95,9 +96,11 @@ public sealed class CareerFlowManager : MonoBehaviour
         // settings. resetPlayerData also keeps evaluation group, times played and the paid-sick-day options.
         float sfxVolume = PlayerPrefs.GetFloat("sfx volume", 1f);
         float backgroundVolume = PlayerPrefs.GetFloat("background volume", 1f);
+        string metro = ColaData.CurrentMetroId();   // chosen at New Game, before the reset
         CustomFunctionScript.resetPlayerData(defaultStartingHealth, 0);
         PlayerPrefs.SetFloat("sfx volume", sfxVolume);
         PlayerPrefs.SetFloat("background volume", backgroundVolume);
+        PlayerPrefs.SetString("metro", metro);
 
         PlayerPrefs.SetInt("started career", 1);
         PlayerPrefs.SetInt("current level", 1);
@@ -107,9 +110,13 @@ public sealed class CareerFlowManager : MonoBehaviour
         PlayerPrefs.SetFloat("health", defaultStartingHealth);
         PlayerPrefs.SetFloat("paycheck", 0);
         PlayerPrefs.SetFloat("earned wages", 0);
+        PlayerState.ResetPaychecks();
+        MailArchive.Reset();
+        MailArchive.DeliverDue();   // day-1 mail
         PlayerPrefs.SetFloat("bank account", 0);
-        PlayerPrefs.SetFloat("hourly rate", defaultHourlyRate);
-        PlayerPrefs.SetInt("retries", defaultRetries);
+        float wage = ColaData.CurrentMinimumWage();   // the metro's minimum wage, else the national one
+        PlayerPrefs.SetFloat("hourly rate", wage > 0f ? wage : defaultHourlyRate);
+        TacoLedger.Reset();
 
         // Effects
         PlayerPrefs.SetInt("health effect", 0);
@@ -130,6 +137,7 @@ public sealed class CareerFlowManager : MonoBehaviour
         PlayerPrefs.DeleteKey("welcomed home");
         PlayerPrefs.DeleteKey("seen bedroom");
         PlayerPrefs.DeleteKey("seen door");
+        ToastData.ResetPlayed();
         PlayerPrefs.DeleteKey("catering");
 
         PlayerPrefs.Save();
@@ -183,17 +191,29 @@ public sealed class CareerFlowManager : MonoBehaviour
         if (resume == "home") LoadHome(); else BeginShift();
     }
 
-    public void GameOver(bool won)
+    /// <summary>True once the month is over (laid off) or the player was evicted; the door then leads to the credits.</summary>
+    public bool RunEnded => MailArchive.RunEnd().Length > 0;
+
+    /// <summary>Marks the run as over ("layoff" or "eviction") and delivers the matching ending mail.</summary>
+    public void EndRun(string how)
     {
-        if (won)
-        {
-            PlayerPrefs.SetInt("survived", 1);
-            PlayerPrefs.SetInt("reset", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("fired", 1);
-        }
+        PlayerPrefs.SetString(MailArchive.RunEndKey, how);
+        MailArchive.DeliverDue();
+        PlayerPrefs.Save();
+    }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene(creditsSceneName);
+    }
+
+    /// <summary>Credits are done: schedule a fresh run and go back to the main menu.</summary>
+    public void FinishRun()
+    {
+        PlayerPrefs.SetInt("survived", 1);
+        PlayerPrefs.SetInt("reset", 1);
+        PlayerPrefs.DeleteKey(MailArchive.RunEndKey);
+        PlayerPrefs.SetString("resume game", "home");
         PlayerPrefs.Save();
         LoadMainMenu();
     }

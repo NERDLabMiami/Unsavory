@@ -53,10 +53,14 @@
   <ItemGroup>
     <Compile Include="Assets/Editor/PhoneSetup.cs" />
     <Compile Include="Assets/Editor/PsdLayout/FitCameraAndBackground.cs" />
+    <Compile Include="Assets/Editor/BossSpriteSetup.cs" />
     <Compile Include="Assets/Editor/PsdLayout/FitTrayColliders.cs" />
+    <Compile Include="Assets/Editor/ConvertRecipesToData.cs" />
+    <Compile Include="Assets/Editor/HandCursorSetup.cs" />
     <Compile Include="Assets/Editor/AssignRecipeSlip.cs" />
     <Compile Include="Assets/Editor/PsdLayout/PsdLayoutApply.cs" />
     <Compile Include="Assets/Editor/PsdLayout/SceneDump.cs" />
+    <Compile Include="Assets/Editor/BuildCreditsScene.cs" />
     <None Include="Assets/Editor/PsdLayout/scene_dump.json" />
     <None Include="Assets/Editor/PsdLayout/layer_files.json" />
     <None Include="Assets/Editor/PsdLayout/layout.json" />

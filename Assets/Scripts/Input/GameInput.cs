@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -61,7 +62,25 @@ public class GameInput : MonoBehaviour
         // With the ingredient grid up, the stick navigates the grid instead of driving the cursor.
         _virtualCursor.Tick(_point.ReadValue<Vector2>(), GridMode ? Vector2.zero : _cursor.ReadValue<Vector2>(),
                             !GridMode && _activate.WasPressedThisFrame() && _activate.activeControl?.device is Gamepad,
-                            !ModalFocus.HasFocus || ShowCursorInModal);
+                            !ModalFocus.HasFocus || ShowCursorInModal, CurrentCursorState(),
+                            HandHiddenInScene);
+    }
+
+    /// <summary>Set by WorldInputRouter2D: the pointer is over a world interactable.</summary>
+    public static bool PointerOverInteractable;
+    /// <summary>Set by WorldInputRouter2D when a click (non-drag release) fires.</summary>
+    public static float LastTapTime = -10f;
+    const float TapFlashSeconds = 0.12f;
+
+    // The hand cursor isn't wanted in gameplay; other scenes show it for the stick cursor.
+    static bool HandHiddenInScene => SceneManager.GetActiveScene().name == "Game";
+
+    CursorState CurrentCursorState()
+    {
+        if (_activate.IsPressed()) return CursorState.Grab;
+        if (Time.unscaledTime - LastTapTime < TapFlashSeconds) return CursorState.Tap;
+        if (PointerOverInteractable || SelectableUnderPointer() != null) return CursorState.Hover;
+        return CursorState.Point;
     }
 
     // Stick/d-pad/arrows become one step per push, so holding a direction doesn't skip across the grid.

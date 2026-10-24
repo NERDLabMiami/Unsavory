@@ -1,116 +1,26 @@
 {
   "levels": [
-    {
-        "recipes": [1,2],
-        "waiting time": 4,
-        "end": false
-    },
-    {
-        "recipes": [2,3],
-        "waiting time": 4,
-        "end": false
-    },
-    {
-        "recipes": [4],
-        "waiting time": 4,
-        "end": false
-    },
-    {
-        "recipes": [5,6],
-        "waiting time": 4,
-        "end": false
-    },
-    {
-        "recipes": [7],
-        "waiting time": 3,
-        "end": true
-    },
-    {
-        "recipes": [8,2,3],
-        "waiting time": 3,
-        "end": false
-    },
-    {
-        "recipes": [9,2,3],
-        "waiting time": 3,
-        "end": false
-    },
-    {
-        "recipes": [10,7],
-        "waiting time": 2,
-        "end": false
-    },
-    {
-        "recipes": [11,2,3],
-        "waiting time": 2,
-        "end": false
-    },
-    {
-        "recipes": [12],
-        "waiting time": 4,
-        "end": false
-    },   
-        {
-        "recipes": [7,9],
-        "waiting time": 3.5,
-        "end": false
-    },
-    {
-        "recipes": [7,4],
-        "waiting time": 3,
-        "end": false
-    },
-    {
-        "recipes": [1,11,9],
-        "waiting time": 3,
-        "end": false
-    },
-    {
-        "recipes": [1,4,9],
-        "waiting time": 2,
-        "end": false
-    },
-        {
-        "recipes": [7,2,3],
-        "waiting time": 2,
-        "end": false
-    },
-        {
-        "recipes": [12,2],
-        "waiting time": 1.5,
-        "end": false
-    },
-        {
-        "recipes": [12,4],
-        "waiting time": 1.5,
-        "end": false
-    },
-        {
-        "recipes": [1,2,9,11],
-        "waiting time": 2,
-        "end": false
-    },
-        {
-        "recipes": [12,11,1],
-        "waiting time": 3,
-        "end": false
-    },
-        {
-        "recipes": [7,12],
-        "waiting time": 2.5,
-        "end": false
-    },
-         {
-        "recipes": [7,12],
-        "waiting time": 3,
-        "end": false
-    },
-        {
-        "recipes": [12,11,1],
-        "waiting time": 1,
-        "end": false
-    },    
-
+    { "recipes": ["Quesadilla", "Beans and Cheese"], "waiting time": 4, "orders": 8, "pace": 12 },
+    { "recipes": ["Quesadilla", "Beans and Cheese", "Creamy Tomato"], "waiting time": 4, "orders": 8, "pace": 12 },
+    { "recipes": ["Beans and Cheese", "Creamy Tomato", "Vegan"], "waiting time": 4, "orders": 8, "pace": 12 },
+    { "recipes": ["Creamy Tomato", "Vegan", "Bean and Cheese with Sour Cream"], "waiting time": 4, "orders": 8, "pace": 12 },
+    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Quesadilla"], "waiting time": 3.5, "orders": 8, "pace": 10.5 },
+    { "recipes": ["Beans and Cheese", "Vegan", "Spicy Quesadilla", "Spicy Bean and Cheese"], "waiting time": 3.5, "orders": 8, "pace": 10.5 },
+    { "recipes": ["Creamy Tomato", "Bean and Cheese with Sour Cream", "Spicy Bean and Cheese", "Spicy Creamy Tomato"], "waiting time": 3.5, "orders": 8, "pace": 10.5 },
+    { "recipes": ["Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy"], "waiting time": 3, "orders": 8, "pace": 9 },
+    { "recipes": ["Bean and Cheese with Sour Cream", "Spicy Bean and Cheese", "Spicy Chicken Heavy"], "waiting time": 3, "orders": 8, "pace": 9 },
+    { "recipes": ["Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 3, "orders": 8, "pace": 9 },
+    { "recipes": ["Bean and Cheese with Sour Cream", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 3, "orders": 8, "pace": 9 },
+    { "recipes": ["Quesadilla", "Vegan", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
+    { "recipes": ["Beans and Cheese", "Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
+    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Creamy Tomato", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
+    { "recipes": ["Spicy Quesadilla", "Spicy Bean and Cheese", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
+    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Chicken Lite"], "waiting time": 2, "orders": 8, "pace": 6 },
+    { "recipes": ["Creamy Tomato", "Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy"], "waiting time": 2, "orders": 8, "pace": 6 },
+    { "recipes": ["Bean and Cheese with Sour Cream", "Spicy Bean and Cheese", "Spicy Chicken Lite"], "waiting time": 2, "orders": 8, "pace": 6 },
+    { "recipes": ["Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 2, "orders": 8, "pace": 6 },
+    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Chicken Lite"], "waiting time": 1.7, "orders": 8, "pace": 5.5 },
+    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 1.7, "orders": 8, "pace": 5.5 },
+    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Chicken Lite"], "waiting time": 1.5, "orders": 8, "pace": 5 }
   ]
-  
- }
+}

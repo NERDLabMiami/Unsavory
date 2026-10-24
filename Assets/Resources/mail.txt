@@ -3,7 +3,7 @@
     {
       "sender": "WerkJerk",
       "subject": "Congratulations! You're a WerkJerk!",
-      "body": "Congratulations!\nYou have been matched with an employer. They are excited to meet you!\nNext step? Training!\n\nYour new employer, Rocket Taco, is expecting you for your first training shift. Show up on time, bring a positive attitude, and get to werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "body": "Congratulations!\nYou have been matched with an employer. You will be paid is {min_wage} an hour, that's the market rate in {metro}. They are excited to meet you!\n\nNext step? Training!\n\nYour new employer, Rocket Taco, is expecting you for your first training shift. Show up on time, bring a positive attitude, and get to werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
       "unlockDay": 1
     },
     {
@@ -20,19 +20,19 @@
     },
     {
       "sender": "City Desk",
-      "subject": "Is Dating Dead? Singles Are Already Finding New Ways to Connect",
+      "subject": "Is Dating Dead?",
       "body": "With health officials warning against close personal contact, singles are finding creative ways to keep romance alive.\n\nAt startup Feelr, product designer Chad Benson is developing a haptic latex bodysuit that allows users to experience physical touch over the internet.\n\n\"Zoom is the leader of camera-connected remote meetings for business, I'll give you that. But they don't understand that in their personal lives, people want to really feel like they're there.\"\n\nThe company plans to launch an early-access beta later this year and is seeking volunteers willing to let researchers observe them using the suits in their own homes.",
       "unlockDay": 5
     },
     {
       "sender": "CDC",
-      "subject": "Respiratory illness season: protect yourself and others",
+      "subject": "It's flu season, protect yourself!",
       "body": "Respiratory viruses can spread when people are near one another. Wash your hands regularly, cover coughs and sneezes, and improve ventilation when possible. If you develop symptoms, stay home and away from others until you are feeling better. Further precautions may be needed when you return to normal activities.",
       "unlockDay": 6
     },
     {
       "sender": "Churd Airlines",
-      "subject": "Need a Break? Miami Flights Starting at Just $79!",
+      "subject": "Need a Break? Flights Start at Just $79!",
       "body": "Your Weekend Escape Is Calling!\n\nFeeling burned out? Sometimes all you need is a change of scenery!\n\nFor a limited time, Churd Airlines is offering last-minute flights to Miami starting at just $79 one-way!\n\nSoak up the sun on beautiful beaches!\n\nEnjoy world-famous restaurants and nightlife!\n\nLeave Friday evening and be back Sunday, refreshed and ready for the workweek!\n\nWhy wait? With fares this low, there's never been a better time to treat yourself.\n\nYou deserve a break. Book today!\n\nThe Churd Team\n\nLimited seats available. Fares are one-way. Additional fees for baggage and other services may apply depending on what Churd Airlines can get away with these days.",
       "unlockDay": 7
     },
@@ -50,7 +50,7 @@
     },
     {
       "sender": "WerkJerk",
-      "subject": "Your Rocket Taco Shifts Are All Set!",
+      "subject": "Your Shifts Have Been Set",
       "body": "Hey, WerkJerk!\n\nYour upcoming Rocket Taco shifts have been confirmed. If something looks wrong, check with your manager. No need to contact us!\n\nAs always, our services are provided under your employer’s standard WerkJerk partner agreement.\n\nKeep up the great werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.\n\nWerkJerk takes care of hiring, scheduling, and performance tracking, so management can spend less time on paperwork and more time running a great company. Build the next great startup, and let us manage the human side of things. Schedule a free demo today!",
       "unlockDay": 12
     },
@@ -74,13 +74,13 @@
     },
     {
       "sender": "City Desk",
-      "subject": "Everyone's a Chef Now! Is Home Cooking the New Fine Dining?",
+      "subject": "Is Home Cooking the New Fine Dining?",
       "body": "With some dining establishments closing their doors, Americans are discovering a newfound passion for cooking!\n\nFrom sourdough starters to gourmet meals, amateur chefs are sharing their culinary creations online, earning thousands of likes and inspiring others to give cooking a try.\n\nSome home cooks say they've developed skills they never imagined having, while others are wondering why they spent so much money eating out in the first place.\n\nAs more people embrace their inner chef, some are wondering whether they'll ever go back to eating out.\n\nAfter all, anyone can make a restaurant-quality meal! All you need are fresh ingredients, the right equipment, and a little free time!\n\n\nSponsored content.",
       "unlockDay": 20
     },
     {
       "sender": "Business Desk",
-      "subject": "The App Running Restaurant HR Wants a Bigger Piece of the Pie",
+      "subject": "This Company Wants a Bigger Piece of the Pie",
       "body": "You may never have heard of WerkJerk, but the startup already handles hiring, scheduling, and employee performance for nationwide fast food giant Rocket Taco.\n\nNow, rumors are circulating that WerkJerk is looking to get into the restaurant business itself. Neither company has confirmed a deal.\n\nThe move has puzzled analysts. Restaurants are notoriously expensive to operate, and WerkJerk already profits from managing their employees. Why buy the business when you're already getting paid by it?\n\nSome investors speculate that the real opportunity lies in the enormous amount of customer and operational data collected by restaurant chains. Others suspect WerkJerk has something entirely different cooking.",
       "unlockDay": 23
     },
@@ -100,7 +100,39 @@
       "sender": "WerkJerk",
       "subject": "A Heroic New Chapter: Introducing WerkJerk Fresh!",
       "body": "Big news, WerkJerks!\n\nFor years, we’ve helped Rocket Taco recruit, schedule, and manage the people who keep its restaurants running. Now, with Rocket Taco officially part of the WerkJerk family, we’re ready for something MUCH bigger!\n\nRocket Taco’s dataset has given us an incredible foundation for our next big idea. All that hard work is powering a bold new vision for the future of food!\n\nIntroducing **WerkJerk Fresh**, an AI-powered food platform with two revolutionary products in development:\n\n**WerkJerk Fresh Stations** — Made-to-order food vending machines offering fresh, customized meals wherever people need them.\n\n**WerkJerk Fresh Home** — A luxury countertop appliance that brings a personal-chef experience into your home. Why cook when the future can do it for you?\n\nOur Rocket Taco teams have been heroes for showing up through difficult times. Today, we’re proud to celebrate a new kind of hero: the innovators brave enough to disrupt an entire industry.\n\nTo make room for this exciting future, all real estate holdings will be turned into data centers. Effective immediately, Rocket Taco restaurant operations have been eliminated. This includes your current assignment.\n\nThank you for your heroic service! We can’t wait to help you find your next opportunity on WerkJerk.\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
-      "unlockDay": 30
+      "ending": "layoff"
+    },
+    {
+      "sender": "Sunnyvale Property Group",
+      "subject": "NOTICE OF EVICTION",
+      "body": "Dear Resident,\n\nRent for your unit has not been received by the due date. Per your lease, you have been removed from the property effective immediately.\n\nYour belongings have been placed on the curb. We are not responsible for items left on the curb.\n\nWe wish you the best in your next chapter.\n\nSunnyvale Property Group\nA WerkJerk Real Estate Holding",
+      "ending": "eviction"
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "You made {wages_paid}!",
+      "body": "Hi WerkJerk!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. That brings your total earnings with us to {wages_total}.\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 6
+    },
+      {
+      "sender": "WerkJerk",
+      "subject": "You made {wages_paid} this week!",
+      "body": "Hi WerkJerk!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. That brings your total earnings with us to {wages_total}.\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 11
+    },
+      {
+      "sender": "WerkJerk",
+      "subject": "Another week, another {wages_paid}!",
+      "body": "Your latest paycheck of {wages_paid} has been deposited into your bank account. You have earned a total of {wages_total} this month.\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 16
+    },
+      {
+      "sender": "WerkJerk",
+      "subject": "Payment Notification",
+      "body": "{wages_paid} has been deposited into your bank account. Your total earnings with us is now {wages_total}.\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 21
     }
+
+
   ]
 }

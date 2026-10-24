@@ -40,7 +40,8 @@ public class WorldInputRouter2D : MonoBehaviour
         UpdateHover(input, blocked || GameInput.GridMode);
         if (blocked) return;
 
-        if (nose) nose.SubmitScrub(input.Scrub, Time.deltaTime);
+        var wipeTarget = nose ? nose : NoseWipeScript.Active;
+        if (wipeTarget) wipeTarget.SubmitScrub(input.Scrub, Time.deltaTime);
 
         if (!input.ActivateReleased) return;
         bool armed = _armed;
@@ -49,6 +50,7 @@ public class WorldInputRouter2D : MonoBehaviour
 
         // A drag (e.g. wiping the nose with the mouse) is not a click on whatever is under the release point.
         if (Vector2.Distance(_pressPos, input.PointerPosition) > Screen.height * 0.03f) return;
+        GameInput.LastTapTime = Time.unscaledTime;
 
         // Stick cursor: it isn't a real pointer, so press any uGUI button under it (HUD pause/quit) before the world.
         if (input.UsingVirtualCursor && input.TryClickUI()) return;
@@ -65,9 +67,11 @@ public class WorldInputRouter2D : MonoBehaviour
     void UpdateHover(GameInput input, bool suppress)
     {
         IHoverable next = null;
+        GameInput.PointerOverInteractable = false;
         if (!suppress && cam)
         {
             var target = InteractableUnderPointer(input);
+            GameInput.PointerOverInteractable = target != null;
             if (target != null) next = target.GetComponent<IHoverable>();
         }
         if (next == _hovered) return;
@@ -80,6 +84,7 @@ public class WorldInputRouter2D : MonoBehaviour
     {
         _hovered?.SetHover(false);
         _hovered = null;
+        GameInput.PointerOverInteractable = false;
     }
 
     static readonly List<Collider2D> Overlaps = new List<Collider2D>();
