@@ -6,16 +6,14 @@ TagManager:
   tags:
   - Recipe
   - Ingredient
-  - OrderStop
   - Tray
-  - Unlockable
   - Bill
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
   - 
-  - Water
+  - 
   - UI
   - 
   - 

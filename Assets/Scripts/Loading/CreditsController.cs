@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // The end of a run: the credits (Resources/credits.txt) scroll up, then the game returns to the main menu with a fresh run.
 // Any click or key press skips ahead after a short grace period. The Credits scene is built by Tools > Create Credits Scene.
@@ -48,7 +49,14 @@ public class CreditsController : MonoBehaviour
 	bool SkipRequested(float startedAt)
 	{
 		if (Time.unscaledTime - startedAt < skipGraceSeconds) return false;
-		return Input.anyKeyDown || Input.GetMouseButtonDown(0) || Input.touchCount > 0;
+		var keyboard = Keyboard.current;
+		var mouse = Mouse.current;
+		var touch = Touchscreen.current;
+		var pad = Gamepad.current;
+		return (keyboard != null && keyboard.anyKey.wasPressedThisFrame)
+			|| (mouse != null && mouse.leftButton.wasPressedThisFrame)
+			|| (touch != null && touch.primaryTouch.press.wasPressedThisFrame)
+			|| (pad != null && pad.buttonSouth.wasPressedThisFrame);
 	}
 
 	IEnumerator Leave()
