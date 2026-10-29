@@ -48,6 +48,7 @@ public class WorkScript : MonoBehaviour
             CareerFlowManager.Instance.LoadCredits();
             return;
         }
+        if (CareerFlowManager.Instance.EvictIfRentOverdue()) return;
         DecreaseHealth();
         CareerFlowManager.Instance.BeginShift();
     }
@@ -58,8 +59,12 @@ public class WorkScript : MonoBehaviour
     public void stayHome()
     {
         if (CareerFlowManager.Instance.RunEnded) return;
+        if (CareerFlowManager.Instance.EvictIfRentOverdue()) return;
         TryUsePaidSickDay();
+        CareerStats.SickDayTaken();
         IncreaseHealth();
+        // The next morning's state line acknowledges the skipped workday (a toast shown now would vanish with this scene).
+        NarrativeRuntime.SetSkippedPreviousShift();
         CareerFlowManager.Instance.LoadHome();
     }
 
@@ -81,6 +86,6 @@ public class WorkScript : MonoBehaviour
             analytics.usedPaidSickDays(paidSickDays);
 
         // Sick day wage credit without needing a Player object in the scene
-        PlayerScript.AddWagesHours(8f);
+        PlayerState.SetEarnedWages(PlayerState.GetEarnedWages() + 8f * PlayerState.GetHourlyRate());
     }
 }

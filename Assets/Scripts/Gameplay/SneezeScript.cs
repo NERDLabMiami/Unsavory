@@ -5,7 +5,6 @@ using System.Linq;
 
 public class SneezeScript : MonoBehaviour {
 	public TimerScript timer;
-	public PlayerScript player;
 	public Level level;
 	private bool launchedLevelEnd = false;
 	private bool endless = false;
@@ -35,7 +34,7 @@ public class SneezeScript : MonoBehaviour {
 				launchedLevelEnd = true;
 				timer.GetComponent<TimerScript>().running = false;
 				level.setTimeWorked(timer.getTimeWorked());
-				level.EndRound(RoundOutcome.Sick);
+				level.BeginSneezeAftermath();
 
 			}
 		}

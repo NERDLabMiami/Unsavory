@@ -74,11 +74,12 @@ public class CurrentOrderScript : MonoBehaviour {
 			levelData =  Resources.Load<TextAsset>("levels").ToString();
 			JSONNode levels = JSON.Parse(levelData);
 			int lastLevel = levels["levels"].Count - 1;
-			if (currentLevel > lastLevel) {
+			int levelIndex = CareerFlowManager.LevelIndex(currentLevel);
+			if (levelIndex > lastLevel) {
 				Debug.LogWarning("[CurrentOrderScript] day " + currentLevel + " is past the last entry in levels.txt; using entry " + lastLevel + ".");
-				currentLevel = lastLevel;
+				levelIndex = lastLevel;
 			}
-			JSONNode entry = levels["levels"][currentLevel];
+			JSONNode entry = levels["levels"][levelIndex];
 			timeBetweenOrders = entry["waiting time"].AsFloat;
 			if (timeBetweenOrders <= 0) {
 				timeBetweenOrders = 5;
@@ -106,8 +107,8 @@ public class CurrentOrderScript : MonoBehaviour {
 	}
 	// Catering orders unlock one more recipe each time it is called, easiest first.
 	static readonly string[] CateringRecipes = {
-		"Quesadilla", "Beans and Cheese", "Creamy Tomato", "Vegan", "Bean and Cheese with Sour Cream",
-		"Spicy Quesadilla", "Spicy Bean and Cheese", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite",
+		"Quesadilla", "Beans and Cheese", "Garden Bean", "Loaded Bean", "Spicy Quesadilla",
+		"Spicy Bean and Cheese", "Tomato Crema", "Garden Fire", "Spicy Chicken", "Spicy Chicken XL",
 	};
 
 	public void incrementRecipeList() {
@@ -162,6 +163,9 @@ public class CurrentOrderScript : MonoBehaviour {
         sauceGraceGiven = true;
         orderTimer = Mathf.Max(orderTimer, SauceGrace);
         orderTimerAlert = false;
+        JustInTimeTip.Run(JustInTimeTip.RocketKey,
+            "Rocket order! " + JustInTimeTip.Device("Press RB or RT", "Press E") + " to squeeze on the hot sauce.",
+            () => plate.sauced || !plate.AwaitingSauce || (GameInput.Instance != null && GameInput.Instance.HotSaucePressed));
     }
 
     // Alert the FRONT order when time is low
@@ -189,6 +193,7 @@ public class CurrentOrderScript : MonoBehaviour {
 
         // The warning panel no longer buzzes on its own (a wrong ingredient already did), so a timeout does it here.
         plate.PlayMistakeSound();
+        CareerStats.OrderMissed();
         if (warningTimer <= Time.time + 2f)
         {
             numberOfUnmatchedOrders++;
