@@ -1,5 +1,14 @@
 # Unsavory
 Unsavory is a mobile game designed to put the player in the precarious position of choosing between their personal health, public health and their financial well-being. Like other activist games, the intention is to create awareness and empathy around an issue that is best understood as part of a larger system. Additionally, the game seeks to be a catalyst for change by embedding a social media campaign into gameplay that encourages players to share meaningful facts and statistics regarding restaurant workers, access to health care, and paid sick day legislation.
+## Development
+Unity 6000.6.2f1, URP, new Input System. Open the project folder in Unity Hub; scenes in build order: MainMenu, Game, Home, Credits.
+
+- `Assets/Scripts` - game code by area (Gameplay, Home, Menu, Player, Bills, Career, Input, UI, Tween, Messaging, Toasts for the data-driven narrative/modal system)
+- `Assets/Resources` - data loaded by name at runtime (levels, mail, toasts, recipes, boss sprites)
+- `Assets/Audio`, `Assets/Sprites`, `Assets/Prefabs` (UI, Trays, Food, Systems), `Assets/Settings`
+- `Docs/` - design and implementation specs (narrative/toasts v3)
+- Edit-mode tests: `Assets/Tests/EditMode` (run via Window > General > Test Runner)
+
 ## Versions
 ### Original
 The original version of Unsavory was released on Google Play and the App Store in 2013. This version centered around the H1N1 outbreak in 2009 and attempted to simulate what that outbreak might have looked like from a fast food employee at that time.

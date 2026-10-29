@@ -12,8 +12,8 @@ using UnityEngine.UI;
 /// </summary>
 public static class PhoneSetup
 {
-    const string BillPrefabPath = "Assets/Prefabs/Phone Bill.prefab";
-    const string MessagePrefabPath = "Assets/Prefabs/Phone Message.prefab";
+    const string BillPrefabPath = "Assets/Prefabs/UI/Phone Bill.prefab";
+    const string MessagePrefabPath = "Assets/Prefabs/UI/Phone Message.prefab";
 
     [MenuItem("Unsavory/Setup Phone")]
     static void Run()
@@ -59,6 +59,7 @@ public static class PhoneSetup
             row.button = message.GetComponent<Button>();
             row.sender = Find<TMP_Text>(message, "Sender");
             row.preview = Find<TMP_Text>(message, "Preview");
+            row.avatar = message.Find("Avatar/Image")?.GetComponent<Image>();
             var saved = PrefabUtility.SaveAsPrefabAssetAndConnect(message.gameObject, MessagePrefabPath, InteractionMode.AutomatedAction);
             controller.messagePrefab = saved.GetComponent<PhoneMessageRow>();
         }
