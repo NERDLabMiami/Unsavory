@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 public class SneezeScript : MonoBehaviour {
 	public TimerScript timer;
@@ -21,7 +18,6 @@ public class SneezeScript : MonoBehaviour {
 	void Update () {
 		if (!launchedLevelEnd && !endless) {
 			if (Camera.main.GetComponent<CameraShakeScript>().sneezed()) {
-				//TODO: Boogeyman
 				PlayerPrefs.SetInt("sneezed", 1);
 				//ALLOW SICK DAYS
 				PlayerPrefs.SetInt("paid sick days achieved",1);
@@ -30,7 +26,6 @@ public class SneezeScript : MonoBehaviour {
 				int sneezes = PlayerPrefs.GetInt ("sneezes") + 1;
 				PlayerPrefs.SetInt ("sneezes", sneezes);
 				level.setTimeWorked(timer.getTimeWorked());
-//				player.addWages( timer.getTimeWorked());
 				launchedLevelEnd = true;
 				timer.GetComponent<TimerScript>().running = false;
 				level.setTimeWorked(timer.getTimeWorked());

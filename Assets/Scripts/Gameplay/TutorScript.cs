@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class TutorScript : MonoBehaviour {
@@ -51,7 +50,7 @@ public class TutorScript : MonoBehaviour {
 		// Plate, tortilla and recipe card are on screen before any text.
 		getTutorial();
 
-		_selector = FindFirstObjectByType<IngredientGridSelector>();
+		_selector = FindAnyObjectByType<IngredientGridSelector>();
 		if (_selector != null) _selector.SelectionChanged += OnSelectionChanged;
 		_intro = StartCoroutine(ControlsIntro());
 	}
@@ -129,7 +128,7 @@ public class TutorScript : MonoBehaviour {
 
 	// Same slot real orders use (the Tutor Panel's own position is in screen pixels, far off-screen).
 	Vector3 CardSlot() {
-		var layout = FindFirstObjectByType<OrderQueueLayout2D>();
+		var layout = FindAnyObjectByType<OrderQueueLayout2D>();
 		return layout != null ? layout.FrontSlotWorld : spawningArea.transform.position;
 	}
 
@@ -144,7 +143,7 @@ public class TutorScript : MonoBehaviour {
 		plate.GetComponent<PlateScript>().EnsureTray();
 
 		// The card slides in from beyond the right edge, the same way real orders arrive.
-		var layout = FindFirstObjectByType<OrderQueueLayout2D>();
+		var layout = FindAnyObjectByType<OrderQueueLayout2D>();
 		Vector3 slot = CardSlot();
 		Vector3 start = layout != null ? layout.OffscreenRightWorld : slot;
 		GameObject newRecipe =(GameObject) Instantiate(_recipePrefab, start, Quaternion.identity);
@@ -184,7 +183,7 @@ public class TutorScript : MonoBehaviour {
 		if (matched) {
 			var done = continueTutorialDialog.GetComponent<TutorialComplete>();
 			done.finishTutorial();
-			var level = FindFirstObjectByType<Level>();
+			var level = FindAnyObjectByType<Level>();
 			if (level != null) level.BeginPostTutorial();
 			else done.startCountdown();
 			gameObject.SetActive(false);

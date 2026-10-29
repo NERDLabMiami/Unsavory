@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 using SimpleJSON;
 
@@ -192,6 +191,7 @@ public class BillScript : MonoBehaviour
         PlayerState.SetMoney(money);
         PlayerPrefs.SetInt("fruit", MaxFruit);
         PlayerPrefs.Save();
+        PlayerSignals.RaiseFruitChanged(MaxFruit);
 
         if (bankAccount)
             bankAccount.text = money.ToString("Account Balance: $0.00");

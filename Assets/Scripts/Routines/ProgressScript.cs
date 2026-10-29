@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class ProgressScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		int daysLeft = 21 - PlayerPrefs.GetInt("current level", 0);
-		Debug.Log("DAYS LEFT: " + PlayerPrefs.GetInt("current level", 0));
-		if (daysLeft < 20) {
+		int finalDay = PlayerPrefs.GetInt("final day", 20);
+		int daysLeft = Mathf.Max(0, finalDay - PlayerPrefs.GetInt("current level", 0) + 1);
+		{
 			float money = PlayerPrefs.GetFloat("money");
 			if (PlayerPrefs.HasKey("fired")) {
 				GetComponent<Text>().text = "Fired with " + money.ToString ("$0") + " to your name";

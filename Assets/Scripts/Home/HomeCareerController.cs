@@ -14,7 +14,6 @@ public class HomeCareerController : MonoBehaviour
     {
         // If you have existing logic, call it here (or keep it in your existing WorkScript for now).
         // Example:
-        // optionalStayHomeLogic?.SendMessage("ApplyStayHomeEffects", SendMessageOptions.DontRequireReceiver);
 
         CareerFlowManager.Instance.LoadHome();
     }

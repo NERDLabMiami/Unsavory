@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
@@ -6,14 +7,33 @@ using SimpleJSON;
 // Mail without tokens is never stored. Mail with no stored copy (old saves) is resolved when read.
 public static class MailArchive
 {
+    static JSONNode _root;
     static JSONNode _mail;
+    static readonly Dictionary<string, Sprite> _icons = new Dictionary<string, Sprite>();
+
+    static JSONNode Root()
+    {
+        if (_root != null) return _root;
+        var text = Resources.Load<TextAsset>("mail");
+        _root = text != null ? JSON.Parse(text.ToString()) : null;
+        return _root;
+    }
 
     public static JSONNode Mail()
     {
         if (_mail != null) return _mail;
-        var text = Resources.Load<TextAsset>("mail");
-        _mail = text != null ? JSON.Parse(text.ToString())?["mail"] : null;
+        _mail = Root()?["mail"];
         return _mail;
+    }
+
+    /// <summary>The avatar for a sender, from the "icons" map in mail.txt (sender -> sprite name in Resources/Mail). Null when unmapped.</summary>
+    public static Sprite IconFor(string sender)
+    {
+        if (_icons.TryGetValue(sender, out var cached)) return cached;
+        string name = Root()?["icons"][sender].Value;
+        var sprite = string.IsNullOrEmpty(name) ? null : Resources.Load<Sprite>("Mail/" + name);
+        _icons[sender] = sprite;
+        return sprite;
     }
 
     static string SubjectKey(int i) => "mail subject " + i;

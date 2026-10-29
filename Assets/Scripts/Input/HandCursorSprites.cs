@@ -15,8 +15,23 @@ public class HandCursorSprites : ScriptableObject
 
     [Tooltip("Cursor image size in screen pixels.")]
     public Vector2 size = new Vector2(96, 96);
-    [Tooltip("Normalized (0-1) point inside the sprite that sits on the pointer position, e.g. the fingertip.")]
-    public Vector2 hotspot = new Vector2(0.5f, 0.5f);
+    [Tooltip("Normalized (0-1, from bottom-left) point inside each sprite that sits on the pointer position, i.e. the fingertip. The poses differ, so each has its own.")]
+    public Vector2 pointHotspot = new Vector2(0.84f, 0.84f);
+    public Vector2 hoverHotspot = new Vector2(0.82f, 0.68f);
+    public Vector2 tapHotspot = new Vector2(0.76f, 0.78f);
+    public Vector2 grabHotspot = new Vector2(0.78f, 0.68f);
+    [Tooltip("Screen-pixel shift of the drawn hand; the pointer position is unchanged. +y moves the hand up.")]
+    public Vector2 imageOffset;
+    [Tooltip("Screen pixels the stick cursor may travel past each window edge, to reach partly off-screen objects.")]
+    public float overscan = 100f;
+
+    public Vector2 HotspotFor(CursorState state) => state switch
+    {
+        CursorState.Hover => hoverHotspot,
+        CursorState.Tap => tapHotspot,
+        CursorState.Grab => grabHotspot,
+        _ => pointHotspot,
+    };
 
     public Sprite For(CursorState state)
     {

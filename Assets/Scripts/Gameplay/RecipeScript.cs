@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 // An order card. The slip is built at runtime from `ingredients`: one row per ingredient (icon circle) that the

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class IngredientTutor : MonoBehaviour {
 	public string message;

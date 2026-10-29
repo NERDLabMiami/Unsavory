@@ -62,7 +62,7 @@ public class GameInput : MonoBehaviour
         // With the ingredient grid up, the stick navigates the grid instead of driving the cursor.
         _virtualCursor.Tick(_point.ReadValue<Vector2>(), GridMode ? Vector2.zero : _cursor.ReadValue<Vector2>(),
                             !GridMode && _activate.WasPressedThisFrame() && _activate.activeControl?.device is Gamepad,
-                            !ModalFocus.HasFocus || ShowCursorInModal, CurrentCursorState(),
+                            (!ModalFocus.HasFocus || ShowCursorInModal) && !ScreenFade.IsCovered, CurrentCursorState(),
                             HandHiddenInScene);
     }
 
@@ -111,6 +111,10 @@ public class GameInput : MonoBehaviour
     public Vector2 PointerPosition => _virtualCursor.Position;
     /// <summary>True while the stick-driven cursor is the active pointer.</summary>
     public bool UsingVirtualCursor => _virtualCursor.Active;
+
+    /// <summary>Glides the stick cursor to a screen position (e.g. onto a d-pad-selected control) until the player moves it away.</summary>
+    public void MoveCursorTo(Vector2 screenPos, bool instant = false) => _virtualCursor.MoveTo(screenPos, instant);
+    public void CancelCursorTarget() => _virtualCursor.CancelTarget();
 
     public bool ActivatePressed  => _activate.WasPressedThisFrame();
     public bool ActivateReleased => _activate.WasReleasedThisFrame();

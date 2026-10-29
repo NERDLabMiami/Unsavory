@@ -99,7 +99,7 @@ public class HomeInteractable : MonoBehaviour, IWorldInteractable, IHoverable
             string key = HoverKey();
             if (key != null)
             {
-                if (_toast == null) _toast = FindObjectOfType<HomeToast>();
+                if (_toast == null) _toast = FindAnyObjectByType<HomeToast>();
                 if (_toast != null) _toast.ShowHover(key);
             }
         }

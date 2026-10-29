@@ -14,7 +14,7 @@ using System.Collections.Generic;
 // Text may hold {name} tokens, filled from the vars passed to Say (e.g. "You earned {wages}.").
 // A player line may instead offer choices: { "who": "player", "choices": [ { "id": "retry", "text": "Try again" }, { "id": "leave", "text": "End shift" } ] }.
 // The first choice sits on the Advance button, the second on Choice Button. Picking one ends the speech and passes its id to onFinished.
-// A boss line may set his expression: "face": "angry", "view": "straight"|"side" (sprite Resources/Boss/boss-<face>-<view>).
+// A boss line may set his expression: "face": "angry" (sprite Resources/Boss/boss-<face>).
 // Both stick until a later line changes them; view defaults to straight, and with no face the original portrait shows.
 // If a face has no sprite in the requested view, the other view is used.
 // Which variant plays is decided by DialogueSelector from the conditions in "when" (see DialogueContext).
@@ -33,8 +33,15 @@ public class CharacterDialog : MonoBehaviour
     /// <summary>The boss's exit fade; yield on it to wait until he is gone. Null if he never left.</summary>
     public Tween HideTween { get; private set; }
 
-    const float InputDelay = 0.4f;
-    const float ReplyLead = 0.35f; // boss line -> player reply: just enough to see the order
+    [Tooltip("Seconds after a line starts before clicks are accepted.")]
+    public float InputDelay = 0.4f;
+    [Tooltip("Seconds between a boss line and the player's answer options (a line's own \"wait\" overrides it).")]
+    public float ReplyLead = 2f;
+    const float PulseScale = 1.06f;   // the selected answer breathes up to this and back
+    const float PulseSeconds = .45f; // one way
+    const float PulseRest = 2.5f;    // pause between pulses
+    [Tooltip("Seconds for both answers to finish popping in before the pulse can start.")]
+    public float AnswersSettle = 0.65f;
 
     JSONNode _lines;
     int _line;
@@ -52,8 +59,13 @@ public class CharacterDialog : MonoBehaviour
     Vector3 _choiceRest;
     // Completes once the portrait has slid in and the bubble has landed; answers and the first line's timer wait for it.
     Tween _showTween;
+    // Answer buttons: the selected one wears its selected sprite and pulses; the other rests on its normal sprite.
+    Image _advanceImage, _choiceImage;
+    Sprite _advanceNormal, _advanceSelected, _choiceNormal, _choiceSelected;
+    bool _answersUp, _answersReady;
+    GameObject _shownSelected;
     // The boss's current expression; a line that names no face/view keeps the last one.
-    string _face = "", _view = "straight";
+    string _face = "";
 
     void Awake()
     {
@@ -62,11 +74,23 @@ public class CharacterDialog : MonoBehaviour
             var b = choiceButton.GetComponent<Button>();
             if (b) b.onClick.AddListener(ChooseSecond);
             _choiceRest = AnimUtil.RestScale(choiceButton.transform);
+            CacheSprites(choiceButton, out _choiceImage, out _choiceNormal, out _choiceSelected);
             choiceButton.SetActive(false);
         }
+        if (advanceButton) CacheSprites(advanceButton, out _advanceImage, out _advanceNormal, out _advanceSelected);
         // ModalFocus would rebuild the buttons' navigation from screen positions every frame; RevealAnswers links the two itself.
         var modal = advanceButton ? advanceButton.GetComponentInParent<ModalFocus>() : null;
         if (modal) modal.manualNavigation = true;
+    }
+
+    // The sprite swap is done here (see RefreshAnswers), so the Button's own transition is switched off.
+    static void CacheSprites(GameObject go, out Image image, out Sprite normal, out Sprite selected)
+    {
+        image = go.GetComponent<Image>();
+        var button = go.GetComponent<Button>();
+        normal = image ? image.sprite : null;
+        selected = button && button.spriteState.selectedSprite ? button.spriteState.selectedSprite : normal;
+        if (button) button.transition = Selectable.Transition.None;
     }
 
     /// <summary>Starts a speech. If the key is missing the speech ends at once, so the caller's flow is never stranded.</summary>
@@ -107,10 +131,10 @@ public class CharacterDialog : MonoBehaviour
         }
 
         if (variants[variant]["once"].Value == "true") DialogueSelector.MarkPlayed(key, variant);
+        NarrativeKnowledge.Learn(variants[variant]["reveals"].Value);   // "acquisition" / "new_vision" in boss dialogue.txt, else empty
         _lines = variants[variant]["lines"];
         if (dialogBox) dialogBox.text = "";
         _face = "";
-        _view = "straight";
         AnimUtil.Get<BossPanelAnim>(gameObject).SetFace(null);
         _showTween = AnimUtil.Get<BossPanelAnim>(gameObject).Show();
         ShowLine();
@@ -146,23 +170,31 @@ public class CharacterDialog : MonoBehaviour
     IEnumerator PlayerReply()
     {
         _busy = true;
+        StopAnswers();
         var es = UnityEngine.EventSystems.EventSystem.current;
         if (es != null) es.SetSelectedGameObject(null);
 
-        var button = advanceButton.transform;
-        var graphic = advanceButton.GetComponent<Graphic>();
+        // The button that was picked lights up; the other leaves with it.
+        bool second = choiceButton && choiceButton.activeSelf && _pickedId == ChoiceId(1);
+        var pickedObj = second ? choiceButton : advanceButton;
+        var otherObj = second ? advanceButton : choiceButton;
+        var button = pickedObj.transform;
+        var graphic = pickedObj.GetComponent<Graphic>();
+        var pickedImage = second ? _choiceImage : _advanceImage;
+        if (pickedImage) pickedImage.sprite = second ? _choiceSelected : _advanceSelected;
         Color baseColor = graphic != null ? graphic.color : Color.white;
         if (graphic != null)
         {
             yield return Tween.Tint(graphic, Color.Lerp(baseColor, new Color(1f, 0.92f, 0.3f, baseColor.a), 0.7f), 0.1f, Tween.Ease.OutQuad);
             yield return Tween.Delay(0.08f);
         }
-        if (choiceButton && choiceButton.activeSelf) BossPanelAnim.PopOut(choiceButton.transform);
+        if (otherObj && otherObj.activeSelf) BossPanelAnim.PopOut(otherObj.transform);
         yield return BossPanelAnim.PopOut(button);
 
         advanceButton.SetActive(false);
         if (choiceButton) { choiceButton.SetActive(false); choiceButton.transform.localScale = _choiceRest; }
-        button.localScale = _buttonRest;
+        button.localScale = second ? _choiceRest : _buttonRest;
+        advanceButton.transform.localScale = _buttonRest;
         if (graphic != null) { Tween.Cancel(graphic, "color"); graphic.color = baseColor; }
         _busy = false;
         NextLine();
@@ -185,6 +217,7 @@ public class CharacterDialog : MonoBehaviour
         _active = false;
         _busy = false;
         StopWait();
+        StopAnswers();
         if (advanceButton) advanceButton.SetActive(false);
         if (choiceButton) choiceButton.SetActive(false);
         HideTween = AnimUtil.Get<BossPanelAnim>(gameObject).Hide();
@@ -233,7 +266,6 @@ public class CharacterDialog : MonoBehaviour
         if (advanceButton) advanceButton.SetActive(false);
         float wait = node["wait"].Value != "" ? node["wait"].AsFloat : -1f;
         if (node["face"].Value != "") _face = node["face"].Value;
-        if (node["view"].Value != "") _view = node["view"].Value;
         Sprite face = ResolveFace();
         if (_line == 0)
         {
@@ -279,6 +311,80 @@ public class CharacterDialog : MonoBehaviour
         // Selected = highlighted, and Submit presses it.
         var es = UnityEngine.EventSystems.EventSystem.current;
         if (es != null) es.SetSelectedGameObject(advanceButton);
+
+        _answersUp = true;
+        _answersReady = false;
+        _shownSelected = null;
+        RefreshAnswers();
+        Tween.Delay(AnswersSettle, () =>
+        {
+            if (!_active || !_answersUp || _line != line) return;
+            _answersReady = true;
+            _shownSelected = null; // force a restyle now that the pulse may start
+            RefreshAnswers();
+        });
+    }
+
+    // A lone answer is always the selected one; with two, whichever the EventSystem has selected (Advance if neither).
+    GameObject SelectedAnswer()
+    {
+        if (!choiceButton || !choiceButton.activeSelf) return advanceButton;
+        var es = UnityEngine.EventSystems.EventSystem.current;
+        return es != null && es.currentSelectedGameObject == choiceButton ? choiceButton : advanceButton;
+    }
+
+    // Selected answer: selected sprite + pulse. The other: normal sprite, at rest. Only does work when the selection changes.
+    void RefreshAnswers()
+    {
+        var selected = SelectedAnswer();
+        if (selected == _shownSelected) return;
+        _shownSelected = selected;
+        StyleAnswer(advanceButton, _advanceImage, _advanceNormal, _advanceSelected, _buttonRest, selected == advanceButton);
+        if (choiceButton && choiceButton.activeSelf)
+            StyleAnswer(choiceButton, _choiceImage, _choiceNormal, _choiceSelected, _choiceRest, selected == choiceButton);
+    }
+
+    void StyleAnswer(GameObject go, Image image, Sprite normal, Sprite selected, Vector3 rest, bool on)
+    {
+        if (image) image.sprite = on ? selected : normal;
+        var t = go.transform;
+        if (on)
+        {
+            if (!_answersReady) return; // still popping in; the settle timer refreshes us
+            // One cycle = a pulse (up and back) then a long rest, repeated.
+            float pulse = PulseSeconds * 2f;
+            Tween.Run(t, "pulse", pulse + PulseRest, v =>
+            {
+                float s = Mathf.Clamp01(v * (pulse + PulseRest) / pulse); // 0..1 over the pulse, then held at 1
+                float bump = Mathf.Sin(s * Mathf.PI);
+                t.localScale = rest * Mathf.Lerp(1f, PulseScale, bump);
+            }, Tween.Ease.Linear).Loop(0, false);
+        }
+        else if (_answersReady)
+        {
+            Tween.Cancel(t, "pulse");
+            Tween.Scale(t, rest, 0.12f, Tween.Ease.OutQuad);
+        }
+    }
+
+    // Answers are leaving (picked, or the speech ended): stop the pulse and put both buttons back as they started.
+    void StopAnswers()
+    {
+        _answersUp = false;
+        _answersReady = false;
+        _shownSelected = null;
+        if (advanceButton)
+        {
+            Tween.Cancel(advanceButton.transform, "pulse");
+            if (_haveButtonRest) advanceButton.transform.localScale = _buttonRest;
+            if (_advanceImage) _advanceImage.sprite = _advanceNormal;
+        }
+        if (choiceButton)
+        {
+            Tween.Cancel(choiceButton.transform, "pulse");
+            choiceButton.transform.localScale = _choiceRest;
+            if (_choiceImage) _choiceImage.sprite = _choiceNormal;
+        }
     }
 
     // The second answer sits above the first: up from Advance reaches it, down from it comes back.
@@ -335,18 +441,18 @@ public class CharacterDialog : MonoBehaviour
         image.raycastTarget = false;
     }
 
-    // Resources/Boss/boss-<face>-<view>; if that view doesn't exist for the face, the other one is tried. Null keeps the current sprite.
+    // Resources/Boss/boss-<face>. Null keeps the current sprite.
     Sprite ResolveFace()
     {
         if (_face == "") return null;
-        string other = _view == "side" ? "straight" : "side";
-        var sprite = Resources.Load<Sprite>($"Boss/boss-{_face}-{_view}") ?? Resources.Load<Sprite>($"Boss/boss-{_face}-{other}");
-        if (sprite == null) Debug.LogWarning($"[CharacterDialog] no boss sprite for face '{_face}' (view '{_view}').");
+        var sprite = Resources.Load<Sprite>($"Boss/boss-{_face}");
+        if (sprite == null) Debug.LogWarning($"[CharacterDialog] no boss sprite for face '{_face}'.");
         return sprite;
     }
 
     void Update()
     {
+        if (_active && _answersUp && !_busy) RefreshAnswers();
         if (!_active || _busy || Time.unscaledTime < _inputReadyAt) return;
         var input = GameInput.Instance;
         if (input == null || !input.ConfirmPressed) return;

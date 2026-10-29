@@ -15,7 +15,7 @@ using UnityEngine.UI;
 /// </summary>
 public class PhoneController : MonoBehaviour
 {
-    public enum Screen { Home, Bills, Mail, MailView }
+    public enum Screen { Home, Bills, Mail, MailView, Locked }
 
     [Header("Screens")]
     public GameObject homeScreen;
@@ -23,6 +23,10 @@ public class PhoneController : MonoBehaviour
     public GameObject mailScreen;
     public GameObject messagesList;     // Mail/Messages
     public GameObject viewMessage;      // Mail/View Message
+
+    [Header("Locked (unpaid phone bill; found by name if unset)")]
+    public GameObject lockedScreen;     // "Phone Locked"
+    public Button lockPayButton;        // "Phone Locked/Notice/Take Button (1)"
 
     [Header("Selection targets")]
     public Selectable homeFirst;        // Bills icon on the home screen
@@ -74,6 +78,8 @@ public class PhoneController : MonoBehaviour
     Vector2 _lastPointer;
     Selectable _hoverSel;
     const float StickThreshold = 0.2f;
+    const float WideRatio = 2.5f;      // width/height above which a control counts as wide for the cursor snap
+    const float MaxLeftInset = 80f;    // local units in from the left end for wide controls
 
     void OnEnable()
     {
@@ -103,6 +109,7 @@ public class PhoneController : MonoBehaviour
         BillsSignals.BillPaid += OnBillPaid;
         _modal = GetComponent<ModalFocus>();
         if (_modal != null) _modal.manualNavigation = true; // this script owns the navigation chain
+        ResolveLocked();
         BeginInput();
         Show(Screen.Home);
     }
@@ -133,6 +140,39 @@ public class PhoneController : MonoBehaviour
         if (this == null || !isActiveAndEnabled) return;
         UpdateClickOutside(input);
         if (Current == Screen.MailView) UpdateLetterScroll(input);
+    }
+
+    // In d-pad mode the hand cursor rides on the selected control (after layout/scrolling has settled),
+    // so handing over to the stick or mouse starts from where the highlight is.
+    void LateUpdate()
+    {
+        var input = GameInput.Instance;
+        var es = EventSystem.current;
+        if (input == null || es == null || _pointerMode || !IsOpen || input.CursorStick.magnitude > StickThreshold) return;
+        // Only while the phone is actually on screen and the selection belongs to it.
+        if (!isActiveAndEnabled || _canvas == null || !_canvas.enabled || _rootCanvas == null || _rootCanvas.localScale == Vector3.zero) return;
+        var sel = es.currentSelectedGameObject;
+        if (sel == null || !sel.activeInHierarchy || !sel.transform.IsChildOf(transform)) return;
+        var rt = sel.transform as RectTransform;
+        if (rt == null) return;
+        // A bill's selectable is its Pay button; point at the row so the hand lands at the row's left end.
+        var relay = sel.GetComponent<BillSelectionRelay>();
+        if (relay != null && relay.bill != null && relay.bill.transform is RectTransform row) rt = row;
+
+        Canvas.ForceUpdateCanvases();
+        Camera cam = null;
+        var canvas = rt.GetComponentInParent<Canvas>();
+        if (canvas != null && canvas.rootCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+            cam = canvas.rootCanvas.worldCamera;
+        // Wide controls (list rows, the header Back bar) get the hand near their left end; icons and buttons use the center.
+        var r = rt.rect;
+        var local = r.center;
+        if (r.width > r.height * WideRatio) local.x = r.xMin + Mathf.Min(r.width * 0.12f, MaxLeftInset);
+        // Jump on the first frame (hand not shown yet / mouse in control), glide after that.
+        bool instant = !GameInput.ShowCursorInModal || !input.UsingVirtualCursor;
+        var screenPt = RectTransformUtility.WorldToScreenPoint(cam, rt.TransformPoint(local));
+        input.MoveCursorTo(screenPt, instant);
+        GameInput.ShowCursorInModal = true;
     }
 
     // ---- Letter scrolling ----
@@ -277,6 +317,7 @@ public class PhoneController : MonoBehaviour
     void SetPointerMode(bool on)
     {
         _pointerMode = on;
+        if (on && GameInput.Instance != null) GameInput.Instance.CancelCursorTarget();
         GameInput.ShowCursorInModal = on && GameInput.Instance != null && GameInput.Instance.UsingVirtualCursor;
         if (_modal != null) _modal.pointerMode = on;
     }
@@ -319,7 +360,7 @@ public class PhoneController : MonoBehaviour
             case Screen.Bills: return FirstPay();
             case Screen.Mail: return FirstSelectable(messagesContainer);
             case Screen.MailView: return viewMessageBack;
-            default: return homeFirst;
+            default: return homeMail != null ? homeMail : homeFirst;
         }
     }
 
@@ -366,11 +407,39 @@ public class PhoneController : MonoBehaviour
 
     // ---- Screens ----
 
+    void ResolveLocked()
+    {
+        if (lockedScreen == null)
+        {
+            var t = transform.Find("Phone Locked");
+            if (t != null) lockedScreen = t.gameObject;
+        }
+        if (lockPayButton == null && lockedScreen != null)
+        {
+            var t = lockedScreen.transform.Find("Notice/Take Button (1)");
+            if (t != null) lockPayButton = t.GetComponent<Button>();
+        }
+        if (lockPayButton != null)
+        {
+            lockPayButton.onClick.RemoveListener(PayPhoneBill);
+            lockPayButton.onClick.AddListener(PayPhoneBill);
+        }
+    }
+
+    void PayPhoneBill()
+    {
+        if (BillsState.PayPhoneBill()) Show(Screen.Home);
+    }
+
     public void Show(Screen screen)
     {
+        // An unpaid phone bill locks everything but the pay prompt (when that panel exists).
+        if (lockedScreen != null && BillsState.IsPhoneDead()) screen = Screen.Locked;
+
         var previous = Current;
         Current = screen;
 
+        if (lockedScreen) lockedScreen.SetActive(screen == Screen.Locked);
         if (homeScreen) homeScreen.SetActive(screen == Screen.Home);
         if (billsScreen) billsScreen.SetActive(screen == Screen.Bills);
         if (mailScreen) mailScreen.SetActive(screen == Screen.Mail || screen == Screen.MailView);
@@ -382,7 +451,7 @@ public class PhoneController : MonoBehaviour
         {
             case Screen.Home:
                 LinkHome();
-                target = homeFirst;
+                target = homeMail != null ? homeMail : homeFirst;
                 break;
             case Screen.Bills:
                 BuildBills();
@@ -398,6 +467,17 @@ public class PhoneController : MonoBehaviour
                 break;
             case Screen.MailView:
                 target = viewMessageBack;
+                break;
+            case Screen.Locked:
+                // Unaffordable: nothing to select, the player can only close the phone.
+                int phoneBill = BillsState.PhoneBillId();
+                bool canPay = phoneBill >= 0 && PlayerState.GetMoney() >= Mathf.Round(BillsState.GetAmount(phoneBill));
+                if (lockPayButton != null)
+                {
+                    lockPayButton.interactable = canPay;
+                    SetNav(lockPayButton, lockPayButton, lockPayButton);
+                }
+                target = canPay ? lockPayButton : null;
                 break;
         }
         Select(target);
@@ -474,6 +554,11 @@ public class PhoneController : MonoBehaviour
     // After a payment that row's Pay stops being selectable: rebuild the chain and move on to the next row.
     void OnBillPaid(int id)
     {
+        if (Current == Screen.Locked)
+        {
+            if (!BillsState.IsPhoneDead()) Show(Screen.Home);
+            return;
+        }
         if (Current != Screen.Bills) return;
         int paidIndex = _bills.FindIndex(b => b != null && b.id == id);
         LinkBills();
@@ -575,7 +660,7 @@ public class PhoneController : MonoBehaviour
             if (!MailArchive.IsAvailable(i)) continue;
             var row = Instantiate(messagePrefab, content);
             row.name = "Message " + i;
-            row.Setup(i, mail[i]["sender"], MailArchive.Subject(i), PlayerPrefs.GetInt("mail" + i, 0) == 1, OpenMessage);
+            row.Setup(i, mail[i]["sender"], MailArchive.Subject(i), PlayerPrefs.GetInt("mail" + i, 0) == 1, OpenMessage, MailArchive.IconFor(mail[i]["sender"]));
             PhoneScrollList.Register(row, row.button);
             _rows.Add(row);
         }
@@ -595,12 +680,19 @@ public class PhoneController : MonoBehaviour
 
         _openedMessage = index;
         PlayerPrefs.SetInt("mail" + index, 1);
+        NarrativeKnowledge.Learn(mail[index]["reveals"].Value);   // "acquisition" / "new_vision" in mail.txt, else empty
 
-        if (viewInfo) viewInfo.text = "From: " + mail[index]["sender"] + "  |  Day " + MailArchive.Day(index);
-        if (viewBody) viewBody.text = "<b>" + MailArchive.Subject(index) + "</b>\n\n" + MailArchive.Body(index);
+        if (viewInfo) viewInfo.text = "Day " + MailArchive.Day(index) + "\nFrom: " + mail[index]["sender"] + "\nSubject: " + MailArchive.Subject(index);
+        if (viewBody)
+        {
+            string postDate = mail[index]["originalPostDate"].Value;
+            if (System.DateTime.TryParseExact(postDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var posted))
+                postDate = posted.ToString("MMMM d, yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            viewBody.text = MailArchive.Body(index) + (string.IsNullOrEmpty(postDate) ? "" : "\n\n<i>" + postDate + "</i>");
+        }
 
         var row = RowFor(index);
-        if (row != null) row.Setup(index, mail[index]["sender"], MailArchive.Subject(index), true, OpenMessage);
+        if (row != null) row.Setup(index, mail[index]["sender"], MailArchive.Subject(index), true, OpenMessage, MailArchive.IconFor(mail[index]["sender"]));
 
         Show(Screen.MailView);
         FitLetter();

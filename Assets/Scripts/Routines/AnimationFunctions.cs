@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class AnimationFunctions : MonoBehaviour {
 	public GameObject objectsWithCollisionToDisable;
@@ -16,12 +15,10 @@ public class AnimationFunctions : MonoBehaviour {
 		for (int i = 0; i < current_recipes.Length; i++) {
 			current_recipes[i].GetComponent<Animator>().SetTrigger("disappear");
 		}
-		Debug.Log("Fading Recipes");
 	}
 
 	public void disableCollisionOnObjects()
 	{
-		Debug.Log("RUNNING DISABLE COLLISION ON OBJECTS");
 		if (GameplayGate.Instance != null)
 			GameplayGate.Instance.Lock(gateReason);
 	}

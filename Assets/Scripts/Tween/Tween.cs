@@ -244,9 +244,18 @@ public sealed class Tween : CustomYieldInstruction {
 		_byKey.Clear(); _active.Clear(); _runner = null;
 	}
 
+	// Unscaled frame time, capped: a stalled frame (editor unfocused, scene-load hitch) must not skip a tween or timer to its end unseen.
+	public const float MaxFrameDelta = 0.1f;
+	public static float FrameDelta { get { return Mathf.Min(Time.unscaledDeltaTime, MaxFrameDelta); } }
+
+	// Yield on this to wait that many seconds of rendered frames (unlike WaitForSecondsRealtime, a stalled frame does not eat the wait).
+	public static IEnumerator Wait(float seconds) {
+		for (float t = 0f; t < seconds; t += FrameDelta) yield return null;
+	}
+
 	sealed class TweenRunner : MonoBehaviour {
 		void Update() {
-			float dt = Time.unscaledDeltaTime;
+			float dt = FrameDelta;
 			// Iterate by index: callbacks may start new tweens (appended) or cancel others.
 			for (int i = 0; i < _active.Count; i++) {
 				var t = _active[i];

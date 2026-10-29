@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +8,6 @@ public class SceneLoader : MonoBehaviour {
 	
 
 	public void goHome() {
-		Debug.Log("[Shift] goHome: loading Home");
 		SceneManager.LoadScene("Home");
 	}
 	public void mainMenu()
@@ -30,7 +27,6 @@ public class SceneLoader : MonoBehaviour {
 	public void RestartGame() {
 		string resume = PlayerPrefs.GetString("resume game");
 		PlayerPrefs.DeleteKey("catering");
-		Debug.Log("Restart Game Run");
 		if (resume.Equals("home")) {
 			SceneManager.LoadScene("Home");
 		}

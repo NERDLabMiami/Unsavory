@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 // Sneezes are scheduled on the order clock, not in seconds: a sick player gets at least one sneeze per shift however fast
@@ -23,6 +22,7 @@ public class NoseWipeScript : MonoBehaviour {
 	bool bound;       // Bind has run: the countdown and the wipe do nothing before that
 	bool finishing;   // the last order is in: no new sneeze starts, but one already under way plays out
 	bool stopped;     // the round has ended
+	bool holdSnot;    // the player sneezed: the splat stays up until the boss arrives
 	float _scrubScore;
 	int _lastSign;
 
@@ -62,9 +62,10 @@ public class NoseWipeScript : MonoBehaviour {
 
 		effectiveHealth = PlayerPrefs.GetFloat("health", 60f) - PlayerPrefs.GetInt("health effect", 0);
 		if (PlayerPrefs.GetInt("fruit", 5) <= 0) effectiveHealth -= emptyFruitHealthPenalty;
+		// Cold medicine taken today (BuyDrugsScript); applied before the insurance clamp so unpaid insurance still wins.
+		effectiveHealth += PlayerState.GetPillBoost();
 		// Unpaid health insurance makes the player sick however healthy they otherwise are.
 		if (BillsState.IsEffectActive("health effect")) effectiveHealth = Mathf.Min(effectiveHealth, SickHealth - 0.01f);
-		Debug.Log("Effective health: " + effectiveHealth);
 
 		endless = PlayerPrefs.HasKey("catering");
 		if (endless) endlessTimer = Mathf.Max(5f, effectiveHealth);
@@ -92,7 +93,6 @@ public class NoseWipeScript : MonoBehaviour {
 		}
 		// Sick means at least one wipe per shift, however the rolls fell.
 		if (slots.Count == 0) slots.Add(Random.Range(1, last + 1));
-		Debug.Log("[Sneeze] slots " + string.Join(",", slots) + " of " + totalOrders + " orders, window " + windowSeconds + "s");
 	}
 
 	/// <summary>The clock moved: this many orders are resolved. A scheduled sneeze begins now.</summary>
@@ -123,6 +123,11 @@ public class NoseWipeScript : MonoBehaviour {
 		finishing = true;
 	}
 
+	/// <summary>The player has sneezed and the round is about to end: keep the snot on screen until StopSneezing clears it.</summary>
+	public void HoldSnot() {
+		holdSnot = true;
+	}
+
 	/// <summary>The round is over (the boss is arriving): put everything about the sneeze away, whatever stage it was at.</summary>
 	public void StopSneezing() {
 		stopped = true;
@@ -150,7 +155,7 @@ public class NoseWipeScript : MonoBehaviour {
 		if (!bound) return;
 
 		// A sneeze burst has finished playing (only catering carries on past one; otherwise the round ends as Sick).
-		if (isSnotBurstActive && snot.isStopped)
+		if (isSnotBurstActive && snot.isStopped && !holdSnot)
 		{
 			isSnotBurstActive = false;
 			snotImage.SetActive(false);
@@ -185,14 +190,10 @@ public class NoseWipeScript : MonoBehaviour {
 	}
 
 	public void checkSneezeTutor() {
-		if (stopped || sneezeTutor == null) return;
-		if (PlayerPrefs.HasKey("sneeze tutor")) {
-			//TODO: Launch Sneeze Tutor
-			Time.timeScale = 0f;
-			sneezeTutor.SetActive(true);
-			PlayerPrefs.DeleteKey("sneeze tutor");
-		}
-
+		if (stopped) return;
+		JustInTimeTip.Run(JustInTimeTip.SneezeKey,
+			"You're about to sneeze and contaminate the food! " + JustInTimeTip.Device("Press LB or LT", "Press Q") + " to wipe your nose.",
+			() => stopped || !sneezeActive || (GameInput.Instance != null && GameInput.Instance.SwipePressed));
 	}
 
 	// A wipe is one stroke one way followed by a stroke back within about a second

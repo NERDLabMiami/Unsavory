@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Linq;
-using System.Collections.Generic;
 
 public class CustomFunctionScript : MonoBehaviour {
 
 	public static void resetPlayerData(float health, float money) {
-		Debug.Log("Resetting Player Data");
 		int timesPlayed = PlayerPrefs.GetInt("times played",0);
 		bool paidSickDaysAchieved = false;
 		bool usingPaidSickDays = false;
@@ -14,10 +11,6 @@ public class CustomFunctionScript : MonoBehaviour {
 		bool survived = false;
 		bool can_cater = false;
 		int evaluationGroup = Random.Range(0,5);
-		Debug.Log("Set Evaluation Group to " + evaluationGroup);
-		if (PlayerPrefs.HasKey("evaluation group")) {
-//			evaluationGroup = PlayerPrefs.GetInt("evaluation group", 0);
-		}
 
 		if (PlayerPrefs.HasKey("can cater")) {
 			can_cater = true;
@@ -40,9 +33,6 @@ public class CustomFunctionScript : MonoBehaviour {
 		PlayerPrefs.SetInt("evaluation group", evaluationGroup);
 		PlayerPrefs.SetInt("times played", timesPlayed);
 		PlayerPrefs.SetInt("current level", 0);
-		//TODO: DEBUG, REMOVE
-//		Debug.Log("Turning off tutorial");
-//		PlayerPrefs.SetInt("tutorial", 1);
 
 		
 		PlayerPrefs.SetFloat ("money", money);
@@ -58,14 +48,12 @@ public class CustomFunctionScript : MonoBehaviour {
 		}
 
 		if (paidSickDaysAchieved) {
-			Debug.Log("Restoring Paid Sick Days");
 			PlayerPrefs.SetInt ("paid sick days achieved",1);
 		}
 		if (twitter) {
 			PlayerPrefs.SetInt("activated", 1);
 		}
 		if (usingPaidSickDays) {
-			Debug.Log("Resetting Sick Days");
 			PlayerPrefs.SetInt("using paid sick days",1);
 			PlayerPrefs.SetInt("paid sick days", 0);
 			PlayerPrefs.SetFloat("health", 60);
@@ -94,7 +82,6 @@ public class CustomFunctionScript : MonoBehaviour {
 	public static void collisionOnObjects(GameObject obj, bool collision) {
 			foreach(BoxCollider2D child in obj.GetComponentsInChildren<BoxCollider2D>()) {
 				child.enabled = collision;
-			Debug.Log("Setting " + child.name + " to " + collision);
 			}
 	}
 

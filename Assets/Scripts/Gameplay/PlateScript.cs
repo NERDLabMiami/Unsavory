@@ -1,16 +1,12 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEngine.UI;
 
 
 public class PlateScript : MonoBehaviour, IWorldInteractable {
-//	public GameObject[] droppedIngredients;
 	public List<GameObject> ingredients = new List<GameObject>();
 	public CurrentOrderScript current;
-//	private int strikeCounter;
 	public GameObject messageEmitter;
 	public GameObject comboMessage;
 	public GameObject warningMessage;

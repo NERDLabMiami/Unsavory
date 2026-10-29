@@ -63,7 +63,6 @@ public class ReadySetGo : MonoBehaviour
         currentOrder.plate.NewTray(false);
         currentOrder.newOrder();
         if (currentOrder.GetActiveOrdersUnsafe().TrueForAll(o => o == null)) currentOrder.newOrder();
-        Debug.Log($"[Start] orders={currentOrder.GetActiveOrdersUnsafe().Count} timeScale={Time.timeScale}");
 
         var a = GetComponent<AudioSource>();
         if (a) a.Stop();

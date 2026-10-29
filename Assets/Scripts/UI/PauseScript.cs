@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class PauseScript : MonoBehaviour {
@@ -10,13 +9,12 @@ public class PauseScript : MonoBehaviour {
 	public Text clock;
 	Level level;
 	public MusicLibrary music;
-	//TODO: Check if gameplaystarted varaible can be removed
 	public bool gamePlayStarted = false;
 	public Sprite pauseImage;
 	public Sprite playImage;
 
 	void Start() {
-		level = FindFirstObjectByType<Level>();
+		level = FindAnyObjectByType<Level>();
 		// The pause panel pops in each time it is enabled.
 		PanelPopAnim.Prepare(pausedCanvas, "", 0f, 0.5f, true);
 	}
@@ -27,7 +25,6 @@ public class PauseScript : MonoBehaviour {
 			Camera.main.GetComponent<AudioSource>().Pause();
 			Camera.main.GetComponent<CameraShakeScript>().pauseSneezing();
 			GetComponentInParent<TimerScript>().running = false;
-			Debug.Log("Pausing");
 			Time.timeScale = 0.0f;
 			pausedCanvas.SetActive(true);
 			isPaused = true;
@@ -35,7 +32,6 @@ public class PauseScript : MonoBehaviour {
 		}
 		else {
 			pauseButton.image.sprite = pauseImage;
-			Debug.Log("Resuming");
 			music.unpause();
 			Camera.main.GetComponent<AudioSource>().Play();
 			Camera.main.GetComponent<CameraShakeScript>().resumeSneezing();

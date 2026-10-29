@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CameraShakeScript : MonoBehaviour {
 
-//	private float timeBetweenSneezes = 10;
-//	private float timeBeforeSneezeWarning = 2;
 	private bool Sneezing;
 	private bool SneezeWarning;
 	private bool didSneeze = false;
@@ -35,7 +32,6 @@ public class CameraShakeScript : MonoBehaviour {
 	}
 
 	public void sneeze(float nextSneezeTime) {
-		Debug.Log("Sneezed");
 		sneezeTimer = nextSneezeTime;
 		Sneezing = true;
 		SneezeWarning = false;
@@ -74,9 +70,7 @@ public class CameraShakeScript : MonoBehaviour {
 			ShakeIntensity -= ShakeDecay;
 		}
 		else if (Sneezing) {
-			//TODO: Send message to pan and game over to the right
 			didSneeze = true;
-			//Sneezing = false;  
 		}
 		else if (SneezeWarning) {
 			SneezeWarning = false;
@@ -86,7 +80,6 @@ public class CameraShakeScript : MonoBehaviour {
 
 	public bool sneezed() {
 		if (didSneeze) {
-			Debug.Log("I done did sneeze");
 		}
 		return didSneeze;
 	}

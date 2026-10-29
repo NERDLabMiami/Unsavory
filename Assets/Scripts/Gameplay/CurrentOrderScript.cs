@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
-using UnityEngine.UI;
 
 public class CurrentOrderScript : MonoBehaviour {
 	public List<RecipeData> recipes = new List<RecipeData>();
@@ -24,7 +22,6 @@ public class CurrentOrderScript : MonoBehaviour {
 	public int numberOfUnmatchedOrders = 0;
 	public int maxNumberOfUnmatchedOrders = 3;
 	private int currentLevel = 0;
-//	private int numberOfRecipes = 7;
 	private int cateringRecipeAmount = 1;
 	public float warningTimer = 0;
 
@@ -45,31 +42,16 @@ public class CurrentOrderScript : MonoBehaviour {
 	private float paceSeconds = 0f;
 	private int ordersSpawned;
 
-	//	private bool catering = false;
-	//	private int numberOfOrdersServed = 0;
-
-
-	/*
-	public void setOrdersServed(int numOrders) {
-		numberOfOrdersServed = numOrders;
-	}
-	*/
 	// Use this for initialization
 	void Start () {
 
-//		if (PlayerPrefs.HasKey("tutorial")) {
-//			Debug.Log("Turning off tutorial");
-//			tutorial = false;
-//		}
 		if (PlayerPrefs.HasKey("catering")) {
-//			catering = true;
 			timeBetweenOrders = 5;
 			levelTimer.SetTotalOrders(ordersInDay);
 			incrementRecipeList();
 			incrementRecipeList();
 		}
 		else {
-//			catering = false;
 			currentLevel = PlayerPrefs.GetInt("current level",0);
 			levelData =  Resources.Load<TextAsset>("levels").ToString();
 			JSONNode levels = JSON.Parse(levelData);
@@ -84,7 +66,6 @@ public class CurrentOrderScript : MonoBehaviour {
 			if (timeBetweenOrders <= 0) {
 				timeBetweenOrders = 5;
 			}
-			Debug.Log("TIME BETWEEN ORDERS: " + timeBetweenOrders);
 
 			var orders = entry["orders"].AsInt;
 			if (orders > 0) ordersInDay = orders;
@@ -181,7 +162,6 @@ public class CurrentOrderScript : MonoBehaviour {
     // (An order already being served or thrown away is settled by that; its own finish starts the next deadline.)
     if (orderTimer <= 0f && !plate.IsResolving)
     {
-        Debug.Log("Number of Unmatched Orders: " + numberOfUnmatchedOrders);
 
         // The front order is thrown away; the next one in the row becomes the front.
         var front = FrontOrderOrNull();

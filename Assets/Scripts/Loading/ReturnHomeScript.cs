@@ -2,7 +2,6 @@ using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 
 public class ReturnHomeScript : MonoBehaviour {
@@ -119,13 +118,11 @@ public class ReturnHomeScript : MonoBehaviour {
 	private float calculateWages() {
 		money = PlayerPrefs.GetFloat("money");
 		float paycheck = PlayerPrefs.GetFloat("earned wages", 0);
-//		Debug.Log("WAGES TO BE PAID: " + wages);
 		money += paycheck;
 		//set earned wages back to nothing
 		PlayerPrefs.SetFloat("earned wages", 0);
 		PlayerState.RecordPaycheck(paycheck);
 		PlayerState.SetMoney(money);
-		Debug.Log("Player has $" + money);
 		return paycheck;
 	}
 
@@ -146,7 +143,6 @@ public class ReturnHomeScript : MonoBehaviour {
 
 		// The scene opens black: a toast reads on the black, then the scene fades in as it leaves.
 		ScreenFade.Black(toast != null ? toast.RootCanvas : null);
-		Debug.Log($"[ReturnHome] Start at {Time.realtimeSinceStartup:F2}s (frame {Time.frameCount})"); // TEMP timing
 
 		money =PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
@@ -189,7 +185,6 @@ public class ReturnHomeScript : MonoBehaviour {
 
 		Debug.Log ("I have " + money.ToString());
 		finalDay = PlayerPrefs.GetInt("final day", 20);
-		Debug.Log("It's day " + day);
 		// Fruit only replenishes when the player buys groceries on the phone; it dwindles by one a day.
 		int fruitCount = Mathf.Max(0, PlayerPrefs.GetInt("fruit", 5) - (firstVisit ? 0 : 1));
 		PlayerPrefs.SetInt("fruit", fruitCount);
@@ -220,13 +215,11 @@ public class ReturnHomeScript : MonoBehaviour {
 				rentPending = true;
 			}
 
-			Debug.Log("Month is over, waiting on rent");
 		}
 		else if (isWeekend)
 		{
 			ApplyPaidSickDayUsageIfNeeded();
 
-			Debug.Log("It's the weekend");
 			PlayerPrefs.SetInt("can cater", 1);
 
 			calculateWages();

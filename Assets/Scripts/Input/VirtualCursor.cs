@@ -10,11 +10,18 @@ public class VirtualCursor
     // Fraction of screen height crossed per second at full stick deflection.
     const float StickSpeed = 0.85f;
     const float StickThreshold = 0.2f;
+    // How fast the cursor eases toward a MoveTo target (higher = snappier).
+    const float TargetSpeed = 18f;
+
+    // Hand size/offset are authored for a 900px-tall window and scale with the real height.
+    static float UiScale => Screen.height / 900f;
 
     public Vector2 Position { get; private set; }
     public bool Active { get; private set; }
 
     Vector2 _lastPoint;
+    Vector2 _target;
+    bool _hasTarget;
     readonly RawImage _reticle; // fallback ring when no HandCursorSprites asset exists
     readonly Image _hand;
     readonly HandCursorSprites _sprites;
@@ -45,11 +52,25 @@ public class VirtualCursor
             _hand = handGo.AddComponent<Image>();
             _hand.raycastTarget = false;
             _hand.preserveAspect = true;
-            _hand.rectTransform.sizeDelta = _sprites.size;
-            _hand.rectTransform.pivot = _sprites.hotspot;
+            _hand.rectTransform.sizeDelta = _sprites.size * UiScale;
+            _hand.rectTransform.pivot = _sprites.pointHotspot;
             _hand.enabled = false;
         }
     }
+
+    /// <summary>
+    /// Glides the stick cursor to a screen position and makes it the active pointer. The target is held (and can be
+    /// re-set every frame to follow a moving control) until the stick or mouse moves, which cancels it at once.
+    /// </summary>
+    public void MoveTo(Vector2 screenPos, bool instant = false)
+    {
+        _target = ClampToScreen(screenPos);
+        _hasTarget = true;
+        Active = true;
+        if (instant) Position = _target;
+    }
+
+    public void CancelTarget() => _hasTarget = false;
 
     public void Tick(Vector2 point, Vector2 stick, bool gamepadActivated, bool showReticle,
                      CursorState state = CursorState.Point, bool hideHand = false)
@@ -58,16 +79,25 @@ public class VirtualCursor
         {
             _lastPoint = point;
             Active = false;
+            _hasTarget = false;
         }
 
         if (stick.magnitude > StickThreshold || gamepadActivated)
+        {
             Active = true;
+            if (stick.magnitude > StickThreshold) _hasTarget = false; // the player broke away from the snap
+        }
 
-        if (Active)
+        if (Active && _hasTarget)
+        {
+            Position = Vector2.Distance(Position, _target) < 0.5f
+                ? _target
+                : Vector2.Lerp(Position, _target, 1f - Mathf.Exp(-TargetSpeed * Time.unscaledDeltaTime));
+        }
+        else if (Active)
         {
             Position += stick * (StickSpeed * Screen.height * Time.unscaledDeltaTime);
-            Position = new Vector2(Mathf.Clamp(Position.x, 0, Screen.width),
-                                   Mathf.Clamp(Position.y, 0, Screen.height));
+            Position = ClampToScreen(Position);
         }
         else
         {
@@ -82,12 +112,29 @@ public class VirtualCursor
             if (!_hand.enabled) return;
             var sprite = _sprites.For(state);
             if (_hand.sprite != sprite) _hand.sprite = sprite;
-            _hand.rectTransform.position = Position;
+            _hand.rectTransform.pivot = _sprites.HotspotFor(state);
+            _hand.rectTransform.sizeDelta = _sprites.size * UiScale;
+            _hand.rectTransform.position = Position + _sprites.imageOffset * UiScale;
             return;
         }
 
         _reticle.enabled = show;
         if (Active) _reticle.rectTransform.position = Position;
+    }
+
+    // The pointer may travel until the drawn hand's centre reaches each window edge (so half the sprite can
+    // hang off-screen), plus the asset's extra overscan, which keeps partly off-screen objects reachable.
+    Vector2 ClampToScreen(Vector2 p)
+    {
+        Vector2 lo = Vector2.zero, hi = new Vector2(Screen.width, Screen.height);
+        if (_sprites != null)
+        {
+            // Where the sprite centre sits relative to the pointer.
+            var c = (_sprites.imageOffset + Vector2.Scale(new Vector2(0.5f, 0.5f) - _sprites.pointHotspot, _sprites.size)) * UiScale;
+            lo += new Vector2(Mathf.Min(0, -c.x), Mathf.Min(0, -c.y)) - Vector2.one * _sprites.overscan;
+            hi += new Vector2(Mathf.Max(0, -c.x), Mathf.Max(0, -c.y)) + Vector2.one * _sprites.overscan;
+        }
+        return new Vector2(Mathf.Clamp(p.x, lo.x, hi.x), Mathf.Clamp(p.y, lo.y, hi.y));
     }
 
     static Texture2D MakeRing(int size)

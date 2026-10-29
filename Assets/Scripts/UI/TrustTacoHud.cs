@@ -16,7 +16,7 @@ public class TrustTacoHud : MonoBehaviour
     // Level calls this on arrival; nothing needs to be wired in the scene.
     public static void Attach()
     {
-        foreach (var t in FindObjectsOfType<Transform>(true))
+        foreach (var t in FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
             if (t.name != "Taco HUD") continue;
             if (t.GetComponent<TrustTacoHud>() == null) t.gameObject.AddComponent<TrustTacoHud>();

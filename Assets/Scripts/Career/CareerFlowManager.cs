@@ -71,14 +71,11 @@ public sealed class CareerFlowManager : MonoBehaviour
         if (PlayerPrefs.HasKey("fired"))
         {
             CustomFunctionScript.resetPlayerData(defaultStartingHealth, 0);
-            Debug.Log("Resetting Game (fired)");
-            // Optional: PlayerPrefs.DeleteKey("fired");
         }
 
         // Global reset flag behavior
         if (PlayerPrefs.HasKey("reset"))
         {
-            Debug.Log("Resetting Player (reset flag)");
             CustomFunctionScript.resetPlayerData(defaultStartingHealth, 0);
             PlayerPrefs.DeleteKey("reset");
         }
@@ -147,7 +144,6 @@ public sealed class CareerFlowManager : MonoBehaviour
         PlayerPrefs.DeleteKey("catering");
 
         PlayerPrefs.Save();
-        Debug.Log("Career Started");
 
         LoadHome();
     }

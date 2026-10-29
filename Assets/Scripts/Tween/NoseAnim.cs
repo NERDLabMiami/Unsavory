@@ -52,7 +52,7 @@ public class NoseAnim : MonoBehaviour {
 	// The nose comes down to the fingertip as the hand rises, stays for the swipe, then returns to its rest position.
 	public void Drop() {
 		if (_nose == null) return;
-		var hands = FindFirstObjectByType<HandPoseController>();
+		var hands = FindAnyObjectByType<HandPoseController>();
 		if (hands == null || !hands.TryGetWipeContact(out var tip, out float rise, out float swipe, out float back)) return;
 		float y = _nose.parent ? _nose.parent.InverseTransformPoint(tip).y : tip.y;
 		var down = new Vector3(_noseRestPos.x, Mathf.Min(_noseRestPos.y, y), _noseRestPos.z);   // only ever dips south

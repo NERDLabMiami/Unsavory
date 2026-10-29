@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MusicLibrary : MonoBehaviour {
-//	public AudioClip characterBackground;
 	public AudioClip characterResponse;
 	public AudioClip characterResponse2;
 	public AudioClip bossTalk;
-//	public AudioClip bossReappears;
 	public AudioClip tutorialBackground;
 	public AudioClip preGameplayBackground;
 	public AudioClip letsGo;

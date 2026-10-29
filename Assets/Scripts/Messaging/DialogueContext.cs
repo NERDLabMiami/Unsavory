@@ -11,7 +11,7 @@ public static class DialogueContext
         return new Dictionary<string, float>
         {
             { "health", PlayerPrefs.GetFloat("health", 0) },
-            { "late", PlayerPrefs.GetInt("late effect", 0) },
+            { "late", CommuteState.LateEffect },
             { "electricity", PlayerPrefs.GetInt("electricity effect", 0) },
             { "phone", PlayerPrefs.GetInt("phone effect", 0) },
             { "overtime", PlayerPrefs.GetInt("overtime effect", 0) },
@@ -30,13 +30,20 @@ public static class DialogueContext
             { "was_trusted", TacoLedger.WasTrusted ? 1 : 0 },
             // Consecutive earned (+) or missed (-) tacos.
             { "performance_streak", TacoLedger.Streak },
+            // Career totals (see CareerStats).
+            { "orders_served", CareerStats.OrdersServed },
+            { "orders_missed", CareerStats.OrdersMissed },
+            { "shifts_worked", CareerStats.ShiftsWorked },
+            { "perfect_days", CareerStats.PerfectDays },
+            { "sick_days", CareerStats.SickDays },
+            { "best_day", CareerStats.BestDay },
             { "first_satisfactory", PlayerPrefs.GetInt("satisfactory played", 0) == 0 ? 1 : 0 },
             // Bills past their due day and still unpaid (the "<name> effect" counters above are what they cause).
             { "missed_bills", BillsState.MissedCount() },
             // Bills due today or earlier and unpaid, unopened mail, and whether the car bill is paid up (0 = lost the car).
             { "bill_due", BillsState.DueCount() },
             { "unread_mail", MailArchive.UnreadCount() },
-            { "car_ok", BillsState.IsEffectActive("late effect") ? 0 : 1 },
+            { "car_ok", CommuteState.CarOk ? 1 : 0 },
             { "money",PlayerPrefs.GetFloat("money", 0) },
             { "pills", PlayerPrefs.GetInt("pills", 0) },
             // Career wages: the last paycheck cashed out and the sum of all of them.
@@ -46,12 +53,14 @@ public static class DialogueContext
     }
 }
 
-// Chooses which variant of a speech plays. A variant's "when" must all hold; the most specific (most conditions) wins,
-// ties are broken at random by "weight". "once" variants are skipped after they have played.
+// Chooses which variant of a speech plays. A variant's "when" must all hold; the highest "priority" (default 0) wins, then the
+// most specific (most conditions), and ties are broken at random by "weight". Story beats use priority so a crowd comment never
+// pre-empts them. "once" variants are skipped after they have played.
 public static class DialogueSelector
 {
     public static int Pick(string key, JSONNode variants, Dictionary<string, float> context, System.Func<int, bool> alreadyPlayed = null)
     {
+        int bestPriority = int.MinValue;
         int bestScore = -1;
         var candidates = new List<int>();
         for (int i = 0; i < variants.Count; i++)
@@ -61,9 +70,13 @@ public static class DialogueSelector
             if (v["once"].Value == "true" && (alreadyPlayed != null ? alreadyPlayed(i) : HasPlayed(key, i))) continue;
             if (!Matches(v["when"], context)) continue;
 
+            int priority = v["priority"].AsInt;
             int score = v["when"].Count;
-            if (score > bestScore) { bestScore = score; candidates.Clear(); }
-            if (score == bestScore) candidates.Add(i);
+            if (priority > bestPriority || (priority == bestPriority && score > bestScore))
+            {
+                bestPriority = priority; bestScore = score; candidates.Clear();
+            }
+            if (priority == bestPriority && score == bestScore) candidates.Add(i);
         }
         if (candidates.Count == 0) return -1;
 

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine.UI;
-//using UnionAssets.FLE;
 
 public enum RoundOutcome { Complete, Slow, Sick }
 
@@ -46,7 +45,7 @@ public class Level : MonoBehaviour {
 		// The tutorial must not start at scene load: CameraSequencing brings it up after the boss intro.
 		// Done here rather than in the scene file, whose saved active flag Unity keeps rewriting.
 		// Awake runs for every object before any Start, so TutorScript.Start never fires early.
-		var tutor = FindFirstObjectByType<TutorScript>();
+		var tutor = FindAnyObjectByType<TutorScript>();
 		if (tutor != null) tutor.gameObject.SetActive(false);
 
 		// The HUD stays off until the player reaches the table (AfterBossExit); switching it on plays its slide-in.
@@ -106,17 +105,14 @@ public class Level : MonoBehaviour {
 		else if (!PlayerPrefs.HasKey("tutorial"))
 		{
 			// The tutorial hasn't been done yet: the boss's welcome leads into it, whatever the day number says.
-			Debug.Log("First Day of Work!");
 			introKey = "welcome";
 		}
 		else if (CommuteState.LateEffect > 0)
 		{
-			Debug.Log("Late to work");
 			introKey = "late_return";
 		}
 		else
 		{
-			Debug.Log("Returned to work on time");
 			introKey = "return";
 		}
 
@@ -128,10 +124,8 @@ public class Level : MonoBehaviour {
 			var crowd = CrowdContext.Pick(currentLevel);
 			crowdContext = CrowdContext.Context(crowd);
 			crowdVars = CrowdContext.Vars(crowd);
-			Debug.Log($"[Level] crowd '{crowd.name}', size {crowd.size}");
 		}
 
-		Debug.Log($"[Level] intro '{introKey}' (current level={currentLevel}, tutorial done={PlayerPrefs.HasKey("tutorial")}, late effect={CommuteState.LateEffect}, catering={PlayerPrefs.HasKey("catering")})");
 		// The boss slides in and speaks; OnBossIntroComplete follows his last line.
 		_bossIntroHandled = false;
 		if (playToast) StartCoroutine(ToastThenSay(toastMessage, introKey, crowdContext, crowdVars));
@@ -226,7 +220,6 @@ public class Level : MonoBehaviour {
 
 		}
 
-		Debug.Log("Begin Level");
 		levelBegan = true;
 	}
 
