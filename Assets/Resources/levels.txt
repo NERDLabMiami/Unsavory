@@ -1,26 +1,281 @@
 {
   "levels": [
-    { "recipes": ["Quesadilla", "Beans and Cheese"], "waiting time": 4, "orders": 8, "pace": 12 },
-    { "recipes": ["Quesadilla", "Beans and Cheese", "Creamy Tomato"], "waiting time": 4, "orders": 8, "pace": 12 },
-    { "recipes": ["Beans and Cheese", "Creamy Tomato", "Vegan"], "waiting time": 4, "orders": 8, "pace": 12 },
-    { "recipes": ["Creamy Tomato", "Vegan", "Bean and Cheese with Sour Cream"], "waiting time": 4, "orders": 8, "pace": 12 },
-    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Quesadilla"], "waiting time": 3.5, "orders": 8, "pace": 10.5 },
-    { "recipes": ["Beans and Cheese", "Vegan", "Spicy Quesadilla", "Spicy Bean and Cheese"], "waiting time": 3.5, "orders": 8, "pace": 10.5 },
-    { "recipes": ["Creamy Tomato", "Bean and Cheese with Sour Cream", "Spicy Bean and Cheese", "Spicy Creamy Tomato"], "waiting time": 3.5, "orders": 8, "pace": 10.5 },
-    { "recipes": ["Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy"], "waiting time": 3, "orders": 8, "pace": 9 },
-    { "recipes": ["Bean and Cheese with Sour Cream", "Spicy Bean and Cheese", "Spicy Chicken Heavy"], "waiting time": 3, "orders": 8, "pace": 9 },
-    { "recipes": ["Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 3, "orders": 8, "pace": 9 },
-    { "recipes": ["Bean and Cheese with Sour Cream", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 3, "orders": 8, "pace": 9 },
-    { "recipes": ["Quesadilla", "Vegan", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
-    { "recipes": ["Beans and Cheese", "Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
-    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Creamy Tomato", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
-    { "recipes": ["Spicy Quesadilla", "Spicy Bean and Cheese", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 2.5, "orders": 8, "pace": 7.5 },
-    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Chicken Lite"], "waiting time": 2, "orders": 8, "pace": 6 },
-    { "recipes": ["Creamy Tomato", "Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy"], "waiting time": 2, "orders": 8, "pace": 6 },
-    { "recipes": ["Bean and Cheese with Sour Cream", "Spicy Bean and Cheese", "Spicy Chicken Lite"], "waiting time": 2, "orders": 8, "pace": 6 },
-    { "recipes": ["Vegan", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 2, "orders": 8, "pace": 6 },
-    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Chicken Lite"], "waiting time": 1.7, "orders": 8, "pace": 5.5 },
-    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Creamy Tomato", "Spicy Chicken Heavy", "Spicy Chicken Lite"], "waiting time": 1.7, "orders": 8, "pace": 5.5 },
-    { "recipes": ["Vegan", "Bean and Cheese with Sour Cream", "Spicy Chicken Lite"], "waiting time": 1.5, "orders": 8, "pace": 5 }
+    {
+      "crowds": [
+        "families",
+        "office"
+      ],
+      "recipes": [
+        "Quesadilla",
+        "Beans and Cheese",
+        "Tomato Crema"
+      ],
+      "waiting time": 4,
+      "orders": 5,
+      "pace": 12
+    },
+    {
+      "crowds": [
+        "students",
+        "health"
+      ],
+      "recipes": [
+        "Beans and Cheese",
+        "Tomato Crema",
+        "Garden Bean"
+      ],
+      "waiting time": 4,
+      "orders": 6,
+      "pace": 12
+    },
+    {
+      "crowds": [
+        "health"
+      ],
+      "recipes": [
+        "Tomato Crema",
+        "Garden Bean",
+        "Loaded Bean"
+      ],
+      "waiting time": 4,
+      "orders": 6,
+      "pace": 12
+    },
+    {
+      "crowds": [
+        "students",
+        "families"
+      ],
+      "recipes": [
+        "Quesadilla",
+        "Loaded Bean",
+        "Spicy Quesadilla"
+      ],
+      "waiting time": 3.5,
+      "orders": 8,
+      "pace": 10.5
+    },
+    {
+      "crowds": [
+        "students",
+        "construction"
+      ],
+      "recipes": [
+        "Beans and Cheese",
+        "Loaded Bean",
+        "Spicy Quesadilla",
+        "Spicy Bean and Cheese"
+      ],
+      "waiting time": 3.5,
+      "orders": 9,
+      "pace": 10.5
+    },
+    {
+      "crowds": [
+        "health",
+        "office"
+      ],
+      "recipes": [
+        "Tomato Crema",
+        "Garden Bean",
+        "Loaded Bean",
+        "Garden Fire"
+      ],
+      "waiting time": 3.5,
+      "orders": 12,
+      "pace": 10.5
+    },
+    {
+      "crowds": [
+        "construction"
+      ],
+      "recipes": [
+        "Spicy Chicken XL",
+        "Spicy Bean and Cheese"
+      ],
+      "waiting time": 3,
+      "orders": 16,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "construction"
+      ],
+      "recipes": [
+        "Beans and Cheese",
+        "Spicy Bean and Cheese",
+        "Spicy Chicken XL",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 6,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "construction",
+        "office"
+      ],
+      "recipes": [
+        "Spicy Chicken XL",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 14,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "hospital"
+      ],
+      "recipes": [
+        "Spicy Chicken XL",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 19,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "hospital",
+        "families"
+      ],
+      "recipes": [
+        "Quesadilla",
+        "Beans and Cheese",
+        "Spicy Chicken",
+        "Loaded Bean"
+      ],
+      "waiting time": 3,
+      "orders": 5,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "hospital"
+      ],
+      "recipes": [
+        "Spicy Chicken XL",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 20,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "office",
+        "health"
+      ],
+      "recipes": [
+        "Garden Bean",
+        "Loaded Bean",
+        "Garden Fire",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 6,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "construction"
+      ],
+      "recipes": [
+        "Spicy Chicken XL",
+        "Spicy Bean and Cheese"
+      ],
+      "waiting time": 3,
+      "orders": 22,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "families"
+      ],
+      "recipes": [
+        "Quesadilla",
+        "Beans and Cheese",
+        "Loaded Bean"
+      ],
+      "waiting time": 3,
+      "orders": 6,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "health",
+        "hospital"
+      ],
+      "recipes": [
+        "Tomato Crema",
+        "Garden Bean",
+        "Garden Fire",
+        "Spicy Chicken XL"
+      ],
+      "waiting time": 3,
+      "orders": 8,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "office",
+        "students"
+      ],
+      "recipes": [
+        "Loaded Bean",
+        "Spicy Bean and Cheese",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 5,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "health",
+        "students"
+      ],
+      "recipes": [
+        "Garden Bean",
+        "Garden Fire",
+        "Spicy Chicken XL",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 9,
+      "pace": 9
+    },
+    {
+      "crowds": [
+        "office",
+        "hospital"
+      ],
+      "recipes": [
+        "Quesadilla",
+        "Loaded Bean",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 6,
+      "pace": 10
+    },
+    {
+      "crowds": [
+        "office",
+        "health"
+      ],
+      "recipes": [
+        "Garden Bean",
+        "Loaded Bean",
+        "Garden Fire",
+        "Spicy Chicken XL",
+        "Spicy Chicken"
+      ],
+      "waiting time": 3,
+      "orders": 8,
+      "pace": 9
+    }
   ]
 }

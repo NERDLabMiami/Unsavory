@@ -1,33 +1,871 @@
 {
-  "home_enter": [
-    { "when": { "run_end": "==1" }, "text": "You've been laid off. Check your email." },
-    { "when": { "run_end": "==2" }, "text": "You've been evicted. Check your email." },
-    { "when": { "run_end": "==0", "first_visit": "==1" }, "text": "You have bills to pay. You should figure out how you're going to make some money." },
-    { "when": { "run_end": "==0", "rent_pending": "==1" }, "text": "Rent is due today, don't get evicted!" },
-    { "when": { "run_end": "==0", "missed_bills": ">=1", "rent_pending": "==0", "first_visit": "==0" }, "text": "You have {missed_bills} overdue bill(s)! You should pay them before something bad happens." },
-    { "when": { "run_end": "==0", "letter": "==1", "missed_bills": "==0", "rent_pending": "==0", "first_visit": "==0" }, "text": "Your phone beckons you." }
-  ],
-  "hover_phone": [
-    { "when": { "bill_due": ">=1" }, "text": "You have a bill due." },
-    { "when": { "unread_mail": ">=1" }, "text": "You have mail." },
-    { "when": { "bill_due": "==0", "unread_mail": "==0" }, "text": "Nothing new on your phone." }
-  ],
-  "hover_bed": [
-    { "when": { "health": ">=30" }, "text": "Skip work and sleep in? That's an option." },
-    { "when": { "health": "<30" }, "text": "Skipping work won't pay the bills, but you might feel better with some rest." }
-  ],
-  "hover_door": [
-    { "when": { "health": ">=30", "car_ok": "==1" }, "text": "Better get to work, don't want to be late." },
-    { "when": { "health": "<30", "car_ok": "==1" }, "text": "You don't feel great, but you don't have paid sick days." },
-    { "when": { "car_ok": "==0" }, "text": "You better get moving, public transportation isn't always reliable." }
-  ],
-  "hover_pills": [
-    { "when": { "pills": ">=1" }, "text": "Pills. Not cheap, but neither is being sick." },
-    { "when": { "pills": "==0" }, "text": "You're out of pills." }
-  ],
-  "work_enter": [
-    { "when": { "tutorial_done": "==0", "catering": "==0" }, "text": "First day at Rocket Taco." },
-    { "when": { "tutorial_done": "==1", "catering": "==0", "late": "==0" }, "text": "Another day making tacos..." },
-    { "when": { "tutorial_done": "==1", "catering": "==0", "late": ">0" }, "text": "Public transit is so unreliable..." }
-  ]
+  "schema_version": 3,
+  "schema_contract": {
+    "status": "Draft",
+    "workday_count": 20,
+    "day_semantics": "day is the upcoming/current scheduled workday (1..20), not a calendar day. An ending home scene after workday 20 is terminal and must be gated by run_end, not by day==21.",
+    "lifecycle": "New Game -> Home morning (employment email and bills available) -> leave for work OR skip that workday -> next Home morning -> ... -> ending Home morning with final email. No playable home evening/after_shift phase, no home_wake event.",
+    "matching": "Arrays are ordered; first matching rule wins in each channel. Every when predicate must match (AND). Missing when means unconditional.",
+    "conditions": "Reuse existing numeric comparator strings (==1, >=6, <30). Support exact literal matches where required. Missing context keys do not match.",
+    "scene_logic": "special is exclusive; otherwise choose one world plus at most one state rule, shown in that order. Trigger once per genuine scene transition, not each render.",
+    "display": "text or lines for entry/hover/outcome; title, text, choices for modal. Interpolate {variable} safely. Display is narrative-only; gameplay actions live in existing code.",
+    "bed_semantics": "The bed is present only in the morning. Sleep/stay home means skip the upcoming workday through the game's missed-shift path and advance to the next morning. Do not add an evening sleep cycle.",
+    "extra_context": [
+      "fruit_count",
+      "car_unavailable_reason",
+      "can_afford_pills",
+      "pill_price",
+      "phone_service"
+    ],
+    "optional_flags": [
+      "acquisition_known",
+      "new_vision_known",
+      "skipped_previous_shift"
+    ],
+    "story_gates": "Never infer player knowledge solely from workday number. Use existing mail/dialogue reveal state or leave flags false until supported.",
+    "outcomes": "Any action that immediately transitions to the next morning must not produce an invisible or briefly flashing toast. Use a one-time handoff or the next home entry state if needed."
+  },
+  "scene_entry": {
+    "home": {
+      "special": [
+        {
+          "id": "home.end.layoff",
+          "when": {
+            "run_end": "==1"
+          },
+          "lines": [
+            "It's another morning.",
+            "You hope you've been assigned work."
+          ]
+
+        },
+        {
+          "id": "home.end.eviction",
+          "when": {
+            "run_end": "==2"
+          },
+          "lines": [
+            "You didn't pay the rent.",
+            "You've been evicted from your apartment."
+          ]
+        },
+        {
+          "id": "home.first",
+          "when": {
+            "first_visit": "==1"
+          },
+          "once": "run",
+          "lines": [
+            "It's the year 2020.",
+            "You need a job.",
+            "Thankfully, there's an app for that."
+          ]
+        }
+      ],
+      "world": [
+        {
+          "id": "home.world.day20",
+          "when": {
+            "day": "==20"
+          },
+          "text": "One more workday on the schedule."
+        },
+        {
+          "id": "home.world.vision",
+          "when": {
+            "day": ">=16",
+            "new_vision_known": "==1"
+          },
+          "lines": [
+            "Rocket Taco has a plan for the future.",
+            "You've still got a shift to get through."
+          ]
+        },
+        {
+          "id": "home.world.acquisition",
+          "when": {
+            "day": ">=16",
+            "acquisition_known": "==1"
+          },
+          "lines": [
+            "Things are changing.",
+            "You've still got bills to pay."
+          ]
+        },
+        {
+          "id": "home.world.day16",
+          "when": {
+            "day": "==16"
+          },
+          "text": "You know the route to work by heart now."
+        },
+        {
+          "id": "home.world.day11",
+          "when": {
+            "day": "==11"
+          },
+          "lines": [
+            "The news gets stranger every day",
+            "The bills remain remarkably consistent."
+          ]
+        },
+        {
+          "id": "home.world.day6",
+          "when": {
+            "day": "==6"
+          },
+          "text": "The streets are getting quieter. Your bills aren't."
+        },
+        {
+          "id": "home.world.week4",
+          "when": {
+            "day": ">=16"
+          },
+          "text": "Another morning, another shift. It's become a routine."
+        },
+        {
+          "id": "home.world.week3",
+          "when": {
+            "day": ">=11"
+          },
+          "text": "The world is adapting. You still have to get up for work."
+        },
+        {
+          "id": "home.world.week2",
+          "when": {
+            "day": ">=6"
+          },
+          "text": "The world outside is changing. Your shift is still on the schedule."
+        },
+        {
+          "id": "home.world.week1",
+          "text": "You've got a job. Now you just have to keep it."
+        }
+      ],
+      "state": [
+        {
+          "id": "home.state.rent",
+          "when": {
+            "rent_pending": "==1"
+          },
+          "text": "Rent is due. There's no putting this one off."
+        },
+        {
+          "id": "home.state.no_phone",
+          "when": {
+            "phone_service": "==0"
+          },
+          "text": "Your phone's gone quiet. That isn't necessarily good news."
+        },
+        {
+          "id": "home.state.overdue",
+          "when": {
+            "missed_bills": ">=1"
+          },
+          "text": "You have {missed_bills} overdue bill(s)."
+        },
+        {
+          "id": "home.state.skipped",
+          "when": {
+            "skipped_previous_shift": "==1"
+          },
+          "text": "Yesterday's workday went by without you. There's still rent to earn."
+        },
+        {
+          "id": "home.state.sick",
+          "when": {
+            "health": "<30"
+          },
+          "text": "You could use the rest. You've got a shift ahead of you."
+        },
+        {
+          "id": "home.state.empty_fruit",
+          "when": {
+            "fruit_count": "==0"
+          },
+          "text": "The fruit bowl is empty."
+        },
+        {
+          "id": "home.state.car",
+          "when": {
+            "car_ok": "==0"
+          },
+          "text": "You'll need another way to work today."
+        }
+      ]
+    },
+    "work": {
+      "special": [
+        {
+          "id": "work.tutorial",
+          "when": {
+            "tutorial_done": "==0",
+            "catering": "==0"
+          },
+          "lines": [
+            "Your first shift at Rocket Taco.",
+            "Time to make the rent."
+          ]
+        }
+      ],
+      "world": [
+        {
+          "id": "work.world.day20",
+          "when": {
+            "catering": "==0",
+            "day": "==20"
+          },
+          "text": "You have arrived at Rocket Taco."
+        },
+        {
+          "id": "work.world.vision",
+          "when": {
+            "catering": "==0",
+            "day": ">=16",
+            "new_vision_known": "==1"
+          },
+          "text": "New vision. Same kitchen."
+        },
+        {
+          "id": "work.world.acquisition",
+          "when": {
+            "catering": "==0",
+            "day": ">=16",
+            "acquisition_known": "==1"
+          },
+          "lines": [
+            "The company is changing.",
+            "The job has not."]
+          },
+        {
+          "id": "work.world.day18",
+          "when": {
+            "catering": "==0",
+            "day": "==18"
+          },
+          "lines": [
+            "The schedule looks familiar.",
+            "Everything else keeps changing."
+          ]
+        },
+        {
+          "id": "work.world.day16",
+          "when": {
+            "catering": "==0",
+            "day": "==16"
+          },
+          "lines": [
+            "Another shift.",
+            "Another stack of orders."]        
+          },
+        {
+          "id": "work.world.day11",
+          "when": {
+            "catering": "==0",
+            "day": "==11"
+          },
+          "text": "It's time to make some tacos..."
+        },
+        {
+          "id": "work.world.day6",
+          "when": {
+            "catering": "==0",
+            "day": "==6"
+          },
+          "text": "The streets quiet. The kitchen isn't."
+        },
+        {
+          "id": "work.world.day3",
+          "when": {
+            "catering": "==0",
+            "day": "==3"
+          },
+          "lines": [
+            "Another day at Rocket Taco.",
+            "This is starting to feel like a routine."]
+        },
+        {
+          "id": "work.world.week4",
+          "when": {
+            "catering": "==0",
+            "day": ">=16"
+          },
+          "lines": [
+            "Another shift.",
+            "Another stack of orders."]
+        },
+        {
+          "id": "work.world.week3",
+          "when": {
+            "catering": "==0",
+            "day": ">=11"
+          },
+          "text": "Another day serving whoever still comes through the door."
+        },
+        {
+          "id": "work.world.week2",
+          "when": {
+            "catering": "==0",
+            "day": ">=6"
+          },
+          "text": "The world outside is quieter. Work isn't."
+        },
+        {
+          "id": "work.world.default",
+          "when": {
+            "catering": "==0"
+          },
+          "text": "You have arrived at Rocket Taco."
+        }
+      ],
+      "state": [
+        {
+          "id": "work.state.crash",
+          "when": {
+            "catering": "==0",
+            "crashed_commute": "==1"
+          },
+          "lines": [
+            "You got into a car accident.",
+            "You're okay, but your car is not.",
+            "You don't have enough money to fix it."]
+        },
+        {
+          "id": "work.state.late",
+          "when": {
+            "catering": "==0",
+            "late": ">0"
+          },
+          "lines": [
+            "The commute took longer than planned.",
+            "You arrived late"]
+        },
+        {
+          "id": "work.state.sick",
+          "when": {
+            "catering": "==0",
+            "health": "<30"
+          },
+          "lines": [
+            "You made it in.",
+            "Nobody asks how you're feeling."]
+        }
+      ]
+    }
+  },
+  "hover": {
+    "phone": [
+      {
+        "id": "phone.bill",
+        "when": {
+          "bill_due": ">=1"
+        },
+        "text": "Your phone is buzzing. You probably need to pay for something."
+      },
+      {
+        "id": "phone.mail.late",
+        "when": {
+          "unread_mail": ">=1",
+          "day": ">=16"
+        },
+        "text": "Your phone is buzzing. Someone wants your attention."
+      },
+      {
+        "id": "phone.mail",
+        "when": {
+          "unread_mail": ">=1"
+        },
+        "text": "Your phone is buzzing. Someone wants something."
+      },
+      {
+        "id": "phone.late",
+        "when": {
+          "day": ">=16"
+        },
+        "text": "Your personal attention seeking device. The buzz signals that you exist."
+      },
+      {
+        "id": "phone.middle",
+        "when": {
+          "day": ">=6"
+        },
+        "text": "Your phone. Your connection to everything."
+      },
+      {
+        "id": "phone.early",
+        "text": "Your phone. The closest thing you have to a social life."
+      }
+    ],
+    "bed": [
+      {
+        "id": "bed.sick.late",
+        "when": {
+          "health": "<30",
+          "day": ">=16"
+        },
+        "text": "The sheets are warm. Your next shift won't work itself."
+      },
+      {
+        "id": "bed.sick",
+        "when": {
+          "health": "<30"
+        },
+        "text": "You could really use another day in bed."
+      },
+      {
+        "id": "bed.late",
+        "when": {
+          "day": ">=16"
+        },
+        "text": "The one place nobody expects anything from you."
+      },
+      {
+        "id": "bed.early",
+        "text": "Your bed. You could stay here until the eviction notice arrives."
+      }
+    ],
+    "door": [
+      {
+        "id": "door.car.payment",
+        "when": {
+          "car_ok": "==0",
+          "car_unavailable_reason": "payment"
+        },
+        "text": "You've lost access to your car. The shift hasn't gone anywhere."
+      },
+      {
+        "id": "door.car.accident",
+        "when": {
+          "car_ok": "==0",
+          "car_unavailable_reason": "accident"
+        },
+        "text": "Your car's a wreck. The shift hasn't gone anywhere."
+      },
+      {
+        "id": "door.car.unavailable",
+        "when": {
+          "car_ok": "==0"
+        },
+        "text": "You can't drive today. Public transit is still an option."
+      },
+      {
+        "id": "door.car.insurance",
+        "when": {
+          "car_ok": "==1",
+          "insurance_lapsed": "==1"
+        },
+        "text": "Your car is right outside. Your coverage isn't."
+      },
+      {
+        "id": "door.sick",
+        "when": {
+          "health": "<30"
+        },
+        "text": "You're supposed to stay home when you're sick. Rent has other ideas."
+      },
+      {
+        "id": "door.late",
+        "when": {
+          "day": ">=16"
+        },
+        "text": "Same route. Same job. Same everything."
+      },
+      {
+        "id": "door.pandemic",
+        "when": {
+          "day": ">=6"
+        },
+        "text": "A lot of people are staying home. You're going to work."
+      },
+      {
+        "id": "door.early",
+        "text": "Your car's outside. Time to earn the rent."
+      }
+    ],
+    "pills": [
+      {
+        "id": "pills.have.late",
+        "when": {
+          "pills": ">=1",
+          "day": ">=11"
+        },
+        "text": "Something to get you through another shift."
+      },
+      {
+        "id": "pills.have",
+        "when": {
+          "pills": ">=1"
+        },
+        "text": "Pills. Not cheap, but neither is being sick."
+      },
+      {
+        "id": "pills.empty.sick",
+        "when": {
+          "pills": "==0",
+          "health": "<30"
+        },
+        "text": "You're out of pills. The symptoms aren't going anywhere."
+      },
+      {
+        "id": "pills.empty",
+        "text": "You're out of pills."
+      }
+    ],
+    "fruit_bowl": [
+      {
+        "id": "fruit.empty.late",
+        "when": {
+          "fruit_count": "==0",
+          "day": ">=11"
+        },
+        "text": "An empty fruit bowl. There's still a bill for groceries."
+      },
+      {
+        "id": "fruit.empty",
+        "when": {
+          "fruit_count": "==0"
+        },
+        "text": "The fruit bowl's empty. So much for eating healthy."
+      },
+      {
+        "id": "fruit.last",
+        "when": {
+          "fruit_count": "==1"
+        },
+        "text": "One piece of fruit left. Better make it count."
+      },
+      {
+        "id": "fruit.low",
+        "when": {
+          "fruit_count": "<=2"
+        },
+        "text": "The fruit is running out. Payday isn't getting any closer."
+      },
+      {
+        "id": "fruit.late",
+        "when": {
+          "day": ">=16"
+        },
+        "text": "A few pieces of fruit. The apartment's most optimistic feature."
+      },
+      {
+        "id": "fruit.full",
+        "text": "Your fruit bowl. At least you've got something fresh to eat."
+      }
+    ]
+  },
+  "modals": {
+    "bed": [
+      {
+        "id": "bed.modal.sick.rent",
+        "when": {
+          "health": "<30",
+          "rent_pending": "==1"
+        },
+        "title": "Take the day off?",
+        "text": "You're sick and rent is due. You'll lose out on {wages} if you don't go to work today.",
+        "choices": [
+          {
+            "label": "Skip Work",
+            "action": "skip_shift"
+          },
+          {
+            "label": "Nevermind",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "bed.modal.sick",
+        "when": {
+          "health": "<30"
+        },
+        "title": "Sleep through your shift?",
+        "text": "Rest might help. You'll miss today's shift and won't be paid for it.",
+        "choices": [
+          {
+            "label": "Sleep",
+            "action": "skip_shift"
+          },
+          {
+            "label": "Nevermind",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "bed.modal.late",
+        "when": {
+          "day": ">=16"
+        },
+        "title": "Skip work today?",
+        "text": "You can stay in bed. No shift means no wages, and there's always another bill.",
+        "choices": [
+          {
+            "label": "Stay home",
+            "action": "skip_shift"
+          },
+          {
+            "label": "Nevermind",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "bed.modal.default",
+        "title": "Stay in bed?",
+        "text": "You can sleep through today's shift. You won't be paid.",
+        "choices": [
+          {
+            "label": "Sleep",
+            "action": "skip_shift"
+          },
+          {
+            "label": "Nevermind",
+            "action": "cancel"
+          }
+        ]
+      }
+    ],
+    "door": [
+      {
+        "id": "door.modal.payment",
+        "when": {
+          "car_ok": "==0",
+          "car_unavailable_reason": "payment"
+        },
+        "title": "How are you getting to work?",
+        "text": "Your car was repossessed after you missed the payment.",
+        "choices": [
+          {
+            "label": "Take public transit",
+            "action": "transit_to_work"
+          },
+          {
+            "label": "Not yet",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "door.modal.accident.sick",
+        "when": {
+          "car_ok": "==0",
+          "car_unavailable_reason": "accident",
+          "health": "<30"
+        },
+        "title": "How are you getting to work?",
+        "text": "Your car is wrecked and you feel awful.",
+        "choices": [
+          {
+            "label": "Take public transit",
+            "action": "transit_to_work"
+          },
+          {
+            "label": "Not yet",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "door.modal.accident",
+        "when": {
+          "car_ok": "==0",
+          "car_unavailable_reason": "accident"
+        },
+        "title": "How are you getting to work?",
+        "text": "Your car is wrecked from the accident.",
+        "choices": [
+          {
+            "label": "Take public transit",
+            "action": "transit_to_work"
+          },
+          {
+            "label": "Not yet",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "door.modal.unavailable",
+        "when": {
+          "car_ok": "==0"
+        },
+        "title": "How are you getting to work?",
+        "text": "You can't use your car today.",
+        "choices": [
+          {
+            "label": "Take public transit",
+            "action": "transit_to_work"
+          },
+          {
+            "label": "Not yet",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "door.modal.sick",
+        "when": {
+          "health": "<30"
+        },
+        "title": "Ready to work?",
+        "text": "You're not feeling well. The shift is still on the schedule.",
+        "choices": [
+          {
+            "label": "Drive to Work",
+            "action": "drive_to_work",
+            "enabled_when": {
+              "car_ok": "==1"
+            }
+          },
+          {
+            "label": "Not Yet",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "door.modal.default",
+        "title": "Ready to work?",
+        "text": "Rocket Taco awaits your return.",
+        "choices": [
+          {
+            "label": "Drive to work",
+            "action": "drive_to_work",
+            "enabled_when": {
+              "car_ok": "==1"
+            }
+          },
+          {
+            "label": "Not yet",
+            "action": "cancel"
+          }
+        ]
+      }
+    ],
+    "pills": [
+      {
+        "id": "pills.modal.use.sick",
+        "when": {
+          "pills": ">=1",
+          "health": "<30"
+        },
+        "title": "Take medicine?",
+        "text": "It may ease the sneeze.",
+        "choices": [
+          {
+            "label": "Take medicine",
+            "action": "take_pill",
+            "enabled_when": {
+              "pills": ">=1"
+            }
+          },
+          {
+            "label": "Buy more",
+            "action": "buy_pills",
+            "enabled_when": {
+              "can_afford_pills": "==1"
+            }
+          },
+          {
+            "label": "Not yet",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "pills.modal.use.healthy",
+        "when": {
+          "pills": ">=1"
+        },
+        "title": "Take medicine?",
+        "text": "You're feeling okay.",
+        "choices": [
+          {
+            "label": "Take Medicine",
+            "action": "take_pill",
+            "enabled_when": {
+              "pills": ">=1"
+            }
+          },
+          {
+            "label": "Buy More",
+            "action": "buy_pills",
+            "enabled_when": {
+              "can_afford_pills": "==1"
+            }
+          },
+          {
+            "label": "Nevermind",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "pills.modal.buy",
+        "when": {
+          "pills": "==0",
+          "can_afford_pills": "==1"
+        },
+        "title": "Buy Medicine?",
+        "text": "This will cost {pill_price}.",
+        "choices": [
+          {
+            "label": "Buy Medicine",
+            "action": "buy_pills",
+            "enabled_when": {
+              "can_afford_pills": "==1"
+            }
+          },
+          {
+            "label": "Not Now",
+            "action": "cancel"
+          }
+        ]
+      },
+      {
+        "id": "pills.modal.broke",
+        "when": {
+          "pills": "==0",
+          "can_afford_pills": "==0"
+        },
+        "title": "Buy Medicine?",
+        "text": "You can't afford to buy anything right now.",
+        "choices": [
+          {
+            "label": "Close",
+            "action": "cancel"
+          }
+        ]
+      }
+    ]
+  },
+  "after_action": {
+    "skip_shift": [
+      {
+        "id": "skip.sick",
+        "when": {
+          "health": "<30"
+        },
+        "text": "A day of rest. A day without pay."
+      },
+      {
+        "id": "skip.other",
+        "text": "You took the day off. The bills didn't."
+      }
+    ],
+    "buy_pills": [
+      {
+        "id": "pills.bought",
+        "text": "A little more medicine. A little less money."
+      }
+    ],
+    "take_pill": [
+      {
+        "id": "pills.taken",
+        "text": "A little relief. The next shift is still waiting."
+      }
+    ]
+  }
 }

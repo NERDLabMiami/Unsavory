@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98888d4361894896bc0b192647bb411, type: 3}
   m_Name: HandCursorSprites
   m_EditorClassIdentifier: Assembly-CSharp::HandCursorSprites
-  point: {fileID: -2174599859282933269, guid: 5ecf127a7661d43c0a2524c12ae8b268, type: 3}
-  hover: {fileID: 8801470999167568506, guid: 9b9fd767ec72542b08a9ecb36c823834, type: 3}
-  tap: {fileID: 21300000, guid: fe1d8433f80d84e59a09b4864e2ed0ec, type: 3}
-  grab: {fileID: -2174599859282933269, guid: 5ecf127a7661d43c0a2524c12ae8b268, type: 3}
+  point: {fileID: 21300000, guid: 14352451841f1484f85cbc28a2916ae1, type: 3}
+  hover: {fileID: 21300000, guid: b0438a64e2b6a40d698421bf60a438b4, type: 3}
+  tap: {fileID: 21300000, guid: 7c5a31bd5bf9341d99f38e599410b122, type: 3}
+  grab: {fileID: 21300000, guid: 95292380ee59a4cda9f8baae93ae77e4, type: 3}
   size: {x: 300, y: 300}
-  hotspot: {x: 0.5, y: 0.5}
+  pointHotspot: {x: 0.84, y: 0.84}
+  hoverHotspot: {x: 0.82, y: 0.68}
+  tapHotspot: {x: 0.76, y: 0.78}
+  grabHotspot: {x: 0.78, y: 0.68}
+  imageOffset: {x: 0, y: -1}
+  overscan: 0

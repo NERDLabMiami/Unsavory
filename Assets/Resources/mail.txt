@@ -1,34 +1,92 @@
 {
+  "icons": {
+    "WerkJerk": "werkjerk",
+    "City Desk": "city",
+    "Dear Leader": "whitehouse",
+    "CDC": "cdc",
+    "Business Desk": "business"
+  },
   "mail": [
     {
       "sender": "WerkJerk",
       "subject": "Congratulations! You're a WerkJerk!",
-      "body": "Congratulations!\nYou have been matched with an employer. You will be paid is {min_wage} an hour, that's the market rate in {metro}. They are excited to meet you!\n\nNext step? Training!\n\nYour new employer, Rocket Taco, is expecting you for your first training shift. Show up on time, bring a positive attitude, and get to werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "body": "You have been matched with an employer. Our matchmaking algorithm has identified you as a great fit for fast food preparation.\n\nYour first shift at Rocket Taco is confirmed!\n\nYou will be paid is {min_wage} an hour, that's the market rate in {metro}. Show up on time, bring a positive attitude, and get to werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
       "unlockDay": 1
     },
     {
-      "sender": "City Desk",
-      "subject": "A Mysterious Virus Is Spreading.",
-      "body": "Should You Be Worried?\n\nWhat's known and unknown about this new illness?\n\nHealth officials are investigating a mysterious respiratory virus that has begun spreading internationally.\n\nExperts have not identified the source of the virus. Some have speculated that it could have escaped from a biological research laboratory in China, while others have suggested that it may have spread naturally through animals sold at a wet market.\n\nNeither explanation has been conclusively established, and researchers are still trying to determine how easily the illness spreads between people.",
+      "sender": "Business Desk",
+      "subject": "The Gig Economy",
+      "body": "America's newest workforce doesn't clock in at one job anymore. It drives, delivers, shops, answers surveys, and rents out anything that isn't nailed down.\n\nEmployment platforms promise flexibility: work when you want, stop when you don't. For workers juggling several apps, that often means being available all the time.\n\nInvestors love the model. The companies call themselves technology providers, not employers. As one analyst put it, the appeal is simple: a business can expand its workforce without taking on the expense of having one.\n\nBusiness Desk News\nYour source for business news and investment advice\n\n",
+      "unlockDay": 1
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Shift Confirmation",
+      "body": "Hey, WerkJerk!\n\nYour hours have been confirmed at Rocket Taco.\n\nOur algorithm predicts a steady stream of students and health-conscious customers today.\n\nStudents love a bargain, and another segment of customers are avoiding meat. Beans and Cheese, Garden Bean, and Tomato Crema should do well.\n\nGive the people what they want!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
       "unlockDay": 2
     },
     {
+      "sender": "City Desk",
+      "subject": "Is Your Phone Making You Anxious?",
+      "body": "Americans are checking their phones more often than ever, and experts say our devices may be distracting us from reality.\n\nFrom delivery updates to breaking-news alerts, every buzz feels like something that needs attention. One app designer says notifications work best when users can't predict which ones matter.\n\nThe recommended cure? Turn off unnecessary alerts, establish healthy boundaries, and try not to look at your phone first thing in the morning.\n\nCity Desk News\n\nYour source for what's trending\n\n",
+      "unlockDay": 2
+    },
+    {
+      "sender": "City Desk",
+      "subject": "A Mysterious Virus Is Spreading",
+      "body": "Should You Be Worried?\n\nWhat's known and unknown about this new illness?\n\nHealth officials are investigating a mysterious respiratory virus that has begun spreading internationally.\n\nExperts have not identified the source of the virus. Some have speculated that it could have escaped from a biological research laboratory in China, while others have suggested that it may have spread naturally through animals sold at a wet market.\n\nNeither explanation has been conclusively established, and researchers are still trying to determine how easily the illness spreads between people.\n\nCity Desk News\nYour source for what's trending\n\n",
+      "unlockDay": 3
+    },
+    {
       "sender": "Dear Leader",
-      "subject": "THE ECONOMY IS STRONG!",
-      "body": "Hottest Economy! JOBS, JOBS, JOBS!\n\nThe Coronavirus is very much under control in the USA.\n\nNothing is shut down, life & the economy go on.\n\nThe Lamestream Media wants us to fail. That will NEVER happen!",
+      "subject": "THEY SAID WE WERE WRONG!",
+      "body": "CDC and my Administration are doing a GREAT job of handling Coronavirus.\n\nWe closed the borders very early. The Democrats opposed it. They said it was too soon. It turned out to be the correct decision!\n\nNo matter how well we do, the Democrats will say we did badly. We have not had one death. Let's keep it that way!",
+      "unlockDay": 4,
+      "originalPostDate": "2020-02-26",
+      "retrievalUrl": "https://www.presidency.ucsb.edu/documents/tweets-february-26-2020"
+    },
+    {
+      "sender": "Business Desk",
+      "subject": "The Great Toilet Paper Shortage",
+      "body": "Americans are discovering that not all toilet paper is created equal.\n\nFor years, businesses have relied on enormous rolls of inexpensive, single-ply paper, while consumers have enjoyed an expanding selection of quilted, ultra-soft, and premium bathroom products.\n\nAs offices close and more people find themselves crapping at home, demand has shifted dramatically.\n\nAmericans who once got paid to poop at work are now paying to poop at home. For those working remotely, the home office now comes with an increase in bathroom supply expenses.\n\nJapanese toilet manufacturers, meanwhile, are reportedly baffled that the world's largest economy is experiencing a shortage of something their customers have spent decades trying not to use.\n\nBusiness Desk News\nYour source for business news and investment advice\n\n",
       "unlockDay": 4
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Heavy foot traffic expected today",
+      "body": "Hey, WerkJerk!\n\nExpect students and construction crews today. Our algorithm predicts strong demand for Beans and Cheese, Loaded Bean, and our spicy bean-and-cheese options!\n\nConstruction crews have an appetite, and students know their way around a value menu.\n\nFortunately, they're not particularly difficult to model.\n\nHave a great shift!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 5
     },
     {
       "sender": "City Desk",
       "subject": "Is Dating Dead?",
-      "body": "With health officials warning against close personal contact, singles are finding creative ways to keep romance alive.\n\nAt startup Feelr, product designer Chad Benson is developing a haptic latex bodysuit that allows users to experience physical touch over the internet.\n\n\"Zoom is the leader of camera-connected remote meetings for business, I'll give you that. But they don't understand that in their personal lives, people want to really feel like they're there.\"\n\nThe company plans to launch an early-access beta later this year and is seeking volunteers willing to let researchers observe them using the suits in their own homes.",
+      "body": "With health officials warning against close personal contact, singles are finding creative ways to keep romance alive.\n\nAt startup Feelr, product designer Chad Benson is developing a haptic latex bodysuit that allows users to experience physical touch over the internet.\n\n\"Zoom is the leader of camera-connected remote meetings for business, I'll give you that. But they don't understand the intimate needs of their users. People want to really feel like they're there.\"\n\nThe company plans to launch an early-access beta later this year and is seeking volunteers willing to let researchers observe them using the suits in their own homes.\n\nCity Desk News\n\nYour source for what's trending\n\n",
       "unlockDay": 5
     },
     {
       "sender": "CDC",
       "subject": "It's flu season, protect yourself!",
-      "body": "Respiratory viruses can spread when people are near one another. Wash your hands regularly, cover coughs and sneezes, and improve ventilation when possible. If you develop symptoms, stay home and away from others until you are feeling better. Further precautions may be needed when you return to normal activities.",
+      "originalPostDate": "2020-02-27",
+      "body": "Respiratory illnesses can spread through close contact with infected people. Wash your hands often with soap and water for at least 20 seconds. Avoid touching your face with unwashed hands. Cover coughs and sneezes, clean frequently touched surfaces, and avoid close contact with people who are sick.\n\nIf you become ill, stay home to avoid spreading infection to others.\n\nU.S. Centers for Disease Control and Prevention",
       "unlockDay": 6
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "You made {wages_paid}!",
+      "body": "Hey, WerkJerk!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. That brings your total earnings with us to {wages_total}.\n\nThe WerkJerk Team\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 6
+    },
+    {
+      "sender": "City Desk",
+      "subject": "School Is Online. Parents Have Questions.",
+      "body": "With classrooms moving online, families are turning kitchens, bedrooms, and living rooms into makeshift schools.\n\nParents are juggling work meetings, forgotten passwords, missing assignments, and children who need help logging into class. Many are discovering that the mute button doesn't work on their children.\n\nBetween their regular jobs, childcare, and providing technical support, millions of parents have now joined the mandatory volunteer education workforce. School districts are calling the transition a success.\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 6
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Analytics to Optimize Your Day",
+      "body": "Hey, WerkJerk!\n\nConstruction crews are expected today.\n\nOur predictive models indicate increased interest in spicy orders, make sure you've stretched your squeezing muscles. Today is will be a busy shift!\n\nThe WerkJerk Team\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 7
     },
     {
       "sender": "Churd Airlines",
@@ -37,69 +95,225 @@
       "unlockDay": 7
     },
     {
+      "sender": "Business Desk",
+      "subject": "The New Office Dress Code",
+      "body": "As video meetings replace office visits, retailers are reporting a curious shift in what people want to wear.\n\n Shirts, sweaters, and anything visible from a webcam remain in demand. Pants are another story.\n\nThe pandemic has forced millions of Americans into an unprecedented experiment in remote work. Employees who once spent hours commuting to offices are discovering that meetings can be attended from their bedrooms, and that getting dressed is largely a matter of camera placement.\n\nFor years, New York's Pro Pants movement championed the virtues of wearing pants, even staging an intervention during the city's annual No Pants Subway Ride. Now, an unexpected technological revolution threatens to undo their work.\n\nNudists, meanwhile, are celebrating a major victory for their movement, although disappointment remains that the revolution has stopped at the waist.\n\nBusiness Desk News\nYour source for business news and investment advice",
+      "unlockDay": 7
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Data You Can Use",
+      "body": "Hey, WerkJerk!\n\nDid you know that adding XL to a menu item makes customers feel like they're getting more for their money?\n\nOur data science team discovered that two little letters can make a big difference! That's why we're putting Spicy Chicken XL front and center in our latest campaign targeting construction crews.\n\nToday's lunch rush gives us another opportunity to see how well our predictions translate into orders.\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 8
+    },
+    {
+      "sender": "City Desk",
+      "subject": "Everyone's Getting Into Baking!",
+      "body": "With nowhere to go and plenty of time to kill, Americans are discovering new ways to relax at home.\n\nFlour and yeast are flying off supermarket shelves as people experiment with sourdough, cookies, and elaborate cakes. Social media is filling with photos of homemade treats, while local dispensaries are reporting a similar surge in demand.\n\nFor many, baking offers a welcome distraction from the monotony of isolation. One enthusiastic home baker described her new routine: \"I've been making cookies all week. Just getting baked... baking all week.\"\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 8
+    },
+    {
       "sender": "CDC",
       "subject": "Feeling sick? Limit the spread.",
-      "body": "If you develop fever, cough, fatigue, or other respiratory symptoms, stay home and away from others. You can generally return to normal activities after symptoms have improved for at least 24 hours and any fever has resolved without fever-reducing medication. Take additional precautions for the next five days. Contact a medical professional if you are at risk of severe illness or concerned about your symptoms.",
+      "originalPostDate": "2020-04-29"
+      "body": "If you feel unwell, or develop symptoms such as fever, cough, or shortness of breath, stay home and do not go to work.\n\nAvoid close contact with others to help prevent the spread of COVID-19.\n\nU.S. Centers for Disease Control and Prevention\n\n",
       "unlockDay": 9
     },
     {
+      "sender": "Business Desk",
+      "subject": "The Contact-Free Economy Is Here",
+      "body": "Loneliness is becoming big business. Startups offering virtual companionship, online communities, and subscription-based friendships are attracting investors eager to capitalize on Americans' growing social isolation.\n\nFor a small monthly fee, consumers can enjoy the feeling of having friends without the inconvenience of making any.\n\nIn other news, the contact-free economy is booming!\n\nTouchless payment, curbside pickup, and doorstep delivery are allowing Americans to shop, eat, and go about their daily lives without interacting with other human beings.\n\nInvestors see tremendous opportunities for growth.\n\nBusiness Desk News\nYour source for business news and investment advice",
+      "unlockDay": 9
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "You're Helping Us Learn!",
+      "body": "Hey, WerkJerk!\n\nYou've successfully prepared {orders_served} orders, with {orders_missed} that didn't quite meet expectations.\n\nBy testing demand for a smaller set of products, we're learning how quickly people can turn the same ingredients into finished meals, again and again.\n\nThanks for being part of the process!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 10
+    },
+    {
+      "sender": "City Desk",
+      "subject": "The Tiger Show",
+      "body": "An eccentric documentary about big cats, feuding zoo owners, and questionable life choices has become the unlikely shared cultural experience of a country stuck at home.\n\nWith parties, concerts, and social gatherings canceled, millions of Americans are spending their evenings following the increasingly bizarre lives of people who collect dangerous animals, feud with their neighbors, and make spectacularly bad decisions.\n\nViewers are gathering online to debate the show's characters, trade conspiracy theories, and argue over who is the least trustworthy person in a cast of deeply questionable individuals.\n\nAt a time when Americans are being urged to stay home, avoid unnecessary risks, and exercise good judgment, the country's most popular entertainment features people who have apparently never done any of those things.\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 10
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Heroic Deals for Our Heroes!",
+      "body": "Hey, WerkJerk!\n\nHospital workers have been keeping our communities going, often with barely enough time to eat. We think that deserves recognition!\n\nTogether with Rocket Taco, we're launching HEROIC DEALS: a special Spicy Chicken offer for the people on the front lines, with more deals coming soon.\n\nOur models expect a modest first day, with families and hospital workers stopping in. Showing people a little appreciation can be just as effective as cutting prices. That's a win for everyone!\n\nYou've completed {shifts_worked} shifts and achieved {perfect_days} perfect days. Thank you for helping us serve those who serve!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. That brings your total earnings with us to {wages_total}.\n\nThe WerkJerk Team\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 11
+    },
+    {
       "sender": "Dear Leader",
-      "subject": "WE WILL WIN!",
-      "body": "The world is at war with a hidden enemy. WE WILL WIN!\n\nTHE CURE CANNOT BE WORSE (by far) THAN THE PROBLEM!\n\nLIBERATE MINNESOTA!\n\nLIBERATE MICHIGAN!\n\nDon't be afraid of Covid. Don't let it dominate your life.",
+      "subject": "BEST TESTING IN THE WORLD!",
+      "body": "The only reason the U.S. has reported one million cases of CoronaVirus is that our Testing is sooo much better\n\nOther countries are far behind us in testing. Of course they report fewer cases. We are doing the testing that others cannot do!",
+      "unlockDay": 11,
+      "originalPostDate": "2020-04-29",
+      "retrievalUrl": "https://www.presidency.ucsb.edu/documents/tweets-april-29-2020"
+    },
+    {
+      "sender": "City Desk",
+      "subject": "Applause at Seven, Silence at Eight",
+      "body": "Across the country, neighbors are stepping onto balconies and front porches to applaud hospital staff and other essential workers. For a few minutes each evening, socially distant streets fill with cheers, horns, and kitchen utensils used as percussion.\n\nOrganizers say the ritual is a reminder that communities are still connected. Some healthcare workers appreciate the gesture but say protective equipment, staffing, and time off would mean more.\n\nThe applause ends after a few minutes. For the people working the night shift, the work goes on.\n\nCity Desk News\nYour source for what's trending",
       "unlockDay": 11
     },
     {
       "sender": "WerkJerk",
       "subject": "Your Shifts Have Been Set",
-      "body": "Hey, WerkJerk!\n\nYour upcoming Rocket Taco shifts have been confirmed. If something looks wrong, check with your manager. No need to contact us!\n\nAs always, our services are provided under your employer’s standard WerkJerk partner agreement.\n\nKeep up the great werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.\n\nWerkJerk takes care of hiring, scheduling, and performance tracking, so management can spend less time on paperwork and more time running a great company. Build the next great startup, and let us manage the human side of things. Schedule a free demo today!",
+      "body": "Hey, WerkJerk!\n\nYour upcoming Rocket Taco shifts have been confirmed. Our models predict demand for Spicy Chicken and Spicy Chicken XL today.\n\nAs always, our services are provided under your employer’s standard WerkJerk partner agreement.\n\nIf something looks wrong, check with your manager. No need to contact us!\n\nKeep up the great werk!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.\n\nWerkJerk takes care of hiring, scheduling, and performance tracking, so management can spend less time on paperwork and more time running a great company. Build the next great startup, and let us manage the human side of things. Schedule a free demo today!",
       "unlockDay": 12
     },
     {
+      "sender": "Business Desk",
+      "subject": "Home Fitness Is Having Its Moment",
+      "body": "With gyms closed and millions of Americans stuck at home, the fitness industry is experiencing an unexpected boom. Exercise bikes, home workout equipment, and virtual personal trainers are attracting customers eager to stay healthy during lockdown.\n\nFitness companies are reporting record demand for subscription services offering live classes, personalized training plans, and motivational reminders. Investors are particularly enthusiastic about customers paying monthly fees, regardless of how often they exercise.\n\nFor some, the transition has made fitness more convenient than ever. One new subscriber described the benefits: \"I used to feel guilty about not going to the gym. Now I can feel guilty without leaving home.\"\n\nBusiness Desk News\nYour source for business news and investment advice",
+      "unlockDay": 12
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Innovating on Social Distance",
+      "body": "Hey, WerkJerk!\n\nOur Heroic Deals campaign has been a tremendous success!\n\nWe're excited to announce a new partnership with local hospitals and a robotics startup to help essential workers stay safe. Our little delivery robots will bring Rocket Taco meals directly to hospital staff, so they can enjoy Heroic Deals without leaving work!\n\nWe're proud to be doing our part to reduce unnecessary contact and keep our communities safe.\n\nExpect a lighter shift with office workers and health-conscious customers ordering Garden Bean, Loaded Bean, Garden Fire, and Spicy Chicken.\n\nFun fact! You've made {orders_missed} unsuccessful orders!\n\nThe WerkJerk Team\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 13
+    },
+    {
       "sender": "City Desk",
-      "subject": "Stay Home If You're Sick. But Who Can Afford To?",
-      "body": "As millions of Americans retreat to the safety of their homes, essential workers continue showing up in person, risking their health to keep the country running.\n\nPublic health officials urge sick workers to stay home, but millions lack paid sick leave. Missing even a single shift could mean falling behind on rent or going without groceries.\n\nFor workers living paycheck to paycheck, the choice is becoming impossible: risk getting sick, or risk losing everything.",
+      "subject": "Face Masks Are In",
+      "body": "What began as an improvised public-health precaution has become an unexpected form of personal expression. Handmade masks now appear in florals, sports colors, cartoon characters, and designs coordinated with entire outfits.\n\nWith so many familiar pleasures disappearing from everyday life, Americans are finding small ways to bring a little joy to an otherwise frightening situation. Online sellers are offering custom patterns, while designers experiment with new fabrics and styles.\n\nFashion retailers say the pandemic has created an entirely new way to express yourself. Preferably in three seasonal colors.\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 13
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Health Is Our Business",
+      "body": "Hey, WerkJerk!\n\nFollowing the success of our hospital pilot, robot delivery is now available to everyone!\n\nOur construction-crew promotion is expected to make today one of our busiest shifts, with Spicy Chicken XL and Spicy Bean and Cheese leading the charge.\n\nYour Health Matters\nOur records show {sick_days} missed workdays during your assignment. We understand that people occasionally need time away from work. That's why our staffing models account for these interruptions and ensure our partners have access to replacements when needed.\n\nWe encourage you to take the time you need to recover, so you can return ready to give your best.\n\nTake care of yourself. Your performance matters!\n\nThe WerkJerk Team\n\nYou've got a job, don't be a jerk.",
       "unlockDay": 14
     },
     {
+      "sender": "City Desk",
+      "subject": "Who Can Afford to Stay Home?",
+      "body": "As millions of Americans retreat to the safety of their homes, essential workers continue showing up in person, risking their health to keep the country running.\n\nPublic health officials urge sick workers to stay home, but millions lack paid sick leave. Missing even a single shift could mean falling behind on rent or going without groceries.\n\nAcross the country, businesses are celebrating essential workers as heroes, praising their courage and thanking them for their sacrifices. Some are even offering discounts on lunch.\n\nFor workers living paycheck to paycheck, however, the choice remains the same: risk getting sick, or risk losing everything.\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 14
+    },
+    {
+      "sender": "Business Desk",
+      "subject": "Human Resources for Fast Food?",
+      "body": "You may never have heard of WerkJerk, but the startup already handles hiring, scheduling, and employee performance for nationwide fast food giant Rocket Taco.\n\nNow, rumors are circulating that WerkJerk is looking to get into the restaurant business itself. Neither company has confirmed a deal.\n\nThe move has puzzled analysts. Restaurants are notoriously expensive to operate, and WerkJerk already profits from managing their employees. Why buy the business when you're already getting paid by it?\n\nSome investors speculate that the real opportunity lies in the enormous amount of customer and operational data collected by restaurant chains. Others suspect WerkJerk has something entirely different cooking.\n\nBusiness Desk News\nYour source for business news and investment advice\n\n",
+      "unlockDay": 15
+    },
+    {
       "sender": "Rocket Taco",
-      "subject": "Not All Heroes Wear Capes!",
-      "body": "Team Rocket,\nIn these extraordinary times, we want to take a moment to recognize the extraordinary people who make Rocket Taco possible.\n\nWhile much of the country stays home, our team continues showing up every day to serve the communities that depend on us.\n\nDoctors, nurses, and first responders aren't the only heroes out there. Every single person wearing a Rocket Taco uniform is a hero, too!\n\nWe know it's not easy. We see the sacrifices you're making, and we couldn't be prouder.\n\nKeep your heads up, your spirits high, and remember that every taco you make is making someone's day a little better. We're all in this together.\n**Thank you for being heroes!**\n\nRocket Taco Leadership",
+      "subject": "Statement Regarding Recent Media Reports",
+      "body": "FOR IMMEDIATE RELEASE\n\nRocket Taco is aware of recent media reports regarding a potential transaction involving our longtime technology partner, WerkJerk.\n\nWe regularly evaluate opportunities to strengthen our business and deliver greater value to our customers and shareholders. While we do not comment on market speculation, our partnership with WerkJerk continues to play an important role in our operations.\n\nRocket Taco restaurants remain open and will continue serving customers as usual. We appreciate the dedication of our employees and partners during this exciting period of growth.\n\nFor media inquiries, please contact Rocket Taco Corporate Communications.",
+      "unlockDay": 15
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Performance Evaluation",
+      "body": "Hey, WerkJerk!\n\nYour latest performance data has been processed.\n\nOur records show {warnings} warnings and {tacos_spent} Trust Tacos redeemed during your assignment.\n\nThese metrics, along with your order completion times, accuracy, and corrections, have been incorporated into our quality assurance models.\n\nYour performance record will continue to be updated automatically. No action is required.\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 15
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "You're Essential!",
+      "body": "Hey, WerkJerk!\n\nAt WerkJerk, we believe every worker deserves recognition for their contribution.\n\nYou've helped prepare {orders_served} meals for customers who might otherwise have had to prepare food themselves.\n\nThat's what we call essential!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. You have earned a total of {wages_total} this month.\n\nHospital workers and health-conscious customers are expected today, with Tomato Crema, Garden Bean, Garden Fire, and Spicy Chicken XL among their likely picks.\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 16
+    },
+    {
+      "sender": "Business Desk",
+      "subject": "Stocks Rise as Main Street Stays Home",
+      "body": "Millions of Americans are facing reduced hours or lost jobs, but Wall Street is staging a remarkable recovery. Investors are pouring money into companies that benefit from shopping, working, and entertaining ourselves at home.\n\nAnalysts point to government stimulus and renewed confidence in technology stocks.\n\nWall Street appears to have successfully flattened the curve of economic anxiety by maintaining a safe distance from the people experiencing it.\n\nBusiness Desk News\nYour source for business news and investment advice",
       "unlockDay": 16
     },
     {
       "sender": "Dear Leader",
-      "subject": "LAW & ORDER!",
-      "body": "Great job last night at the White House\n\nIt's ANTIFA and the Radical Left. Don't lay the blame on others!\n\nLAW & ORDER!\n\n.@CNN & MSDNC are doing everything possible to \"inflame\" the crowd.",
-      "unlockDay": 18
-    },
-    {
-      "sender": "City Desk",
-      "subject": "Is Home Cooking the New Fine Dining?",
-      "body": "With some dining establishments closing their doors, Americans are discovering a newfound passion for cooking!\n\nFrom sourdough starters to gourmet meals, amateur chefs are sharing their culinary creations online, earning thousands of likes and inspiring others to give cooking a try.\n\nSome home cooks say they've developed skills they never imagined having, while others are wondering why they spent so much money eating out in the first place.\n\nAs more people embrace their inner chef, some are wondering whether they'll ever go back to eating out.\n\nAfter all, anyone can make a restaurant-quality meal! All you need are fresh ingredients, the right equipment, and a little free time!\n\n\nSponsored content.",
-      "unlockDay": 20
+      "subject": "WE SAVED MILLIONS OF LIVES!",
+      "body": "We did a great job on CoronaVirus, including the early China restrictions, Ventilator production, and Testing. We saved millions of American lives!\n\nYet the Fake News refuses to acknowledge this in a positive way. They give Dr. Fauci a great approval rating while refusing to give our Administration the credit it deserves. Why? Because they are Fake News!",
+      "unlockDay": 16,
+      "originalPostDate": "2020-06-23",
+      "retrievalUrl": "https://www.presidency.ucsb.edu/documents/tweets-june-23-2020"
     },
     {
       "sender": "Business Desk",
-      "subject": "This Company Wants a Bigger Piece of the Pie",
-      "body": "You may never have heard of WerkJerk, but the startup already handles hiring, scheduling, and employee performance for nationwide fast food giant Rocket Taco.\n\nNow, rumors are circulating that WerkJerk is looking to get into the restaurant business itself. Neither company has confirmed a deal.\n\nThe move has puzzled analysts. Restaurants are notoriously expensive to operate, and WerkJerk already profits from managing their employees. Why buy the business when you're already getting paid by it?\n\nSome investors speculate that the real opportunity lies in the enormous amount of customer and operational data collected by restaurant chains. Others suspect WerkJerk has something entirely different cooking.",
-      "unlockDay": 23
-    },
-    {
-      "sender": "Business Desk",
-      "subject": "What Does an HR App Want With Tacos?",
-      "body": "WerkJerk, the human resources tech startup announced today that it is acquiring the fast-food chain Rocket Taco. Executives described the purchase as an exciting new chapter in their existing partnership.\n\nWerkJerk pointed to Rocket Taco’s recipes, operational systems, and years of business data as valuable assets. The company says the deal will support new opportunities in food and technology but offered few details about what it intends to build.\n\nFor now, Rocket Taco restaurants remain open. Asked what the acquisition means for employees and managers, a spokesperson said staffing plans would be communicated during the transition.",
-      "unlockDay": 24
-    },
-    {
-      "sender": "Dear Leader",
-      "subject": "AMERICAN WORKERS AND THE AI FUTURE",
-      "body": "I've studied automation\n\nThe amount of money saved is nowhere near the distress, hurt, and harm it causes for American Workers\n\nThe best and most successful business leaders on Earth are now racing to invest in the United States.\n\nIf these Countries want to participate in the AI Industrial Revolution, it is time to choose sides with America, not against us.\n\nThere must be only One Rulebook if we are going to continue to lead in AI.",
-      "unlockDay": 25
+      "subject": "Rocket Taco is On the Menu",
+      "reveals": "acquisition",
+      "body": "WerkJerk, the human resources tech startup announced today that it is acquiring the fast-food chain Rocket Taco. Executives described the purchase as an exciting new chapter in their existing partnership.\n\nWerkJerk pointed to Rocket Taco’s recipes, operational systems, and years of business data as valuable assets. The company says the deal will support new opportunities in food and technology but offered few details about what it intends to build.\n\nFor now, Rocket Taco restaurants remain open. Asked what the acquisition means for employees and managers, a spokesperson said staffing plans would be communicated during the transition.\n\nBusiness Desk News\nYour source for business news and investment advice\n\n",
+      "unlockDay": 17
     },
     {
       "sender": "WerkJerk",
-      "subject": "A Heroic New Chapter: Introducing WerkJerk Fresh!",
-      "body": "Big news, WerkJerks!\n\nFor years, we’ve helped Rocket Taco recruit, schedule, and manage the people who keep its restaurants running. Now, with Rocket Taco officially part of the WerkJerk family, we’re ready for something MUCH bigger!\n\nRocket Taco’s dataset has given us an incredible foundation for our next big idea. All that hard work is powering a bold new vision for the future of food!\n\nIntroducing **WerkJerk Fresh**, an AI-powered food platform with two revolutionary products in development:\n\n**WerkJerk Fresh Stations** — Made-to-order food vending machines offering fresh, customized meals wherever people need them.\n\n**WerkJerk Fresh Home** — A luxury countertop appliance that brings a personal-chef experience into your home. Why cook when the future can do it for you?\n\nOur Rocket Taco teams have been heroes for showing up through difficult times. Today, we’re proud to celebrate a new kind of hero: the innovators brave enough to disrupt an entire industry.\n\nTo make room for this exciting future, all real estate holdings will be turned into data centers. Effective immediately, Rocket Taco restaurant operations have been eliminated. This includes your current assignment.\n\nThank you for your heroic service! We can’t wait to help you find your next opportunity on WerkJerk.\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "subject": "Official News: Rocket Taco Joins WerkJerk!",
+      "reveals": "acquisition",
+      "body": "Big news, WerkJerks!\n\nWe're thrilled to announce that WerkJerk has acquired Rocket Taco! What started as an exciting partnership is now one big family of innovation.\n\nYou might be wondering what this means for your assignment. Good news: you're still scheduled to work! Restaurants will continue operating during the transition.\n\nWe've seen incredible results from combining Rocket Taco's recipes and restaurant know-how with WerkJerk's scheduling, performance tools, and operational data. Together, there's so much more we can do.\n\nWe're exploring bold new opportunities, and we'll share our vision soon. In the meantime, keep showing up and doing what you do best!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 17
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Everybody Loves Convenience!",
+      "body": "Hey, WerkJerk!\n\nNow that Rocket Taco is part of the WerkJerk family, we're looking at convenience in a whole new way.\n\nPeople will eat almost anything if it means they don't have to make it themselves. Our models suggest that customers can be divided into four groups based on just two preferences: how they feel about eating animals, and how much spice they can handle.\n\nThat's a whole lot of people to satisfy with just a handful of ingredients!\n\nAnd we're only getting started!\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 18
+    },
+    {
+      "sender": "Dear Leader",
+      "subject": "I FEEL BETTER THAN EVER!",
+      "body": "Don't be afraid of Covid. Don't let it dominate your life.\n\nWe developed great drugs and treatments under my Administration. I have just left Walter Reed and am feeling really good.\n\nI feel better than I did 20 years ago!\n\nThey said the virus would stop us. The supporters outside the hospital know better. We will win!",
+      "unlockDay": 18,
+      "originalPostDate": "2020-10-05",
+      "retrievalUrl": "https://www.presidency.ucsb.edu/documents/tweets-october-5-2020"
+    },
+    {
+      "sender": "City Desk",
+      "subject": "You May Now Kiss the Webcam",
+      "body": "Wedding plans are being rewritten as couples exchange vows in backyards, living rooms, and video calls. With guests unable to gather in person, wedding planners are finding creative ways to bring traditional celebrations online.\n\nNew virtual wedding packages include livestreamed ceremonies, digital guest books, and animated bouquet tosses. One startup is developing a service that delivers individual slices of wedding cake to guests watching from home, while another offers augmented reality wedding receptions where guests can dance together without leaving their living rooms.\n\nThe latest innovation is a subscription-based virtual honeymoon, allowing newlyweds to experience exotic destinations together from the comfort of their own home. An optional premium package allows couples to experience the honeymoon separately.\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 18
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "The Rocket Taco Standard!",
+      "body": "Hey, WerkJerk!\n\nOffice workers and hospital staff are expected today. Different professions, different schedules, but remarkably similar lunch habits! Our models predict a relatively light shift, with demand for Quesadillas, Loaded Bean, and Spicy Chicken.\n\nWe're finding that the same principles apply in the kitchen. Every Rocket Taco order follows a series of steps, and each step gives us valuable information about timing, accuracy, and consistency.\n\nThe more we understand these patterns, the better we can predict the future.\n\nThe WerkJerk Team\nYou've got a job, don't be a jerk.",
+      "unlockDay": 19
+    },
+    {
+      "sender": "Business Desk",
+      "subject": "A Vacation From Your Living Room",
+      "body": "With travel restrictions keeping Americans at home, the tourism industry is finding new ways to bring the vacation experience to customers who can't go anywhere.\n\nHotels are offering virtual tours, museums are selling online experiences, and wellness startups are promising the restorative benefits of a getaway without the expense or inconvenience of travel.\n\nOne luxury retreat company has introduced a subscription service that lets customers escape the stresses of everyday life from the comfort of their living rooms. The standard package includes tropical scenery, soothing ocean sounds, and a personalized relaxation schedule.\n\nThe premium package includes a guided meditation, a downloadable sunset, and exclusive access to the sound of silence.\n\nBusiness Desk News\nYour source for business news and investment advice",
+      "unlockDay": 19
+    },
+    {
+      "sender": "Dear Leader",
+      "subject": "THEY DID NOT WANT ME TO GET A VACCINE WIN!",
+      "body": "The @US_FDA and the Democrats didn't want to have me get a Vaccine WIN, prior to the election\n\nPfizer waited until after the election to announce its news. If Biden were President, you would have waited years for a vaccine. They tried to deny us the credit, but we were right all along!",
+      "unlockDay": 20,
+      "originalPostDate": "2020-11-10",
+      "retrievalUrl": "https://www.presidency.ucsb.edu/documents/tweets-november-10-2020"
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Introducing WerkJerk Fresh!",
+      "reveals": "new_vision",
+      "body": "Big news, WerkJerks!\n\nOur Rocket Taco acquisition is just the beginning. We've been working with some of the brightest minds in brand strategy to imagine what WerkJerk can become. Our new vision? Make everyday life a little more effortless.\n\nIntroducing WERKJERK FRESH, our new AI-powered food platform!\n\nWERKJERK FRESH STATIONS — Made-to-order food from automated stations, with Rocket Taco favorites wherever people need them.\n\nWERKJERK FRESH HOME — A premium countertop appliance that brings the convenience of a personal chef right into your kitchen.\n\nRocket Taco's recipes, ingredient combinations, and years of preparation data are making this possible. Every shift, every order, every improvement has brought us closer to a world where great food doesn't have to mean hard work.\n\nOur brand consultants put it best: We're not just helping people get work done anymore. We're helping people get on with their lives!\n\nMore updates on the transition soon. For now, please continue following your scheduled assignments.\n\nThe WerkJerk Fresh Team\nYou've got a life. Don't do the work.",
+      "unlockDay": 20
+    },
+    {
+      "sender": "City Desk",
+      "subject": "The New Fine Dining?",
+      "body": "With restaurants closing their doors, Americans are discovering the joys of preparing gourmet meals at home.\n\nSocial media is overflowing with beautifully plated dinners, ambitious recipes, and amateur chefs showing off their culinary creations. Some say they may never need to visit a restaurant again!\n\nOf course, restaurant-quality cooking takes time. There's shopping, chopping, measuring, preparing, cooking, and cleaning up afterward. For busy households, the dream of becoming a home chef can quickly start to feel like a second job.\n\nBut what if you could enjoy the results without doing any of the work?\n\nSponsored content.\n\nCity Desk News\nYour source for what's trending",
+      "unlockDay": 20
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Your Daily Werk Report",
+      "body": "Hey, WerkJerk!\n\nYour Rocket Taco shift is confirmed!\n\nOur models predict a steady lunch crowd of office workers and health-conscious customers.\n\nYou've helped us serve {orders_served} orders across {shifts_worked} completed shifts. Thanks for your continued contribution to the Rocket Taco standard!\n\nWe couldn't have done it without you!\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 21
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Payment Notification",
+      "body": "{wages_paid} has been deposited into your bank account. Your total earnings with us is now {wages_total}.\n\nYou've got a job, don't be a jerk.",
+      "unlockDay": 21
+    },
+    {
+      "sender": "WerkJerk",
+      "subject": "Your Contribution to the Future of Food",
+      "body": "Congratulations, WerkJerk!\n\nAcross your Rocket Taco assignment, you've served {orders_served} orders in {shifts_worked} completed shifts, including {perfect_days} perfect days. You also generated {orders_missed} valuable examples of how food preparation can go wrong.\n\nEvery ingredient you handled, every order you completed, every correction you made helped us document what it takes to prepare Rocket Taco food. Your work has been invaluable to the development of WerkJerk Fresh!\n\nAs part of our next chapter, Rocket Taco restaurant operations are being eliminated, and the properties will be converted into data centers to support our new automated food platform. Effective immediately, your Rocket Taco assignment has ended.\n\nThank you for your heroic service. We couldn't have built a future without this work.\n\nWe're excited to help you explore new opportunities through WerkJerk!\n\nThe WerkJerk Fresh Team\nYou've got a life. Don't do the work.",
       "ending": "layoff"
     },
     {
@@ -107,32 +321,6 @@
       "subject": "NOTICE OF EVICTION",
       "body": "Dear Resident,\n\nRent for your unit has not been received by the due date. Per your lease, you have been removed from the property effective immediately.\n\nYour belongings have been placed on the curb. We are not responsible for items left on the curb.\n\nWe wish you the best in your next chapter.\n\nSunnyvale Property Group\nA WerkJerk Real Estate Holding",
       "ending": "eviction"
-    },
-    {
-      "sender": "WerkJerk",
-      "subject": "You made {wages_paid}!",
-      "body": "Hi WerkJerk!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. That brings your total earnings with us to {wages_total}.\n\nYou've got a job, don't be a jerk.",
-      "unlockDay": 6
-    },
-      {
-      "sender": "WerkJerk",
-      "subject": "You made {wages_paid} this week!",
-      "body": "Hi WerkJerk!\n\nYour latest paycheck of {wages_paid} has been deposited into your bank account. That brings your total earnings with us to {wages_total}.\n\nYou've got a job, don't be a jerk.",
-      "unlockDay": 11
-    },
-      {
-      "sender": "WerkJerk",
-      "subject": "Another week, another {wages_paid}!",
-      "body": "Your latest paycheck of {wages_paid} has been deposited into your bank account. You have earned a total of {wages_total} this month.\n\nYou've got a job, don't be a jerk.",
-      "unlockDay": 16
-    },
-      {
-      "sender": "WerkJerk",
-      "subject": "Payment Notification",
-      "body": "{wages_paid} has been deposited into your bank account. Your total earnings with us is now {wages_total}.\n\nYou've got a job, don't be a jerk.",
-      "unlockDay": 21
     }
-
-
   ]
 }
