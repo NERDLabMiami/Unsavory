@@ -24,7 +24,6 @@ public class PlateScript : MonoBehaviour, IWorldInteractable {
 	public int bestMatchedAggregate = 0;
 	public GameObject music;
 	public TortillaFoundation tortilla;
-	public UnityAnalyticsIntegration analytics;
 	public bool perfectLevel = true;
 
 	// Hot sauce never counts toward matching or as a mistake; it is required only by orders whose RecipeData.rocket is set,
@@ -210,7 +209,6 @@ public class PlateScript : MonoBehaviour, IWorldInteractable {
 		string combo = ComboMessages.ForStreak(matchedAggregate);
 		if (combo != null) playerMessage(combo);
 
-		analytics.servedOrder(matchedOrder.name, "true");
 
 		// Let the last ingredient show on the tortilla before the plate becomes the taco; ignore presses meanwhile.
 		_serving = true;
@@ -222,6 +220,7 @@ public class PlateScript : MonoBehaviour, IWorldInteractable {
 	// Swaps the plated ingredients for the completed taco and sends the order off the table.
 	void FinishServe(GameObject matchedOrder) {
 		_serving = false;
+		if (!tutorialMode) CareerStats.OrderServed();
 		var matchedRS = matchedOrder != null ? matchedOrder.GetComponent<RecipeScript>() : null;
 
 		if (current_set != null) current_set.ClearIngredients();
@@ -240,7 +239,6 @@ public class PlateScript : MonoBehaviour, IWorldInteractable {
 			}
 			else
 			{
-				analytics.servedOrder(matchedOrder.name, "false");
 				music.GetComponent<MusicLibrary>().plated();
 				// The taco rides the tray off the table.
 				taco.transform.SetParent(setT, true);
@@ -276,6 +274,7 @@ public class PlateScript : MonoBehaviour, IWorldInteractable {
 			current.RemoveOrderAfterAnim(target, 0.45f);
 			current.OnFrontFinished();
 
+			CareerStats.OrderMissed();
 			current.numberOfUnmatchedOrders++;
 			if (current.warningTimer <= Time.time + 2f) {
 				playerWarning(current.numberOfUnmatchedOrders);

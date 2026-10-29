@@ -14,7 +14,12 @@ public class ReturnHomeScript : MonoBehaviour {
 	public SwipeScene room; // assign
 	public HomeToast toast;
 	public string newMonthCaption = "New month, another adventure.";
-	private bool rentPending = false;
+	// Rent is due today. Shared with the narrative context so the bed, door and hover text can react to it.
+	private bool rentPending
+	{
+		get { return NarrativeRuntime.RentPending; }
+		set { NarrativeRuntime.RentPending = value; }
+	}
 	private bool endingStarted = false;
 
 	private void OnEnable()
@@ -44,7 +49,6 @@ public class ReturnHomeScript : MonoBehaviour {
 
 	private IEnumerator NewMonthRoutine()
 	{
-		gameObject.GetComponent<UnityAnalyticsIntegration>()?.survived();
 
 		var canvasGO = new GameObject("NewMonthFade", typeof(Canvas));
 		var canvas = canvasGO.GetComponent<Canvas>();
@@ -86,19 +90,10 @@ public class ReturnHomeScript : MonoBehaviour {
 		CareerFlowManager.Instance.EndRun(how);
 	}
 
+	// The run just ended in this scene (no reload): the ending morning's entry, which only points at the email.
 	private void ShowRunEndToast()
 	{
-		if (toast) toast.ShowKey("home_enter", new Dictionary<string, float> { { "run_end", RunEndCode() } });
-	}
-
-	private static float RunEndCode()
-	{
-		switch (MailArchive.RunEnd())
-		{
-			case "layoff": return 1;
-			case "eviction": return 2;
-			default: return 0;
-		}
+		if (toast) toast.ShowEntry("home");
 	}
 
 	private static void Stretch(RectTransform rt)
@@ -151,15 +146,18 @@ public class ReturnHomeScript : MonoBehaviour {
 
 		// The scene opens black: a toast reads on the black, then the scene fades in as it leaves.
 		ScreenFade.Black(toast != null ? toast.RootCanvas : null);
+		Debug.Log($"[ReturnHome] Start at {Time.realtimeSinceStartup:F2}s (frame {Time.frameCount})"); // TEMP timing
 
-		money = PlayerPrefs.GetFloat("money");
+		money =PlayerPrefs.GetFloat("money");
 		day = PlayerPrefs.GetInt("current level", 0);
 		Time.timeScale = 1f;
 
 		// The run is over: nothing here advances any more, the player reads their email and leaves by the door.
+		// The ending morning's toast plays only on arrival, not when the scene is merely reloaded.
+		rentPending = false;
 		if (CareerFlowManager.Instance.RunEnded)
 		{
-			ShowRunEndToast();
+			if (NarrativeRuntime.ConsumeEntry("home")) ShowRunEndToast();
 			if (toast == null || !toast.IsShowing) ScreenFade.FadeIn(HomeToast.RevealSeconds);
 			return;
 		}
@@ -167,7 +165,6 @@ public class ReturnHomeScript : MonoBehaviour {
 		bool firstVisit = !PlayerPrefs.HasKey("welcomed home");
 		if (firstVisit)
 		{
-			if (toast) toast.Show("Welcome home. Pay bills, stock up on medicine, then head to work.");
 			PlayerPrefs.SetInt("welcomed home", 1);
 
 		}
@@ -182,7 +179,6 @@ public class ReturnHomeScript : MonoBehaviour {
 			{
 				if (PlayerPrefs.GetInt("bill" + i, 0) == 0)
 				{
-					gameObject.GetComponent<UnityAnalyticsIntegration>()?.overdueBill(i);
 					string eff = bills["bills"][i]["effect"];
 					int currentEffect = PlayerPrefs.GetInt(eff, 0);
 					currentEffect++;
@@ -199,15 +195,15 @@ public class ReturnHomeScript : MonoBehaviour {
 		PlayerPrefs.SetInt("fruit", fruitCount);
 		if (fruit) fruit.SetCount(fruitCount);
 		bool isMonthEnd = (day % finalDay == 0) && (day != 0);
-		bool isWeekend  = (day % 5 == 0);
+		bool isWeekend  = CareerFlowManager.IsWeekendDay(day);
 
 		if (!firstVisit) DecayHealth();
+		PlayerState.ResetPillsToday();
 		if (isWeekend && PlayerPrefs.GetFloat("health", 0f) >= 30f) PlayerPrefs.SetInt("letter", 0);
 
 		if (countUnpaidGameOverBills(true) > 0)
 		{
 			// Rent was due on the last day of the month and never paid.
-			gameObject.GetComponent<UnityAnalyticsIntegration>()?.survivedWithUnpaidBills();
 			EndRun("eviction");
 		}
 		else if (isMonthEnd)
@@ -222,7 +218,6 @@ public class ReturnHomeScript : MonoBehaviour {
 			else
 			{
 				rentPending = true;
-				if (toast) toast.Show("Rent is due today. Pay it to start a new month.");
 			}
 
 			Debug.Log("Month is over, waiting on rent");
@@ -236,7 +231,6 @@ public class ReturnHomeScript : MonoBehaviour {
 
 			calculateWages();
 
-			gameObject.GetComponent<UnityAnalyticsIntegration>()?.weekend();
 		}
 
 // Always advance day at end of Start() flow
@@ -276,13 +270,10 @@ public class ReturnHomeScript : MonoBehaviour {
 		PlayerPrefs.SetInt("current level", day);
 		MailArchive.DeliverDue();
 
-		// One toast for arriving home, chosen from toasts.txt by day, missed bills, rent, letter, first visit.
-		if (toast) toast.ShowKey("home_enter", new Dictionary<string, float>
-		{
-			{ "first_visit", firstVisit ? 1 : 0 },
-			{ "rent_pending", rentPending ? 1 : 0 },
-			{ "letter", PlayerPrefs.HasKey("letter") ? 1 : 0 },
-			{ "run_end", RunEndCode() },
-		});
+		// One entry for arriving home, chosen from toasts.txt: a special alone, else a world line then a state line.
+		// Only a real arrival (New Game, back from a shift, a skipped day) plays it; a reload of the scene stays quiet.
+		if (NarrativeRuntime.ConsumeEntry("home") && toast)
+			toast.ShowEntry("home", c => c.Set("first_visit", firstVisit));
+		NarrativeRuntime.ClearSkippedPreviousShift();
 	}
 }

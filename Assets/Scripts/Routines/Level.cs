@@ -26,6 +26,10 @@ public class Level : MonoBehaviour {
 	public Animator HUD;
 
 	public AudioClip gamePlayBackground;
+	[Tooltip("Played, with the background music stopped, when the player sneezes; \"Mariachi T1 - Failure\".")]
+	public AudioClip sneezeFailureCue;
+	[Tooltip("Seconds the snot stays on screen after a sneeze before the boss arrives.")]
+	public float sneezeLingerSeconds = 3f;
 	private bool levelBegan = false;
 	private bool roundEnded = false;
 	private int currentLevel;
@@ -78,14 +82,10 @@ public class Level : MonoBehaviour {
 
 		// The Boss Canvas can be saved inactive in the scene; the intro cannot run (or finish) without it.
 		// When a toast opens the day, the canvas stays hidden until the toast is gone (ToastThenSay shows it).
-		var toastStats = new Dictionary<string, float>
-		{
-			{ "place", 3 },
-			{ "catering", PlayerPrefs.HasKey("catering") ? 1 : 0 },
-			{ "tutorial_done", PlayerPrefs.HasKey("tutorial") ? 1 : 0 },
-		};
-		string toastText = toast != null ? ToastData.Pick("work_enter", toastStats) : null;
-		bool playToast = toastText != null;
+		// Arriving at work after reporting from home plays the entry toast (toasts.txt "work"); a reload of the shift does not.
+		NarrativeMessage toastMessage = toast != null && NarrativeRuntime.ConsumeEntry("work") ? NarrativeRuntime.PickEntry("work") : null;
+		bool playToast = toastMessage != null;
+		CommuteState.ClearCrashedCommute();   // the crash line (if any) was chosen above and shows once
 		if (dialog != null) dialog.gameObject.SetActive(!playToast);
 
 		currentLevel = PlayerPrefs.GetInt("current level");
@@ -94,7 +94,7 @@ public class Level : MonoBehaviour {
 
 
 		// Arrival at work: 9 AM, up to an hour later when late. Fixed now so the boss's mood and the clock agree.
-		float lateness = PlayerPrefs.GetInt("late effect", 0);
+		float lateness = CommuteState.LateEffect;
 		int minutesLate = lateness > 0 ? UnityEngine.Random.Range(10, 61) : 0;
 		timer.setWorkday(new TimeSpan(9, minutesLate, 0));
 
@@ -109,7 +109,7 @@ public class Level : MonoBehaviour {
 			Debug.Log("First Day of Work!");
 			introKey = "welcome";
 		}
-		else if (PlayerPrefs.GetInt("late effect", 0) > 0)
+		else if (CommuteState.LateEffect > 0)
 		{
 			Debug.Log("Late to work");
 			introKey = "late_return";
@@ -120,25 +120,36 @@ public class Level : MonoBehaviour {
 			introKey = "return";
 		}
 
-		Debug.Log($"[Level] intro '{introKey}' (current level={currentLevel}, tutorial done={PlayerPrefs.HasKey("tutorial")}, late effect={PlayerPrefs.GetInt("late effect", 0)}, catering={PlayerPrefs.HasKey("catering")})");
+		// The boss can name today's crowd and how busy it will be when he sends the player back to work.
+		Dictionary<string, float> crowdContext = null;
+		Dictionary<string, string> crowdVars = null;
+		if (introKey == "return" || introKey == "late_return")
+		{
+			var crowd = CrowdContext.Pick(currentLevel);
+			crowdContext = CrowdContext.Context(crowd);
+			crowdVars = CrowdContext.Vars(crowd);
+			Debug.Log($"[Level] crowd '{crowd.name}', size {crowd.size}");
+		}
+
+		Debug.Log($"[Level] intro '{introKey}' (current level={currentLevel}, tutorial done={PlayerPrefs.HasKey("tutorial")}, late effect={CommuteState.LateEffect}, catering={PlayerPrefs.HasKey("catering")})");
 		// The boss slides in and speaks; OnBossIntroComplete follows his last line.
 		_bossIntroHandled = false;
-		if (playToast) StartCoroutine(ToastThenSay(toastText, introKey));
+		if (playToast) StartCoroutine(ToastThenSay(toastMessage, introKey, crowdContext, crowdVars));
 		else
 		{
 			ScreenFade.FadeIn(HomeToast.RevealSeconds);
-			dialog.Say(introKey, OnBossIntroComplete);
+			dialog.Say(introKey, id => OnBossIntroComplete(), crowdContext, crowdVars);
 		}
 
 		if (countdownUiRoot) countdownUiRoot.SetActive(false);
 	}
 
 
-	private IEnumerator ToastThenSay(string text, string introKey)
+	private IEnumerator ToastThenSay(NarrativeMessage message, string introKey, Dictionary<string, float> context, Dictionary<string, string> vars)
 	{
-		yield return toast.ShowAndWait(text);
+		yield return toast.ShowSequenceAndWait(message.Lines, message.MarkShown);
 		dialog.gameObject.SetActive(true);
-		dialog.Say(introKey, OnBossIntroComplete);
+		dialog.Say(introKey, id => OnBossIntroComplete(), context, vars);
 	}
 
 	private void OnBossIntroComplete()
@@ -229,6 +240,18 @@ public class Level : MonoBehaviour {
 
 	private bool IsCatering { get { return PlayerPrefs.HasKey("catering"); } }
 
+	/// <summary>The player has sneezed: the snot stays up while the music gives way to the failure cue, then the round ends as Sick.</summary>
+	public void BeginSneezeAftermath() {
+		if (roundEnded) return;
+		if (nose != null) nose.HoldSnot();
+		var music = Camera.main.GetComponent<AudioSource>();
+		float volume = music.volume;
+		music.Stop();
+		if (sneezeFailureCue != null) AudioSource.PlayClipAtPoint(sneezeFailureCue, Camera.main.transform.position, volume);
+		else Debug.LogWarning("[Level] sneezeFailureCue is not assigned: no failure music after a sneeze.");
+		Tween.Delay(sneezeLingerSeconds, () => EndRound(RoundOutcome.Sick));
+	}
+
 	/// <summary>The one way a round ends: the timer ran out, too many orders backed up, or the player sneezed.
 	/// State is settled first, then the boss speaks the outcome and the shift is left from his last line.</summary>
 	public void EndRound(RoundOutcome outcome) {
@@ -245,7 +268,6 @@ public class Level : MonoBehaviour {
 		var music = Camera.main.GetComponent<AudioSource>();
 		Tween.Volume(music, music.volume * EndOfDayMusicLevel, EndOfDayMusicFade);
 
-		var analytics = GetComponent<UnityAnalyticsIntegration>();
 		string key;
 		float wages;
 		int score = 0;
@@ -258,11 +280,10 @@ public class Level : MonoBehaviour {
 			wages = PlayerState.AddWagesHours(8f);
 			// The boss only hands out a good will taco for a flawless day on which the player was neither late nor sick.
 			sick = PlayerPrefs.GetFloat("health", 60f) < SickHealth && nose != null && nose.nearSneezes >= SickNearSneezes;
-			taco = score == 3 && PlayerPrefs.GetInt("late effect", 0) == 0 && !sick;
+			taco = score == 3 && CommuteState.LateEffect == 0 && !sick;
 			if (!IsCatering) TacoLedger.RecordResult(taco);
 			retries = TacoLedger.Trust;
-			analytics.careerModeLevelFinished(currentLevel, "full day", Time.time);
-			key = IsCatering ? "catering_complete" : (currentLevel % 5 == 0 ? "weekend" : CompleteKey(score));
+			key = IsCatering ? "catering_complete" : (CareerFlowManager.IsWeekendDay(currentLevel) ? "weekend" : CompleteKey(score));
 		}
 		else {
 			sick = outcome == RoundOutcome.Sick;
@@ -270,11 +291,12 @@ public class Level : MonoBehaviour {
 			if (!IsCatering) TacoLedger.RecordResult(false);   // a failed day is a missed chance too
 			retries = TacoLedger.Trust;
 			fired = PlayerPrefs.GetInt("warnings") + 1 > PlayerPrefs.GetInt("max warnings");
-			analytics.careerModeLevelFinished(currentLevel, sick ? "sick" : "mismatches", Time.time);
 			if (sick) PlayerPrefs.SetInt("letter", PlayerPrefs.GetInt("sneezes", 1) > 1 ? 2 : 1);
 			string kind = sick ? "sick" : "slow";
 			key = fired ? "fired_" + kind : (IsCatering ? "catering_" + kind : (sick ? "sneezed" : "slow"));
 		}
+
+		CareerStats.ShiftEnded(outcome == RoundOutcome.Complete, outcome == RoundOutcome.Complete && score == 3);
 
 		var vars = new Dictionary<string, string> {
 			{ "wages", wages.ToString("$0.00") },
@@ -316,7 +338,6 @@ public class Level : MonoBehaviour {
 			if (fired) {
 				PlayerPrefs.SetInt("fired", 1);
 				PlayerPrefs.SetInt("can cater", 1);
-				GetComponent<UnityAnalyticsIntegration>().fired();
 			}
 		}
 		StartCoroutine(LeaveAfterBoss(fired ? (Action)GoToMainMenu : GoHome));

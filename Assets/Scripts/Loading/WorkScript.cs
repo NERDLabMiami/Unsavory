@@ -81,10 +81,6 @@ public class WorkScript : MonoBehaviour
         PlayerPrefs.SetInt(PREF_PAID_SICK_DAYS, paidSickDays);
         PlayerPrefs.Save();
 
-        var analytics = GetComponent<UnityAnalyticsIntegration>();
-        if (analytics != null)
-            analytics.usedPaidSickDays(paidSickDays);
-
         // Sick day wage credit without needing a Player object in the scene
         PlayerState.SetEarnedWages(PlayerState.GetEarnedWages() + 8f * PlayerState.GetHourlyRate());
     }
